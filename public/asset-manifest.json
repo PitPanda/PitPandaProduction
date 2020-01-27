@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8c878d44.chunk.css",
+    "main.js": "/static/js/main.253dda71.chunk.js",
+    "main.js.map": "/static/js/main.253dda71.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.9d7b816c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.9d7b816c.js.map",
+    "static/js/2.ae972fcb.chunk.js": "/static/js/2.ae972fcb.chunk.js",
+    "static/js/2.ae972fcb.chunk.js.map": "/static/js/2.ae972fcb.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.f4feb5b7aa62a1a63f98a2e279622493.js": "/precache-manifest.f4feb5b7aa62a1a63f98a2e279622493.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.8c878d44.chunk.css.map": "/static/css/main.8c878d44.chunk.css.map",
+    "static/js/2.ae972fcb.chunk.js.LICENSE": "/static/js/2.ae972fcb.chunk.js.LICENSE",
+    "static/media/index.css": "/static/media/Roboto-Regular-webfont.da61d7ef.svg",
+    "static/media/itemStyles.css": "/static/media/blocks_items_potions.195f6b98.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9d7b816c.js",
+    "static/js/2.ae972fcb.chunk.js",
+    "static/css/main.8c878d44.chunk.css",
+    "static/js/main.253dda71.chunk.js"
+  ]
+}
