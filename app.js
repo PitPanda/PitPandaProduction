@@ -101,8 +101,9 @@ app.get('/api/TradeCenter/DiscordAuth/:id', (req, res) => {
         if(!result.success) resolve({success:false,error:result.cause});
         const discord = getRef(result,'player',"socialMedia","links",'DISCORD');
         const prestige = (getRef(result,'player',"stats","Pit",'profile',"prestiges")||[]).length;
+        const username = getRef(result,'player',"displayname");
         if(discord){
-            res.send({success:true,discord,prestige});
+            res.send({success:true,discord,prestige,username});
         }else res.send({success:false,error:'User has not set a discord profile'})
     });
 });
