@@ -88,12 +88,24 @@ const apiError = message => ((req,res)=>res.send({success:false,error:message}))
 app.get('/api/players/:id', (req, res) => {
     let start = Date.now();
     getPitStats(req.params.id, res).then(out=>{
-        res.send(JSON.stringify(out));
+        res.send(out);
         console.log(`Loaded ${req.params.id} in ${Date.now()-start} ms`);
+    });
+});
+app.get('/api/TradeCenter/DiscordAuth/:id', (req, res) => {
+    const identification = req.params.id.replace(/-/g,'');
+    hypixel.getUserByUnknown(identification).then(apiCall => {
+        if(!apiCall) res.send({success:false,error:'Failed to reach Hypixel API'});
+        else if(apiCall.err) res.send({success:false,error:apiCall.err});
+        const result = JSON.parse(apiCall.body);
+        if(!result.success) resolve({success:false,error:result.cause});
+        const disc = getRef(result,'player',"socialMedia","links",'DISCORD');
+        res.send(disc?{success:true,discord:disc}:{success:false,error:'User has not set a discord profile'})
     });
 });
 
 app.get('/api/players', apiError('No user specified'));
+app.get('/api/TradeCenter/DiscordAuth', apiError('No user specified'));
 app.get('/api', apiError('Invalid Endpoint'));
 app.get('/api/*', apiError('Invalid Endpoint'));
 
@@ -105,7 +117,7 @@ function getPitStats(tag){
     const identification = tag.replace(/-/g,'');
     return new Promise((resolve,reject)=>{
         hypixel.getUserByUnknown(identification).then(apiCall => {
-            if(!apiCall) resolve({success:false,error:"Failed to reach hypixel api"});
+            if(!apiCall) resolve({success:false,error:"Failed to reach hypixel API"});
             else if(apiCall.err) resolve({success:false,error:apiCall.err});
             else {
                 let raw = JSON.parse(apiCall.body);
@@ -275,7 +287,7 @@ function getPitStats(tag){
                     progress.xp.current = Math.round(getPresXp(out.stats.xp,out.stats.prestige));
                     progress.xp.per = out.progress.xp.current/out.progress.xp.goal;
                     progress.xp.str = abbrNum(out.progress.xp.current,2) + '/' + abbrNum(out.progress.xp.goal,2);
-                    progress.xp.hover = Math.round(progress.xp.per*1000)/10+'%';
+                    progress.xp.hover = (out.stats.prestige==30&&progress.xp.per==1)?('Max Prestige'):(Math.round(progress.xp.per*1000)/10+'%');
 
                     progress.gold.goal = pitMaster.Pit.Prestiges[out.stats.prestige].GoldReq;
                     if(progress.gold.goal==0){
@@ -290,7 +302,7 @@ function getPitStats(tag){
 
                     progress.renown.per = progress.renown.current/progress.renown.goal;
                     progress.renown.str = `${(getRef(pit,'profile','renown_unlocks')||[]).length}/78`;
-                    progress.renown.hover = Math.floor(progress.renown.per*1000)/10+'%';
+                    progress.renown.hover = (progress.renown.per==1)?"Max Shop":(Math.floor(progress.renown.per*1000)/10+'%');
                     
                     
                     
