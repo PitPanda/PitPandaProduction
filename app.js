@@ -83,6 +83,8 @@ let blueprintItem = {};
 
 app.use(express.static('public'));
 
+const apiError = message => ((req,res)=>res.send({success:false,error:message}));
+
 app.get('/api/players/:id', (req, res) => {
     let start = Date.now();
     getPitStats(req.params.id, res).then(out=>{
@@ -91,23 +93,11 @@ app.get('/api/players/:id', (req, res) => {
     });
 });
 
-app.get('/api/players', (req, res) => {
-    res.send("{success:false,error:\"No user specified\"}");
-});
+app.get('/api/players', apiError('No user specified'));
+app.get('/api', apiError('Invalid Endpoint'));
+app.get('/api/*', apiError('Invalid Endpoint'));
 
-const mainHandler = (req,res) => {
-    res.sendFile(__dirname + "/public/index.html");
-}
-
-app.get('/', mainHandler);
-app.get('/calculator', mainHandler);
-app.get('/calculator/*', mainHandler);
-app.get('/players', mainHandler);
-app.get('/players/*', mainHandler);
-app.get('/*', (req,res)=>{
-    res.status(404);
-    res.type('txt').send('Not found');
-});
+app.get('*', (req,res)=>res.sendFile(__dirname + "/public/index.html"));
 
 const server = app.listen(port, () => console.log(`Pit Panda listening on port ${port}!`));
 
@@ -147,17 +137,17 @@ function getPitStats(tag){
                         out.stats.gold = profile.cash||0;
                         if(profile.bounties && profile.bounties.length > 0) out.bounty = calcBounty(profile.bounties);
                         if(profile.prestiges) out.stats.prestige = profile.prestiges.length;
-                        for(let thing of profile[`unlocks`]){
+                        for(let thing of (profile[`unlocks`]||[])){
                             thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name') || getRef(pitMaster.Pit.Perks,thing.key,'Name') || thing.key;
                         }
-                        out.prestiges.push(profile.unlocks);
+                        out.prestiges.push(profile.unlocks||[]);
                         for(let i = 1; i <= out.stats.prestige; i++){
                             if(profile[`unlocks_${i}`]) {
                                 for(let thing of profile[`unlocks_${i}`]){
                                     thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name') || getRef(pitMaster.Pit.Perks,thing.key,'Name') || thing.key;
                                 }
                                 out.prestiges.push(profile[`unlocks_${i}`]);
-                            }
+                            }else out.prestiges.push([]);
                         }
                         out.inventories = {};
 
@@ -228,7 +218,7 @@ function getPitStats(tag){
                             `${Colors.GRAY}K+A/D: ${Colors.GREEN}${(((ptl.kills||0)+(ptl.assists||0))/(ptl.deaths||1)).toLocaleString()}`,
                             `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${(((ptl.kills||0)+(ptl.assists||0))/(ptl.playtime_minutes||1)*60).toLocaleString()}`,
                             `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${((ptl.damage_dealt||0)/(ptl.damage_received||1)).toLocaleString()}`,
-                            `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${Math.round((ptl.arrow_hits||0)*1000/(ptl.arrows_fired||0))/10 + '%'}`,
+                            `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${Math.round((ptl.arrow_hits||0)*1000/(ptl.arrows_fired||1))/10 + '%'}`,
                             `${Colors.GRAY}Hours played: ${Colors.GREEN}${Math.round((ptl.playtime_minutes||0)/60).toLocaleString()}`,
                             `${Colors.GRAY}Contracts Started: ${Colors.GREEN}${(ptl.contracts_started||0).toLocaleString()}`,
                             `${Colors.GRAY}Contracts Completed: ${Colors.GREEN}${(ptl.contracts_completed||0).toLocaleString()}`
