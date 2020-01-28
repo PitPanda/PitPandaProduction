@@ -99,8 +99,11 @@ app.get('/api/TradeCenter/DiscordAuth/:id', (req, res) => {
         else if(apiCall.err) res.send({success:false,error:apiCall.err});
         const result = JSON.parse(apiCall.body);
         if(!result.success) resolve({success:false,error:result.cause});
-        const disc = getRef(result,'player',"socialMedia","links",'DISCORD');
-        res.send(disc?{success:true,discord:disc}:{success:false,error:'User has not set a discord profile'})
+        const discord = getRef(result,'player',"socialMedia","links",'DISCORD');
+        const prestige = (getRef(result,'player',"stats","Pit",'profile',"prestiges")||[]).length;
+        if(discord){
+            res.send({success:true,discord,prestige});
+        }else res.send({success:false,error:'User has not set a discord profile'})
     });
 });
 
