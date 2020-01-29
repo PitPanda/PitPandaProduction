@@ -1,5 +1,4 @@
 /node_modules
 /frontEnd/node_modules
-/frontEnd/build
 .vs/
 keys.json
