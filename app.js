@@ -154,13 +154,23 @@ function getPitStats(tag){
                         if(profile.bounties && profile.bounties.length > 0) out.bounty = calcBounty(profile.bounties);
                         if(profile.prestiges) out.stats.prestige = profile.prestiges.length;
                         for(let thing of (profile[`unlocks`]||[])){
-                            thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name') || getRef(pitMaster.Pit.Perks,thing.key,'Name') || thing.key;
+                            thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name');
+                            if(!thing.display) {
+                                thing.display = getRef(pitMaster.Pit.Perks,thing.key,'Name');
+                                if(thing.display) thing.tier = -1;
+                            }
+                            if(!thing.display) thing.display = thing.key;
                         }
                         out.prestiges.push(profile.unlocks||[]);
                         for(let i = 1; i <= out.stats.prestige; i++){
                             if(profile[`unlocks_${i}`]) {
                                 for(let thing of profile[`unlocks_${i}`]){
-                                    thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name') || getRef(pitMaster.Pit.Perks,thing.key,'Name') || thing.key;
+                                    thing.display = getRef(pitMaster.Pit.Upgrades,thing.key,'Name');
+                                    if(!thing.display) {
+                                        thing.display = getRef(pitMaster.Pit.Perks,thing.key,'Name');
+                                        if(thing.display) thing.tier = -1;
+                                    }
+                                    if(!thing.display) thing.display = thing.key;
                                 }
                                 out.prestiges.push(profile[`unlocks_${i}`]);
                             }else out.prestiges.push([]);
