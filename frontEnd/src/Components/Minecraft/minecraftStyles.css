@@ -1,0 +1,118 @@
+.MinecraftText{
+  font-family: "Minecraftia";
+  display: inline-block;
+}
+
+.item{
+  display: inline-block;
+  padding: 8px;
+  padding-bottom: 1px;
+  border-radius: 10px;
+  background-color: #333333;
+  border: 2px solid #333333;
+  margin:1.7px;
+  -webkit-transition: border 0.1s;
+  -moz-transition: border 0.1s;
+  -o-transition: border 0.1s;
+  transition: border 0.1s;
+}
+
+.mctooltip {
+  z-index: 10;
+  display: inline-block;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute; 
+  background: #120211; 
+  padding: 5px; 
+  padding-bottom: 3px; 
+  border-radius: 5px; 
+  border: 4px solid #25015b; 
+  line-height: 17px;
+  padding-right:12px;
+  margin-top: 39px;
+  margin-left: -35px;
+  width: max-content;
+  font-size: 15px;
+  -webkit-transition: opacity 0.1s;
+  -moz-transition: opacity 0.1s;
+  -o-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+}
+
+.MinecraftInventory {
+  color: #fff;
+  display: inline-block;
+}
+
+.count {
+  position: absolute;
+  font-family: 'Minecraftia';
+  color: #fff;
+  margin-left: 21px;
+  margin-top: 18px;
+}
+
+.halfgrey {
+  filter: grayscale(50%);
+}
+
+.grey {
+  filter: grayscale(100%);
+}
+
+.darken {
+  filter: brightness(70%) grayscale(100%);
+}
+
+.item:hover .mctooltip, .item.shown .mctooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.item:hover:not(.shown) .mctooltip {
+  pointer-events: none;
+}
+
+.item:hover, .item.shown {
+  border: 2px solid #666;
+}
+
+.rare:hover, .rare.shown{
+  border-color: #a5f;
+}
+
+.bountiful:hover, .bountiful.shown{
+  border-color: #1ef;
+}
+
+.legendary:hover, .legendary.shown{
+  border-color: #e81;
+}
+
+.extraordinary:hover, .extraordinary.shown{
+  border-color: #b11;
+}
+
+.evil:hover, .evil.shown{
+  border-color: #000;
+}
+
+.artifact:hover, .artifact.shown{
+  border-color: #1a1;
+}
+
+.miracle:hover, .miracle.shown{
+  animation: colorchange 3s infinite;
+  -webkit-animation: colorchange 3s infinite;
+}
+
+@keyframes colorchange{
+  0%  {border-color: blue;}
+  17%  {border-color: purple;}
+  34% {border-color: red;}
+  51%  {border-color: orange;}
+  68%  {border-color: yellow;}
+  85%  {border-color: green;}
+  100%  {border-color: blue;}
+}

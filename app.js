@@ -81,7 +81,7 @@ fs.readFile('enchants.json', (err, data) => {
 
 let blueprintItem = {};
 
-app.use(express.static('public'));
+app.use(express.static('frontEnd/build'));
 
 const apiError = message => ((req,res)=>res.send({success:false,error:message}));
 
@@ -113,7 +113,7 @@ app.get('/api/TradeCenter/DiscordAuth', apiError('No user specified'));
 app.get('/api', apiError('Invalid Endpoint'));
 app.get('/api/*', apiError('Invalid Endpoint'));
 
-app.get('*', (req,res)=>res.sendFile(__dirname + "/public/index.html"));
+app.get('*', (req,res)=>res.sendFile(__dirname + "/frontEnd/build/index.html"));
 
 const server = app.listen(port, () => console.log(`Pit Panda listening on port ${port}!`));
 
