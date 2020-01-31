@@ -11,12 +11,12 @@ function hypixelAPIconstructor(){
     }
     return (tag => {
         return Promise.race([new Promise((resolve)=>{
-            request(`https://api.hypixel.net/player?key=${getKey()}&${tag.length<32?'name':'uuid'}=${tag}`, (err, {statusCode}, body)=>{
-                if(err || (Math.floor(statusCode/100)!=2)) resolve({success:false,error:err||`API returned with code ${statusCode}`});
+            request(`https://api.hypixel.net/player?key=${getKey()}&${tag.length<32?'name':'uuid'}=${tag}`, (err, response, body)=>{
+                if(err || (Math.floor(response.statusCode/100)!=2)) resolve({success:false,error:err||`API returned with code ${response.statusCode}`});
                 else resolve(JSON.parse(body));
             });
         }),new Promise((resolve)=>{
-            setTimeout(()=>resolve({success:false,error:"Request Timed Out"}),6000);
+            setTimeout(()=>resolve(APIerror("Request Timed Out").json),6000);
         })]);
     });
 }
@@ -30,9 +30,37 @@ const hypixelAPI = tag => tmp(tag);
 module.exports.hypixelAPI = hypixelAPI;
 
 /**
+<<<<<<< HEAD
  * Generates a error function that with output
  * @param {String} message error message
  * @returns {Function} 
  */
 const apiError = message => ((req,res)=>res.status(404).json({success:false,error:message}));
 module.exports.error = apiError;
+=======
+ * Generates a function to send to router to display a given error message
+ * @param {string} message Error message
+ * @returns {Function}
+ */
+function APIerror (message) {
+    const json = {success:false,error:message};
+    const errorFn = ((req,res)=>res.status(404).json(json));
+    errorFn.toString = () => message;
+    errorFn.json = json;
+    return errorFn;
+}
+module.exports.APIerror = APIerror;
+
+/**
+ * Gets properties for an object and returns undefined if
+ * it does not exist instead of erroring
+ * @param {Object} object object to grab property from
+ * @param  {...string} path path to get
+ * @returns the value at the path from the object
+ */
+function getRef(object, ...path){
+    if(!object) return undefined;
+    if(path.length==1) return object[path[0]];
+    else return getRef(object[path.shift()],...path)
+} module.exports.getRef = getRef;
+>>>>>>> d52e3a43c17e2743e4a16963109e2ddc344aefe6
