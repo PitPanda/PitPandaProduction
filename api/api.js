@@ -4,6 +4,6 @@ const tools = require('./apiTools');
 
 router.use('/players',players);
 
-router.use('*', tools.error('Invalid Endpoint'))
+router.use('*', tools.APIerror('Invalid Endpoint'))
 
 module.exports = router;
