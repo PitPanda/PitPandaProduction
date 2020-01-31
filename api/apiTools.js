@@ -30,14 +30,6 @@ const hypixelAPI = tag => tmp(tag);
 module.exports.hypixelAPI = hypixelAPI;
 
 /**
-<<<<<<< HEAD
- * Generates a error function that with output
- * @param {String} message error message
- * @returns {Function} 
- */
-const apiError = message => ((req,res)=>res.status(404).json({success:false,error:message}));
-module.exports.error = apiError;
-=======
  * Generates a function to send to router to display a given error message
  * @param {string} message Error message
  * @returns {Function}
@@ -63,4 +55,3 @@ function getRef(object, ...path){
     if(path.length==1) return object[path[0]];
     else return getRef(object[path.shift()],...path)
 } module.exports.getRef = getRef;
->>>>>>> d52e3a43c17e2743e4a16963109e2ddc344aefe6
