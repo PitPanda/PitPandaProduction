@@ -1,7 +1,7 @@
 const request = require('request');
 
 function hypixelAPI(){
-    const keys = require('./keys');
+    const keys = require('./../keys');
     let i = 0;
     const getKey = () => {
         if(i==keys.length)i=0;
