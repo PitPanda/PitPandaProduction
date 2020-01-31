@@ -1,6 +1,8 @@
 const request = require('request');
-
-function hypixelAPI(){
+/**
+ * Constructor for API utilty function
+ */
+function hypixelAPIconstructor(){
     const keys = require('./../keys');
     let i = 0;
     const getKey = () => {
@@ -17,8 +19,20 @@ function hypixelAPI(){
             setTimeout(()=>resolve({success:false,error:"Request Timed Out"}),6000);
         })]);
     });
-    
-} module.exports.hypixelAPI = hypixelAPI();
+}
+const tmp = hypixelAPIconstructor();
+/**
+ * Return an object containing the api response or error info
+ * @param {string} tag UUID or Username of the user you are getting
+ * @returns {Promise} JSON result of the api call
+ */
+const hypixelAPI = tag => tmp(tag);
+module.exports.hypixelAPI = hypixelAPI;
 
+/**
+ * Generates a error function that with output
+ * @param {String} message error message
+ * @returns {Function} 
+ */
 const apiError = message => ((req,res)=>res.status(404).json({success:false,error:message}));
 module.exports.error = apiError;
