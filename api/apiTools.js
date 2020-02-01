@@ -24,7 +24,7 @@ const tmp = hypixelAPIconstructor();
 /**
  * Return an object containing the api response or error info
  * @param {string} tag UUID or Username of the user you are getting
- * @returns {Promise} JSON result of the api call
+ * @returns {Promise<Object>} JSON result of the api call
  */
 const hypixelAPI = tag => tmp(tag);
 module.exports.hypixelAPI = hypixelAPI;
