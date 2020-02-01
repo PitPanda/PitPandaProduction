@@ -9,10 +9,13 @@ router.use('/:tag', (req,res)=>{
         if(!target.valid) res.json(json);
         else {
             let result = {};
+            let waiting = [
+                target.inventory.then(inv=>result.inv=inv)
+            ];
             result.username = target.name;
-            result.testing = target.mysticsEnchanted;
+
             
-            res.json({success:true,data:result});
+            Promise.all(waiting).then(()=>res.json({success:true,data:result}));
         }
     });
 });

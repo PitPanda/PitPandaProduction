@@ -1,6 +1,9 @@
 const {getRef} = require('../apiTools');
 const pitMaster = require('../../pitMaster.json');
 const {Levels, Prestiges} = pitMaster.Pit;
+const Item = require('./Item');
+const {inflate} = require('pako');
+const nbt = require('nbt');
 
 /**
  * Represents the player output from the Hypixel API
@@ -514,46 +517,28 @@ class Pit{
     get kingsQuestCompletions(){
         return this.getStat('stats','Pit','pit_stats_ptl','king_quest_completion');
     }
+
+    /**
+     * Player's inventory
+     * @returns {Promise<Item[]>} 
+     */
+    get inventory(){
+        return new Promise(resolve=>{
+            const rawInv = this.getStat('stats','Pit','profile','inv_contents','data');
+            if(!rawInv) return resolve([]);
+            parseInv(Buffer.from(rawInv)).then(resolve);
+        });
+    }
 } module.exports = Pit;
 
 /**
- * Formats big numbers nicely
- * @param {*} number 
- * @param {*} decPlaces 
- * @returns {string} ex (10345678,2) => '10.34m'
+ * Takes byte array and returns a promise for its decoded contents
+ * @param {Buffer} byteArr 
+ * @returns {Promise<Item[]>}
  */
-function abbrNum(number, decPlaces) { //https://stackoverflow.com/questions/2685911/is-there-a-way-to-round-numbers-into-a-reader-friendly-format-e-g-1-1k
-    // 2 decimal places => 100, 3 => 1000, etc
-    decPlaces = Math.pow(10,decPlaces);
-
-    // Enumerate number abbreviations
-    var abbrev = [ "k", "m", "b", "t" ];
-
-    // Go through the array backwards, so we do the largest first
-    for (var i=abbrev.length-1; i>=0; i--) {
-
-        // Convert array index to "1000", "1000000", etc
-        var size = Math.pow(10,(i+1)*3);
-
-        // If the number is bigger or equal do the abbreviation
-        if(size <= number) {
-             // Here, we multiply by decPlaces, round, and then divide by decPlaces.
-             // This gives us nice rounding to a particular decimal place.
-             number = Math.round(number*decPlaces/size)/decPlaces;
-
-             // Handle special case where we round up to the next abbreviation
-             if((number == 1000) && (i < abbrev.length - 1)) {
-                 number = 1;
-                 i++;
-             }
-
-             // Add the letter for the abbreviation
-             number += abbrev[i];
-
-             // We are done... stop
-             break;
-        }
-    }
-
-    return number;
+function parseInv(byteArr){
+    return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
+        if(err) return resolve([]);
+        else return resolve(inv.value.i.value.value.map(item=>new Item(item)));
+    }));
 }
