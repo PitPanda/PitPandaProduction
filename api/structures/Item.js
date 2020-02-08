@@ -20,7 +20,7 @@ class Item{
         if(!this.id) return {}; //air slots should be empty objects
         /**
          * minecraft item meta OR leather color
-         * can be type number or string
+         * @type {(number|string)}
          */
         this.meta = getRef(item,'Damage','value') || toHex(getRef(item, "tag", "value","display","value","color","value"));
         if(this.id>=298&&this.id<=301&&typeof this.meta == 'undefined') this.meta = 'A06540';
@@ -68,17 +68,7 @@ function getItemNameFromId(id,meta){
  * @returns {string}
  */
 function getEnchantDescription(ench){
-    const info = minecraftEnchants.find(el=>el.id==ench.id.value);
+    const info = mcenchants.find(el=>el.id==ench.id.value);
     if(!info) return '';
     return `${ColorCodes.GRAY}${info.displayName} ${romanNumGen(ench.lvl.value)}`;
 }
-
-/*
-let lore = (getRef(item, "tag","value","display","value","Lore","value","value")||[])
-    .concat((getRef(item, "tag", "value", "ench", "value", "value")||[])
-    .map(ench=>
-        `${Colors.GRAY}
-        ${minecraftEnchants.find(el=>el.id==ench.id.value).displayName} 
-        ${romanNumGen(ench.lvl.value)}`
-    ));
-*/

@@ -8,4 +8,4 @@ app.use('/api', api);
 
 app.get('*', (req,res)=>res.status(200).sendFile(__dirname + "/frontEnd/build/index.html"));
 
-app.listen(80, () => console.log(`Pit Panda listening on port 80!`));
+app.listen(5000, () => console.log(`Pit Panda has just booted!`));
