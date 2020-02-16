@@ -1,9 +1,10 @@
-const {getRef} = require('../apiTools');
-const {Pit: {Levels, Prestiges}, Extra: {ColorCodes,RankPrefixes}} = require('../../pitMaster.json');
+const {getRef,formatNumber} = require('../apiTools');
+const pitMaster = require('../../frontEnd/src/pitMaster.json');
+const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades}, Extra: {ColorCodes:Colors,RankPrefixes}} = pitMaster;
 const Item = require('./Item');
 const Prestige = require('./Prestige');
-const UnlockEntry = require('./UnlockEntry');
-const RenownShop = require('./RenownShop');
+const Progress = require('./Progress');
+const UnlockCollection = require('./UnlockCollection');
 const {inflate} = require('pako');
 const nbt = require('nbt');
 
@@ -41,6 +42,12 @@ class Pit{
         });
 
         /**
+         * container for inventory formatted data
+         * @type {object}
+         */
+        this.inventories = {};
+
+        /**
          * Array of Player's Prestige Details
          * @type {Prestige[]}
          */
@@ -48,25 +55,20 @@ class Pit{
         Object.defineProperty(this,'prestiges',{
             enumerable:true,
             get: ()=>{
-                if(!this._prestiges)Object.defineProperty(this,'_prestiges',{
-                        enumerable: false,
-                        value: (this.getStat('stats','Pit','profile','prestiges')||[]).map(pres=>{
-                        let unlocks = this.getStat('stats','Pit','profile',`unlocks_${pres.index-1}`)
-                        if(pres.index==1) unlocks = this.getStat('stats','Pit','profile','unlocks');
-                        return new Prestige(
-                            pres.index-1,
-                            pres.timestamp,
-                            unlocks,
-                            this.getStat('stats','Pit','profile',`cash_during_prestige_${pres.index-1}`)
-                        );
-                    }).concat(
-                        [new Prestige(
-                            this.prestige,
-                            undefined,
-                            this.getStat('stats','Pit','profile',(this.prestige!=0)?`unlocks_${this.prestige}`:'unlocks'),
-                            this.getStat('stats','Pit','profile',`cash_during_prestige_${this.prestige}`)
-                        )]
-                    )
+                if(!this._prestiges) Object.defineProperty(this,'_prestiges',{
+                    enumerable: false,
+                    value: [
+                        new Prestige(0,undefined,this.getStat('stats','Pit','profile','unlocks')),
+                        ...(this.getStat('stats','Pit','profile','prestiges')||[])
+                            .map(pres=>
+                                new Prestige(
+                                    pres.index,
+                                    pres.timestamp,
+                                    this.getStat('stats','Pit','profile',`unlocks_${pres.index}`),
+                                    this.getStat('stats','Pit','profile',`cash_during_prestige_${pres.index}`)
+                                )
+                            )
+                    ]
                 });
                 return this._prestiges;
             }
@@ -129,7 +131,7 @@ class Pit{
                 const rank = this.rank;
                 let prefix = this.getStat('prefix') || RankPrefixes[rank] || '§7';
                 const plus = this.getStat('rankPlusColor');
-                prefix = prefix.replace('$',ColorCodes[plus]||'§c');
+                prefix = prefix.replace('$',Colors[plus]||'§c');
                 return prefix + (rank!='NON'?' ':'') + this.name;
             }
         });
@@ -176,13 +178,19 @@ class Pit{
         });
 
         /**
-         * xp required to reach next prestige
-         * @type {number}
+         * XP progression details
+         * @type {Progress}
          */
-        this.prestigeXpGoal;
-        Object.defineProperty(this,'prestigeXpGoal',{
+        this.xpProgress;
+        Object.defineProperty(this,'xpProgress',{
             enumerable:true,
-            get: ()=>Prestiges[this.prestige].TotalXp
+            get: ()=>{
+                if(!this._xpProgress) Object.defineProperty(this,'_xpProgress',{
+                    enumerable: false,
+                    value: new Progress(this.prestigeXp,Prestiges[this.prestige].TotalXp,(this.prestige===30&&this.prestigeXp===Prestiges[this.prestige].TotalXp)?'Max XP':undefined)
+                });
+                return this._xpProgress;
+            }
         });
 
         /**
@@ -245,29 +253,44 @@ class Pit{
         });
 
         /**
-         * Prestige Gold Goal
-         * @type {number}
+         * Goal progression details
+         * @type {Progress}
          */
-        this.prestigeGoldGoal;
-        Object.defineProperty(this,'prestigeGoldGoal',{
+        this.goldProgress;
+        Object.defineProperty(this,'goldProgress',{
             enumerable:true,
-            get: ()=>Prestiges[this.prestige].GoldReq
+            get: ()=>{
+                if(!this._goldProgress) Object.defineProperty(this,'_goldProgress',{
+                    enumerable: false,
+                    value: new Progress(this.prestigeGold,Prestiges[this.prestige].GoldReq,this.prestige===30?'Max Prestige':false)
+                });
+                return this._goldProgress;
+            }
         });
 
         /**
          * Renown unlocks
-         * @type {RenownShop}
+         * @type {UnlockEntry[]}
          */
         this.renownShop;
         Object.defineProperty(this,'renownShop',{
             enumerable:true,
+            get: ()=>this.renownShopCollection.raw
+        });
+
+        /**
+         * renown progression details
+         * @type {Progress}
+         */
+        this.renownProgress;
+        Object.defineProperty(this,'renownProgress',{
+            enumerable:true,
             get: ()=>{
-                if(!this._renownShop) Object.defineProperty(this,'_renownShop',{
+                if(!this._renownProgress) Object.defineProperty(this,'_renownProgress',{
                     enumerable: false,
-                    value: new RenownShop((this.getStat('stats','Pit','profile','renown_unlocks')||[])
-                    .map(entry => new UnlockEntry(entry)))
+                    value: new Progress(this.renownShop.length,78,this.renownShop.length===78?'Max Shop':false,this.renownShopSpent,1680)
                 });
-                return this._renownShop;
+                return this._renownProgress;
             }
         });
 
@@ -386,6 +409,16 @@ class Pit{
         });
 
         /**
+         * Player's hat color
+         * @type {string} formatted color without the #
+         */
+        this.hatColor
+        Object.defineProperty(this,'hatColor',{
+            enumerable:true,
+            get: ()=>this.getStat('stats','Pit','profile','hat_color')
+        });
+
+        /**
          * Times the player has left clicked in pit
          * @type {number}
          */
@@ -393,6 +426,16 @@ class Pit{
         Object.defineProperty(this,'leftClicks',{
             enumerable:true,
             get: ()=>this.getStat('stats','Pit','pit_stats_ptl','left_clicks')
+        });
+
+        /**
+         * Player kills
+         * @type {number}
+         */
+        this.kills;
+        Object.defineProperty(this,'kills',{
+            enumerable:true,
+            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','kills')
         });
 
         /**
@@ -731,8 +774,8 @@ class Pit{
          * Total gold earned from selling fish
          * @type {number}
          */
-        this.foldFromSellingFish;
-        Object.defineProperty(this,'foldFromSellingFish',{
+        this.goldFromSellingFish;
+        Object.defineProperty(this,'goldFromSellingFish',{
             enumerable:true,
             get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gold_from_selling_fish')
         });
@@ -786,6 +829,130 @@ class Pit{
     getStat(...path){
         return getRef(this.raw,...path);
     }
+
+    /**
+     * UnlockCollection formatted version of unlocks
+     * @type {UnlockCollection}
+     */
+    get renownShopCollection(){
+        if(!this._renownShop) Object.defineProperty(this,'_renownShop',{
+            enumerable: false,
+            value: new UnlockCollection(this.getStat('stats','Pit','profile','renown_unlocks')||[],this.raw)
+        });
+        return this._renownShop;
+    }
+
+    /**
+     * marks if the player has pit_stats_ptl or not
+     * @type {boolean}
+     */
+    get hasStats(){
+        return Boolean(this.getStat('stats','Pit','pit_stats_ptl'));
+    }
+    
+    /**
+     * Playtime (minutes) but never 0
+     * @type {number}
+     */
+    get playtimeSafe(){
+        return this.playtime || 1;
+    }
+
+    /**
+     * Playtime in hours
+     * @type {number}
+     */
+    get playtimeHours(){
+        return this.playtime/60;
+    }
+
+    /**
+     * Playtime (hours) but never 0
+     * @type {number}
+     */
+    get playtimeHoursSafe(){
+        return this.playtimeSafe/60;
+    }
+
+    /**
+     * xp/hours 
+     * @type {number}
+     */
+    get xpHourly(){
+        return this.xp/this.playtimeHoursSafe;
+    }
+
+    /**
+     * gold/hours 
+     * @type {number}
+     */
+    get goldHourly(){
+        return this.lifetimeGold/this.playtimeHoursSafe;
+    }
+
+    /**
+     * player deaths but never 0
+     * @type {number}
+     */
+    get deathsSafe(){
+        return this.deaths||1;
+    }
+
+    /**
+     * kills/deaths
+     * @type {number}
+     */
+    get killDeathRatio(){
+        return this.kills/this.deathsSafe;
+    }
+
+    /**
+     * (kills+assists)/deaths
+     * @type {number}
+     */
+    get killAssistDeathRatio(){
+        return (this.kills+this.assists)/this.deathsSafe;
+    }
+
+    /**
+     * (kills+assists)/hours
+     * @type {number}
+     */
+    get killAssistHourly(){
+        return (this.kills+this.assists)/this.playtimeHoursSafe;
+    }
+
+    /**
+     * damage received but not 0
+     * @type {number}
+     */
+    get damageReceivedSafe(){
+        return this.damageReceived||1;
+    }
+
+    /**
+     * damage given / damage received
+     * @type {number}
+     */
+    get damageRatio(){
+        return this.damageDealt/this.damageReceivedSafe;
+    }
+    
+    /**
+     * arrows fired but not 0
+     * @type {number}
+     */
+    get arrowsFiredSafe(){
+        return this.arrowsFired||1;
+    }
+
+    /**
+     * bow accuracy [0,1]
+     * @type {number}
+     */
+    get bowAccuracy(){
+        return this.arrowHits/this.arrowsFiredSafe;
+    }
     
     /**
      * Calculates Player level from xp and prestige
@@ -831,7 +998,7 @@ class Pit{
 
     /**
      * Loads and caches the player's inventory
-     * @returns {Promise<Item[]>}
+     * @returns {Promise<Item[] | void>}
      */
     loadInventory(){
         return new Promise(resolve=>{
@@ -839,10 +1006,10 @@ class Pit{
             if(!rawInv) return resolve([]);
             parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
-                 * Player's inventory
+                 * Player's main inventory
                  * @type {Item[]} 
                  */
-                this.inventory = items;
+                this.inventories.main = items;
                 resolve(items.slice(9).concat(items.slice(0,9)));
             });
         });
@@ -850,7 +1017,7 @@ class Pit{
 
     /**
      * Loads and caches the player's Armor
-     * @returns {Promise<Item[]>} 
+     * @returns {Promise<Item[] | void>} 
      */
     loadArmor(){
         return new Promise(resolve=>{
@@ -862,7 +1029,7 @@ class Pit{
                  * Player's armor
                  * @type {Item[]} 
                  */
-                this.armor = arr;
+                this.inventories.armor = arr;
                 resolve(arr);
             });
         });
@@ -870,7 +1037,7 @@ class Pit{
 
     /**
      * Loads and caches the player's Enderchest
-     * @returns {Promise<Item[]>} 
+     * @returns {Promise<Item[] | void>} 
      */
     loadEnderchest(){
         return new Promise(resolve=>{
@@ -881,7 +1048,7 @@ class Pit{
                  * Player's enderchest
                  * @type {Item[]} 
                  */
-                this.enderchest = items;
+                this.inventories.enderchest = items;
                 resolve(items);
             });
         });
@@ -889,7 +1056,7 @@ class Pit{
 
     /**
      * Loads and caches the player's Stash
-     * @returns {Promise<Item[]>} 
+     * @returns {Promise<Item[] | void>} 
      */
     loadStash(){
         return new Promise(resolve=>{
@@ -900,7 +1067,7 @@ class Pit{
                  * Player's stash
                  * @type {Item[]} 
                  */
-                this.stash = items;
+                this.inventories.stash = items;
                 resolve(items);
             });
         });
@@ -908,7 +1075,7 @@ class Pit{
 
     /**
      * Loads and caches the player's Mystic Well
-     * @returns {Promise<Item[]>} 
+     * @returns {Promise<Item[] | void>} 
      */
     loadWell(){
         return new Promise(resolve=>{
@@ -926,20 +1093,174 @@ class Pit{
                 )
             ).then(result=>{
                 result = result.flat(1);
-                this.well = result;
+                /**
+                 * Player's Mystic Well Items
+                 * @type {Item[]}
+                 */
+                this.inventories.well = result;
                 resolve(result);
             });
         });
     }
 
+    /**
+     * Loads all inventories
+     * @returns {Promise<Item[][] | void>}
+     */
     loadInventorys(){
         return Promise.all([
             this.loadInventory(),
             this.loadArmor(),
             this.loadEnderchest(),
             this.loadStash(),
-            this.loadWell()
+            this.loadWell(),
+            this.buildPerkInventory(),
+            this.buildUpgradeInventory(),
+            this.buildRenownUpgradeInventory(),
+            this.buildStatsInventory()
         ]);
+    }
+
+    /**
+     * Builds an inventory format of their Perks
+     * @type {void | Item[]}
+     */
+    buildPerkInventory(){
+        const perks = this.perks;
+        const inv = perks.map(key=>{
+            if(key==='none')return {};
+            const perk = Perks[key];
+            return new Item('§9'+perk.Name,perk.Description,perk.Item.Id,perk.Item.Meta);
+        });
+        /**
+         * Player's selected perks
+         * @type {Item[]}
+         */
+        this.inventories.perks = inv;
+        return inv;
+    }
+
+    /**
+     * Builds an inventory format of their Upgrades
+     * @type {void | Item[]}
+     */
+    buildUpgradeInventory(){
+        const inv = Object.keys(Upgrades).map(this.prestiges[this.prestige].unlocksCollection.buildItem);
+        /**
+         * Player's Upgrades
+         * @type {Item[]}
+         */
+        this.inventories.upgrades = inv;
+        return inv;
+    }
+
+    /**
+     * Builds an inventory format of their Upgrades
+     * @type {void | Item[]}
+     */
+    buildRenownUpgradeInventory(){
+        const inv = Object.keys(RenownUpgrades).map(this.renownShopCollection.buildItem);
+        /**
+         * Player's Renown Shop Upgrades
+         * @type {Item[]}
+         */
+        this.inventories.renownShop = inv;
+        return inv;
+    }
+
+    /**
+     * Builds a inventory of their player statistics
+     * @type {void | Item[]}
+     */
+    buildStatsInventory(){
+        /**
+         * General stats inventory
+         * @type {Item[]}
+         */
+        this.inventories.generalStats;
+        if(this.hasStats){
+            const offlore = [
+                `${Colors.GRAY}Kills: ${Colors.GREEN}${formatNumber(this.kills)}`,
+                `${Colors.GRAY}Assists: ${Colors.GREEN}${formatNumber(this.assists)}`,
+                `${Colors.GRAY}Sword Hits: ${Colors.GREEN}${formatNumber(this.swordHits)}`,
+                `${Colors.GRAY}Arrows Shot: ${Colors.GREEN}${formatNumber(this.arrowsFired)}`,
+                `${Colors.GRAY}Arrows Hit: ${Colors.GREEN}${formatNumber(this.arrowHits)}`,
+                `${Colors.GRAY}Damage Dealt: ${Colors.GREEN}${formatNumber(this.damageDealt)}`,
+                `${Colors.GRAY}Melee Damage Dealt: ${Colors.GREEN}${formatNumber(this.meleeDamageDealt)}`,
+                `${Colors.GRAY}Bow Damage Dealt: ${Colors.GREEN}${formatNumber(this.bowDamageDealt)}`,
+                `${Colors.GRAY}Highest Streak: ${Colors.GREEN}${formatNumber(this.highestStreak)}`
+            ];
+            const deflore = [
+                `${Colors.GRAY}Deaths: ${Colors.GREEN}${formatNumber(this.deaths)}`,
+                `${Colors.GRAY}Damage Taken: ${Colors.GREEN}${formatNumber(this.damageReceived)}`,
+                `${Colors.GRAY}Melee Damage Taken: ${Colors.GREEN}${formatNumber(this.meleeDamageReceived)}`,
+                `${Colors.GRAY}Bow Damage Taken: ${Colors.GREEN}${formatNumber(this.bowDamageReceived)}`
+            ];
+            const perflore = [
+                `${Colors.GRAY}XP: ${Colors.AQUA}${formatNumber(this.xp)}`,
+                `${Colors.GRAY}XP/hour: ${Colors.AQUA}${formatNumber(this.xpHourly)}`,
+                `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${formatNumber(this.lifetimeGold)}g`,
+                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${formatNumber(this.goldHourly)}g`,
+                `${Colors.GRAY}K/D: ${Colors.GREEN}${formatNumber(this.killDeathRatio)}`,
+                `${Colors.GRAY}K+A/D: ${Colors.GREEN}${formatNumber(this.killAssistDeathRatio)}`,
+                `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${formatNumber(this.killAssistHourly)}`,
+                `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${formatNumber(this.damageRatio)}`,
+                `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${formatNumber(Math.round(this.bowAccuracy*1000)/10)}%`,
+                `${Colors.GRAY}Hours played: ${Colors.GREEN}${formatNumber(Math.round(this.playtimeHours))}`,
+                `${Colors.GRAY}Contracts Started: ${Colors.GREEN}${formatNumber(this.contractsStarted)}`,
+                `${Colors.GRAY}Contracts Completed: ${Colors.GREEN}${formatNumber(this.contractsCompleted)}`
+            ];
+            const perkmyslore = [
+                `${Colors.GRAY}Golden Apples Eaten: ${Colors.GREEN}${formatNumber(this.gapplesEaten)}`,
+                `${Colors.GRAY}Golden Heads Eaten: ${Colors.GREEN}${formatNumber(this.gheadsEaten)}`,
+                `${Colors.GRAY}Lava Buckets Emptied: ${Colors.GREEN}${formatNumber(this.lavaBucketsPlaced)}`,
+                `${Colors.GRAY}Fishing Rods Launched: ${Colors.GREEN}${formatNumber(this.fishingRodCasts)}`,
+                `${Colors.GRAY}Soups Drank: ${Colors.GREEN}${formatNumber(this.soupsDrank)}`,
+                `${Colors.GRAY}T1 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[0])}`,
+                `${Colors.GRAY}T2 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[1])}`,
+                `${Colors.GRAY}T3 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[2])}`,
+                `${Colors.GRAY}Dark Pants Created: ${Colors.GREEN}${formatNumber(this.darkPantsCreated)}`
+            ];
+            const misclore = [
+                `${Colors.GRAY}Left Clicks: ${Colors.GREEN}${formatNumber(this.leftClicks)}`,
+                `${Colors.GRAY}Diamond Items Purchased: ${Colors.GREEN}${formatNumber(this.diamondItemsPurchased)}`,
+                `${Colors.GRAY}Chat messages: ${Colors.GREEN}${formatNumber(this.chatMessages)}`,
+                `${Colors.GRAY}Blocks Placed: ${Colors.GREEN}${formatNumber(this.blocksPlaced)}`,
+                `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${formatNumber(this.blocksBroken)}`,
+                `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${formatNumber(this.jumpsIntoPit)}`,
+                `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${formatNumber(this.launcherLaunches)}`
+            ];
+            const farmlore = [
+                `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${formatNumber(this.wheatFarmed)}`,
+                `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
+                `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
+                `${Colors.GRAY}Gold From Selling Fish: ${Colors.GOLD}${formatNumber(this.goldFromSellingFish)}g`,
+                `${Colors.GRAY}Gold From Farming: ${Colors.GOLD}${formatNumber(this.goldFromFarming)}g`,
+                `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${formatNumber(this.kingsQuestCompletions)}`,
+                `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${formatNumber(this.sewerTreasuresFound)}`,
+                `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${formatNumber(this.nightQuestsCompleted)}`
+            ];
+            const presstats = [
+                `${Colors.GRAY}Prestige: ${Colors.GREEN}${formatNumber(this.prestige)}`,
+                `${Colors.GRAY}Current Renown: ${Colors.GREEN}${formatNumber(this.renown)}`,
+                `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${formatNumber(this.lifetimeRenown)}`,
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${formatNumber(this.renownShop.length)}/78`
+            ]
+            const off = new Item(`${Colors.RED}Offensive Stats`,offlore,267);
+            const def = new Item(`${Colors.BLUE}Defensive Stats`,deflore,307);
+            const perf = new Item(`${Colors.YELLOW}Performance Stats`,perflore,296);
+            const perkmys = new Item(`${Colors.GREEN}Perk/Mystic Stats`,perkmyslore,116);
+            const misc = new Item(`${Colors.LIGHT_PURPLE}Miscellaneous Stats`,misclore,49);
+            const farm = new Item(`${Colors.GOLD}Farming Stats`,farmlore,291);
+            const prestige = new Item(`${Colors.AQUA}Prestige Stats`,presstats,264);
+            const inv = [off,def,perf,perkmys,misc,farm,prestige];
+            this.inventories.generalStats = inv;
+            return inv;
+        }else {
+            const inv = new Item(`${Colors.DARK_RED}Error`,[`${Colors.RED}Player Does not have any stats!`],166)
+            this.inventories.generalStats = inv;
+            return inv;
+        }
     }
 } module.exports = Pit;
 
@@ -951,6 +1272,6 @@ class Pit{
 function parseInv(byteArr){
     return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
         if(err) return resolve([]);
-        else return resolve(inv.value.i.value.value.map(item=>new Item(item)));
+        else return resolve(inv.value.i.value.value.map(item=>Item.buildFromNBT(item)));
     }));
 }

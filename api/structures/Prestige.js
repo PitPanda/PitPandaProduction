@@ -1,4 +1,5 @@
-const pitMaster = require('../../pitMaster.json');
+const pitMaster = require('../../frontEnd/src/pitMaster.json');
+const UnlockCollection = require('./UnlockCollection');
 const UnlockEntry = require('./UnlockEntry');
 
 /**
@@ -58,10 +59,16 @@ class Prestige{
         this.unlocks;
         Object.defineProperty(this,'unlocks',{
             enumerable:true,
-            get(){
-                if (!this._unlocks) this._unlocks = (this.raw_unlocks||[]).map(entry=>new UnlockEntry(entry));
-                return this._unlocks;
-            }
+            get: ()=>this.unlocksCollection.raw
         });
+    }
+
+    /**
+     * Unlock Collection formatted unlocks
+     * @type {UnlockCollection}
+     */
+    get unlocksCollection(){
+        if (!this._unlocks) this._unlocks = new UnlockCollection(this.raw_unlocks||[]);
+        return this._unlocks;
     }
 } module.exports = Prestige;

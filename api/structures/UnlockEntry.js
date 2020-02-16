@@ -1,4 +1,5 @@
-const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../../pitMaster.json');
+const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../../frontEnd/src/pitMaster.json');
+const {isTiered} = require('../apiTools');
 
 /**
  * Represents a unlock renwon shop, perk, upgrade
@@ -20,7 +21,7 @@ class UnlockEntry{
          * Internal upgrade key name
          * @type {string}
          */
-        this.key = this.raw.key;
+        this.key = raw.key;
 
         /**
          * signifies if the unlock is Upgrade, Perk, or RenownUpgrade
@@ -36,6 +37,12 @@ class UnlockEntry{
         this.displayName = this.key;
 
         /**
+         * unix epoch (seconds) of unlock
+         * @type {number}
+         */
+        this.timestamp = raw.acquireDate;
+
+        /**
          * If the upgrade has multiple tiers this will be set
          * @type {number}
          */
@@ -44,14 +51,15 @@ class UnlockEntry{
         if(Upgrades[this.key]){
             this.type = 'Upgrade';
             this.displayName = Upgrades[this.key].Name;
-            this.tier = this.raw.tier;
+            this.tier = raw.tier;
         } else if(Perks[this.key]){
             this.type = 'Perk';
             this.displayName = Perks[this.key].Name;
         } else if(RenownUpgrades[this.key]){
             this.type = 'RenownUpgrade';
             this.displayName = RenownUpgrades[this.key].Name;
-            this.cost = RenownUpgrades[this.key].Costs[this.raw.tier];
+            if(isTiered(RenownUpgrades[this.key])) this.tier = raw.tier;
+            this.cost = RenownUpgrades[this.key].Costs[raw.tier];
         }
 
         Object.defineProperty(this, 'type', {enumerable: false});

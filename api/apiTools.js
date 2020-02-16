@@ -1,4 +1,5 @@
 const request = require('request');
+const {Pit:{Upgrades, RenownUpgrades, Perks}} = require('../frontEnd/src/pitMaster.json');
 /**
  * Constructor for API utilty function
  */
@@ -81,12 +82,75 @@ function romanNumGen(int) {
 
 /**
  * converts a decimal number to hex with padded 0s
- * @param {*} n 
+ * @param {number} n 
  * @returns {string}
  */
 function toHex(n){
     if(typeof n == "undefined") return;
     let str = n.toString(16);
     str+='0'.repeat(6-str.length);
-    return str;
+    return str.toUpperCase();
 } module.exports.toHex = toHex;
+
+/**
+ * Formated numbers as strings
+ * @param {number} n
+ */
+function formatNumber(n){
+    return Number(n||0).toLocaleString();
+} module.exports.formatNumber = formatNumber;
+
+/**
+ * 
+ * @param {string | object} target key or upgrade object to check
+ */
+function isTiered(target){
+    if(typeof target === 'string') target = Upgrades[target] || RenownUpgrades[target] || Perks[target];
+    return (
+        (target.Levels||[]).length>1||
+        getRef(target,'Extra','Formatting')=="Seperated"||
+        getRef(target,'Extra','Formatting')=="Reveal"
+    )
+} module.exports.isTiered = isTiered;
+
+/**
+ * Formats numbers nicely ex: f(1234, 2) = 1.2k
+ * @param {number} number 
+ * @param {number} decPlaces 
+ * @returns {string}
+ */
+function abbrNum(number, decPlaces) { //https://stackoverflow.com/questions/2685911/is-there-a-way-to-round-numbers-into-a-reader-friendly-format-e-g-1-1k
+    // 2 decimal places => 100, 3 => 1000, etc
+    decPlaces = Math.pow(10,decPlaces);
+
+    // Enumerate number abbreviations
+    var abbrev = [ "k", "m", "b", "t" ];
+
+    // Go through the array backwards, so we do the largest first
+    for (var i=abbrev.length-1; i>=0; i--) {
+
+        // Convert array index to "1000", "1000000", etc
+        var size = Math.pow(10,(i+1)*3);
+
+        // If the number is bigger or equal do the abbreviation
+        if(size <= number) {
+             // Here, we multiply by decPlaces, round, and then divide by decPlaces.
+             // This gives us nice rounding to a particular decimal place.
+             number = Math.round(number*decPlaces/size)/decPlaces;
+
+             // Handle special case where we round up to the next abbreviation
+             if((number === 1000) && (i < abbrev.length - 1)) {
+                 number = 1;
+                 i++;
+             }
+
+             // Add the letter for the abbreviation
+             number += abbrev[i];
+
+             // We are done... stop
+             break;
+        }
+    }
+
+    return number;
+} module.exports.abbrNum = abbrNum;

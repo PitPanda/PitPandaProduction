@@ -1,51 +1,73 @@
 const {getRef,romanNumGen,toHex} = require('../apiTools');
 const mcitems = require('../../minecraftItems.json');
 const mcenchants = require('../../enchants.json');
-const {Extra:{ColorCodes}} = require('../../pitMaster.json');
+const {Extra:{ColorCodes}} = require('../../frontEnd/src/pitMaster.json');
 
 /**
  * Represents a minecraft item
  */
 class Item{
+    
     /**
-     * Constructs from the decoded nbt data 
-     * @param {Object} item 
+     * Constructs an Item
+     * @param {string} name 
+     * @param {string[]} lore 
+     * @param {number} id 
+     * @param {number|string} meta 
+     * @param {number} count 
+     * @returns {Item}
      */
-    constructor(item){
-        /**
-         * minecraft item id
-         * @type {number}
-         */
-        this.id = getRef(item,'id','value');
-        if(!this.id) return {}; //air slots should be empty objects
-        /**
-         * minecraft item meta OR leather color
-         * @type {(number|string)}
-         */
-        this.meta = getRef(item,'Damage','value') || toHex(getRef(item, "tag", "value","display","value","color","value"));
-        if(this.id>=298&&this.id<=301&&typeof this.meta == 'undefined') this.meta = 'A06540';
+    constructor(name='',desc=[],id=0,meta=0,count=1){
         /**
          * Item's custom name if it has one or its minecraft default name
          * @type {string}
          */
-        this.name = 
-            getRef(item,'tag','value','display','value','Name','value') ||
-            getItemNameFromId(this.id,this.meta);
-
+        this.name=name;
         /**
-         * Item lore
+         * minecraft item id
+         * @type {number}
+         */
+        this.id=id;
+        /**
+         * Item lore/description
          * @type {string[]}
          */
-        this.lore = 
-            (getRef(item, "tag","value","display","value","Lore","value","value")||[])
-            .concat((getRef(item, "tag", "value", "ench", "value", "value")||[])
-            .map(getEnchantDescription));
-
+        this.desc=desc;
+        /**
+         * minecraft item meta OR leather color
+         * @type {(number|string)}
+         */
+        this.meta=meta;
         /**
          * Item stack size
          * @type {number}
          */
-        this.count = getRef(item,"Count","value");
+        this.count=count;
+    }
+
+    /**
+     * Constructs from the decoded nbt data 
+     * @param {Object} item 
+     */
+    static buildFromNBT(item){
+        const id = getRef(item,'id','value');
+        if(!id) return {}; //air slots should be empty objects
+        
+        let meta = getRef(item,'Damage','value') || toHex(getRef(item, "tag", "value","display","value","color","value"));
+        if(id>=298&&id<=301&&typeof meta == 'undefined') meta = 'A06540';
+        
+        const name = 
+            getRef(item,'tag','value','display','value','Name','value') ||
+            getItemNameFromId(id,meta);
+        
+        const lore = 
+            (getRef(item, "tag","value","display","value","Lore","value","value")||[])
+            .concat((getRef(item, "tag", "value", "ench", "value", "value")||[])
+            .map(getEnchantDescription));
+        
+        const count = getRef(item,"Count","value");
+
+        return new Item(name,lore,id,meta,count);
     }
 } module.exports = Item;
 

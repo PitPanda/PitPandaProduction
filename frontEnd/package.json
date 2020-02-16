@@ -2,7 +2,7 @@
   "name": "PitPandaFrontEnd",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost/",
+  "proxy": "http://localhost:5000/",
   "homepage": "http://pitpanda.rocks/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
