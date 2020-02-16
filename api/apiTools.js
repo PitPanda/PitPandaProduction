@@ -88,7 +88,7 @@ function romanNumGen(int) {
 function toHex(n){
     if(typeof n == "undefined") return;
     let str = n.toString(16);
-    str+='0'.repeat(6-str.length);
+    str='0'.repeat(6-str.length)+str;
     return str.toUpperCase();
 } module.exports.toHex = toHex;
 
