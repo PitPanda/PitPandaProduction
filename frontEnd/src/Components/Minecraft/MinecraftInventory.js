@@ -7,12 +7,15 @@ class MinecraftInventory extends React.Component {
 
     constructor(props){
         super(props);
-        this.items = JSON.parse(JSON.stringify(this.props.inventory.items))
+        this.width = props.width || 9;
+        this.rows = props.rows || 1;
+        const {inventory} = props;
+        this.items = JSON.parse(JSON.stringify(inventory))
             .concat(
                 new Array(
                     Math.max(
-                        this.props.inventory.slots-this.props.inventory.items.length,
-                        this.props.inventory.width*Math.ceil(this.props.inventory.items.length/this.props.inventory.width)-this.props.inventory.items.length
+                        this.rows*this.width-inventory.length,
+                        this.width*Math.ceil(inventory.length/this.width)-inventory.length
                     )
                 ).fill(0).map(()=>({}))
             );
@@ -29,7 +32,7 @@ class MinecraftInventory extends React.Component {
     render() {
         let style = {};
         if(this.props.style) style = JSON.parse(JSON.stringify(this.props.style));
-        style.maxWidth=`${55.4*this.props.inventory.width}px`;
+        style.maxWidth=`${55.4*this.width}px`;
         return (
             <div style={style} className="MinecraftInventory">
                 {this.items.map(item=>{
