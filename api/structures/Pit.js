@@ -7,6 +7,7 @@ const Progress = require('./Progress');
 const UnlockCollection = require('./UnlockCollection');
 const {inflate} = require('pako');
 const nbt = require('nbt');
+const Mystic = require('../models/Mystic');
 
 /**
  * Represents the player output from the Hypixel API
@@ -22,7 +23,8 @@ class Pit{
          * @type {Boolean}
          */
         this.valid;
-        Object.defineProperty(this,'valid',{value:json.success,enumerable:false});
+        Object.defineProperty(this,'valid',{value:json.success&&json.player,enumerable:false});
+        if(!this.valid)return{error:json.err||'Player not found'};
 
         /**
          * Raw hypixel output json
@@ -1004,7 +1006,7 @@ class Pit{
         return new Promise(resolve=>{
             const rawInv = this.getStat('stats','Pit','profile','inv_contents','data');
             if(!rawInv) return resolve([]);
-            parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's main inventory
                  * @type {Item[]} 
@@ -1024,7 +1026,7 @@ class Pit{
         return new Promise(resolve=>{
             const rawInv = this.getStat('stats','Pit','profile','inv_armor','data');
             if(!rawInv) return resolve([]);
-            parseInv(Buffer.from(rawInv)).then(arr=>{
+            this.parseInv(Buffer.from(rawInv)).then(arr=>{
                 arr.reverse();
                 /**
                  * Player's armor
@@ -1044,7 +1046,7 @@ class Pit{
         return new Promise(resolve=>{
             const rawInv = this.getStat('stats','Pit','profile','inv_enderchest','data');
             if(!rawInv) return resolve([]);
-            parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's enderchest
                  * @type {Item[]} 
@@ -1063,7 +1065,7 @@ class Pit{
         return new Promise(resolve=>{
             const rawInv = this.getStat('stats','Pit','profile','item_stash','data');
             if(!rawInv) return resolve([]);
-            parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's stash
                  * @type {Item[]} 
@@ -1088,7 +1090,7 @@ class Pit{
                 invs.map(inv=>
                     new Promise(res=>
                         inv ? 
-                            parseInv(Buffer.from(inv)).then(res) : 
+                            this.parseInv(Buffer.from(inv)).then(res) : 
                             res([])
                     )
                 )
@@ -1263,16 +1265,50 @@ class Pit{
             return inv;
         }
     }
-} module.exports = Pit;
 
-/**
- * Takes byte array and returns a promise for its decoded contents
- * @param {Buffer} byteArr 
- * @returns {Promise<Item[]>}
- */
-function parseInv(byteArr){
-    return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
-        if(err) return resolve([]);
-        else return resolve(inv.value.i.value.value.map(item=>Item.buildFromNBT(item)));
-    }));
-}
+    /**
+     * Takes byte array and returns a promise for its decoded contents
+     * @param {Buffer} byteArr 
+     * @returns {Promise<Item[]>}
+     */
+    parseInv(byteArr){
+        return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
+            if(err) return resolve([]);
+            else return resolve(inv.value.i.value.value.map(item=>{
+                this.logMystic(item);
+                return Item.buildFromNBT(item);
+            }));
+        }));
+    }
+
+    /**
+     * Updates the item info in the MongoDB
+     * @param {Object} item nbt
+     */
+    logMystic(item){
+        const rawEnchants = getRef(item, "tag", "value", "ExtraAttributes", "value","CustomEnchants","value","value");
+        if(rawEnchants && getRef(item, "tag", "value", "ExtraAttributes", "value","UpgradeTier","value")===3){
+            const enchants = rawEnchants.map(ench=>({
+                key: ench.Key.value,
+                level: ench.Level.value
+            }));
+            const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value","Nonce","value");
+            const id = getRef(item, "id", "value");
+            let meta = getRef(item,'Damage','value') || getRef(item, "tag", "value","display","value","color","value");
+            if(id>=298&&id<=301&&typeof meta == 'undefined') meta = 10511680;
+
+            const mystic = {
+                owner: this.uuid,
+                enchants,
+                nonce,
+                item:{
+                    id,
+                    meta,
+                    name: getRef(item,'tag','value','display','value','Name','value')
+                },
+                lastseen: Date.now()
+            };
+            Mystic.findOneAndUpdate({nonce,enchants},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
+        }
+    }
+} module.exports = Pit;

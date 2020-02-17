@@ -1,5 +1,5 @@
 const request = require('request');
-const {Pit:{Upgrades, RenownUpgrades, Perks}} = require('../frontEnd/src/pitMaster.json');
+const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics}} = require('../frontEnd/src/pitMaster.json');
 /**
  * Constructor for API utilty function
  */
@@ -154,3 +154,26 @@ function abbrNum(number, decPlaces) { //https://stackoverflow.com/questions/2685
 
     return number;
 } module.exports.abbrNum = abbrNum;
+
+const Item = require('./structures/Item');
+/**
+ * converts document to item
+ * @param {Document} doc 
+ * @returns {{owner:String,lastseen:Number,item:Item}}
+ */
+function dbToItem(doc){
+    return {
+        owner: doc.owner,
+        lastseen: Math.floor(doc.lastseen/1e3),
+        item: new Item(
+            doc.item.name,
+            doc.enchants.map(({key,level})=>[
+                '',
+                Mystics[key].Name+' '+((Mystics[key].Descriptions.length>1)?romanNumGen(level):''),
+                ...Mystics[key].Descriptions[Math.min(level,Mystics[key].Descriptions.length-1)]
+            ]).flat(1).slice(1),
+            doc.item.id,
+            (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined
+        )
+    };
+} module.exports.dbToItem = dbToItem;

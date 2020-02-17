@@ -3,6 +3,7 @@ const mcitems = require('../../minecraftItems.json');
 const mcenchants = require('../../enchants.json');
 const {Extra:{ColorCodes}} = require('../../frontEnd/src/pitMaster.json');
 
+
 /**
  * Represents a minecraft item
  */
