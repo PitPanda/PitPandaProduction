@@ -965,7 +965,7 @@ class Pit{
         let level = 0;
         let extra = 0;
         let next = 0;
-        while(xp>0){
+        while(xp>0&&level<120){
             const levelXp = Levels[Math.floor(level/10)].Xp*multiplier;
             if(xp>=levelXp*10){
                 xp-=levelXp*10;
