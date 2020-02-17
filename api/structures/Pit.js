@@ -1009,8 +1009,9 @@ class Pit{
                  * Player's main inventory
                  * @type {Item[]} 
                  */
+                items = items.slice(9).concat(items.slice(0,9));
                 this.inventories.main = items;
-                resolve(items.slice(9).concat(items.slice(0,9)));
+                resolve(items);
             });
         });
     }
