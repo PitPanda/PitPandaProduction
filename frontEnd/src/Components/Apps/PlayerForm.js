@@ -4,8 +4,9 @@ class PlayerForm extends React.Component {
     
     handleSubmit = e => {
         e.preventDefault();
-        if(e.target.srchInp.value!=='') {
-            this.props.history.push(`/players/${e.target.srchInp.value.trim().replace(/-/g,'')}`);
+        const srch = e.target.srchInp.value.trim().replace(/-/g,'');
+        if(srch!=='') {
+            this.props.history.push(`/players/${srch}`);
             e.target.srchInp.value='';
         }
     }

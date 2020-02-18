@@ -1260,7 +1260,7 @@ class Pit{
             return inv;
         }else {
             const inv = new Item(`${Colors.DARK_RED}Error`,[`${Colors.RED}Player Does not have any stats!`],166)
-            this.inventories.generalStats = inv;
+            this.inventories.generalStats = [inv];
             return inv;
         }
     }
