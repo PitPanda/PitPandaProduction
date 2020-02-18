@@ -9,7 +9,7 @@ class MinecraftInventory extends React.Component {
         super(props);
         this.width = props.width || 9;
         this.rows = props.rows || 1;
-        const {inventory} = props;
+        const {inventory=[]} = props;
         this.items = JSON.parse(JSON.stringify(inventory))
             .concat(
                 new Array(
