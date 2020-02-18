@@ -12,8 +12,6 @@ router.use('/:query', (req,res)=>{
         }
         else return{};
     });
-    query.forEach(q=>console.log(typeof q.key,typeof q.level));
-    console.log(query);
     if(!query.every(q=>typeof q.key === 'string' && typeof q.level === 'number')) return res.status(400).send({error:'invalid query'})
     Mystic.find({
         enchants:{
