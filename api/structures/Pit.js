@@ -708,7 +708,7 @@ class Pit{
         this.lavaBucketsPlaced;
         Object.defineProperty(this,'lavaBucketsPlaced',{
             enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','lava_buckets_emptied')
+            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','lava_bucket_emptied')
         });
 
         /**
@@ -728,7 +728,7 @@ class Pit{
         this.gheadsEaten;
         Object.defineProperty(this,'gheadsEaten',{
             enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gheads_eaten')
+            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','ghead_eaten')
         });
 
         /**
@@ -748,7 +748,7 @@ class Pit{
         this.gapplesEaten;
         Object.defineProperty(this,'gapplesEaten',{
             enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gapples_eaten')
+            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gapple_eaten')
         });
 
         /**
