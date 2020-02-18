@@ -54,7 +54,7 @@ class UnlockCollection{
         const tier = this.tierOf(key);
         const up = subDescription(Upgrades[key] || RenownUpgrades[key],tier-1,this.api);
         const name = `${tier>0?'§9':'§c'}${up.Name} ${isTiered(key)?romanNumGen(tier):''}`;
-        return new Item(name,up.Description,up.Item.Id,up.Item.Meta);
+        return new Item(name,up.Description,up.Item.Id,up.Item.Meta,tier);
     }
 
     /*

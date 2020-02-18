@@ -165,6 +165,7 @@ function dbToItem(doc){
     return {
         owner: doc.owner,
         lastseen: Math.floor(doc.lastseen/1e3),
+        id: doc._id,
         item: new Item(
             doc.item.name,
             doc.enchants.map(({key,level})=>[

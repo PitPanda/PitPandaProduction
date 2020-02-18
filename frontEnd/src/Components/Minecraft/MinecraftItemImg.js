@@ -2,13 +2,13 @@ import React from 'react';
 import './itemStyles.css';
 
 const mapped = [
-    'ffaa00',
-    '55ff55',
-    '5555ff',
-    'ffff55',
-    'ff5555',
-    '55ffff',
-    '7dc383',
+    'ffAA00',
+    '55FF55',
+    '5555FF',
+    'FFFF55',
+    'FF5555',
+    '55FFFF',
+    '7DC383',
     '000000'
 ];
 
