@@ -18,13 +18,6 @@ class Pit{
      * @param {Object} json 
      */
     constructor(json){
-        /**
-         * Represents whether or not the player is defined
-         * @type {Boolean}
-         */
-        this.valid;
-        Object.defineProperty(this,'valid',{value:json.success&&json.player,enumerable:false});
-        if(!this.valid)return{error:json.err||'Player not found'};
 
         /**
          * Raw hypixel output json
@@ -32,6 +25,12 @@ class Pit{
          */
         this.raw;
         Object.defineProperty(this,'raw',{value:json.player,enumerable:false});
+
+        if(!json.success)return{error:json.err||'Failed to reach the api'};
+        if(!json.player)return{error:'Player not found'};
+        if(!this.getStat('stats','Pit'))return{error:'Player has not played the Pit'};
+
+        
 
         /**
          * User's linked discord account
