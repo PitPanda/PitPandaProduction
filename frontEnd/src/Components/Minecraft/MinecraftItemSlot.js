@@ -1,5 +1,5 @@
 import React from 'react';
-import MinecraftText from './MinecraftText';
+import MinecraftItemDescription from './MinecraftItemDescription';
 import MinecraftItemImg from './MinecraftItemImg';
 
 class MinecraftItemSlot extends React.Component {
@@ -24,13 +24,8 @@ class MinecraftItemSlot extends React.Component {
                 <MinecraftItemImg id={id} meta={meta} count={count}/>
                 {
                     (name.length>0||desc.length>0)?
-                    <div className={`mctooltip ${count===0?'halfgrey':''}`}>
-                        <MinecraftText style={{marginBottom:'3px'}} className='text-title' raw={name}/> <br/>
-                        {desc.map((line,i)=>
-                            <React.Fragment key={this.props.id+'-'+i}>
-                                <MinecraftText raw={line}/><br/>
-                            </React.Fragment>
-                        )}
+                    <div className={`itemcontainer ${count===0?'halfgrey':''}`}>
+                        <MinecraftItemDescription name={name} description={desc}/>
                     </div>:''
                 }
             </div>

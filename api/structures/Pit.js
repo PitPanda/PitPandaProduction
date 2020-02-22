@@ -702,6 +702,26 @@ class Pit{
         });
 
         /**
+         * Gold trade limit usage
+         * @type {number}
+         */
+        this.tradeGold;
+        Object.defineProperty(this,'tradeGold',{
+            enumerable:true,
+            get: ()=>this.trades.reduce((acc,trade)=>acc+trade.amount,0)
+        });
+
+        /**
+         * Trade limit usage
+         * @type {number}
+         */
+        this.tradeCount;
+        Object.defineProperty(this,'tradeCount',{
+            enumerable:true,
+            get: ()=>this.trades.length
+        });
+
+        /**
          * Total lava buckets placed
          * @type {number}
          */
@@ -1230,7 +1250,9 @@ class Pit{
                 `${Colors.GRAY}Blocks Placed: ${Colors.GREEN}${formatNumber(this.blocksPlaced)}`,
                 `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${formatNumber(this.blocksBroken)}`,
                 `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${formatNumber(this.jumpsIntoPit)}`,
-                `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${formatNumber(this.launcherLaunches)}`
+                `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${formatNumber(this.launcherLaunches)}`,
+                `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
+                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${formatNumber(this.tradeGold)}/50,000`
             ];
             const farmlore = [
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${formatNumber(this.wheatFarmed)}`,
@@ -1263,6 +1285,15 @@ class Pit{
             this.inventories.generalStats = [inv];
             return inv;
         }
+    }
+
+    /**
+     * Player Trades in the past 24h
+     * @type {number}
+     */
+    get trades(){
+        return (this.getStat('stats','Pit','profile','gold_transactions')||[])
+            .filter(trade=>Date.now()-trade.timestamp<86400e3);
     }
 
     /**

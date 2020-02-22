@@ -18,11 +18,6 @@
 }
 
 .mctooltip {
-  z-index: 10;
-  display: inline-block;
-  visibility: hidden;
-  opacity: 0;
-  position: absolute; 
   background: #120211; 
   padding: 5px; 
   padding-bottom: 3px; 
@@ -30,10 +25,18 @@
   border: 4px solid #25015b; 
   line-height: 17px;
   padding-right:12px;
-  margin-top: 39px;
-  margin-left: -35px;
   width: max-content;
   font-size: 15px;
+}
+
+.itemcontainer {
+  z-index: 10;
+  display: inline-block;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute; 
+  margin-top: 39px;
+  margin-left: -35px;
   -webkit-transition: opacity 0.1s;
   -moz-transition: opacity 0.1s;
   -o-transition: opacity 0.1s;
@@ -65,12 +68,12 @@
   filter: brightness(70%) grayscale(100%);
 }
 
-.item:hover .mctooltip, .item.shown .mctooltip {
+.item:hover .itemcontainer, .item.shown .itemcontainer {
   visibility: visible;
   opacity: 1;
 }
 
-.item:hover:not(.shown) .mctooltip {
+.item:hover:not(.shown) .itemcontainer {
   pointer-events: none;
 }
 

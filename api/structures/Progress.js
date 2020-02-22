@@ -49,7 +49,7 @@ class Progress{
          */
         this.displayGoal = displayGoal;
 
-        this.percent = Math.min(1,this.percentCurrent/this.percentGoal);
+        this.percent = this.percentCurrent/this.percentGoal;
         this.description = `${abbrNum(this.displayCurrent,2)}`;
         if(this.displayGoal) this.description += `/${abbrNum(this.displayGoal,2)}`;
         if(specialCaseText) this.message = specialCaseText;

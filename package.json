@@ -15,5 +15,8 @@
     "nbt": "^0.8.1",
     "pako": "^1.0.10",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
