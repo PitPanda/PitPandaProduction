@@ -60,6 +60,7 @@ class ItemSearch extends React.Component {
     render() {
         return (
             <div style={{textAlign:'center'}}>
+                <h1 className="page-header">Pit Panda Mystic Search (Alpha)</h1>
                 <ItemBuilder report={this.query}/>
                 <div style={{display:'inline-block',textAlign:'left'}}>
                     <StaticCard title="Results">
