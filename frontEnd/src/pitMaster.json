@@ -2343,23 +2343,23 @@
 				],
 				"Name": "§9Punisher"
 			},
-			"melee_healer": {
-				"Descriptions": [
-					[
-						"§7Hitting players §aheal §7both you",
-						"§7and them for §c1❤"
-					],
-					[
-						"§7Hitting players §aheal §7both you",
-						"§7and them for §c2❤"
-					],
-					[
-						"§7Your hits §aheal §7you for §c1❤",
-						"§c§7and them for §c5❤ §7(1s cd)"
-					]
-				],
-				"Name": "§dRARE! §9Healer"
-			},
+"melee_healer": {
+	"Descriptions": [
+		[
+			"§7Your hits §aheal §7you for §c0.5❤",
+			"§7and them for §c2❤ (1s cd)"
+		],
+		[
+			"§7Your hits §aheal §7you for §c0.75❤",
+			"§7and them for §c4❤ (1s cd)"
+		],
+		[
+			"§7Your hits §aheal §7you for §c1❤",
+			"§7and them for §c5❤ (1s cd)"
+		]
+	],
+	"Name": "§dRARE! §9Healer"
+},
 			"tough_crew": {
 				"Descriptions": [
 					[
