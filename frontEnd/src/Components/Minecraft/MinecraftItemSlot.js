@@ -1,12 +1,9 @@
 import React from 'react';
 import MinecraftItemDescription from './MinecraftItemDescription';
 import MinecraftItemImg from './MinecraftItemImg';
+import './minecraftStyles.css';
 
 class MinecraftItemSlot extends React.Component {
-    onClick = e => {
-        if(!((typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1))) this.props.changeSelected(this.props.id);
-    }
-
     render() {
         let cls = '';
         const {name = '', desc = [], id=0, meta=0, count=1} = this.props.item;
@@ -20,7 +17,7 @@ class MinecraftItemSlot extends React.Component {
             if(name.toLowerCase().includes('miracle')) cls = 'miracle';
         }
         return (
-            <div className={`item ${cls} ${this.props.selected?'shown':''}`} onClick={this.onClick}>
+            <div className={`item ${cls}`} onClick={this.props.onClick}>
                 <MinecraftItemImg id={id} meta={meta} count={count}/>
                 {
                     (name.length>0||desc.length>0)?

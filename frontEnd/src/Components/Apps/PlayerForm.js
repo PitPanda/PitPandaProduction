@@ -21,7 +21,7 @@ class PlayerForm extends React.Component {
                         <input type="text" id="srchInp" name="lookup" placeholder="Enter a Minecraft Username or UUID..." style={{width:"50%"}}/>
                     </fieldset>
                     <fieldset className="button-holder">
-                        <input type="submit" id="srchBtn" value="Search"/>
+                        <input type="submit" className="srchBtn" value="Search"/>
                     </fieldset>
                 </form>
             </div>

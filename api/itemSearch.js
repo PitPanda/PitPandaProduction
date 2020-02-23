@@ -4,6 +4,8 @@ const {dbToItem} = require('./apiTools');
 
 const router = require('express').Router();
 
+const perPage = 36;
+
 const itemSearch = (req,res)=>{
     const query = req.params.query.split(',').map(str=>{
         const end = /[0-9]{1,}$/.exec(str);
@@ -15,21 +17,26 @@ const itemSearch = (req,res)=>{
     });
     const page = req.params.page || 0;
     if(!query.every(q=>typeof q.key === 'string' && typeof q.level === 'number')) return res.status(400).send({error:'invalid query'})
-    Mystic.find({
-        enchants:{
-            $all:query.map(({key,level})=>({
-                $elemMatch:{
-                    key,
-                    level:{
-                        $gte:level
+    Mystic
+        .find({
+            enchants:{
+                $all:query.map(({key,level})=>({
+                    $elemMatch:{
+                        key,
+                        level:{
+                            $gte:level
+                        }
                     }
-                }
-            }))
-        }
-    }).then(docs=>{
-        const items = docs.map(dbToItem);
-        res.status(200).send(items);
-    });
+                }))
+            }
+        })
+        .limit(perPage)
+        .skip(perPage*page)
+        .sort('-lastseen')
+        .then(docs=>{
+            const items = docs.map(dbToItem);
+            res.status(200).send(items);
+        });
 };
 
 router.use('/:query/:page', itemSearch);

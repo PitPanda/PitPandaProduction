@@ -96,7 +96,7 @@ tr:not(:first-child) td{
   border-top: 1px solid #444;
 }
 
-#srchBtn{
+.srchBtn{
   margin-top: 30px;
   background-color: rgb(221,159,78);
   padding: 8px 20px;

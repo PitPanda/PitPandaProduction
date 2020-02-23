@@ -9,7 +9,7 @@ class StaticCard extends React.Component {
                 {this.props.title}
             </div>
             <div className="Card-Body">
-                {this.props.content}
+                {this.props.content||this.props.children}
             </div>
         </div>
     );

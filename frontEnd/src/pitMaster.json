@@ -1079,15 +1079,6 @@
 			{"Multiplier": 75, "TotalXp": 4946250, "SumXp": 31375830, "GoldReq": 4500000, "Renown": 75, "Color": "LIGHT_PURPLE", "ColorCode":"§d"},
 			{"Multiplier": 100, "TotalXp": 6595000, "SumXp": 37970830, "GoldReq": 0, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"}
 		],
-		"PantsColors": [
-			{"Red": 16733525},
-			{"Orange": 16755200},
-			{"Yellow": 16777045},
-			{"Green": 5635925},
-			{"Blue": 5592575},
-			{"Sewer": 8242051},
-			{"Dark": 0}
-		],
 		"Mystics": {
 			"less_damage_nearby_players": {
 				"Descriptions": [

@@ -1,5 +1,6 @@
 import React from 'react';
 import './itemStyles.css';
+import './minecraftStyles.css';
 
 const mapped = [
     'ffAA00',
