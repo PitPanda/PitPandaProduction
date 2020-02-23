@@ -28,7 +28,7 @@ class ItemSearch extends React.Component {
     }
     
     requestOwner=(index)=>{
-        if(!this.state.lastresult[index].checked){
+        if(index<this.state.lastresult.length&&!this.state.lastresult[index].checked){
             let lastresult = this.state.lastresult;
             lastresult[index].desc[0] = '§7Owner: Loading';
             this.setState({lastresult});

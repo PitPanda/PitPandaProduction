@@ -6,7 +6,7 @@ function MinecraftText(props){
     let {text='', raw='', className='', style={}} = props;
     if(raw.length>0) text = parseStyle(raw).raw;
     return (
-        <span className={`MinecraftText ${className}`} style={style} dangerouslySetInnerHTML={{__html:text}}></span>
+        <span className={`MinecraftText ${className}`} style={style} dangerouslySetInnerHTML={{__html:text}} onClick={props.onClick}></span>
     );
 }
 

@@ -31,10 +31,10 @@ class EnchantButton extends React.Component {
     render() {
         return (
             <div style={{display:'inline-block',width:'300px'}}>
-                <div style={{textAlign:'center',cursor:'pointer'}} onClick={()=>this.setState({selecting:this.state.selecting?undefined:'enchant'})}>
-                    <MinecraftText raw={(Mystics[this.state.key]||{Name:"§9None Selected"}).Name} />
-                    <span> </span>
-                    <MinecraftText raw={'§9'+((Mystics[this.state.key]&&Mystics[this.state.key].Descriptions.length>1)?(frontendTools.romanNumGen(this.state.tier)):'')} />
+                <div style={{textAlign:'center',cursor:'pointer'}}>
+                    <MinecraftText raw={(Mystics[this.state.key]||{Name:"§9None Selected"}).Name}  onClick={()=>this.setState({selecting:this.state.selecting?undefined:'enchant'})}/>
+                    <span onClick={()=>this.setState({selecting:this.state.selecting?undefined:'enchant'})}> </span>
+                    <MinecraftText raw={'§9'+((Mystics[this.state.key]&&Mystics[this.state.key].Descriptions.length>1)?(frontendTools.romanNumGen(this.state.tier)):'')} onClick={()=>this.setState({selecting:this.state.selecting?undefined:'tier'})} />
                 </div>
                 <div style={{visibility:this.state.selecting?'visible':'hidden',position:'absolute'}}>
                     {

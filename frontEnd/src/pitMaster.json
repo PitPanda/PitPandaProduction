@@ -2347,15 +2347,15 @@
 	"Descriptions": [
 		[
 			"§7Your hits §aheal §7you for §c0.5❤",
-			"§7and them for §c2❤ (1s cd)"
+			"§7and them for §c2❤ §7(1s cd)"
 		],
 		[
 			"§7Your hits §aheal §7you for §c0.75❤",
-			"§7and them for §c4❤ (1s cd)"
+			"§7and them for §c4❤ §7(1s cd)"
 		],
 		[
 			"§7Your hits §aheal §7you for §c1❤",
-			"§7and them for §c5❤ (1s cd)"
+			"§7and them for §c5❤ §7(1s cd)"
 		]
 	],
 	"Name": "§dRARE! §9Healer"
