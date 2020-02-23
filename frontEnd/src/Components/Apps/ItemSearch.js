@@ -41,13 +41,12 @@ class ItemSearch extends React.Component {
                 target.desc[0] = '§7Owner: '+this.knownUUIDS[target.owner];
                 return this.setState({lastresult});
             }
-            fetch(`/api/item/${target.uuid}?extended=true`).then(res=>res.json()).then(json => {
+            fetch(`/api/username/${target.owner}`).then(res=>res.json()).then(json => {
                 console.log(json);
                 if(json.success){
                     target.checked = true;
-                    target.desc[0] = '§7Owner: '+json.item.formatted;
-                    target.desc[1] = '§7Lastseen: '+new Date(json.item.lastseen*1000).toLocaleString();
-                    this.knownUUIDS[target.owner]=json.item.formatted; //'§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString()
+                    target.desc[0] = '§7Owner: '+json.leveled;
+                    this.knownUUIDS[target.owner]=json.leveled;
                 }else{
                     target.desc[0] = '§7Owner: §4ERROR';
                 }

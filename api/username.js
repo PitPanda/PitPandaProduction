@@ -8,7 +8,8 @@ router.use('/:tag', (req,res)=>{
         res.status(200);
         if(target.error) res.json({success:false,error:target.error});
         else {
-            res.json({success:true,name:target.name,formatted:target.formattedName})
+            res.json({success:true,name:target.name,ranked:target.formattedName,leveled:target.levelFormattedName})
+            target.loadNBTInventorys();
         }
     });
 });

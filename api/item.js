@@ -18,7 +18,7 @@ router.use('/:id', (req,res)=>{
                 else {
                     target.loadInventorys();
                     let result = dbToItem(item);
-                    result.formatted = target.formattedLevel+' '+target.colouredName;
+                    result.formatted = target.levelFormattedName;
                     result.ownername = target.name;
                     return res.status(200).json({success:true,item:result});
                 }

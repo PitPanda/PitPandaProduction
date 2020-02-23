@@ -134,6 +134,18 @@ class Pit{
         });
 
         /**
+         * Player's ingame color formatted name with level instead of rank
+         * @type {string}
+         */
+        this.levelFormattedName;
+        Object.defineProperty(this,'levelFormattedName',{
+            enumerable:true,
+            get: ()=>{
+                return this.formattedLevel + ' ' + this.colouredName;
+            }
+        });
+
+        /**
          * Player's ingame color formatted level
          * @type {string}
          */
