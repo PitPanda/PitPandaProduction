@@ -8,8 +8,9 @@ class ItemSearch extends React.Component {
     page=0;
     query=(selected)=>{
         const items = selected.filter(({key})=>key!=='none');
-        this.path = items.map(({key,tier})=>key+tier).join();
-        if(this.path.length===0)return;
+        const newPath = items.map(({key,tier})=>key+tier).join();
+        if(newPath.length===0||this.path===newPath)return;
+        this.path=newPath;
         this.setState({loading:true})
         fetch(`/api/itemSearch/${this.path}`).then(res=>res.json()).then(json => {
             for(let item of json){
