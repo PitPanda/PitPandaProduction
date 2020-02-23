@@ -171,7 +171,7 @@ function dbToItem(doc){
             doc.enchants.map(({key,level})=>[
                 '',
                 Mystics[key].Name+' '+((Mystics[key].Descriptions.length>1)?romanNumGen(level):''),
-                ...Mystics[key].Descriptions[Math.min(level,Mystics[key].Descriptions.length-1)]
+                ...Mystics[key].Descriptions[Math.min(level-1,Mystics[key].Descriptions.length-1)]
             ]).flat(1).slice(1),
             doc.item.id,
             (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined
