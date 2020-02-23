@@ -1,5 +1,5 @@
-#Pit Panda Production
-###Setup
+# Pit Panda Production
+### Setup
 if you want to set this up for your self the files need that are excluded for the project via the .gitignore are
 ```
 /node_modules
