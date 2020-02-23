@@ -4,7 +4,7 @@ const {dbToItem} = require('./apiTools');
 
 const router = require('express').Router();
 
-const perPage = 36;
+const perPage = 72;
 
 const itemSearch = (req,res)=>{
     const query = req.params.query.split(',').map(str=>{
@@ -35,7 +35,7 @@ const itemSearch = (req,res)=>{
         .sort('-lastseen')
         .then(docs=>{
             const items = docs.map(dbToItem);
-            res.status(200).send(items);
+            res.status(200).json({success:true,items});
         });
 };
 

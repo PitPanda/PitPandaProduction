@@ -16,7 +16,7 @@ class DropDownSelector extends React.Component {
                         );
                     })}
                 </div>
-                {this.props.showClear?<p onClick={()=>this.props.return('none')} style={{textDecoration:'underline',marginTop:'6px',cursor:'pointer'}}>Clear Selection</p>:''}
+                {this.props.showClear?<p onClick={()=>this.props.return(this.props.clearVal)} style={{textDecoration:'underline',marginTop:'6px',cursor:'pointer'}}>Clear Selection</p>:''}
             </div>
         );
     }

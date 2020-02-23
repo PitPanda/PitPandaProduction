@@ -6,7 +6,6 @@ class ItemBuilder extends React.Component {
     state={selected:new Array(3).fill({key:'none',tier:0})};
 
     update = (index,key,tier)=>{
-        console.log(index,key,tier);
         let selected = this.state.selected;
         selected[index]={key,tier};
         this.setState({selected})

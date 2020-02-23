@@ -34,13 +34,13 @@ class EnchantButton extends React.Component {
                 <div style={{textAlign:'center',cursor:'pointer'}}>
                     <MinecraftText raw={(Mystics[this.state.key]||{Name:"§9None Selected"}).Name}  onClick={()=>this.setState({selecting:this.state.selecting?undefined:'enchant'})}/>
                     <span onClick={()=>this.setState({selecting:this.state.selecting?undefined:'enchant'})}> </span>
-                    <MinecraftText raw={'§9'+((Mystics[this.state.key]&&Mystics[this.state.key].Descriptions.length>1)?(frontendTools.romanNumGen(this.state.tier)):'')} onClick={()=>this.setState({selecting:this.state.selecting?undefined:'tier'})} />
+                    <MinecraftText raw={'§9'+((this.state.tier>1)?(frontendTools.romanNumGen(this.state.tier)):'')} onClick={()=>this.setState({selecting:this.state.selecting?undefined:'tier'})} />
                 </div>
                 <div style={{visibility:this.state.selecting?'visible':'hidden',position:'absolute'}}>
                     {
                         (this.state.selecting==='enchant')?
-                        <DropDownSelector options={formatted.map(m=>[m[0],m[1].Name])} return={this.setKey} showClear={this.state.key!=='none'}/>:
-                        <DropDownSelector options={[[1,'§fI'],[2,'§fII'],[3,'§fIII']]} return={this.setTier}/>
+                        <DropDownSelector options={formatted.map(m=>[m[0],m[1].Name])} return={this.setKey} showClear={this.state.key!=='none'} clearVal="none" />:
+                        <DropDownSelector options={[[1,'§fI'],[2,'§fII'],[3,'§fIII']]} return={this.setTier} showClear={this.state.tier!==0} clearVal={0}/>
                     }
                 </div>
             </div>

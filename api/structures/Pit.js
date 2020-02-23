@@ -1,6 +1,6 @@
-const {getRef,formatNumber} = require('../apiTools');
+const {getRef,formatNumber,romanNumGen} = require('../apiTools');
 const pitMaster = require('../../frontEnd/src/pitMaster.json');
-const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades}, Extra: {ColorCodes:Colors,RankPrefixes}} = pitMaster;
+const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
 const Item = require('./Item');
 const Prestige = require('./Prestige');
 const Progress = require('./Progress');
@@ -59,7 +59,7 @@ class Pit{
                 if(!this._prestiges) Object.defineProperty(this,'_prestiges',{
                     enumerable: false,
                     value: [
-                        new Prestige(0,undefined,this.getStat('stats','Pit','profile','unlocks')),
+                        new Prestige(0,undefined,this.getStat('stats','Pit','profile','unlocks'),this.getStat('stats','Pit','profile',`cash_during_prestige_0`)),
                         ...(this.getStat('stats','Pit','profile','prestiges')||[])
                             .map(pres=>
                                 new Prestige(
@@ -114,9 +114,9 @@ class Pit{
             enumerable:true,
             get: ()=>{
                 let rank = this.getStat('newPackageRank') || this.getStat('PackageRank') || 'NON';
-                if(this.getStat('monthlyPackageRank') =='SUPERSTAR') rank = 'SUEPRSTAR';
+                if(this.getStat('monthlyPackageRank') =='SUPERSTAR') rank = 'SUPERSTAR';
                 const staff = this.getStat('rank');
-                if(staff && staff!='NORMAL') rank = this.getStat('rank');
+                if(staff && staff!='NORMAL') rank = staff;
                 return rank;
             }
         });
@@ -129,11 +129,38 @@ class Pit{
         Object.defineProperty(this,'formattedName',{
             enumerable:true,
             get: ()=>{
+                return this.prefix + (this.rank!=='NON'?' ':'') + this.name;
+            }
+        });
+
+        /**
+         * Player's ingame color formatted level
+         * @type {string}
+         */
+        this.formattedLevel;
+        Object.defineProperty(this,'formattedLevel',{
+            enumerable:true,
+            get: ()=>{
+                let lc = pitMaster.Pit.Levels[Math.floor(this.level/10)].ColorCode;
+                if(this.prestige===0) return Colors.GRAY+'['+lc+this.level+Colors.GRAY+'§r]';
+                let pc=pitMaster.Pit.Prestiges[this.prestige].ColorCode;
+                return pc+'['+Colors.YELLOW+romanNumGen(this.prestige)+pc+'-'+lc+this.level+'§r'+pc+']';
+            }
+        });
+
+        /**
+         * Player's ingame color prefix
+         * @type {string}
+         */
+        this.prefix;
+        Object.defineProperty(this,'prefix',{
+            enumerable:true,
+            get: ()=>{
                 const rank = this.rank;
                 let prefix = this.getStat('prefix') || RankPrefixes[rank] || '§7';
                 const plus = this.getStat('rankPlusColor');
                 prefix = prefix.replace('$',Colors[plus]||'§c');
-                return prefix + (rank!='NON'?' ':'') + this.name;
+                return prefix;
             }
         });
 
@@ -1144,6 +1171,20 @@ class Pit{
     }
 
     /**
+     * Loads all NBT inventories
+     * @returns {Promise<Item[][] | void>}
+     */
+    loadNBTInventorys(){
+        return Promise.all([
+            this.loadInventory(),
+            this.loadArmor(),
+            this.loadEnderchest(),
+            this.loadStash(),
+            this.loadWell()
+        ]);
+    }
+
+    /**
      * Builds an inventory format of their Perks
      * @type {void | Item[]}
      */
@@ -1297,6 +1338,14 @@ class Pit{
     }
 
     /**
+     * Player's ingame color formatted name without prefix
+     * @type {string}
+     */
+    get colouredName(){
+        return this.prefix.substring(0,2) + this.name;
+    }
+
+    /**
      * Takes byte array and returns a promise for its decoded contents
      * @param {Buffer} byteArr 
      * @returns {Promise<Item[]>}
@@ -1338,7 +1387,7 @@ class Pit{
                 },
                 lastseen: Date.now()
             };
-            Mystic.findOneAndUpdate({nonce,enchants},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
+            return Mystic.findOneAndUpdate({nonce,enchants},mystic,{upsert:true,useFindAndModify:false});
         }
     }
 } module.exports = Pit;

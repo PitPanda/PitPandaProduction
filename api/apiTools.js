@@ -159,7 +159,7 @@ const Item = require('./structures/Item');
 /**
  * converts document to item
  * @param {Document} doc 
- * @returns {{owner:String,lastseen:Number,item:Item}}
+ * @returns {{owner:String,lastseen:Number,item:Item,id:string}}
  */
 function dbToItem(doc){
     return {
@@ -170,7 +170,7 @@ function dbToItem(doc){
             doc.item.name,
             doc.enchants.map(({key,level})=>[
                 '',
-                Mystics[key].Name+' '+((Mystics[key].Descriptions.length>1)?romanNumGen(level):''),
+                Mystics[key].Name+' '+((level>1)?romanNumGen(level):''),
                 ...Mystics[key].Descriptions[Math.min(level-1,Mystics[key].Descriptions.length-1)]
             ]).flat(1).slice(1),
             doc.item.id,
