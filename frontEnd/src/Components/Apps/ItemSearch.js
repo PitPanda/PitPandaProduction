@@ -19,7 +19,8 @@ class ItemSearch extends React.Component {
             for(let item of json.items){
                 item.item.desc.unshift('');
                 item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-                item.item.desc.unshift('§7Owner: Click to request');
+                if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
+                else item.item.desc.unshift('§7Owner: Click to request');
                 item.item.uuid = item.id;
                 item.item.owner = item.owner;
                 item.item.checked = false;
@@ -33,22 +34,31 @@ class ItemSearch extends React.Component {
     requestOwner=(index)=>{
         if(index<this.state.lastresult.length&&!this.state.lastresult[index].checked){
             let lastresult = this.state.lastresult;
-            let target = lastresult[index];
-            target.desc[0] = '§7Owner: Loading';
-            this.setState({lastresult});
-            if(this.knownUUIDS[target.owner]){
-                target.checked = true;
-                target.desc[0] = '§7Owner: '+this.knownUUIDS[target.owner];
+            let owner = lastresult[index].owner;
+            let targets = lastresult.filter(item=>item.owner===owner);
+            for(let item of targets){
+                item.desc[0] = '§7Owner: Loading';
+            }
+            if(this.knownUUIDS[owner]){
+                for(let item of targets){
+                    item.checked = true;
+                    item.desc[0] = '§7Owner: '+this.knownUUIDS[owner];
+                }
                 return this.setState({lastresult});
             }
-            fetch(`/api/username/${target.owner}`).then(res=>res.json()).then(json => {
+            this.setState({lastresult});
+            fetch(`/api/username/${owner}`).then(res=>res.json()).then(json => {
                 console.log(json);
                 if(json.success){
-                    target.checked = true;
-                    target.desc[0] = '§7Owner: '+json.leveled;
-                    this.knownUUIDS[target.owner]=json.leveled;
+                    for(let item of targets){
+                        item.checked = true;
+                        item.desc[0] = '§7Owner: '+json.leveled;
+                    }
+                    this.knownUUIDS[owner]=json.leveled;
                 }else{
-                    target.desc[0] = '§7Owner: §4ERROR';
+                    for(let item of targets){
+                        item.desc[0] = '§7Owner: §4ERROR';
+                    }
                 }
                 this.setState({lastresult});
             });
@@ -63,7 +73,8 @@ class ItemSearch extends React.Component {
             for(let item of json.items){
                 item.item.desc.unshift('');
                 item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-                item.item.desc.unshift('§7Owner: Click to request');
+                if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
+                else item.item.desc.unshift('§7Owner: Click to request');
                 item.item.uuid = item.id;
                 item.item.owner = item.owner;
                 item.item.checked = false;

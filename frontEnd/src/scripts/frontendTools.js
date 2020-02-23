@@ -10,9 +10,9 @@ const Colors = pitMaster.Extra.ColorCodes;
  */
 function levelString(prestige,level){
     let lc = pitMaster.Pit.Levels[Math.floor(level/10)].ColorCode;
-    if(prestige===0) return Colors.GRAY+'['+lc+level+Colors.GRAY+'§r]';
+    if(prestige===0) return Colors.GRAY+'['+lc+level+Colors.RESET+Colors.GRAY+']';
     let pc=pitMaster.Pit.Prestiges[prestige].ColorCode;
-    return pc+'['+Colors.YELLOW+romanNumGen(prestige)+pc+'-'+lc+level+'§r'+pc+']';
+    return pc+'['+Colors.YELLOW+romanNumGen(prestige)+pc+'-'+lc+level+Colors.RESET+pc+']';
 } module.exports.levelString = levelString;
 
 /**

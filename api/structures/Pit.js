@@ -154,9 +154,9 @@ class Pit{
             enumerable:true,
             get: ()=>{
                 let lc = pitMaster.Pit.Levels[Math.floor(this.level/10)].ColorCode;
-                if(this.prestige===0) return Colors.GRAY+'['+lc+this.level+Colors.GRAY+'§r]';
+                if(this.prestige===0) return Colors.GRAY+'['+lc+this.level+Colors.RESET+Colors.GRAY+']';
                 let pc=pitMaster.Pit.Prestiges[this.prestige].ColorCode;
-                return pc+'['+Colors.YELLOW+romanNumGen(this.prestige)+pc+'-'+lc+this.level+'§r'+pc+']';
+                return pc+'['+Colors.YELLOW+romanNumGen(this.prestige)+pc+'-'+lc+this.level+Colors.RESET+pc+']';
             }
         });
 

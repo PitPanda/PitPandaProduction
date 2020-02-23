@@ -20,6 +20,7 @@ class EnchantButton extends React.Component {
         let shouldTier = false;
         if(Mystics[key]&&Mystics[key].Descriptions.length>1) shouldTier = true;
         this.setState({key,selecting:shouldTier?'tier':undefined});
+        if(!shouldTier) this.setTier(0);
         this.props.report(key,this.state.tier);
     }
 

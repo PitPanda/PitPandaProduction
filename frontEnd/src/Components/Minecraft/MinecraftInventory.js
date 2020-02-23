@@ -9,20 +9,17 @@ class MinecraftInventory extends React.Component {
     static getDerivedStateFromProps(props,state){
         const width = props.width || 9;
         const rows = props.rows || 1;
-        const inventory = props.inventory || [];
-        const newState = {items:JSON.parse(JSON.stringify(inventory))
-            .concat(
-                new Array(
-                    Math.max(
-                        rows*width-inventory.length,
-                        width*Math.ceil(inventory.length/width)-inventory.length
-                    )
-                ).fill(0).map(()=>({}))
-            ).map(item=>{
-                if(!item.uuid) item.uuid = uuid.v4();
-                return item;
-            }), width};
-        return newState;
+        let inventory = props.inventory || [];
+        const toFill = Math.max(
+            rows*width-inventory.length,
+            width*Math.ceil(inventory.length/width)-inventory.length
+        );
+        for(let i = 0; i < toFill; i++)inventory.push({});
+        inventory = inventory.map(item=>{
+            if(!item.uuid) item.uuid = uuid.v4();
+            return item;
+        });
+        return {items:inventory,width};
     }
 
     render() {
