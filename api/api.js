@@ -20,7 +20,7 @@ router.use('*',(req,res,next)=>{
     if(!statBatch[path])statBatch[path]=1;
     else if(statBatch[path]===batchSize){
         statBatch[path]=0;
-        ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true,useFindAndModify:false}).then((bungus)=>console.log(bungus,'done'));
+        ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true,useFindAndModify:false}).catch(console.err);
     }statBatch[path]++;
     console.log(`requested ${req.originalUrl.substring(5)}`);
     next();
