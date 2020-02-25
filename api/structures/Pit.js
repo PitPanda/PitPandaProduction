@@ -1366,7 +1366,7 @@ class Pit{
         return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
             if(err) return resolve([]);
             else return resolve(inv.value.i.value.value.map(item=>{
-                //this.logMystic(item);
+                this.logMystic(item);
                 return Item.buildFromNBT(item);
             }));
         }));
