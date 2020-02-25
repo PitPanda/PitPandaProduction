@@ -7,10 +7,21 @@ const tradecenter = require('./tradecenter');
 const tools = require('./apiTools');
 const username = require('./username');
 const mongoose = require('mongoose');
+const ApiStat = require('./models/ApiStat');
+
+let statBatch = {};
+const batchSize = 10;
 
 mongoose.connect(require('../dbLogin.json'),{useNewUrlParser:true,useUnifiedTopology:true},()=>console.log('MongoDB Connected'));
 
 router.use('*',(req,res,next)=>{
+    const end = req.originalUrl.lastIndexOf('/');
+    const path = req.originalUrl.substring(0,end);
+    if(!statBatch[path])statBatch[path]=1;
+    else if(statBatch[path]===batchSize){
+        statBatch[path]=0;
+        ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true,useFindAndModify:false}).then((bungus)=>console.log(bungus,'done'));
+    }statBatch[path]++;
     console.log(`requested ${req.originalUrl.substring(5)}`);
     next();
 });
