@@ -88,20 +88,25 @@ class ItemSearch extends React.Component {
     render() {
         return (
             <div style={{textAlign:'center'}}>
-                <h1 className="page-header">Pit Panda Mystic Search (Alpha)</h1>
-                <ItemBuilder report={this.query}/>
-                <div style={{display:'inline-block',textAlign:'left'}}>
-                    <StaticCard title="Results">
-                        <MinecraftInventory inventory={this.state.lastresult} onClick={this.requestOwner} colors={true}/>
-                        {this.state.lastresult.length%72===0&&this.state.lastresult.length!==0&&!this.state.loading?
-                        <div style={{margin:'auto',textAlign:'center'}}>
-                            <button onClick={this.loadMore} className='srchBtn'>Load More</button>
-                        </div>:''}
-                    </StaticCard>
-                </div>
+                <h1 className="page-header">Pit Panda Mystic Search will return soon</h1>
             </div>
         )
     }
 }
+
+/*
+
+<ItemBuilder report={this.query}/>
+<div style={{display:'inline-block',textAlign:'left'}}>
+    <StaticCard title="Results">
+        <MinecraftInventory inventory={this.state.lastresult} onClick={this.requestOwner} colors={true}/>
+        {this.state.lastresult.length%72===0&&this.state.lastresult.length!==0&&!this.state.loading?
+        <div style={{margin:'auto',textAlign:'center'}}>
+            <button onClick={this.loadMore} className='srchBtn'>Load More</button>
+        </div>:''}
+    </StaticCard>
+</div>
+
+*/
 
 export default ItemSearch;
