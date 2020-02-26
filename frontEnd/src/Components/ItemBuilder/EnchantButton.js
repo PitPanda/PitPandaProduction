@@ -6,7 +6,10 @@ import DropDownSelector from './DropDownSelector';
 import frontendTools from '../../scripts/frontendTools';
 
 let Mystics = pitMaster.Pit.Mystics;
-const formatted = Object.entries(Mystics).sort(([,a],[,b])=>a.Name.substring(a.Name.indexOf('§9')+2)<b.Name.substring(b.Name.indexOf('§9')+2)?-1:1);
+const valid = ["resource","sword","bow","pants"];
+const formatted = Object.entries(Mystics)
+    .filter(([,ench])=>valid.includes(ench.Type))
+    .sort(([,a],[,b])=>a.Name.substring(a.Name.indexOf('§9')+2)<b.Name.substring(b.Name.indexOf('§9')+2)?-1:1);
 
 class EnchantButton extends React.Component {
 

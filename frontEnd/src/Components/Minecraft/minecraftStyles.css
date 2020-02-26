@@ -105,7 +105,7 @@
   border-color: #1a1;
 }
 
-.miracle:hover, .miracle.shown{
+.miraculous:hover, .miraculous.shown{
   animation: colorchange 3s infinite;
   -webkit-animation: colorchange 3s infinite;
 }

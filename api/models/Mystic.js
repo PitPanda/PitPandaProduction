@@ -17,8 +17,12 @@ const MysticSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    flags:[String],
     owner: String,
     nonce: Number,
+    lives: Number,
+    maxLives: Number,
+    tokens: Number,
     item:ItemSchema
 });
 

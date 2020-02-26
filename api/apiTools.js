@@ -1,5 +1,5 @@
 const request = require('request');
-const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics}} = require('../frontEnd/src/pitMaster.json');
+const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics},Extra:{ColorCodes:Colors}} = require('../frontEnd/src/pitMaster.json');
 /**
  * Constructor for API utilty function
  */
@@ -168,11 +168,11 @@ function dbToItem(doc){
         id: doc._id,
         item: new Item(
             doc.item.name,
-            doc.enchants.map(({key,level})=>[
+            [`${Colors.GRAY}Lives: ${doc.lives>3?Colors.GREEN:Colors.RED}${doc.lives}${Colors.GRAY}/${doc.maxLives}`,...doc.enchants.map(({key,level})=>[
                 '',
                 Mystics[key].Name+' '+((level>1)?romanNumGen(level):''),
                 ...Mystics[key].Descriptions[Math.min(level-1,Mystics[key].Descriptions.length-1)]
-            ]).flat(1).slice(1),
+            ]).flat(1)],
             doc.item.id,
             (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined
         )

@@ -14,7 +14,7 @@ class MinecraftInventory extends React.Component {
             rows*width-inventory.length,
             width*Math.ceil(inventory.length/width)-inventory.length
         );
-        for(let i = 0; i < toFill; i++)inventory.push({});
+        for(let i = 0; i < toFill; i++)inventory.push({fake:true});
         inventory = inventory.map(item=>{
             if(!item.uuid) item.uuid = uuid.v4();
             return item;
@@ -29,7 +29,7 @@ class MinecraftInventory extends React.Component {
         return (
             <div style={style} className="MinecraftInventory">
                 {this.state.items.map((item,index)=>(
-                    <MinecraftItemSlot key={item.uuid} item={item} colors={this.props.colors} onClick={()=>this.props.onClick(index)}/>
+                    <MinecraftItemSlot key={item.uuid} item={item} colors={this.props.colors} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
                 ))}
             </div>
         );

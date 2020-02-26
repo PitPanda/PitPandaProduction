@@ -1,6 +1,6 @@
 const {getRef,formatNumber,romanNumGen} = require('../apiTools');
 const pitMaster = require('../../frontEnd/src/pitMaster.json');
-const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
+const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
 const Item = require('./Item');
 const Prestige = require('./Prestige');
 const Progress = require('./Progress');
@@ -1366,7 +1366,7 @@ class Pit{
         return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
             if(err) return resolve([]);
             else return resolve(inv.value.i.value.value.map(item=>{
-                //this.logMystic(item);
+                this.logMystic(item);
                 return Item.buildFromNBT(item);
             }));
         }));
@@ -1383,23 +1383,39 @@ class Pit{
                 key: ench.Key.value,
                 level: ench.Level.value
             }));
+            let flags = [];
+            const rareCount = enchants.filter(({key})=>Mystics[key].Name.includes('RARE')).length;
+            if(rareCount>=1) flags.push('rare');
+            if(rareCount>=2) flags.push('extraordinary');
+            const resourceCount = enchants.filter(({key})=>Mystics[key].Type=="resource").length;
+            if(resourceCount===3) flags.push('bountiful');
+            const tokenCount = enchants.reduce((acc,{level})=>acc+level,0);
+            if(tokenCount>=8) flags.push('legendary');
             const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value","Nonce","value");
             const id = getRef(item, "id", "value");
             let meta = getRef(item,'Damage','value') || getRef(item, "tag", "value","display","value","color","value");
             if(id>=298&&id<=301&&typeof meta == 'undefined') meta = 10511680;
-
+            const maxLives = getRef(item, "tag", "value", "ExtraAttributes", "value","MaxLives","value");
+            if(maxLives===100) flags.push('artifact');
+            const lives = getRef(item, "tag", "value", "ExtraAttributes", "value","Lives","value");
+            if(flags.includes('artifact')&&flags.includes('extraordinary'))flags.push('miraculous');
+            if(flags.includes('artifact')&&flags.includes('legendary'))flags.push('overpowered');
             const mystic = {
                 owner: this.uuid,
                 enchants,
                 nonce,
+                lives,
+                maxLives,
                 item:{
                     id,
                     meta,
                     name: getRef(item,'tag','value','display','value','Name','value')
                 },
+                flags,
+                tokens: tokenCount,
                 lastseen: Date.now()
             };
-            return Mystic.findOneAndUpdate({nonce,enchants},mystic,{upsert:true,useFindAndModify:false});
+            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
         }
     }
 } module.exports = Pit;

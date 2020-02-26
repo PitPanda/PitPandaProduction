@@ -11,6 +11,12 @@ class ItemBuilder extends React.Component {
         this.setState({selected})
     }
 
+    formatOutputQuery = ()=>{
+        const items = this.state.selected.filter(({key})=>key!=='none');
+        const newPath = items.map(({key,tier})=>key+tier+'+').join();
+        this.props.report(newPath);
+    }
+
     render() {
         return (
             <div className="ItemBuilder">
@@ -18,7 +24,7 @@ class ItemBuilder extends React.Component {
                     <EnchantButton key={i} report={(key,tier)=>this.update(i,key,tier)}/>
                 ))}
                 <div style={{margin:'auto',textAlign:'center'}}>
-                    <button onClick={()=>this.props.report(this.state.selected)} className='srchBtn'>Search</button>
+                    <button onClick={this.formatOutputQuery} className='srchBtn'>Search</button>
                 </div>
             </div>
         )

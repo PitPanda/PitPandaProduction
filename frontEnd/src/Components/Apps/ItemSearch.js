@@ -4,35 +4,25 @@ import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import StaticCard from '../Cards/StaticCard';
 
 class ItemSearch extends React.Component {
-    state={lastresult:[],loading:false};
+    state={lastresult:[],loading:false,lastsize:0};
     knownUUIDS={};
     page=0;
-    query=(selected)=>{
-        const items = selected.filter(({key})=>key!=='none');
-        const newPath = items.map(({key,tier})=>key+tier).join();
-        if(newPath.length===0||this.path===newPath)return;
-        this.path=newPath;
+    query=(queryString)=>{
+        if(queryString.length===0||this.queryString===queryString)return;
+        this.queryString=queryString;
         this.page=0;
         this.setState({loading:true});
-        fetch(`/api/itemSearch/${this.path}`).then(res=>res.json()).then(json => {
+        fetch(`/api/itemSearch/${queryString}`).then(res=>res.json()).then(json => {
             if(!json.success) return;
-            for(let item of json.items){
-                item.item.desc.unshift('');
-                item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-                if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
-                else item.item.desc.unshift('§7Owner: Click to request');
-                item.item.uuid = item.id;
-                item.item.owner = item.owner;
-                item.item.checked = false;
-            }
+            this.readyItems(json.items);
             const lastresult = json.items.map(item=>item.item);
             console.log(json);
-            this.setState({lastresult,loading:false});
+            this.setState({lastresult,loading:false,lastsize:json.items.length});
         });
     }
     
     requestOwner=(index)=>{
-        if(index<this.state.lastresult.length&&!this.state.lastresult[index].checked){
+        if(!this.state.lastresult[index].fake&&!this.state.lastresult[index].checked){
             let lastresult = this.state.lastresult;
             let owner = lastresult[index].owner;
             let targets = lastresult.filter(item=>item.owner===owner);
@@ -65,30 +55,43 @@ class ItemSearch extends React.Component {
         }
     }
 
+    readyItems = (items) => {
+        for(let item of items){
+            item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
+            if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
+            else item.item.desc.unshift('§7Owner: Click to request');
+            item.item.uuid = item.id;
+            item.item.owner = item.owner;
+            item.item.checked = false;
+        }
+    }
+
     loadMore = () => {
         this.page++;
         this.setState({loading:true})
-        fetch(`/api/itemSearch/${this.path}/${this.page}`).then(res=>res.json()).then(json => {
+        fetch(`/api/itemSearch/${this.queryString}/${this.page}`).then(res=>res.json()).then(json => {
             if(!json.success) return;
-            for(let item of json.items){
-                item.item.desc.unshift('');
-                item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-                if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
-                else item.item.desc.unshift('§7Owner: Click to request');
-                item.item.uuid = item.id;
-                item.item.owner = item.owner;
-                item.item.checked = false;
-            }
+            this.readyItems(json.items);
             const lastresult = this.state.lastresult.concat(json.items.map(item=>item.item));
             console.log(json);
-            this.setState({lastresult,loading:false});
+            this.setState({lastresult,loading:false,lastsize:json.items.length});
         });
     }
 
     render() {
         return (
             <div style={{textAlign:'center'}}>
-                <h1 className="page-header">Pit Panda Mystic Search will return soon</h1>
+                <h1 className="page-header">Pit Panda Mystic Search (Alpha)</h1>
+                <ItemBuilder report={this.query}/>
+                <div style={{display:'inline-block',textAlign:'left'}}>
+                    <StaticCard title="Results">
+                        <MinecraftInventory inventory={this.state.lastresult} onClick={this.requestOwner} colors={true}/>
+                        {this.state.lastsize===72&&this.state.lastresult.length!==0&&!this.state.loading?
+                        <div style={{margin:'auto',textAlign:'center'}}>
+                            <button onClick={this.loadMore} className='srchBtn'>Load More</button>
+                        </div>:''}
+                    </StaticCard>
+                </div>
             </div>
         )
     }
@@ -96,16 +99,9 @@ class ItemSearch extends React.Component {
 
 /*
 
-<ItemBuilder report={this.query}/>
-<div style={{display:'inline-block',textAlign:'left'}}>
-    <StaticCard title="Results">
-        <MinecraftInventory inventory={this.state.lastresult} onClick={this.requestOwner} colors={true}/>
-        {this.state.lastresult.length%72===0&&this.state.lastresult.length!==0&&!this.state.loading?
-        <div style={{margin:'auto',textAlign:'center'}}>
-            <button onClick={this.loadMore} className='srchBtn'>Load More</button>
-        </div>:''}
-    </StaticCard>
-</div>
+<input type="text" id="query" onKeyPress={e=>{
+                    if(e.key==='Enter') this.query(e.target.value);
+                }} />
 
 */
 

@@ -1095,7 +1095,8 @@
 						"§7player (max 10 players)"
 					]
 				],
-				"Name": "§9\"Not\" Gladiator"
+				"Name": "§9\"Not\" Gladiator",
+				"Type": "pants"
 			},
 			"immune_true_damage": {
 				"Descriptions": [
@@ -1113,7 +1114,8 @@
 						"§7your attacker"
 					]
 				],
-				"Name": "§9Mirror"
+				"Name": "§9Mirror",
+				"Type": "pants"
 			},
 			"instaboom_tnt": {
 				"Descriptions": [
@@ -1141,7 +1143,8 @@
 						"§7Consecutive uses §churt §7you!"
 					]
 				],
-				"Name": "§dRARE! §9Instaboom"
+				"Name": "§dRARE! §9Instaboom",
+				"Type": "pants"
 			},
 			"eggs": {
 				"Descriptions": [
@@ -1158,7 +1161,8 @@
 						"§aeggs §7on kill"
 					]
 				],
-				"Name": "§9Eggs"
+				"Name": "§9Eggs",
+				"Type": "pants"
 			},
 			"paparazzi": {
 				"Descriptions": [
@@ -1178,7 +1182,8 @@
 						"§7this item per event."
 					]
 				],
-				"Name": "§dRARE! §9Paparazzi"
+				"Name": "§dRARE! §9Paparazzi",
+				"Type": "pants"
 			},
 			"trash_panda": {
 				"Descriptions": [
@@ -1188,7 +1193,8 @@
 						"§bRight-click to open menus!"
 					]
 				],
-				"Name": "§dRARE! §9Trash Panda"
+				"Name": "§dRARE! §9Trash Panda",
+				"Type": "sewer"
 			},
 			"gold_per_kill": {
 				"Descriptions": [
@@ -1202,7 +1208,8 @@
 						"§7Earn §6+12g §7per kill"
 					]
 				],
-				"Name": "§9Gold Bump"
+				"Name": "§9Gold Bump",
+				"Type": "resource"
 			},
 			"gold_strictly_kills": {
 				"Descriptions": [
@@ -1219,7 +1226,8 @@
 						"§7excluded)"
 					]
 				],
-				"Name": "§9Moctezuma"
+				"Name": "§9Moctezuma",
+				"Type": "resource"
 			},
 			"melee_execute": {
 				"Descriptions": [
@@ -1236,7 +1244,8 @@
 						"§c§7instantly kills them"
 					]
 				],
-				"Name": "§dRARE! §9Executioner"
+				"Name": "§dRARE! §9Executioner",
+				"Type": "sword"
 			},
 			"gold_boost": {
 				"Descriptions": [
@@ -1250,7 +1259,8 @@
 						"§7Earn §6+45% gold (g) §7from kills"
 					]
 				],
-				"Name": "§9Gold Boost"
+				"Name": "§9Gold Boost",
+				"Type": "resource"
 			},
 			"absorption_on_kill": {
 				"Descriptions": [
@@ -1267,7 +1277,8 @@
 						"§7(max §66❤§7)"
 					]
 				],
-				"Name": "§9Golden Heart"
+				"Name": "§9Golden Heart",
+				"Type": "pants"
 			},
 			"max_bounty_self_claim": {
 				"Descriptions": [
@@ -1290,7 +1301,8 @@
 						"§7this item"
 					]
 				],
-				"Name": "§9Self-checkout"
+				"Name": "§9Self-checkout",
+				"Type": "pants"
 			},
 			"double_jump": {
 				"Descriptions": [
@@ -1307,7 +1319,8 @@
 						"§7cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Double-jump"
+				"Name": "§dRARE! §9Double-jump",
+				"Type": "pants"
 			},
 			"increase_armor_drops": {
 				"Descriptions": [
@@ -1327,7 +1340,8 @@
 						"§730%)"
 					]
 				],
-				"Name": "§9Lodbrok"
+				"Name": "§9Lodbrok",
+				"Type": "pants"
 			},
 			"melee_damage_vs_bows": {
 				"Descriptions": [
@@ -1344,7 +1358,8 @@
 						"§7holding a bow"
 					]
 				],
-				"Name": "§9Beat the Spammers"
+				"Name": "§9Beat the Spammers",
+				"Type": "sword"
 			},
 			"streak_xp": {
 				"Descriptions": [
@@ -1360,7 +1375,8 @@
 						"§7bonus and §b+100 max XP §7per kill"
 					]
 				],
-				"Name": "§9Sweaty"
+				"Name": "§9Sweaty",
+				"Type": "resource"
 			},
 			"melee_heal_on_hit": {
 				"Descriptions": [
@@ -1374,7 +1390,8 @@
 						"§7Heal for §c13% §7of damage dealt"
 					]
 				],
-				"Name": "§9Lifesteal"
+				"Name": "§9Lifesteal",
+				"Type": "sword"
 			},
 			"xp_boost": {
 				"Descriptions": [
@@ -1388,7 +1405,8 @@
 						"§7Earn §b+30% XP §7from kills"
 					]
 				],
-				"Name": "§9XP Boost"
+				"Name": "§9XP Boost",
+				"Type": "resource"
 			},
 			"gold_per_diamond_piece": {
 				"Descriptions": [
@@ -1405,7 +1423,8 @@
 						"§b§7pieces your victims wear"
 					]
 				],
-				"Name": "§9Sierra"
+				"Name": "§9Sierra",
+				"Type": "sword"
 			},
 			"pickpocket": {
 				"Descriptions": [
@@ -1422,7 +1441,8 @@
 						"§7cooldown)"
 					]
 				],
-				"Name": "§9Pitpocket"
+				"Name": "§9Pitpocket",
+				"Type": "sword"
 			},
 			"somber": {
 				"Descriptions": [
@@ -1431,7 +1451,8 @@
 						"§7enchantments."
 					]
 				],
-				"Name": "§9Somber"
+				"Name": "§9Somber",
+				"Type": "dark"
 			},
 			"venom": {
 				"Descriptions": [
@@ -1442,7 +1463,8 @@
 						"§7Also §apoisons §7yourself!"
 					]
 				],
-				"Name": "§9Combo: Venom"
+				"Name": "§9Combo: Venom",
+				"Type": "dark"
 			},
 			"misery": {
 				"Descriptions": [
@@ -1452,7 +1474,8 @@
 						"§7take §c0.3❤§7"
 					]
 				],
-				"Name": "§9Misery"
+				"Name": "§9Misery",
+				"Type": "dark"
 			},
 			"spite": {
 				"Descriptions": [
@@ -1462,7 +1485,8 @@
 						"§7wearing leather armor"
 					]
 				],
-				"Name": "§9Spite"
+				"Name": "§9Spite",
+				"Type": "dark"
 			},
 			"melee_combo_heal": {
 				"Descriptions": [
@@ -1482,7 +1506,8 @@
 						"§6§7absorption"
 					]
 				],
-				"Name": "§9Combo: Heal"
+				"Name": "§9Combo: Heal",
+				"Type": "sword"
 			},
 			"melee_combo_speed": {
 				"Descriptions": [
@@ -1499,7 +1524,8 @@
 						"§7§eSpeed II §7(5s)"
 					]
 				],
-				"Name": "§9Combo: Swift"
+				"Name": "§9Combo: Swift",
+				"Type": "sword"
 			},
 			"gold_per_crit": {
 				"Descriptions": [
@@ -1513,7 +1539,8 @@
 						"§7Earn §6+§66g §7per critical strike"
 					]
 				],
-				"Name": "§9Critically Rich"
+				"Name": "§9Critically Rich",
+				"Type": "resource"
 			},
 			"melee_damage_vs_diamond": {
 				"Descriptions": [
@@ -1530,7 +1557,8 @@
 						"§7wearing diamond armor"
 					]
 				],
-				"Name": "§9Diamond Stomp"
+				"Name": "§9Diamond Stomp",
+				"Type": "sword"
 			},
 			"melee_damage_vs_leather": {
 				"Descriptions": [
@@ -1547,7 +1575,8 @@
 						"§7wearing leather armor"
 					]
 				],
-				"Name": "§9Fancy Raider"
+				"Name": "§9Fancy Raider",
+				"Type": "sword"
 			},
 			"melee_weakness": {
 				"Descriptions": [
@@ -1564,7 +1593,8 @@
 						"§c§7(lasts 0.5s, 2s cooldown)"
 					]
 				],
-				"Name": "§9Crush"
+				"Name": "§9Crush",
+				"Type": "sword"
 			},
 			"increased_blocking": {
 				"Descriptions": [
@@ -1581,7 +1611,8 @@
 						"§7received damage by §c2❤"
 					]
 				],
-				"Name": "§9Bruiser"
+				"Name": "§9Bruiser",
+				"Type": "sword"
 			},
 			"pants_radar": {
 				"Descriptions": [
@@ -1598,7 +1629,8 @@
 						"§7bows drop §d+90% §7more frequently"
 					]
 				],
-				"Name": "§9Pants Radar"
+				"Name": "§9Pants Radar",
+				"Type": "resource"
 			},
 			"melee_damage_when_close_low_players": {
 				"Descriptions": [
@@ -1618,7 +1650,8 @@
 						"§7blocks"
 					]
 				],
-				"Name": "§9Shark"
+				"Name": "§9Shark",
+				"Type": "sword"
 			},
 			"melee_damage_when_absorption": {
 				"Descriptions": [
@@ -1635,7 +1668,8 @@
 						"§7absorption hearts"
 					]
 				],
-				"Name": "§9Gold and Boosted"
+				"Name": "§9Gold and Boosted",
+				"Type": "sword"
 			},
 			"melee_damage_when_low": {
 				"Descriptions": [
@@ -1652,7 +1686,8 @@
 						"§c§7you're missing"
 					]
 				],
-				"Name": "§9Pain Focus"
+				"Name": "§9Pain Focus",
+				"Type": "sword"
 			},
 			"melee_damage_when_on_grass": {
 				"Descriptions": [
@@ -1669,7 +1704,8 @@
 						"§7your victim are standing on grass"
 					]
 				],
-				"Name": "§9Grasshopper"
+				"Name": "§9Grasshopper",
+				"Type": "pants"
 			},
 			"less_damage_vs_diamond_weapons": {
 				"Descriptions": [
@@ -1686,7 +1722,8 @@
 						"§7diamond weapons"
 					]
 				],
-				"Name": "§9Diamond Allergy"
+				"Name": "§9Diamond Allergy",
+				"Type": "pants"
 			},
 			"overheal_enchant": {
 				"Descriptions": [
@@ -1700,7 +1737,8 @@
 						"§7Can hold §a+3 healing §7item"
 					]
 				],
-				"Name": "§9Excess"
+				"Name": "§9Excess",
+				"Type": "pants"
 			},
 			"less_damage_from_arrows": {
 				"Descriptions": [
@@ -1717,7 +1755,8 @@
 						"§7arrows"
 					]
 				],
-				"Name": "§9Ring Armor"
+				"Name": "§9Ring Armor",
+				"Type": "pants"
 			},
 			"gold_per_hit": {
 				"Descriptions": [
@@ -1731,7 +1770,8 @@
 						"§7Earn §6+3g §7per hit (1s cooldown)"
 					]
 				],
-				"Name": "§9Strike Gold"
+				"Name": "§9Strike Gold",
+				"Type": "resource"
 			},
 			"tnt": {
 				"Descriptions": [
@@ -1754,7 +1794,8 @@
 						"§7Gain §c+2 TNT §7on kill"
 					]
 				],
-				"Name": "§9TNT"
+				"Name": "§9TNT",
+				"Type": "pants"
 			},
 			"damage_reduction": {
 				"Descriptions": [
@@ -1768,7 +1809,8 @@
 						"§7Receive §9-10% §7damage"
 					]
 				],
-				"Name": "§9Protection"
+				"Name": "§9Protection",
+				"Type": "pants"
 			},
 			"contract_rewards": {
 				"Descriptions": [
@@ -1782,7 +1824,8 @@
 						"§7Earn §6+100% gold §7from contracts"
 					]
 				],
-				"Name": "§9Negotiator"
+				"Name": "§9Negotiator",
+				"Type": "pants"
 			},
 			"less_damage_vs_bounties": {
 				"Descriptions": [
@@ -1799,7 +1842,8 @@
 						"§7players with a bounty"
 					]
 				],
-				"Name": "§9David and Goliath"
+				"Name": "§9David and Goliath",
+				"Type": "pants"
 			},
 			"bow_damage": {
 				"Descriptions": [
@@ -1813,7 +1857,8 @@
 						"§7Deal §c+20% §7bow damage"
 					]
 				],
-				"Name": "§9Fletching"
+				"Name": "§9Fletching",
+				"Type": "bow"
 			},
 			"heal_on_shoot_self": {
 				"Descriptions": [
@@ -1828,7 +1873,8 @@
 						"§7Shooting yourself heals you §c3.5❤"
 					]
 				],
-				"Name": "§9What doesn't kill you"
+				"Name": "§9What doesn't kill you",
+				"Type": "bow"
 			},
 			"respawn_with_absorption": {
 				"Descriptions": [
@@ -1842,7 +1888,8 @@
 						"§7Spawn with §615❤ §7absorption"
 					]
 				],
-				"Name": "§9Respawn: Absorption"
+				"Name": "§9Respawn: Absorption",
+				"Type": "pants"
 			},
 			"steaks_on_kill": {
 				"Descriptions": [
@@ -1868,7 +1915,8 @@
 						"§7steaks"
 					]
 				],
-				"Name": "§9Steaks"
+				"Name": "§9Steaks",
+				"Type": "pants"
 			},
 			"melee_gamble": {
 				"Descriptions": [
@@ -1888,7 +1936,8 @@
 						"§7yourself"
 					]
 				],
-				"Name": "§dRARE! §9Gamble!"
+				"Name": "§dRARE! §9Gamble!",
+				"Type": "sword"
 			},
 			"melee_strike_after_block": {
 				"Descriptions": [
@@ -1911,7 +1960,8 @@
 						"§7and heals §c1.5❤"
 					]
 				],
-				"Name": "§9Duelist"
+				"Name": "§9Duelist",
+				"Type": "sword"
 			},
 			"fishing_rod_enchant": {
 				"Descriptions": [
@@ -1919,7 +1969,8 @@
 						"§7Spawn with a fishing rod"
 					]
 				],
-				"Name": "§9Club Rod"
+				"Name": "§9Club Rod",
+				"Type": "aqua"
 			},
 			"water_bucket": {
 				"Descriptions": [
@@ -1930,7 +1981,8 @@
 						"§7seconds."
 					]
 				],
-				"Name": "§9Portable Pond"
+				"Name": "§9Portable Pond",
+				"Type": "aqua"
 			},
 			"increase_gold_pickup": {
 				"Descriptions": [
@@ -1945,7 +1997,8 @@
 						"§7rewards §6+§615g"
 					]
 				],
-				"Name": "§9Pebble"
+				"Name": "§9Pebble",
+				"Type": "pants"
 			},
 			"xp_per_kill": {
 				"Descriptions": [
@@ -1959,7 +2012,8 @@
 						"§7Earn §b+6 XP §7from kills"
 					]
 				],
-				"Name": "§9XP Bump"
+				"Name": "§9XP Bump",
+				"Type": "resource"
 			},
 			"blocking_cancels_projectiles": {
 				"Descriptions": [
@@ -1978,7 +2032,8 @@
 						"§7heals §c1.5❤"
 					]
 				],
-				"Name": "§9Bullet Time"
+				"Name": "§9Bullet Time",
+				"Type": "sword"
 			},
 			"rogue": {
 				"Descriptions": [
@@ -1988,7 +2043,8 @@
 						"§7§baqua §7pants"
 					]
 				],
-				"Name": "§9Rogue"
+				"Name": "§9Rogue",
+				"Type": "aqua"
 			},
 			"regen_when_hit": {
 				"Descriptions": [
@@ -2002,7 +2058,8 @@
 						"§7Gain §cRegen II §7(8s) when hit"
 					]
 				],
-				"Name": "§9Peroxide"
+				"Name": "§9Peroxide",
+				"Type": "pants"
 			},
 			"less_damage_when_high_bounty": {
 				"Descriptions": [
@@ -2019,7 +2076,8 @@
 						"§7have a §65000g bounty"
 					]
 				],
-				"Name": "§9Billy"
+				"Name": "§9Billy",
+				"Type": "pants"
 			},
 			"solitude": {
 				"Descriptions": [
@@ -2039,7 +2097,8 @@
 						"§7blocks"
 					]
 				],
-				"Name": "§dRARE! §9Solitude"
+				"Name": "§dRARE! §9Solitude",
+				"Type": "pants"
 			},
 			"melee_combo_damage": {
 				"Descriptions": [
@@ -2056,7 +2115,8 @@
 						"§7§c+45% §7damage"
 					]
 				],
-				"Name": "§9Combo: Damage"
+				"Name": "§9Combo: Damage",
+				"Type": "sword"
 			},
 			"etspeed_on_kill": {
 				"Descriptions": [
@@ -2070,7 +2130,8 @@
 						"§7Gain §eSpeed I §7(12s) on kill"
 					]
 				],
-				"Name": "§9Speedy Kill"
+				"Name": "§9Speedy Kill",
+				"Type": "sword"
 			},
 			"melee_stun": {
 				"Descriptions": [
@@ -2089,7 +2150,8 @@
 						"§7stuns them for 1.5 seconds"
 					]
 				],
-				"Name": "§dRARE! §9Combo: Stun"
+				"Name": "§dRARE! §9Combo: Stun",
+				"Type": "sword"
 			},
 			"jump_spammer": {
 				"Descriptions": [
@@ -2110,7 +2172,8 @@
 						"§7and ranged attacks"
 					]
 				],
-				"Name": "§9Jumpspammer"
+				"Name": "§9Jumpspammer",
+				"Type": "bow"
 			},
 			"explosive_chickens": {
 				"Descriptions": [
@@ -2126,7 +2189,8 @@
 						"§7chickens"
 					]
 				],
-				"Name": "§dRARE! §9Devil Chicks!"
+				"Name": "§dRARE! §9Devil Chicks!",
+				"Type": "bow"
 			},
 			"respawn_with_resistance": {
 				"Descriptions": [
@@ -2141,7 +2205,8 @@
 						"§7Spawn with §9Resistance II §7(40s)"
 					]
 				],
-				"Name": "§9Respawn: Resistance"
+				"Name": "§9Respawn: Resistance",
+				"Type": "pants"
 			},
 			"perma_speed": {
 				"Descriptions": [
@@ -2155,7 +2220,8 @@
 						"§7Move §e20% faster §7at all times"
 					]
 				],
-				"Name": "§9Gotta go fast"
+				"Name": "§9Gotta go fast",
+				"Type": "pants"
 			},
 			"passive_health_regen": {
 				"Descriptions": [
@@ -2172,7 +2238,8 @@
 						"§7seconds"
 					]
 				],
-				"Name": "§9Boo-boo"
+				"Name": "§9Boo-boo",
+				"Type": "pants"
 			},
 			"bow_weakness_on_hit": {
 				"Descriptions": [
@@ -2187,7 +2254,8 @@
 						"§7Apply §cWeakness IV §7(16s) on hit"
 					]
 				],
-				"Name": "§9Wasp"
+				"Name": "§9Wasp",
+				"Type": "bow"
 			},
 			"pin_down": {
 				"Descriptions": [
@@ -2207,7 +2275,8 @@
 						"§7Speed and Jump Boost (10s)"
 					]
 				],
-				"Name": "§9Pin down"
+				"Name": "§9Pin down",
+				"Type": "bow"
 			},
 			"melee_damage_vs_high_hp": {
 				"Descriptions": [
@@ -2224,7 +2293,8 @@
 						"§7above 50% HP"
 					]
 				],
-				"Name": "§9King Buster"
+				"Name": "§9King Buster",
+				"Type": "sword"
 			},
 			"melee_launch": {
 				"Descriptions": [
@@ -2241,7 +2311,8 @@
 						"§7in the air (20s cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9The Punch"
+				"Name": "§dRARE! §9The Punch",
+				"Type": "sword"
 			},
 			"speed_when_hit_few_times": {
 				"Descriptions": [
@@ -2258,7 +2329,8 @@
 						"§7§e2 times §7by a player"
 					]
 				],
-				"Name": "§9Counter-Offensive"
+				"Name": "§9Counter-Offensive",
+				"Type": "pants"
 			},
 			"phoenix": {
 				"Descriptions": [
@@ -2284,7 +2356,8 @@
 						"§c§7damage (10s) buff."
 					]
 				],
-				"Name": "§dRARE! §9Phoenix"
+				"Name": "§dRARE! §9Phoenix",
+				"Type": "pants"
 			},
 			"combo_xp": {
 				"Descriptions": [
@@ -2301,7 +2374,8 @@
 						"§7§b+36 XP"
 					]
 				],
-				"Name": "§9Combo: XP"
+				"Name": "§9Combo: XP",
+				"Type": "sword"
 			},
 			"melee_bleed": {
 				"Descriptions": [
@@ -2324,7 +2398,8 @@
 						"§7(2s cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Hemorrhage"
+				"Name": "§dRARE! §9Hemorrhage",
+				"Type": "sword"
 			},
 			"melee_damage_vs_low_hp": {
 				"Descriptions": [
@@ -2341,25 +2416,27 @@
 						"§7below 50% HP"
 					]
 				],
-				"Name": "§9Punisher"
+				"Name": "§9Punisher",
+				"Type": "sword"
 			},
-"melee_healer": {
-	"Descriptions": [
-		[
-			"§7Your hits §aheal §7you for §c0.5❤",
-			"§7and them for §c2❤ §7(1s cd)"
-		],
-		[
-			"§7Your hits §aheal §7you for §c0.75❤",
-			"§7and them for §c4❤ §7(1s cd)"
-		],
-		[
-			"§7Your hits §aheal §7you for §c1❤",
-			"§7and them for §c5❤ §7(1s cd)"
-		]
-	],
-	"Name": "§dRARE! §9Healer"
-},
+			"melee_healer": {
+				"Descriptions": [
+					[
+						"§7Your hits §aheal §7you for §c0.5❤",
+						"§7and them for §c2❤ §7(1s cd)"
+					],
+					[
+						"§7Your hits §aheal §7you for §c0.75❤",
+						"§7and them for §c4❤ §7(1s cd)"
+					],
+					[
+						"§7Your hits §aheal §7you for §c1❤",
+						"§7and them for §c5❤ §7(1s cd)"
+					]
+				],
+				"Name": "§dRARE! §9Healer",
+				"Type": "sword"
+			},
 			"tough_crew": {
 				"Descriptions": [
 					[
@@ -2368,7 +2445,8 @@
 						"§7§baqua §7pants near you"
 					]
 				],
-				"Name": "§9Tough Crew"
+				"Name": "§9Tough Crew",
+				"Type": "aqua"
 			},
 			"pullbow": {
 				"Descriptions": [
@@ -2387,7 +2465,8 @@
 						"§7cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Pullbow"
+				"Name": "§dRARE! §9Pullbow",
+				"Type": "bow"
 			},
 			"telebow": {
 				"Descriptions": [
@@ -2407,7 +2486,8 @@
 						"§7hit)"
 					]
 				],
-				"Name": "§dRARE! §9Telebow"
+				"Name": "§dRARE! §9Telebow",
+				"Type": "bow"
 			},
 			"melee_literally_p2w": {
 				"Descriptions": [
@@ -2424,7 +2504,8 @@
 						"§cdamage §7but cost §6350g"
 					]
 				],
-				"Name": "§dRARE! §9Billionaire"
+				"Name": "§dRARE! §9Billionaire",
+				"Type": "sword"
 			},
 			"sniper": {
 				"Descriptions": [
@@ -2441,7 +2522,8 @@
 						"§7from over §f24 §7blocks"
 					]
 				],
-				"Name": "§9Sniper"
+				"Name": "§9Sniper",
+				"Type": "bow"
 			},
 			"volley": {
 				"Descriptions": [
@@ -2455,7 +2537,8 @@
 						"§7Shoot §f5 arrows §7at once"
 					]
 				],
-				"Name": "§dRARE! §9Volley"
+				"Name": "§dRARE! §9Volley",
+				"Type": "bow"
 			},
 			"melee_knockback": {
 				"Descriptions": [
@@ -2472,7 +2555,8 @@
 						"§7enemies by §f9 blocks"
 					]
 				],
-				"Name": "§dRARE! §9Knockback"
+				"Name": "§dRARE! §9Knockback",
+				"Type": "sword"
 			},
 			"royalty": {
 				"Descriptions": [
@@ -2480,7 +2564,8 @@
 						"§7Earn §b+10% XP §7from kills"
 					]
 				],
-				"Name": "§9Royalty"
+				"Name": "§9Royalty",
+				"Type": "helmet"
 			},
 			"stereo": {
 				"Descriptions": [
@@ -2489,7 +2574,8 @@
 						"§7around"
 					]
 				],
-				"Name": "§dRARE! §9Stereo"
+				"Name": "§dRARE! §9Stereo",
+				"Type": "aqua"
 			},
 			"mind_assault": {
 				"Descriptions": [
@@ -2501,7 +2587,8 @@
 						"§c§7damage"
 					]
 				],
-				"Name": "§9Mind Assault"
+				"Name": "§9Mind Assault",
+				"Type": "dark"
 			},
 			"melee_crit_midair": {
 				"Descriptions": [
@@ -2521,7 +2608,8 @@
 						"§7§c50% extra §7damage"
 					]
 				],
-				"Name": "§9Berserker"
+				"Name": "§9Berserker",
+				"Type": "sword"
 			},
 			"less_damage_on_grass": {
 				"Descriptions": [
@@ -2542,7 +2630,8 @@
 						"§aPerma §cRegen I §aon grass!"
 					]
 				],
-				"Name": "§9Cricket"
+				"Name": "§9Cricket",
+				"Type": "pants"
 			},
 			"regen_speed_when_low": {
 				"Descriptions": [
@@ -2562,7 +2651,8 @@
 						"§c§7(45s cooldown)"
 					]
 				],
-				"Name": "§9Revitalize"
+				"Name": "§9Revitalize",
+				"Type": "pants"
 			},
 			"gain_arrows_on_hit": {
 				"Descriptions": [
@@ -2576,7 +2666,8 @@
 						"§7Get §f8 arrows §7on arrow hit"
 					]
 				],
-				"Name": "§9Bottomless Quiver"
+				"Name": "§9Bottomless Quiver",
+				"Type": "bow"
 			},
 			"rod_true_damage": {
 				"Descriptions": [
@@ -2585,7 +2676,8 @@
 						"§7hit"
 					]
 				],
-				"Name": "§9Grandmaster"
+				"Name": "§9Grandmaster",
+				"Type": "aqua"
 			},
 			"first_shot": {
 				"Descriptions": [
@@ -2602,7 +2694,8 @@
 						"§7§c+25% damage"
 					]
 				],
-				"Name": "§9First Shot"
+				"Name": "§9First Shot",
+				"Type": "bow"
 			},
 			"melee_heal_on_kill": {
 				"Descriptions": [
@@ -2616,7 +2709,8 @@
 						"§7Heal §c1❤ §7on kill"
 					]
 				],
-				"Name": "§9Guts"
+				"Name": "§9Guts",
+				"Type": "sword"
 			},
 			"melee_avenge": {
 				"Descriptions": [
@@ -2633,7 +2727,8 @@
 						"§7player who killed you"
 					]
 				],
-				"Name": "§9Revengeance"
+				"Name": "§9Revengeance",
+				"Type": "sword"
 			},
 			"bow_combo_speed": {
 				"Descriptions": [
@@ -2650,7 +2745,8 @@
 						"§7missing grants §eSpeed IV §7(4s)"
 					]
 				],
-				"Name": "§9Faster than their shadow"
+				"Name": "§9Faster than their shadow",
+				"Type": "bow"
 			},
 			"bow_spammer": {
 				"Descriptions": [
@@ -2667,7 +2763,8 @@
 						"§7within §f8 §7blocks"
 					]
 				],
-				"Name": "§9Spammer and Proud"
+				"Name": "§9Spammer and Proud",
+				"Type": "bow"
 			},
 			"parasite": {
 				"Descriptions": [
@@ -2681,7 +2778,8 @@
 						"§7Heal §c1.0❤ §7on arrow hit"
 					]
 				],
-				"Name": "§9Parasite"
+				"Name": "§9Parasite",
+				"Type": "bow"
 			},
 			"bow_slow": {
 				"Descriptions": [
@@ -2700,7 +2798,8 @@
 						"§9§7(3s)"
 					]
 				],
-				"Name": "§9Sprint Drain"
+				"Name": "§9Sprint Drain",
+				"Type": "bow"
 			},
 			"melee_damage_vs_bounties": {
 				"Descriptions": [
@@ -2717,7 +2816,8 @@
 						"§7with a bounty"
 					]
 				],
-				"Name": "§9Bounty Reaper"
+				"Name": "§9Bounty Reaper",
+				"Type": "sword"
 			},
 			"resistance_on_kill": {
 				"Descriptions": [
@@ -2734,7 +2834,8 @@
 						"§7kill"
 					]
 				],
-				"Name": "§9Counter-Janitor"
+				"Name": "§9Counter-Janitor",
+				"Type": "sword"
 			},
 			"regen_when_ooc": {
 				"Descriptions": [
@@ -2753,7 +2854,8 @@
 						"§7when entering combat"
 					]
 				],
-				"Name": "§dRARE! §9Gomraw's Heart"
+				"Name": "§dRARE! §9Gomraw's Heart",
+				"Type": "pants"
 			},
 			"wolf_pack": {
 				"Descriptions": [
@@ -2773,7 +2875,8 @@
 						"§7once"
 					]
 				],
-				"Name": "§dRARE! §9Wolf Pack"
+				"Name": "§dRARE! §9Wolf Pack",
+				"Type": "pants"
 			},
 			"counter_bounty_hunter": {
 				"Descriptions": [
@@ -2794,7 +2897,8 @@
 						"§7§9-20% §7damage to you"
 					]
 				],
-				"Name": "§9Hunt the Hunter"
+				"Name": "§9Hunt the Hunter",
+				"Type": "pants"
 			},
 			"higher_max_hp": {
 				"Descriptions": [
@@ -2809,7 +2913,8 @@
 						"§7Increase your max health by §c1❤"
 					]
 				],
-				"Name": "§9Hearts"
+				"Name": "§9Hearts",
+				"Type": "pants"
 			},
 			"fishing_rod_kb": {
 				"Descriptions": [
@@ -2818,7 +2923,8 @@
 						"§7players"
 					]
 				],
-				"Name": "§9Rodback"
+				"Name": "§9Rodback",
+				"Type": "aqua"
 			},
 			"melee_lightning": {
 				"Descriptions": [
@@ -2840,7 +2946,8 @@
 						"§7§oLightning deals true damage"
 					]
 				],
-				"Name": "§dRARE! §9Combo: Perun's Wrath"
+				"Name": "§dRARE! §9Combo: Perun's Wrath",
+				"Type": "sword"
 			},
 			"explosive_bow": {
 				"Descriptions": [
@@ -2854,7 +2961,8 @@
 						"§7Arrows go BOOM! (5s cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Explosive"
+				"Name": "§dRARE! §9Explosive",
+				"Type": "bow"
 			},
 			"damage_per_arrow": {
 				"Descriptions": [
@@ -2871,7 +2979,8 @@
 						"§farrows §7per shot, if available"
 					]
 				],
-				"Name": "§9Arrow Armory"
+				"Name": "§9Arrow Armory",
+				"Type": "bow"
 			},
 			"escape_pod": {
 				"Descriptions": [
@@ -2897,7 +3006,8 @@
 						"§7once per life."
 					]
 				],
-				"Name": "§dRARE! §9Escape Pod"
+				"Name": "§dRARE! §9Escape Pod",
+				"Type": "pants"
 			},
 			"less_damage_when_swimming": {
 				"Descriptions": [
@@ -2914,7 +3024,8 @@
 						"§7while swimming in water or lava"
 					]
 				],
-				"Name": "§9McSwimmer"
+				"Name": "§9McSwimmer",
+				"Type": "pants"
 			},
 			"instant_shot": {
 				"Descriptions": [
@@ -2934,7 +3045,8 @@
 						"§7grants §aJump Boost IV §7(2s)"
 					]
 				],
-				"Name": "§dRARE! §9Mega Longbow"
+				"Name": "§dRARE! §9Mega Longbow",
+				"Type": "bow"
 			},
 			"mixed_combat": {
 				"Descriptions": [
@@ -2954,7 +3066,8 @@
 						"§7§c+30% §7extra damage"
 					]
 				],
-				"Name": "§9Mixed Combat"
+				"Name": "§9Mixed Combat",
+				"Type": "bow"
 			},
 			"arrow_true_damage": {
 				"Descriptions": [
@@ -2968,7 +3081,8 @@
 						"§7Deals §c1.5❤ §7extra true damage"
 					]
 				],
-				"Name": "§9Chipping"
+				"Name": "§9Chipping",
+				"Type": "bow"
 			},
 			"melee_speed_on_hit": {
 				"Descriptions": [
@@ -2985,7 +3099,8 @@
 						"§7cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Speedy Hit"
+				"Name": "§dRARE! §9Speedy Hit",
+				"Type": "sword"
 			},
 			"superspeed_when_low": {
 				"Descriptions": [
@@ -3002,7 +3117,8 @@
 						"§7reaching §c4❤ §7(10s cooldown)"
 					]
 				],
-				"Name": "§9Danger Close"
+				"Name": "§9Danger Close",
+				"Type": "pants"
 			},
 			"plain_melee_damage": {
 				"Descriptions": [
@@ -3016,7 +3132,8 @@
 						"§7Deal §c+12% §7melee damage"
 					]
 				],
-				"Name": "§9Sharp"
+				"Name": "§9Sharp",
+				"Type": "sword"
 			},
 			"sneak_teleport": {
 				"Descriptions": [
@@ -3033,7 +3150,8 @@
 						"§7attacker. (3s cooldown)"
 					]
 				],
-				"Name": "§dRARE! §9Assassin"
+				"Name": "§dRARE! §9Assassin",
+				"Type": "pants"
 			},
 			"resistance_when_low": {
 				"Descriptions": [
@@ -3050,7 +3168,8 @@
 						"§7seconds) when reaching §c3❤"
 					]
 				],
-				"Name": "§9Last Stand"
+				"Name": "§9Last Stand",
+				"Type": "pants"
 			},
 			"singularity": {
 				"Descriptions": [
@@ -3067,7 +3186,8 @@
 						"§7§c1.5❤ §7damage"
 					]
 				],
-				"Name": "§dRARE! §9Singularity"
+				"Name": "§dRARE! §9Singularity",
+				"Type": "pants"
 			},
 			"refresh_speed_on_kill": {
 				"Descriptions": [
@@ -3087,7 +3207,8 @@
 						"§7(Halved for Speed II+, Max 30s)"
 					]
 				],
-				"Name": "§9Electrolytes"
+				"Name": "§9Electrolytes",
+				"Type": "pants"
 			},
 			"gold_break_obsidian": {
 				"Descriptions": [
@@ -3104,7 +3225,8 @@
 						"§c§7(3s) from breaking obsidian"
 					]
 				],
-				"Name": "§9Purple Gold"
+				"Name": "§9Purple Gold",
+				"Type": "pants"
 			},
 			"pit_mba": {
 				"Descriptions": [
@@ -3124,7 +3246,8 @@
 						"§7least 5 players within 15 blocks"
 					]
 				],
-				"Name": "§9Pit MBA"
+				"Name": "§9Pit MBA",
+				"Type": "pants"
 			},
 			"grim_reaper": {
 				"Descriptions": [
@@ -3135,7 +3258,8 @@
 						"§5Receive -80% rewards from your kills"
 					]
 				],
-				"Name": "§9Grim Reaper"
+				"Name": "§9Grim Reaper",
+				"Type": "dark"
 			},
 			"chance_dont_lose_life": {
 				"Descriptions": [
@@ -3152,7 +3276,8 @@
 						"§7your items on death"
 					]
 				],
-				"Name": "§dRARE! §9Divine Miracle"
+				"Name": "§dRARE! §9Divine Miracle",
+				"Type": "pants"
 			},
 			"the_blob": {
 				"Descriptions": [
@@ -3178,7 +3303,8 @@
 						"§7enemy you kill."
 					]
 				],
-				"Name": "§dRARE! §9Pit Blob"
+				"Name": "§dRARE! §9Pit Blob",
+				"Type": "pants"
 			},
 			"wood_blocks": {
 				"Descriptions": [
@@ -3198,7 +3324,8 @@
 						"§fblocks §7on kill"
 					]
 				],
-				"Name": "§9Creative"
+				"Name": "§9Creative",
+				"Type": "pants"
 			},
 			"thorns": {
 				"Descriptions": [
@@ -3215,7 +3342,8 @@
 						"§c§7true damage"
 					]
 				],
-				"Name": "§9Prick"
+				"Name": "§9Prick",
+				"Type": "pants"
 			},
 			"worm": {
 				"Descriptions": [
@@ -3224,7 +3352,8 @@
 						"§b§7from kills in the sewers."
 					]
 				],
-				"Name": "§9Worm"
+				"Name": "§9Worm",
+				"Type": "sewer"
 			},
 			"power_against_crits": {
 				"Descriptions": [
@@ -3246,7 +3375,8 @@
 						"§7next strike for §c+30% §7damage"
 					]
 				],
-				"Name": "§9Critically Funky"
+				"Name": "§9Critically Funky",
+				"Type": "pants"
 			},
 			"lucky_shot": {
 				"Descriptions": [
@@ -3263,7 +3393,8 @@
 						"§7quadruple damage"
 					]
 				],
-				"Name": "§dRARE! §9Lucky Shot"
+				"Name": "§dRARE! §9Lucky Shot",
+				"Type": "bow"
 			},
 			"martyrdom": {
 				"Descriptions": [
@@ -3280,7 +3411,8 @@
 						"§7§acreepers §7behind on death"
 					]
 				],
-				"Name": "§dRARE! §9Martyrdom"
+				"Name": "§dRARE! §9Martyrdom",
+				"Type": "pants"
 			},
 			"snowballs": {
 				"Descriptions": [
@@ -3306,7 +3438,8 @@
 						"§7in a row"
 					]
 				],
-				"Name": "§dRARE! §9Snowballs"
+				"Name": "§dRARE! §9Snowballs",
+				"Type": "pants"
 			},
 			"punch_once_in_a_while": {
 				"Descriptions": [
@@ -3325,7 +3458,8 @@
 						"§c§7extra damage"
 					]
 				],
-				"Name": "§9Push comes to shove"
+				"Name": "§9Push comes to shove",
+				"Type": "bow"
 			},
 			"bow_to_true_damage": {
 				"Descriptions": [
@@ -3344,18 +3478,20 @@
 						"§7armor)"
 					]
 				],
-				"Name": "§dRARE! §9True Shot"
+				"Name": "§dRARE! §9True Shot",
+				"Type": "bow"
 			},
 			"hedge_fund": {
 				"Descriptions": [
 					[
-						"§7Gain §6+§66g §7on kills. Gain",
-						"§7§6+§666g §7from killing players",
+						"§7Gain §6+6g §7on kills. Gain",
+						"§7§6+66g §7from killing players",
 						"§7wearing §dTier I+ pants§7",
 						"§7Dying costs you §650g"
 					]
 				],
-				"Name": "§9Hedge Fund"
+				"Name": "§9Hedge Fund",
+				"Type": "dark"
 			},
 			"aegis": {
 				"Descriptions": [
@@ -3364,7 +3500,8 @@
 						"§7one blow every 9 seconds"
 					]
 				],
-				"Name": "§9Aegis"
+				"Name": "§9Aegis",
+				"Type": "dark"
 			},
 			"heartripper": {
 				"Descriptions": [
@@ -3377,7 +3514,8 @@
 						"§dpants§7."
 					]
 				],
-				"Name": "§dRARE! §9Heartripper"
+				"Name": "§dRARE! §9Heartripper",
+				"Type": "dark"
 			},
 			"hidden_jewel": {
 				"Descriptions": [
@@ -3388,7 +3526,8 @@
 						"§7Kills: §30"
 					]
 				],
-				"Name": "§9Hidden Jewel"
+				"Name": "§9Hidden Jewel",
+				"Type": "sewer"
 			},
 			"snowmen": {
 				"Descriptions": [
@@ -3417,7 +3556,8 @@
 						"§7§a12 §bscoops§7."
 					]
 				],
-				"Name": "§dRARE! §9Snowmen Army"
+				"Name": "§dRARE! §9Snowmen Army",
+				"Type": "pants"
 			},
 			"fractional_reserve": {
 				"Descriptions": [
@@ -3437,7 +3577,8 @@
 						"§7max)"
 					]
 				],
-				"Name": "§9Fractional Reserve"
+				"Name": "§9Fractional Reserve",
+				"Type": "pants"
 			},
 			"needless_suffering": {
 				"Descriptions": [
@@ -3446,7 +3587,8 @@
 						"§cCannot heal!"
 					]
 				],
-				"Name": "§9Needless Suffering"
+				"Name": "§9Needless Suffering",
+				"Type": "dark"
 			},
 			"fishers_unite": {
 				"Descriptions": [
@@ -3455,7 +3597,8 @@
 						"§7wearing §baqua §7pants"
 					]
 				],
-				"Name": "§9Unite"
+				"Name": "§9Unite",
+				"Type": "aqua"
 			},
 			"homing": {
 				"Descriptions": [
@@ -3472,7 +3615,8 @@
 						"§7§c60% §7damage"
 					]
 				],
-				"Name": "§dRARE! §9Robinhood"
+				"Name": "§dRARE! §9Robinhood",
+				"Type": "bow"
 			},
 			"lycanthropy": {
 				"Descriptions": [
@@ -3484,7 +3628,8 @@
 						"§cday after being worn."
 					]
 				],
-				"Name": "§9Lycanthropy"
+				"Name": "§9Lycanthropy",
+				"Type": "dark"
 			},
 			"sanguisuge": {
 				"Descriptions": [
@@ -3496,7 +3641,8 @@
 						"§cRegeneration never heals."
 					]
 				],
-				"Name": "§9Sanguisuge"
+				"Name": "§9Sanguisuge",
+				"Type": "dark"
 			},
 			"trophy": {
 				"Descriptions": [
@@ -3504,7 +3650,8 @@
 						"§7Fish §6+2 ingots §7at a time"
 					]
 				],
-				"Name": "§9Trophy"
+				"Name": "§9Trophy",
+				"Type": "aqua"
 			},
 			"luck_of_the_pond": {
 				"Descriptions": [
@@ -3512,7 +3659,8 @@
 						"§7Fish §b+10% §7faster"
 					]
 				],
-				"Name": "§9Luck of the Pond"
+				"Name": "§9Luck of the Pond",
+				"Type": "aqua"
 			},
 			"nostalgia": {
 				"Descriptions": [
@@ -3521,7 +3669,8 @@
 						"§7Equipped diamond armor §bglows§7."
 					]
 				],
-				"Name": "§dRARE! §9Nostalgia"
+				"Name": "§dRARE! §9Nostalgia",
+				"Type": "dark"
 			},
 			"golden_handcuffs": {
 				"Descriptions": [
@@ -3532,7 +3681,8 @@
 						"§7§o(min 30 players)"
 					]
 				],
-				"Name": "§dRARE! §9Golden Handcuffs"
+				"Name": "§dRARE! §9Golden Handcuffs",
+				"Type": "dark"
 			}
 		}
 	},
