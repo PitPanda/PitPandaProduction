@@ -1082,7 +1082,7 @@
 			{"Multiplier": 102, "TotalXp": 6726900, "SumXp": 51358680, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 103, "TotalXp": 6792850, "SumXp": 58151530, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 104, "TotalXp": 6858800, "SumXp": 65010330, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
-			{"Multiplier": 105, "TotalXp": 6924750, "SumXp": 71935080, "GoldReq": 0, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"}
+			{"Multiplier": 105, "TotalXp": 6924750, "SumXp": 71935080, "GoldReq": 0, "Renown": 100, "Color": "AQUA", "ColorCode":"§b"}
 		],
 		"Mystics": {
 			"less_damage_nearby_players": {
