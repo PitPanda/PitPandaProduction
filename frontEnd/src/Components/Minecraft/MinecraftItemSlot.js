@@ -15,6 +15,7 @@ class MinecraftItemSlot extends React.Component {
             if(name.toLowerCase().includes('evil')) cls = 'evil';
             if(name.toLowerCase().includes('artifact')) cls = 'artifact';
             if(name.toLowerCase().includes('miraculous')) cls = 'miraculous';
+            if(name.toLowerCase().includes('overpowered')) cls = 'overpowered';
         }
         return (
             <div className={`item ${cls}`} onClick={this.props.onClick}>

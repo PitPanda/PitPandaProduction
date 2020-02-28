@@ -12,7 +12,7 @@ class ProgressBar extends React.Component {
                 <div className={`progress-icon ${this.props.type}bg`}>
                     <MinecraftItemImg {...item}/>
                 </div>
-                <div style={{display:'inline-block',minWidth:'270px',verticalAlign:'top'}}>
+                <div style={{display:'inline-block',minWidth:'270px',verticalAlign:'top',height:'40px',paddingTop:'3px'}}>
                     <MinecraftText text={this.props.title} className="progress-name"/>
                     <div className="progress-bar">
                         <div className={`progress-bar-progress ${this.props.type}bg`} style={{width:(Math.min(info.percent,1)*97+3)+'%'}}/>

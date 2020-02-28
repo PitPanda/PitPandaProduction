@@ -18,7 +18,7 @@
   background-color: #2e2e2e;
 }
 
-ul li, .CardTitle{
+.Card-Head ul li, .CardTitle{
   display:inline;
   margin-right: 10px;
   cursor:pointer;

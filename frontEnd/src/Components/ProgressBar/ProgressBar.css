@@ -11,6 +11,10 @@
     width:100%;
 }
 
+.ProgressBar {
+    margin-bottom:10px;
+}
+
 .progress-icon {
     padding:2px;
     height: 40px;

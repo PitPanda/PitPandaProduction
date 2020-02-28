@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0f0115d80714d6fd757ac4c3c47e655a",
+    "revision": "aba03545f076fa9aea72e581acf97212",
     "url": "/index.html"
   },
   {
-    "revision": "f0a9bb882f00f1dcfa9b",
-    "url": "/static/css/main.0ffd69d3.chunk.css"
+    "revision": "68f48e14a3c98a8ef5cf",
+    "url": "/static/css/main.781b6ae4.chunk.css"
   },
   {
-    "revision": "8579f18a52b5ba1502f4",
-    "url": "/static/js/2.5eb56fb0.chunk.js"
+    "revision": "c68953e79bc156bc4a7d",
+    "url": "/static/js/2.9615b86c.chunk.js"
   },
   {
     "revision": "e928fe768baa9832b5bc57eae021f30c",
-    "url": "/static/js/2.5eb56fb0.chunk.js.LICENSE"
+    "url": "/static/js/2.9615b86c.chunk.js.LICENSE"
   },
   {
-    "revision": "f0a9bb882f00f1dcfa9b",
-    "url": "/static/js/main.4558dbac.chunk.js"
+    "revision": "68f48e14a3c98a8ef5cf",
+    "url": "/static/js/main.6e927c8c.chunk.js"
   },
   {
     "revision": "a2cd2306c7ce001917a3",
@@ -76,8 +76,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/Roboto-Regular-webfont.da61d7ef.svg"
   },
   {
-    "revision": "a041ab7b92cd71ded6b4aa3260c60f6d",
-    "url": "/static/media/blocks_items.a041ab7b.png"
+    "revision": "aea5f236bd8a02a0618bae6e693927d2",
+    "url": "/static/media/blocks_items.aea5f236.png"
   },
   {
     "revision": "195f6b98e460802afc6c6782a5666cf0",

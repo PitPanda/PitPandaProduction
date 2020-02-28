@@ -1,0 +1,64 @@
+body {
+    font-family: sans-serif;
+}
+
+.SearchField {
+    width:100%;
+    font-size: 16px;
+    font-family: minecraftia;
+    margin-bottom:10px;
+    padding:5px;
+    color: #aaa;
+    border: none;
+    background-color: #333333;
+}
+
+.Half {
+    width:75% !important;
+}
+
+.SuggestionsHalf {
+    width:225px;
+}
+
+.NumberField {
+    width:22%;
+    margin-left: 3%;
+}
+
+.HideField {
+    width: 0;
+    margin-left: 0;
+    padding:0;
+}
+
+.no-suggestions {
+    color: #999;
+    padding: 0.5rem;
+}
+
+.suggestions {
+    background-color: #282828;
+    text-align: left;
+    border: 1px solid #999;
+    width: 300px;
+    font-family: minecraftia;
+    position: absolute;
+}
+
+.suggestions li {
+    display: block;
+    padding:3px;
+    padding-left: 6px;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+    cursor: pointer;
+    font-weight: 700;
+    background-color: #222;
+}
+
+.suggestions li:not(:last-of-type) {
+    border-bottom: 1px solid #999;
+}

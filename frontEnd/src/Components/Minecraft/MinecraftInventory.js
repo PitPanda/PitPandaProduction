@@ -16,7 +16,8 @@ class MinecraftInventory extends React.Component {
         );
         for(let i = 0; i < toFill; i++)inventory.push({fake:true});
         inventory = inventory.map(item=>{
-            if(!item.uuid) item.uuid = uuid.v4();
+            //if(!item.uuid) item.uuid = uuid.v4();
+            item.uuid = uuid.v4();
             return item;
         });
         return {items:inventory,width};

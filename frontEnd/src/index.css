@@ -124,3 +124,18 @@ a:hover{
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.small-input {
+  width:100%;
+  font-size: 24px;
+  font-family: minecraftia;
+  margin-bottom:10px;
+  padding:5px;
+  color: #aaa;
+  border: none;
+  background-color: #333333;
+}
+
+.small-input:focus {
+  outline: none;
+}

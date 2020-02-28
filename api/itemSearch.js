@@ -25,6 +25,10 @@ const itemSearch = (req,res)=>{
     let types = [];
     let $and = [];
     for(const str of req.params.query.toLowerCase().split(',')){
+        if(str.startsWith('uuid')) {
+            query.owner = str.substring(4);
+            continue;
+        }
         const end = /[0-9]{1,}(\+|-)?$/.exec(str);
         if(end) {
             const a = str.substring(0,end.index);
@@ -41,6 +45,8 @@ const itemSearch = (req,res)=>{
             if(a==='tokens') $and.push({tokens:finalB});
             else if(a==='lives') $and.push({lives:finalB});
             else if(a==='maxlives') $and.push({maxLives:finalB});
+            else if(a==='color') $and.push({nonce:{$mod:[5,b]}});
+            else if(a==='nonce') $and.push({nonce:finalB});
             else enchants.push({
                 $elemMatch:{
                     key: a,

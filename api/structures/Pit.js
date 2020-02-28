@@ -227,7 +227,7 @@ class Pit{
             get: ()=>{
                 if(!this._xpProgress) Object.defineProperty(this,'_xpProgress',{
                     enumerable: false,
-                    value: new Progress(this.prestigeXp,Prestiges[this.prestige].TotalXp,(this.prestige===30&&this.prestigeXp===Prestiges[this.prestige].TotalXp)?'Max XP':undefined)
+                    value: new Progress(this.prestigeXp,Prestiges[this.prestige].TotalXp,(this.prestige===35&&this.prestigeXp===Prestiges[this.prestige].TotalXp)?'Max XP':undefined)
                 });
                 return this._xpProgress;
             }
@@ -302,7 +302,7 @@ class Pit{
             get: ()=>{
                 if(!this._goldProgress) Object.defineProperty(this,'_goldProgress',{
                     enumerable: false,
-                    value: new Progress(this.prestigeGold,Prestiges[this.prestige].GoldReq,this.prestige===30?'Max Prestige':false)
+                    value: new Progress(this.prestigeGold,Prestiges[this.prestige].GoldReq,this.prestige===35?'Max Prestige':false)
                 });
                 return this._goldProgress;
             }
@@ -1399,7 +1399,7 @@ class Pit{
             if(maxLives===100) flags.push('artifact');
             const lives = getRef(item, "tag", "value", "ExtraAttributes", "value","Lives","value");
             if(flags.includes('artifact')&&flags.includes('extraordinary'))flags.push('miraculous');
-            if(flags.includes('artifact')&&flags.includes('legendary'))flags.push('overpowered');
+            if(flags.includes('artifact')&&tokenCount>=7)flags.push('overpowered');
             const mystic = {
                 owner: this.uuid,
                 enchants,
