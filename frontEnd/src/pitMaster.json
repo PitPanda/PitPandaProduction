@@ -1079,10 +1079,10 @@
 			{"Multiplier": 75, "TotalXp": 4946250, "SumXp": 31375830, "GoldReq": 4500000, "Renown": 75, "Color": "LIGHT_PURPLE", "ColorCode":"§d"},
 			{"Multiplier": 100, "TotalXp": 6595000, "SumXp": 37970830, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 44631780, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
-			{"Multiplier": 101, "TotalXp": 6726900, "SumXp": 51292730, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
-			{"Multiplier": 101, "TotalXp": 6792850, "SumXp": 57953680, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
-			{"Multiplier": 101, "TotalXp": 6858800, "SumXp": 64614630, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
-			{"Multiplier": 101, "TotalXp": 6924750, "SumXp": 71275580, "GoldReq": 0, "Renown": 100, "Color": "AQUA", "ColorCode":"§b"}
+			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 51292730, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
+			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 57953680, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
+			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 64614630, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
+			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 71275580, "GoldReq": 0, "Renown": 100, "Color": "AQUA", "ColorCode":"§b"}
 		],
 		"Mystics": {
 			"less_damage_nearby_players": {
