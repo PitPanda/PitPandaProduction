@@ -25,7 +25,7 @@ Mystics.color = {Name:'§fColor',Type:'pants',Colors:{
     blue:2,
     orange:3,
     green:4
-},NoNumber:true};
+}};
 Mystics['color0'] = {Name:'§fRed',Type:'pants',NoNumber:true};
 Mystics['color1'] = {Name:'§fYellow',Type:'pants',NoNumber:true};
 Mystics['color2'] = {Name:'§fBlue',Type:'pants',NoNumber:true};

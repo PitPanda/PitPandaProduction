@@ -68,13 +68,13 @@ class Autocomplete extends Component {
             match = this.props.suggestions.find(s=>s[1].Name.replace(/§./g,'').toLowerCase() === value);
             if(!match) match = this.props.suggestions.find(s=>s[1].Name.replace(/§./g,'').toLowerCase().indexOf(value) > -1);
             if(match) {
-                if(!showNumber){
+                if(!showNumber&&!match[1].NoNumber){
                     showNumber=true;
                     number='0+';
                 }
                 if(match[1].Name.replace(/§./g,'').toLowerCase()===value) {
                     type=match[1].Type;
-                    this.setState({showNumber:true});
+                    this.setState({showNumber:!match[1].NoNumber});
                 }
                 value  = match[0];
             }
