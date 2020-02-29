@@ -20,11 +20,11 @@ Mystics.overpowered = {Name:'§fOverpowered',Type:'resource',NoNumber:true};
 Mystics.miraculous = {Name:'§fMiraculous',Type:'resource',NoNumber:true};
 Mystics.nonce = {Name:'§fNonce',Type:'resource'};
 Mystics.color = {Name:'§fColor',Type:'pants',Colors:{
-    red:0,
-    yellow:1,
-    blue:2,
-    orange:3,
-    green:4
+    red:'0',
+    yellow:'1',
+    blue:'2',
+    orange:'3',
+    green:'4'
 }};
 Mystics['color0'] = {Name:'§fRed',Type:'pants',NoNumber:true};
 Mystics['color1'] = {Name:'§fYellow',Type:'pants',NoNumber:true};

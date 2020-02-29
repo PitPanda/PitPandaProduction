@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import MinecraftText from '../Minecraft/MinecraftText';
 import './SearchField.css';
 
-class Autocomplete extends Component {
+class SearchField extends Component {
 
     state = {
         // The active selection's index
@@ -250,4 +250,4 @@ class Autocomplete extends Component {
     }
 }
 
-export default Autocomplete;
+export default SearchField;
