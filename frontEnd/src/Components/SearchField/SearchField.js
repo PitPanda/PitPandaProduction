@@ -86,6 +86,8 @@ class Autocomplete extends Component {
             if(colors&&typeof colors[1].Colors[number] !== 'undefined') number=colors[1].Colors[number];
         }
         if(typeof number === 'undefined' || number==='') number = '0+';
+        if(number.startsWith('<')) number=number.substring(1)+'-';
+        if(number.startsWith('>')) number=number.substring(1)+'+';
         this.props.report(value+(showNumber?number:''), text, type);
     }
 
