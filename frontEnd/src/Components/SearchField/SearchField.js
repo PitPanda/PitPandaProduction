@@ -52,7 +52,8 @@ class SearchField extends Component {
             showSuggestions: true,
             userInput: userInput,
             reporting: userInput,
-            showNumber
+            showNumber,
+            userNumber:showNumber?this.state.userNumber:''
         });
         this.reportString(userInput,showNumber,this.state.userNumber,userInput);
     };
@@ -125,14 +126,16 @@ class SearchField extends Component {
                     this.select(activeSuggestion);
                 }else{
                     const reporting = e.currentTarget.value;
+                    const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber));
                     this.setState({
                         activeSuggestion: 0,
                         showSuggestions: false,
                         userInput: e.currentTarget.value,
-                        showNumber: Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber)),
+                        showNumber,
+                        userNumber: showNumber?this.state.userNumber:'',
                         reporting
                     });
-                    this.reportString(reporting,this.state.showNumber,this.state.userNumber,e.currentTarget.value);
+                    this.reportString(reporting,showNumber,this.state.userNumber,e.currentTarget.value);
                 }
             }
             // User pressed the up arrow, decrement the index

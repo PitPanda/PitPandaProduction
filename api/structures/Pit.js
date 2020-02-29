@@ -47,6 +47,17 @@ class Pit{
          * @type {object}
          */
         this.inventories = {};
+        /**
+         * promise for when inventories will be loaded
+         * @type {Promise<item[][] | void>}
+         */
+        this.NBTInventoryPromise = Promise.all([
+            this.loadInventory(),
+            this.loadArmor(),
+            this.loadEnderchest(),
+            this.loadStash(),
+            this.loadWell()
+        ]);
 
         /**
          * Array of Player's Prestige Details
@@ -1170,29 +1181,11 @@ class Pit{
      */
     loadInventorys(){
         return Promise.all([
-            this.loadInventory(),
-            this.loadArmor(),
-            this.loadEnderchest(),
-            this.loadStash(),
-            this.loadWell(),
+            this.NBTInventoryPromise,
             this.buildPerkInventory(),
             this.buildUpgradeInventory(),
             this.buildRenownUpgradeInventory(),
             this.buildStatsInventory()
-        ]);
-    }
-
-    /**
-     * Loads all NBT inventories
-     * @returns {Promise<Item[][] | void>}
-     */
-    loadNBTInventorys(){
-        return Promise.all([
-            this.loadInventory(),
-            this.loadArmor(),
-            this.loadEnderchest(),
-            this.loadStash(),
-            this.loadWell()
         ]);
     }
 

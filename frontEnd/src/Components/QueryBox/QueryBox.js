@@ -75,7 +75,6 @@ class QueryBox extends React.Component{
         for(const input of inputs){
             if(input.type&&input.type!=='resource'){
                 foundType=input.type;
-                console.log(input.type);
                 this.setState({type:input.type})
             }
         }
