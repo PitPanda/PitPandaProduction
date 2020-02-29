@@ -35,7 +35,7 @@ class Autocomplete extends Component {
     // Event fired when the input value is changed
     onChange = e => {
         const { suggestions } = this.props;
-        const userInput = e.currentTarget.value;
+        const userInput = e.currentTarget.value.split('').filter(str=>/[-+!":a-zA-Z ]/.test(str)).join('');
 
         // Filter our suggestions that don't contain the user's input
         const filteredSuggestions = suggestions.filter(
@@ -45,17 +45,16 @@ class Autocomplete extends Component {
 
         // Update the user input and filtered suggestions, reset the active
         // suggestion and make sure the suggestions are shown
-        const reporting=e.currentTarget.value;
-        const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber))
+        const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===userInput&&!s[1].NoNumber))
         this.setState({
             activeSuggestion: 0,
             filteredSuggestions,
             showSuggestions: true,
-            userInput: e.currentTarget.value,
-            reporting,
+            userInput: userInput,
+            reporting: userInput,
             showNumber
         });
-        this.reportString(reporting,showNumber,this.state.userNumber,e.currentTarget.value);
+        this.reportString(userInput,showNumber,this.state.userNumber,userInput);
     };
 
     reportString(value,showNumber,number,text){
@@ -92,8 +91,9 @@ class Autocomplete extends Component {
     }
 
     onNumberChange = e => {
-        this.setState({userNumber:e.currentTarget.value});
-        this.reportString(this.state.reporting,true,e.currentTarget.value,this.state.userInput);
+        let userNumber = e.currentTarget.value.split('').filter(str=>/[-+><0-9a-zA-Z]/.test(str)).join('');
+        this.setState({userNumber});
+        this.reportString(this.state.reporting,true,userNumber,this.state.userInput);
     }
 
     onClick = e => {

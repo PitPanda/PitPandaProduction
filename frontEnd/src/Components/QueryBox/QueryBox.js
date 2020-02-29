@@ -100,7 +100,7 @@ class QueryBox extends React.Component{
     focus = (index) => {
         if(this.state.inputs[index]){
             this.state.inputs[index].ref.current.focus();
-        }else if(index>=this.state.inputs.length) this.button.current.focus();
+        }else if(index>=this.state.inputs.length) this.buttonRef.current.focus();
     }
 
     render(){
