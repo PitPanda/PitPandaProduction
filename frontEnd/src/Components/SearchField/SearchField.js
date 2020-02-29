@@ -35,7 +35,7 @@ class Autocomplete extends Component {
     // Event fired when the input value is changed
     onChange = e => {
         const { suggestions } = this.props;
-        const userInput = e.currentTarget.value.split('').filter(str=>/[-+!":a-zA-Z ]/.test(str)).join('');
+        const userInput = e.currentTarget.value.split('').filter(str=>/[-+!":a-zA-Z0-9 ]/.test(str)).join('');
 
         // Filter our suggestions that don't contain the user's input
         const filteredSuggestions = suggestions.filter(
