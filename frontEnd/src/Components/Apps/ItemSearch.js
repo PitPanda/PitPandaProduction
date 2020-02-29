@@ -1,89 +1,42 @@
 import React from 'react';
-//import ItemBuilder from '../ItemBuilder/ItemBuilder';
 import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import StaticCard from '../Cards/StaticCard';
-import Autocomplete from '../SearchField/SearchField';
-import uuid from 'uuid';
-import pitMaster from '../../pitMaster.json';
+import QueryBox from '../QueryBox/QueryBox';
 
-let Mystics = pitMaster.Pit.Mystics;
-Mystics.pants = {Name:'§fPants',Type:'pants',NoNumber:true};
-Mystics.sword = {Name:'§fSword',Type:'sword',NoNumber:true};
-Mystics.bow = {Name:'§fBow',Type:'bow',NoNumber:true};
-Mystics.lives = {Name:'§fLives',Type:'resource'};
-Mystics.maxLives = {Name:'§fMax Lives',Type:'resource'};
-Mystics.tokens = {Name:'§fTokens',Type:'resource'};
-Mystics.artifact = {Name:'§fArtifact',Type:'resource',NoNumber:true};
-Mystics.rare = {Name:'§fRare',Type:'resource',NoNumber:true};
-Mystics.legendary = {Name:'§fLegendary',Type:'resource',NoNumber:true};
-Mystics.bountiful = {Name:'§fBountiful',Type:'resource',NoNumber:true};
-Mystics.extraordinary = {Name:'§fExtraordinary',Type:'resource',NoNumber:true};
-Mystics.overpowered = {Name:'§fOverpowered',Type:'resource',NoNumber:true};
-Mystics.miraculous = {Name:'§fMiraculous',Type:'resource',NoNumber:true};
-Mystics.nonce = {Name:'§fNonce',Type:'resource'};
-Mystics.color = {Name:'§fColor',Type:'pants',Colors:{
-    red:0,
-    yellow:1,
-    blue:2,
-    orange:3,
-    green:4
-}};
-Mystics['color0'] = {Name:'§fRed',Type:'pants',NoNumber:true};
-Mystics['color1'] = {Name:'§fYellow',Type:'pants',NoNumber:true};
-Mystics['color2'] = {Name:'§fBlue',Type:'pants',NoNumber:true};
-Mystics['color3'] = {Name:'§fOrange',Type:'pants',NoNumber:true};
-Mystics['color4'] = {Name:'§fGreen',Type:'pants',NoNumber:true};
-
-const formatted = Object.entries(Mystics)
-    .sort(([,a],[,b])=>a.Name.substring(a.Name.indexOf('§9')+2)<b.Name.substring(b.Name.indexOf('§9')+2)?-1:1);
-//.filter(([,ench])=>valid.includes(ench.Type))
-function createInputData(){
-    return {id:uuid.v4(),ref:React.createRef(),reporting:'',says:''};
-}
-
+const pageSize = 72;
 class ItemSearch extends React.Component {
     state={
-        lastresult:[],
+        results:[],
         loading:false,
         lastsize:0,
-        inputs:[createInputData()],
-        type:'*'
+        knownUUIDS:{},
+        page:0,
+        queryString:''
     };
-    knownUUIDS={};
-    page=0;
-    button=React.createRef();
 
     query=(queryString)=>{
         console.log(queryString);
         if(queryString.length===0||this.queryString===queryString)return;
-        this.queryString=queryString;
-        this.page=0;
-        this.setState({loading:true});
+        this.setState({loading:true,page:0,queryString});
         fetch(`/api/itemSearch/${queryString}`).then(res=>res.json()).then(json => {
             if(!json.success) return;
             this.readyItems(json.items);
-            const lastresult = json.items.map(item=>item.item);
+            const result = json.items.map(item=>item.item);
             console.log(json);
-            this.setState({lastresult,loading:false,lastsize:json.items.length});
+            this.setState({results:result,loading:false,lastsize:result.length});
         });
     }
     
     requestOwner=(index)=>{
-        if(!this.state.lastresult[index].fake&&!this.state.lastresult[index].checked){
-            let lastresult = this.state.lastresult;
-            let owner = lastresult[index].owner;
-            let targets = lastresult.filter(item=>item.owner===owner);
+        if(!this.state.results[index].fake&&!this.state.results[index].checked){
+            let results = this.state.results;
+            let owner = results[index].owner;
+            let knownUUIDS = this.state.knownUUIDS;
+            let targets = results.filter(item=>item.owner===owner);
             for(let item of targets){
                 item.desc[0] = '§7Owner: Loading';
             }
-            if(this.knownUUIDS[owner]){
-                for(let item of targets){
-                    item.checked = true;
-                    item.desc[0] = '§7Owner: '+this.knownUUIDS[owner];
-                }
-                return this.setState({lastresult});
-            }
-            this.setState({lastresult});
+            this.setState({results});
             fetch(`/api/username/${owner}`).then(res=>res.json()).then(json => {
                 console.log(json);
                 if(json.success){
@@ -91,13 +44,13 @@ class ItemSearch extends React.Component {
                         item.checked = true;
                         item.desc[0] = '§7Owner: '+json.leveled;
                     }
-                    this.knownUUIDS[owner]=json.leveled;
+                    knownUUIDS[owner]=json.leveled;
                 }else{
                     for(let item of targets){
                         item.desc[0] = '§7Owner: §4ERROR';
                     }
                 }
-                this.setState({lastresult});
+                this.setState({results,knownUUIDS});
             });
         }
     }
@@ -105,7 +58,7 @@ class ItemSearch extends React.Component {
     readyItems = (items) => {
         for(let item of items){
             item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-            if(this.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.knownUUIDS[item.owner]);
+            if(this.state.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.state.knownUUIDS[item.owner]);
             else item.item.desc.unshift('§7Owner: Click to request');
             item.item.uuid = item.id;
             item.item.owner = item.owner;
@@ -114,111 +67,26 @@ class ItemSearch extends React.Component {
     }
 
     loadMore = () => {
-        this.page++;
-        this.setState({loading:true})
-        fetch(`/api/itemSearch/${this.queryString}/${this.page}`).then(res=>res.json()).then(json => {
+        this.setState({loading:true,page:this.state.page+1})
+        fetch(`/api/itemSearch/${this.state.queryString}/${this.state.page+1}`).then(res=>res.json()).then(json => {
             if(!json.success) return;
             this.readyItems(json.items);
-            const lastresult = this.state.lastresult.concat(json.items.map(item=>item.item));
+            let results = this.state.results;
+            results = results.concat(json.items.map(item=>item.item));
             console.log(json);
-            this.setState({lastresult,loading:false,lastsize:json.items.length});
+            this.setState({results,loading:false,lastsize:json.items.length});
         });
     }
 
-    handleNext = (e,i) => {
-        if(e.keyCode===13 && i!==this.state.inputs.length-1) {
-            let inputs = this.state.inputs;
-            if(inputs[i].text==='') return;
-            if(inputs[i+1].text==='') return inputs[i+1].ref.current.focus();
-            inputs.push(createInputData());
-            for(let j = inputs.length-1; j > i+1; j--){
-                inputs[j].text=inputs[j-1].text;
-            }
-            inputs[i+1].text='';
-            inputs[i+1].ref.current.focus();
-            this.setState({inputs});
-        }
-        if(e.keyCode===8 && i!==0 && e.target.value==='') {
-            let inputs = this.state.inputs;
-            this.state.inputs[i-1].ref.current.focus();
-            inputs[i-1].text += '_';
-            inputs = inputs.slice(0,i).concat(inputs.slice(i+1));
-            this.setState({inputs});
-        }
-        if(e.keyCode===38 && i!==0) this.state.inputs[i-1].ref.current.focus();
-        if(e.keyCode===40 && i!==this.state.inputs.length-1) this.state.inputs[i+1].ref.current.focus();
-    }
-
-    focus = (index) => {
-        if(this.state.inputs[index]){
-            this.state.inputs[index].ref.current.focus();
-        }else if(index>=this.state.inputs.length) this.button.current.focus();
-    }
-
-    buildAndSendQuery = () => {
-        let inputs = this.state.inputs;
-        let toClear = inputs.filter((input,index)=>(input.reporting==='')&&index!==inputs.length-1);
-        toClear.forEach(input=>clearTimeout(input.timeout))
-        inputs = inputs.filter((input,index)=>(input.reporting!=='')||index===inputs.length-1);
-        let queryString = inputs.slice(0,-1).map(i=>i.reporting).join();
-        if(this.state.type!=='*') queryString+=','+this.state.type;
-        this.query(queryString);
-        this.setState({inputs});
-    }
-    
-    monitorInputs = (report,raw,type,index) => {
-        let inputs = this.state.inputs;
-        inputs[index].reporting=report;
-        inputs[index].says=raw;
-        inputs[index].type=type;
-        let foundType;
-        for(const input of inputs){
-            if(input.type&&input.type!=='resource'){
-                foundType=input.type;
-                console.log(input.type);
-                this.setState({type:input.type})
-            }
-        }
-        if(!foundType) this.setState({type:'*'});
-        if(index+1===inputs.length){
-            inputs.push(createInputData());
-        }
-        this.setState({inputs});
-    }
-
-    killInput = (index) => {
-        if((index!==this.state.inputs.length-1&&index!==0)||(index!==0&&this.state.inputs[index-1].report==='')){
-            let inputs = this.state.inputs;
-            inputs[index-1].ref.current.focus();
-            inputs[index-1].says+='_';
-            clearTimeout(inputs[index].timeout)
-            inputs = inputs.slice(0,index).concat(inputs.slice(index+1));
-            this.setState({inputs});
-        }
-    }
-
-    timeOutFix = (timeout,index) => {
-        let inputs = this.state.inputs;
-        inputs[index].timeout=timeout;
-        this.setState({inputs});
-    }
-
     render() {
-        let suggestions = formatted;
-        if(this.state.type!=='*') suggestions = suggestions.filter(([,ench])=>['resource',this.state.type].includes(ench.Type));
         return (
             <div style={{textAlign:'center'}}>
                 <h1 className="page-header" style={{marginBottom:'200px'}}>Pit Panda Mystic Search (Alpha)</h1>
-                <StaticCard title="Query" style={{width:'350px',display:'inline-block',verticalAlign:'top',margin:'20px',textAlign:'left'}}>
-                    {this.state.inputs.map((input,index)=>(
-                        <Autocomplete up={()=>this.focus(index-1)} down={()=>this.focus(index+1)} says={input.says} timeOutFix={timeout=>this.timeOutFix(timeout,index)} kill={e=>this.killInput(index)} key={input.id} mainRef={input.ref} suggestions={suggestions} report={(a,b,c)=>this.monitorInputs(a,b,c,index)}/>
-                    ))}
-                    <button onClick={this.buildAndSendQuery} onKeyDown={e=>{if(e.keyCode===38)this.focus(this.state.inputs.length-1);}} ref={this.button} className='srchBtn' style={{marginTop:'0px'}}>Search</button>
-                </StaticCard>
+                <QueryBox query={this.query}/>
                 <div style={{display:'inline-block',textAlign:'left',margin:'20px'}}>
                     <StaticCard title="Results">
-                        <MinecraftInventory inventory={this.state.lastresult} onClick={this.requestOwner} colors={true}/>
-                        {this.state.lastsize===72&&this.state.lastresult.length!==0&&!this.state.loading?
+                        <MinecraftInventory style={{display:'block'}} key={this.state.queryString} inventory={this.state.results} onClick={this.requestOwner} colors={true}/>
+                        {this.state.lastsize===pageSize&&this.state.results.length!==0&&!this.state.loading?
                         <div style={{margin:'auto',textAlign:'center'}}>
                             <button onClick={this.loadMore} className='srchBtn'>Load More</button>
                         </div>:''}

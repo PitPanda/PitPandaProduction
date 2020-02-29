@@ -2,14 +2,13 @@ import React from 'react';
 import parseStyle from '../../scripts/colorCodes.js';
 import './minecraftStyles.css';
 
-class MinecraftText extends React.Component{
+class MinecraftText extends React.PureComponent{
     static getDerivedStateFromProps(props,state){
         if(props.raw!==state.raw||props.text){
             if(props.text){
                 state.text = props.text;
             }else{
                 state.text = parseStyle(props.raw).raw;
-                state.raw=props.raw;
             }
         }
         return state;

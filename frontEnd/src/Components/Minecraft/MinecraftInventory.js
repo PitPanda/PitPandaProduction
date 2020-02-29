@@ -1,36 +1,58 @@
 import React from 'react';
-import uuid from 'uuid';
 import MinecraftItemSlot from './MinecraftItemSlot';
 import './minecraftStyles.css';
 
 class MinecraftInventory extends React.Component {
-    state={};
-
-    static getDerivedStateFromProps(props,state){
+    constructor(props){
+        super(props);
         const width = props.width || 9;
         const rows = props.rows || 1;
-        let inventory = props.inventory || [];
+        let len = (props.inventory || []).length;
         const toFill = Math.max(
-            rows*width-inventory.length,
-            width*Math.ceil(inventory.length/width)-inventory.length
+            rows*width-len,
+            width*Math.ceil(len/width)-len
         );
-        for(let i = 0; i < toFill; i++)inventory.push({fake:true});
-        inventory = inventory.map(item=>{
-            //if(!item.uuid) item.uuid = uuid.v4();
-            item.uuid = uuid.v4();
-            return item;
-        });
-        return {items:inventory,width};
+        let filler = new Array(toFill).fill({});
+        let style = props.style || {};
+        style.maxWidth=`${55.4*width}px`;
+        this.state = {
+            inventory: props.inventory,
+            width,
+            style,
+            filler
+        };
+    }
+
+    static getDerivedStateFromProps(props,state){
+        if(props.inventory===state.inventory)return state;
+        const width = props.width || 9;
+        const rows = props.rows || 1;
+        let len = (props.inventory || []).length;
+        const toFill = Math.max(
+            rows*width-len,
+            width*Math.ceil(len/width)-len
+        );
+        let filler;
+        if(toFill===state.filler.length) filler = state.filler;
+        else filler = new Array(toFill).fill({});
+        let style = props.style || {};
+        style.maxWidth=`${55.4*width}px`;
+        return {
+            inventory: props.inventory,
+            width,
+            style,
+            filler
+        };
     }
 
     render() {
-        let style = {};
-        if(this.props.style) style = JSON.parse(JSON.stringify(this.props.style));
-        style.maxWidth=`${55.4*this.state.width}px`;
         return (
-            <div style={style} className="MinecraftInventory">
-                {this.state.items.map((item,index)=>(
-                    <MinecraftItemSlot key={item.uuid} item={item} colors={this.props.colors} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
+            <div style={this.state.style} className="MinecraftInventory">
+                {(this.state.inventory||[]).map((item,index)=>(
+                    <MinecraftItemSlot key={(item.uuid||'')+index} item={item} colors={this.props.colors} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
+                ))}
+                {this.state.filler.map((blank,index)=>(
+                    <MinecraftItemSlot key={'filler'+index} item={blank} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
                 ))}
             </div>
         );
