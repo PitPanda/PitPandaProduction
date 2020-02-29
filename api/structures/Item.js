@@ -16,9 +16,10 @@ class Item{
      * @param {number} id 
      * @param {number|string} meta 
      * @param {number} count 
+     * @param {number} nonce 
      * @returns {Item}
      */
-    constructor(name='',desc=[],id=0,meta=0,count=1){
+    constructor(name='',desc=[],id=0,meta=0,count=1, nonce){
         /**
          * Item's custom name if it has one or its minecraft default name
          * @type {string}
@@ -44,6 +45,11 @@ class Item{
          * @type {number}
          */
         this.count=count;
+        /**
+         * Item nonce
+         * @type {number}
+         */
+        this.nonce=nonce;
     }
 
     /**

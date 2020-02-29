@@ -29,7 +29,7 @@ const itemSearch = (req,res)=>{
             query.owner = str.substring(4);
             continue;
         }
-        const end = /[0-9]{1,}(\+|-)?$/.exec(str);
+        const end = /-?[0-9]{1,}(\+|-)?$/.exec(str);
         if(end) {
             const a = str.substring(0,end.index);
             let b;

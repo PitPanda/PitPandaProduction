@@ -174,7 +174,9 @@ function dbToItem(doc){
                 ...Mystics[key].Descriptions[Math.min(level-1,Mystics[key].Descriptions.length-1)]
             ]).flat(1)],
             doc.item.id,
-            (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined
+            (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined,
+            1,
+            doc.nonce
         )
     };
 } module.exports.dbToItem = dbToItem;
