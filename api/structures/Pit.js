@@ -47,17 +47,6 @@ class Pit{
          * @type {object}
          */
         this.inventories = {};
-        /**
-         * promise for when inventories will be loaded
-         * @type {Promise<item[][] | void>}
-         */
-        this.NBTInventoryPromise = Promise.all([
-            this.loadInventory(),
-            this.loadArmor(),
-            this.loadEnderchest(),
-            this.loadStash(),
-            this.loadWell()
-        ]);
 
         /**
          * Array of Player's Prestige Details
@@ -890,6 +879,18 @@ class Pit{
             enumerable:true,
             get: ()=>this.getStat('stats','Pit','pit_stats_ptl','king_quest_completion')
         });
+
+        /**
+         * promise for when inventories will be loaded
+         * @type {Promise<item[][] | void>}
+         */
+        this.NBTInventoryPromise = Promise.all([
+            this.loadInventory(),
+            this.loadArmor(),
+            this.loadEnderchest(),
+            this.loadStash(),
+            this.loadWell()
+        ]);
     }
 
     /**
