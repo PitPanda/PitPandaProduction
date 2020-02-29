@@ -58,11 +58,16 @@ class ItemSearch extends React.Component {
     readyItems = (items) => {
         for(let item of items){
             item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-            if(this.state.knownUUIDS[item.owner]) item.item.desc.unshift('§7Owner: '+this.state.knownUUIDS[item.owner]);
-            else item.item.desc.unshift('§7Owner: Click to request');
+            if(this.state.knownUUIDS[item.owner]) {
+                item.item.desc.unshift('§7Owner: '+this.state.knownUUIDS[item.owner]);
+                item.item.checked = true;
+            }
+            else {
+                item.item.desc.unshift('§7Owner: Click to request');
+                item.item.checked = false;
+            }
             item.item.uuid = item.id;
             item.item.owner = item.owner;
-            item.item.checked = false;
         }
     }
 

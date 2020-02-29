@@ -1267,9 +1267,9 @@ class Pit{
             ];
             const perflore = [
                 `${Colors.GRAY}XP: ${Colors.AQUA}${formatNumber(this.xp)}`,
-                `${Colors.GRAY}XP/hour: ${Colors.AQUA}${formatNumber(this.xpHourly)}`,
+                `${Colors.GRAY}XP/hour: ${Colors.AQUA}${formatNumber(Math.round(this.xpHourly))}`,
                 `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${formatNumber(this.lifetimeGold)}g`,
-                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${formatNumber(this.goldHourly)}g`,
+                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${formatNumber(Math.round(this.goldHourly))}g`,
                 `${Colors.GRAY}K/D: ${Colors.GREEN}${formatNumber(this.killDeathRatio)}`,
                 `${Colors.GRAY}K+A/D: ${Colors.GREEN}${formatNumber(this.killAssistDeathRatio)}`,
                 `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${formatNumber(this.killAssistHourly)}`,
