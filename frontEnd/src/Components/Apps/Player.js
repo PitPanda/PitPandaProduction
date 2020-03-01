@@ -52,21 +52,21 @@ class Player extends React.Component {
                 margin: '20px',
                 minWidth: '350px'
               }}>
-                <StaticCard title="Profile" content={
+                <StaticCard title="Profile">
                   <div>
                     <img 
                       src={`https://crafatar.com/avatars/${this.state.user.uuid}?overlay=true`} 
                       style = {{width:'100px', height:'100px', display:'inline-block'}}
                       alt = ''
                     />
-                    <div style={{verticalAlign:'top', display:'inline-block', marginTop:'2px',marginLeft:'10px', fontSize:'17px'}}>
+                    <div key={this.state.user.uuid} style={{verticalAlign:'top', display:'inline-block', marginTop:'2px',marginLeft:'10px', fontSize:'17px'}}>
                       <MinecraftText style={{fontSize:'110%'}} raw={this.state.user.formattedName}/><br/>
                       <MinecraftText raw={`LVL: ${this.state.user.formattedLevel}`}/><br/>
                       <MinecraftText raw={`Gold: §6${this.state.user.currentGold.toLocaleString()}g`}/><br/>
                       <MinecraftText raw={`Played: §f${frontendTools.minutesToString(this.state.user.playtime)}`}/>
                     </div>
                   </div>
-                }/>
+                </StaticCard>
                 <StaticCard title="Status" content={
                   <div style={{fontSize:'16px'}}>
                     <MinecraftText className='text-title' style={{color:this.state.user.online?'green':'red'}} text={this.state.user.online?'Online':'Offline'}/><br/>

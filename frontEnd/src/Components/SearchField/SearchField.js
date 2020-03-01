@@ -148,7 +148,7 @@ class SearchField extends Component {
             }
             // User pressed the down arrow, increment the index
             else if (e.keyCode === 40) {
-                if (activeSuggestion - 1 === filteredSuggestions.length) {
+                if (activeSuggestion + 1 === filteredSuggestions.length) {
                     return;
                 }
     

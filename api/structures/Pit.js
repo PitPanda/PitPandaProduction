@@ -8,6 +8,7 @@ const UnlockCollection = require('./UnlockCollection');
 const {inflate} = require('pako');
 const nbt = require('nbt');
 const Mystic = require('../models/Mystic');
+const Player = require('../models/Player');
 
 /**
  * Represents the player output from the Hypixel API
@@ -884,13 +885,68 @@ class Pit{
          * promise for when inventories will be loaded
          * @type {Promise<item[][] | void>}
          */
-        this.NBTInventoryPromise = Promise.all([
-            this.loadInventory(),
-            this.loadArmor(),
-            this.loadEnderchest(),
-            this.loadStash(),
-            this.loadWell()
-        ]);
+        this.NBTInventoryPromise;
+        Object.defineProperty(this,'NBTInventoryPromise',{
+            enumerable: false,
+            value: Promise.all([
+                this.loadInventory(),
+                this.loadArmor(),
+                this.loadEnderchest(),
+                this.loadStash(),
+                this.loadWell()
+            ])
+        });
+
+        /*
+        const mystic = {
+            owner: this.uuid,
+            enchants,
+            nonce,
+            lives,
+            maxLives,
+            item:{
+                id,
+                meta,
+                name: getRef(item,'tag','value','display','value','Name','value')
+            },
+            flags,
+            tokens: tokenCount,
+            lastseen: Date.now()
+        };*/
+        //return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
+        const playerDoc = new Player({
+            _id:this.uuid,
+            kills: this.kills,
+            assists: this.assists,
+            damageDealt: this.damageDealt,
+            damageReceived: this.damageReceived,
+            damageRatio: this.damageRatio,
+            highestStreak: this.highestStreak,
+            deaths: this.deaths,
+            kdr: this.killDeathRatio,
+            xp: this.xp,
+            gold: this.currentGold,
+            lifetimeGold: this.lifetimeGold,
+            playtime: this.playtime,
+            contracts: this.contractsCompleted,
+            gapples: this.gapplesEaten,
+            gheads: this.gheadsEaten,
+            lavaBuckets: this.lavaBucketsPlaced,
+            soups: this.soupsDrank,
+            tierThrees: this.mysticsEnchanted[2],
+            darkPants: this.darkPantsCreated,
+            leftClicks: this.leftClicks,
+            chatMessages: this.chatMessages,
+            wheatFarmed: this.wheatFarmed,
+            fishedAnything: this.fishedAnything,
+            blocksBroken: this.blocksBroken,
+            kingsQuests: this.kingsQuestCompletions,
+            sewerTreasures: this.sewerTreasuresFound,
+            nightQuests: this.nightQuestsCompleted,
+            renown: this.renown,
+            lifetimeRenown: this.lifetimeRenown
+        });
+        Player.findOneAndUpdate({_id:this.uuid},playerDoc,{upsert:true,useFindAndModify:false}).catch(console.err);
     }
 
     /**
