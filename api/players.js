@@ -15,14 +15,4 @@ router.use('/:tag', (req,res)=>{
     });
 });
 
-let uuids = require('./uuids.json');
-console.log(uuids);
-function pop(){
-    const uuid = uuids.pop();
-    console.log(uuid);
-    hypixelAPI(uuid).then(json=>new Pit(json));
-    if(uuids.length) setTimeout(pop,400);
-}
-setTimeout(pop,400)
-
 module.exports = router;
