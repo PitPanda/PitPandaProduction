@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: pitpanda.rocks
+Token: 6a5d46aae7eef01516f40898369a0b40bcc05767aff636e18daa4414717ea670
