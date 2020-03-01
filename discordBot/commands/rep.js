@@ -1,7 +1,8 @@
 const Command = require('./Command');
 const {WebhookClient, RichEmbed} = require('discord.js');
 const PendingRep = require('../../models/PendingRep');
-const RepLogHook = new WebhookClient('678842693324898325','x1LTfFFw6DsFVe8tzlxScMFgLCMspQE_VjN6onT4XG_qSLqBfnWfyF2wA3ozSCIGKejw');
+const {WebHook} = require('../CoreConfig.json');
+const RepLogHook = new WebhookClient(...WebHook);
 
 function command(msg,rest){
     let target = msg.mentions.members.first();
