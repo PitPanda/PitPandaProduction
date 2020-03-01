@@ -8,7 +8,7 @@ function command(msg){
         .setTitle('Trade Center Bot usage')
         .setColor('#9040ff');
     for(const cmd of require('../commandList')){
-        if(!cmd.info.staff || tools.isStaff(msg)) embed.addField(cmd.info.example.replace('$',Prefix),cmd.info.description);
+        if(!cmd.info.staff || tools.isStaff(msg)) embed.addField(cmd.info.example.replace('$',Prefix),cmd.info.description.replace('$',Prefix));
     }
     msg.channel.send(embed);
 }
