@@ -13,7 +13,7 @@ class MinecraftInventory extends React.Component {
             width*Math.ceil(len/width)-len
         );
         let filler = new Array(toFill).fill({});
-        let style = props.style || {};
+        let style = {...props.style} || {};
         style.maxWidth=`${55.4*width}px`;
         this.state = {
             inventory: props.inventory,

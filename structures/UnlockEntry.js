@@ -1,4 +1,4 @@
-const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../../frontEnd/src/pitMaster.json');
+const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../frontEnd/src/pitMaster.json');
 const {isTiered} = require('../apiTools');
 
 /**

@@ -1,7 +1,7 @@
 const {getRef,romanNumGen,toHex} = require('../apiTools');
-const mcitems = require('../../minecraftItems.json');
-const mcenchants = require('../../enchants.json');
-const {Extra:{ColorCodes}} = require('../../frontEnd/src/pitMaster.json');
+const mcitems = require('../minecraftItems.json');
+const mcenchants = require('../enchants.json');
+const {Extra:{ColorCodes}} = require('../frontEnd/src/pitMaster.json');
 
 
 /**

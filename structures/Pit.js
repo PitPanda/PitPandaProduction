@@ -1,5 +1,5 @@
 const {getRef,formatNumber,romanNumGen} = require('../apiTools');
-const pitMaster = require('../../frontEnd/src/pitMaster.json');
+const pitMaster = require('../frontEnd/src/pitMaster.json');
 const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
 const Item = require('./Item');
 const Prestige = require('./Prestige');
@@ -913,7 +913,7 @@ class Pit{
             tokens: tokenCount,
             lastseen: Date.now()
         };*/
-        //return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
+        //return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.error);
         const playerDoc = new Player({
             _id:this.uuid,
             kills: this.kills,
@@ -946,7 +946,7 @@ class Pit{
             renown: this.renown,
             lifetimeRenown: this.lifetimeRenown
         });
-        Player.findOneAndUpdate({_id:this.uuid},playerDoc,{upsert:true,useFindAndModify:false}).catch(console.err);
+        Player.findOneAndUpdate({_id:this.uuid},playerDoc,{upsert:true,useFindAndModify:false}).catch(console.error);
     }
 
     /**
@@ -1465,7 +1465,7 @@ class Pit{
                 tokens: tokenCount,
                 lastseen: Date.now()
             };
-            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.err);
+            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.error);
         }
     }
 } module.exports = Pit;

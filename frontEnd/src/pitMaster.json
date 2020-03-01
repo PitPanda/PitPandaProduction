@@ -1077,7 +1077,7 @@
 			{"Multiplier": 45, "TotalXp": 2967750, "SumXp": 23132080, "GoldReq": 2700000, "Renown": 50, "Color": "LIGHT_PURPLE", "ColorCode":"§d"},
 			{"Multiplier": 50, "TotalXp": 3297500, "SumXp": 26429580, "GoldReq": 3000000, "Renown": 60, "Color": "LIGHT_PURPLE", "ColorCode":"§d"},
 			{"Multiplier": 75, "TotalXp": 4946250, "SumXp": 31375830, "GoldReq": 4500000, "Renown": 75, "Color": "LIGHT_PURPLE", "ColorCode":"§d"},
-			{"Multiplier": 100, "TotalXp": 6595000, "SumXp": 37970830, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
+			{"Multiplier": 100, "TotalXp": 6595000, "SumXp": 37970830, "GoldReq": 10000000, "Renown": 250, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 44631780, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 51292730, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},
 			{"Multiplier": 101, "TotalXp": 6660950, "SumXp": 57953680, "GoldReq": 10000000, "Renown": 100, "Color": "WHITE", "ColorCode":"§f"},

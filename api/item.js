@@ -1,8 +1,8 @@
-const Mystic = require('./models/Mystic');
-const Item = require('./structures/Item');
-const {dbToItem} = require('./apiTools');
-const {hypixelAPI} = require('./apiTools');
-const Pit = require('./structures/Pit');
+const Mystic = require('../models/Mystic');
+const Item = require('../structures/Item');
+const {dbToItem} = require('../apiTools');
+const hypixelAPI = require('../playerRequest');
+const Pit = require('../structures/Pit');
 
 const router = require('express').Router();
 router.use('/:id', (req,res)=>{
@@ -34,7 +34,7 @@ module.exports = router;
 /*
 
 const router = require('express').Router();
-const {hypixelAPI} = require('./apiTools');
+const hypixelAPI = require('./playerRequest');
 const Pit = require('./structures/Pit');
 
 router.use('/:tag', (req,res)=>{

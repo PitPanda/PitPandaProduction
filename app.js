@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const api = require('./api/api');
+require('./discordBot/bot');
 
 app.use(express.static('frontEnd/build'));
 

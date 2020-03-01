@@ -1,6 +1,6 @@
 const UnlockEntry = require('./UnlockEntry');
 const Item = require('./Item');
-const {Pit: {Upgrades, RenownUpgrades, Perks}} = require('../../frontEnd/src/pitMaster.json');
+const {Pit: {Upgrades, RenownUpgrades, Perks}} = require('../frontEnd/src/pitMaster.json');
 const {getRef, toHex, romanNumGen, isTiered} = require('../apiTools');
 
 /**

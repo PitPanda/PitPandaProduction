@@ -1,5 +1,6 @@
 /node_modules
 /frontEnd/node_modules
+/discordBot/CoreConfig.json
 .vs/
 keys.json
 dbLogin.json

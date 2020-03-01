@@ -1,5 +1,5 @@
 const {formatNumber,abbrNum} = require('../apiTools');
-const pitMaster = require('../../frontEnd/src/pitMaster.json');
+const pitMaster = require('../frontEnd/src/pitMaster.json');
 
 /**
  * Progress class (used on pitpanda for progress bars)
