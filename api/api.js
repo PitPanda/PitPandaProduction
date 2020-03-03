@@ -5,6 +5,7 @@ const item = require('./item');
 const itemSearch = require('./itemSearch');
 const {APIerror} = require('../apiTools');
 const username = require('./username');
+const custom = require('./custom');
 const mongoose = require('mongoose');
 const ApiStat = require('../models/ApiStat');
 
@@ -15,8 +16,10 @@ mongoose.connect(require('../dbLogin.json'),{useNewUrlParser:true,useUnifiedTopo
 mongoose.set('useFindAndModify', false);
 
 router.use('*',(req,res,next)=>{
-    const args = req.originalUrl.substring(1).split('/');
-    const path = `/api/${args[1]}`;
+    const args = req.originalUrl.substring(1).toLowerCase().split('/');
+    if(!args[1])return;
+    let path = `/api/${args[1]}`;
+    if(args[1]==='custom')path+=`/${args[2]}`
     if(!statBatch[path])statBatch[path]=1;
     else if(statBatch[path]===batchSize){
         statBatch[path]=0;
@@ -31,6 +34,7 @@ router.use('/dump',dump);
 router.use('/item',item);
 router.use('/itemSearch',itemSearch);
 router.use('/username',username);
+router.use('/custom',custom);
 
 router.use('*', APIerror('Invalid Endpoint'))
 

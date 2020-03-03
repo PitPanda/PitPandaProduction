@@ -1,22 +1,22 @@
 const {getRef,romanNumGen,toHex,getItemNameFromId} = require('../apiTools');
-const {Extra:{ColorCodes}} = require('../frontEnd/src/pitMaster.json');
 const mcenchants = require('../enchants.json');
+
 
 /**
  * Represents a minecraft item
  */
-class Item{
+class SimpleItem{
     
     /**
-     * Constructs an Item
-     * @param {string} name 
-     * @param {string[]} lore 
+     * 
+     * @param {String} name 
      * @param {number} id 
-     * @param {number|string} meta 
+     * @param {number|String} meta 
      * @param {number} count 
-     * @returns {Item}
+     * @param {any} rest
+     * @returns {SimpleItem}
      */
-    constructor(name='',desc=[],id=0,meta=0,count=1){
+    constructor(name='',id=0,meta=0,count=1, rest={}){
         /**
          * Item's custom name if it has one or its minecraft default name
          * @type {string}
@@ -28,11 +28,6 @@ class Item{
          */
         this.id=id;
         /**
-         * Item lore/description
-         * @type {string[]}
-         */
-        this.desc=desc;
-        /**
          * minecraft item meta OR leather color
          * @type {(number|string)}
          */
@@ -42,6 +37,21 @@ class Item{
          * @type {number}
          */
         this.count=count;
+        /**
+         * Item nonce
+         * @type {number}
+         */
+        this.nonce=rest.nonce;
+        /**
+         * Vanilla enchants
+         * @type {any[]}
+         */
+        this.vanillaEnchants=rest.vanillaEnchants;
+        /**
+         * Mystic enchants
+         * @type {any[]}
+         */
+        this.mysticEnchants=rest.mysticEnchants;
     }
 
     /**
@@ -59,24 +69,29 @@ class Item{
             getRef(item,'tag','value','display','value','Name','value') ||
             getItemNameFromId(id,meta);
         
-        const lore = 
-            (getRef(item, "tag","value","display","value","Lore","value","value")||[])
-            .concat((getRef(item, "tag", "value", "ench", "value", "value")||[])
-            .map(getEnchantDescription));
-        
         const count = getRef(item,"Count","value");
 
-        return new Item(name,lore,id,meta,count);
+        let optionals = {};
+        if(getRef(item,'tag','value','ExtraAttributes')){
+            optionals.nonce =  getRef(item,'tag','value','ExtraAttributes','value','Nonce','value');
+            let mysticEnchants = getRef(item,'tag','value','ExtraAttributes','value','CustomEnchants','value','value');
+            if(mysticEnchants) optionals.mysticEnchants = mysticEnchants.map(ench=>({key:ench.Key.value,tier:ench.Level.value}));
+            let vanillaEnchants = getRef(item, "tag", "value", "ench", "value", "value");
+            if(vanillaEnchants&&vanillaEnchants.length) optionals.vanillaEnchants = vanillaEnchants.map(enchantFormat);
+        }
+
+        return new SimpleItem(name,id,meta,count,optionals);
     }
-} module.exports = Item;
+} module.exports = SimpleItem;
 
 /**
  * Takes unformatted nbt data for enchant and formats a stirng
  * @param {Object} ench 
- * @returns {string}
+ * @returns {Object}
  */
-function getEnchantDescription(ench){
+function enchantFormat(ench){
+    console.log(ench)
     const info = mcenchants.find(el=>el.id==ench.id.value);
-    if(!info) return '';
-    return `${ColorCodes.GRAY}${info.displayName} ${romanNumGen(ench.lvl.value)}`;
+    if(!info) return {key:'unknown',tier:0};
+    return {key:info.displayName,tier:ench.lvl.value};
 }

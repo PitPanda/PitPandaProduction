@@ -1,4 +1,5 @@
 const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics},Extra:{ColorCodes:Colors}} = require('./frontEnd/src/pitMaster.json');
+const mcitems = require('./minecraftItems.json');
 
 /**
  * Generates a function to send to router to display a given error message
@@ -125,6 +126,19 @@ function abbrNum(number, decPlaces) { //https://stackoverflow.com/questions/2685
     return number;
 } module.exports.abbrNum = abbrNum;
 
+/**
+ * takes item id and meta and returns it item name
+ * @param {number} id 
+ * @param {number} meta 
+ * @returns {string}
+ */
+function getItemNameFromId(id,meta){
+    const firstcheck = mcitems.filter(item=>item.type==id);
+    if(firstcheck.length==0) return;
+    const secondcheck = firstcheck.find(item=>item.meta==meta);
+    return (secondcheck||firstcheck[0]).name;
+} module.exports.getItemNameFromId = getItemNameFromId;
+
 const Item = require('./structures/Item');
 /**
  * converts document to item
@@ -145,8 +159,7 @@ function dbToItem(doc){
             ]).flat(1)],
             doc.item.id,
             (typeof doc.item.meta !== 'undefined')?toHex(doc.item.meta):undefined,
-            1,
-            doc.nonce
+            1
         )
     };
 } module.exports.dbToItem = dbToItem;

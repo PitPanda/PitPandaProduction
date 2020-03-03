@@ -2,6 +2,7 @@ const {getRef,formatNumber,romanNumGen} = require('../apiTools');
 const pitMaster = require('../frontEnd/src/pitMaster.json');
 const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
 const Item = require('./Item');
+const SimpleItem = require('./SimpleItem');
 const Prestige = require('./Prestige');
 const Progress = require('./Progress');
 const UnlockCollection = require('./UnlockCollection');
@@ -48,6 +49,22 @@ class Pit{
          * @type {object}
          */
         this.inventories = {};
+
+        /**
+         * container for raw inventory data
+         * @type {object}
+         */
+        this.raw_inventories;
+        Object.defineProperty(this,'raw_inventories',{
+            enumerable:false,
+            value:{}
+        });
+
+        /**
+         * container for simplified inventory data
+         * @type {object}
+         */
+        this.simplified_inventories = {};
 
         /**
          * Array of Player's Prestige Details
@@ -883,7 +900,7 @@ class Pit{
 
         /**
          * promise for when inventories will be loaded
-         * @type {Promise<item[][] | void>}
+         * @type {Promise<Item[][] | void>}
          */
         this.NBTInventoryPromise;
         Object.defineProperty(this,'NBTInventoryPromise',{
@@ -932,6 +949,106 @@ class Pit{
             lifetimeRenown: this.lifetimeRenown
         });
         Player.findOneAndUpdate({_id:this.uuid},{$set:playerDoc},{upsert:true}).catch(console.error);
+
+        /**
+         * Player's main inventory
+         * @type {Item[]}
+         */
+        this.inventories.main;
+        Object.defineProperty(this.inventories,'main',{
+            enumerable:true,
+            get:()=>this.raw_inventories.main.map(Item.buildFromNBT)
+        });
+
+        /**
+         * Player's armor
+         * @type {Item[]}
+         */
+        this.inventories.armor;
+        Object.defineProperty(this.inventories,'armor',{
+            enumerable:true,
+            get:()=>this.raw_inventories.armor.map(Item.buildFromNBT)
+        });
+
+        /**
+         * Player's enderchest
+         * @type {Item[]}
+         */
+        this.inventories.enderchest;
+        Object.defineProperty(this.inventories,'enderchest',{
+            enumerable:true,
+            get:()=>this.raw_inventories.enderchest.map(Item.buildFromNBT)
+        });
+
+        /**
+         * Player's stash
+         * @type {Item[]}
+         */
+        this.inventories.stash;
+        Object.defineProperty(this.inventories,'stash',{
+            enumerable:true,
+            get:()=>this.raw_inventories.stash.map(Item.buildFromNBT)
+        });
+
+        /**
+         * Player's well
+         * @type {Item[]}
+         */
+        this.inventories.well;
+        Object.defineProperty(this.inventories,'well',{
+            enumerable:true,
+            get:()=>this.raw_inventories.well.map(Item.buildFromNBT)
+        });
+
+        /**
+         * Player's main inventory
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.main;
+        Object.defineProperty(this.simplified_inventories,'main',{
+            enumerable:true,
+            get:()=>this.raw_inventories.main.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's armor
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.armor;
+        Object.defineProperty(this.simplified_inventories,'armor',{
+            enumerable:true,
+            get:()=>this.raw_inventories.armor.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's enderchest
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.enderchest;
+        Object.defineProperty(this.simplified_inventories,'enderchest',{
+            enumerable:true,
+            get:()=>this.raw_inventories.enderchest.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's stash
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.stash;
+        Object.defineProperty(this.simplified_inventories,'stash',{
+            enumerable:true,
+            get:()=>this.raw_inventories.stash.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's well
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.well;
+        Object.defineProperty(this.simplified_inventories,'well',{
+            enumerable:true,
+            get:()=>this.raw_inventories.well.map(SimpleItem.buildFromNBT)
+        });
     }
 
     /**
@@ -1111,19 +1228,20 @@ class Pit{
 
     /**
      * Loads and caches the player's inventory
-     * @returns {Promise<Item[] | void>}
+     * @returns {Promise<any[] | void>}
      */
     loadInventory(){
         return new Promise(resolve=>{
+            if(this.raw_inventories.main)return resolve(this.raw_inventories.main);
             const rawInv = this.getStat('stats','Pit','profile','inv_contents','data');
             if(!rawInv) return resolve([]);
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's main inventory
-                 * @type {Item[]} 
+                 * @type {any[]} 
                  */
                 items = items.slice(9).concat(items.slice(0,9));
-                this.inventories.main = items;
+                this.raw_inventories.main = items;
                 resolve(items);
             });
         });
@@ -1131,19 +1249,20 @@ class Pit{
 
     /**
      * Loads and caches the player's Armor
-     * @returns {Promise<Item[] | void>} 
+     * @returns {Promise<any[] | void>} 
      */
     loadArmor(){
         return new Promise(resolve=>{
+            if(this.raw_inventories.armor)return resolve(this.raw_inventories.armor);
             const rawInv = this.getStat('stats','Pit','profile','inv_armor','data');
             if(!rawInv) return resolve([]);
             this.parseInv(Buffer.from(rawInv)).then(arr=>{
                 arr.reverse();
                 /**
                  * Player's armor
-                 * @type {Item[]} 
+                 * @type {any[]} 
                  */
-                this.inventories.armor = arr;
+                this.raw_inventories.armor = arr;
                 resolve(arr);
             });
         });
@@ -1151,18 +1270,19 @@ class Pit{
 
     /**
      * Loads and caches the player's Enderchest
-     * @returns {Promise<Item[] | void>} 
+     * @returns {Promise<any[] | void>} 
      */
     loadEnderchest(){
         return new Promise(resolve=>{
+            if(this.raw_inventories.enderchest)return resolve(this.raw_inventories.stash);
             const rawInv = this.getStat('stats','Pit','profile','inv_enderchest','data');
             if(!rawInv) return resolve([]);
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's enderchest
-                 * @type {Item[]} 
+                 * @type {any[]} 
                  */
-                this.inventories.enderchest = items;
+                this.raw_inventories.enderchest = items;
                 resolve(items);
             });
         });
@@ -1170,18 +1290,19 @@ class Pit{
 
     /**
      * Loads and caches the player's Stash
-     * @returns {Promise<Item[] | void>} 
+     * @returns {Promise<any[] | void>} 
      */
     loadStash(){
         return new Promise(resolve=>{
+            if(this.raw_inventories.stash)return resolve(this.raw_inventories.stash);
             const rawInv = this.getStat('stats','Pit','profile','item_stash','data');
             if(!rawInv) return resolve([]);
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's stash
-                 * @type {Item[]} 
+                 * @type {any[]} 
                  */
-                this.inventories.stash = items;
+                this.raw_inventories.stash = items;
                 resolve(items);
             });
         });
@@ -1189,10 +1310,11 @@ class Pit{
 
     /**
      * Loads and caches the player's Mystic Well
-     * @returns {Promise<Item[] | void>} 
+     * @returns {Promise<any[] | void>}
      */
     loadWell(){
         return new Promise(resolve=>{
+            if(this.raw_inventories.well) return resolve(this.raw_inventories.well);
             const invs = [
                 this.getStat('stats','Pit','profile','mystic_well_item','data'),
                 this.getStat('stats','Pit','profile','mystic_well_pants','data')
@@ -1211,8 +1333,8 @@ class Pit{
                  * Player's Mystic Well Items
                  * @type {Item[]}
                  */
-                this.inventories.well = result;
-                resolve(result);
+                this.raw_inventories.well = result;
+                resolve(this.raw_inventories.well);
             });
         });
     }
@@ -1395,15 +1517,16 @@ class Pit{
     /**
      * Takes byte array and returns a promise for its decoded contents
      * @param {Buffer} byteArr 
-     * @returns {Promise<Item[]>}
+     * @returns {Promise<any[]>} data that can be passed to Item.buildFromNBT
      */
     parseInv(byteArr){
         return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
             if(err) return resolve([]);
-            else return resolve(inv.value.i.value.value.map(item=>{
-                this.logMystic(item);
-                return Item.buildFromNBT(item);
-            }));
+            else {
+                let items = inv.value.i.value.value;
+                items.forEach(this.logMystic.bind(this));
+                return resolve(items);
+            }
         }));
     }
 
