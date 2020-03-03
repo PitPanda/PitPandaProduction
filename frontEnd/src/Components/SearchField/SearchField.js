@@ -104,7 +104,7 @@ class SearchField extends Component {
     select = index => {
         const reporting = this.state.filteredSuggestions[index][0];
         const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber));
-        if(showNumber) this.numRef.current.focus();//setTimeout(()=>this.numRef.current.focus(),0);
+        if(showNumber) setTimeout(()=>this.numRef.current.focus(),0);
         const userInput = this.state.filteredSuggestions[index][1].Name.replace(/§./g,'')
         this.setState({
             activeSuggestion: 0,
@@ -119,7 +119,6 @@ class SearchField extends Component {
     }
 
     onKeyDown = e => {
-        console.log(e.keyCode);
         const { activeSuggestion, filteredSuggestions, showSuggestions } = this.state;
         if(showSuggestions && filteredSuggestions.length && filteredSuggestions.length !== this.props.suggestions.length){
             if (e.keyCode === 13 || e.keyCode === 9) {
