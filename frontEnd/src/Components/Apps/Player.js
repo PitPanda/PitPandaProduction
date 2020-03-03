@@ -68,6 +68,14 @@ class Player extends React.Component {
                     </div>
                   </div>
                 </StaticCard>
+                {this.state.user.profileDisplay?(
+                  <StaticCard title={this.state.user.profileDisplay.title}>
+                    <div style={{maxWidth:'320px'}}>
+                      <p style={{marginBottom:'10px'}}>{this.state.user.profileDisplay.message}</p>
+                      <a href={this.state.user.profileDisplay.url}>{this.state.user.profileDisplay.linkTitle||this.state.user.profileDisplay.url}</a>
+                    </div>
+                  </StaticCard>
+                ):''}
                 <StaticCard title="Status" content={
                   <div style={{fontSize:'16px'}}>
                     <MinecraftText className='text-title' style={{color:this.state.user.online?'green':'red'}} text={this.state.user.online?'Online':'Offline'}/><br/>

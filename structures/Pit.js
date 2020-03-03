@@ -896,7 +896,7 @@ class Pit{
                 this.loadWell()
             ])
         });
-        
+
         const playerDoc = new Player({
             _id:this.uuid,
             name:this.name,
@@ -931,7 +931,7 @@ class Pit{
             renown: this.renown,
             lifetimeRenown: this.lifetimeRenown
         });
-        Player.findOneAndUpdate({_id:this.uuid},{$set:playerDoc},{upsert:true,useFindAndModify:false}).catch(console.error);
+        Player.findOneAndUpdate({_id:this.uuid},{$set:playerDoc},{upsert:true}).catch(console.error);
     }
 
     /**
@@ -1450,7 +1450,7 @@ class Pit{
                 tokens: tokenCount,
                 lastseen: Date.now()
             };
-            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.error);
+            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true}).catch(console.error);
         }
     }
 } module.exports = Pit;

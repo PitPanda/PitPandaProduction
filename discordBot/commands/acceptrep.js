@@ -14,7 +14,7 @@ function command(msg,rest){
             comment: rep.comment,
             evidence: rep.evidence
         };
-        DiscordUser.findOneAndUpdate({_id:rep.receiver},{$push:{reps:finalRep}},{upsert:true,useFindAndModify:false}).then(doc=>{
+        DiscordUser.findOneAndUpdate({_id:rep.receiver},{$push:{reps:finalRep}},{upsert:true}).then(doc=>{
             msg.reply('Rep has been accept successfully!');
         }).catch(err=>{
             console.error(err);

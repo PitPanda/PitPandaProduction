@@ -31,7 +31,7 @@ function command(msg,rest,alias){
             uuid: result.uuid
         });
         console.log(user);
-        DiscordUser.findOneAndUpdate({_id:msg.author.id},{$set:user},{upsert:true,useFindAndModify:false}).catch(console.error);
+        DiscordUser.findOneAndUpdate({_id:msg.author.id},{$set:user},{upsert:true}).catch(console.error);
     });
 }
 

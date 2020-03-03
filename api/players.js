@@ -7,10 +7,12 @@ router.use('/:tag', (req,res)=>{
         res.status(200);
         if(target.error) res.json({success:false,error:target.error});
         else {
-            target.loadInventorys().then(()=>{
+            Promise.all([target.loadInventorys(),Player.findOne({_id:target.uuid})]).then(([,player])=>{
                 data = {};
+                if(player) data.profileDisplay = player.profileDisplay;
                 data.uuid = target.uuid;
                 data.name = target.name;
+                data.bounty = target.bounty;
                 data.online = target.online;
                 data.lastSave = target.lastSave;
                 data.formattedName = target.formattedName;
@@ -22,7 +24,7 @@ router.use('/:tag', (req,res)=>{
                 data.xpProgress = target.xpProgress;
                 data.goldProgress = target.goldProgress;
                 data.renownProgress = target.renownProgress;
-                res.json({success:true,data})
+                res.json({success:true,data});
             });
         }
     });

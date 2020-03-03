@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+const profileDisplaySchema = mongoose.Schema({
+    url: String,
+    linkTitle: String,
+    message: String,
+    title: String
+},{_id:false});
+
 const PlayerSchema = mongoose.Schema({
     _id: String,
     lastsave: {
@@ -37,7 +44,11 @@ const PlayerSchema = mongoose.Schema({
     sewerTreasures: Number,
     nightQuests: Number,
     renown: Number,
-    lifetimeRenown: Number
+    lifetimeRenown: Number,
+    profileDisplay: {
+        type: profileDisplaySchema,
+        default: undefined
+    }
 });
 
 module.exports = mongoose.model('Players',PlayerSchema);

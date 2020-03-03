@@ -12,6 +12,7 @@ let statBatch = {};
 const batchSize = 10;
 
 mongoose.connect(require('../dbLogin.json'),{useNewUrlParser:true,useUnifiedTopology:true},()=>console.log('MongoDB Connected'));
+mongoose.set('useFindAndModify', false);
 
 router.use('*',(req,res,next)=>{
     const args = req.originalUrl.substring(1).split('/');
@@ -19,7 +20,7 @@ router.use('*',(req,res,next)=>{
     if(!statBatch[path])statBatch[path]=1;
     else if(statBatch[path]===batchSize){
         statBatch[path]=0;
-        ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true,useFindAndModify:false}).catch(console.error);
+        ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true}).catch(console.error);
     } statBatch[path]++;
     console.log(`requested ${req.originalUrl.substring(5)}`);
     next();
