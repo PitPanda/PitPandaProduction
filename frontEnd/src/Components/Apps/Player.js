@@ -150,7 +150,7 @@ class Player extends React.Component {
                         </tr>
                         {prestige.unlocks.length>0?prestige.unlocks.slice().reverse().map((item,i)=>
                           <tr key={i}>
-                            <td>{item.displayName} {item.tier||''}</td><td>{(new Date(item.timestamp)).toLocaleString()}</td>
+                            <td>{item.displayName} {(typeof item.tier === 'number')?item.tier+1:''}</td><td>{(new Date(item.timestamp)).toLocaleString()}</td>
                           </tr>
                         ):(
                           <tr>
