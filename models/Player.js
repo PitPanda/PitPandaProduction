@@ -6,6 +6,8 @@ const PlayerSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    name: String,
+    displayName: String,
     kills: Number,
     assists: Number,
     damageDealt: Number,

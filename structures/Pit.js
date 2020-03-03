@@ -896,26 +896,11 @@ class Pit{
                 this.loadWell()
             ])
         });
-
-        /*
-        const mystic = {
-            owner: this.uuid,
-            enchants,
-            nonce,
-            lives,
-            maxLives,
-            item:{
-                id,
-                meta,
-                name: getRef(item,'tag','value','display','value','Name','value')
-            },
-            flags,
-            tokens: tokenCount,
-            lastseen: Date.now()
-        };*/
-        //return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true,useFindAndModify:false}).catch(console.error);
+        
         const playerDoc = new Player({
             _id:this.uuid,
+            name:this.name,
+            displayName:this.levelFormattedName,
             kills: this.kills,
             assists: this.assists,
             damageDealt: this.damageDealt,
@@ -946,7 +931,7 @@ class Pit{
             renown: this.renown,
             lifetimeRenown: this.lifetimeRenown
         });
-        Player.findOneAndUpdate({_id:this.uuid},playerDoc,{upsert:true,useFindAndModify:false}).catch(console.error);
+        Player.findOneAndUpdate({_id:this.uuid},{$set:playerDoc},{upsert:true,useFindAndModify:false}).catch(console.error);
     }
 
     /**

@@ -19,6 +19,7 @@ class Player extends React.Component {
   }
 
   loadUser = (path) => {
+    if(path.length===0)return;
     fetch(`/api${path}`).then(res=>res.json()).then(json => {
       console.log(json);
       if(json.success) {
