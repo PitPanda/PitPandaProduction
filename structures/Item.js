@@ -61,8 +61,10 @@ class Item{
         
         const lore = 
             (getRef(item, "tag","value","display","value","Lore","value","value")||[])
-            .concat((getRef(item, "tag", "value", "ench", "value", "value")||[])
-            .map(getEnchantDescription));
+            .concat(
+                (getRef(item, "tag", "value", "ench", "value", "value")||[])
+                .map(getEnchantDescription)
+            );
         
         const count = getRef(item,"Count","value");
 
@@ -76,7 +78,6 @@ class Item{
  * @returns {string}
  */
 function getEnchantDescription(ench){
-    console.log(ench);
     const info = mcenchants.find(el=>el.id==ench.id.value);
     if(!info) return '';
     return `${ColorCodes.GRAY}${info.displayName} ${romanNumGen(ench.lvl.value)}`;
