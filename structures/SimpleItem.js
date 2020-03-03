@@ -76,10 +76,9 @@ class SimpleItem{
             optionals.nonce =  getRef(item,'tag','value','ExtraAttributes','value','Nonce','value');
             let mysticEnchants = getRef(item,'tag','value','ExtraAttributes','value','CustomEnchants','value','value');
             if(mysticEnchants) optionals.mysticEnchants = mysticEnchants.map(ench=>({key:ench.Key.value,tier:ench.Level.value}));
-            let vanillaEnchants = getRef(item, "tag", "value", "ench", "value", "value");
-            if(vanillaEnchants&&vanillaEnchants.length) optionals.vanillaEnchants = vanillaEnchants.map(enchantFormat);
         }
-
+        let vanillaEnchants = getRef(item, "tag", "value", "ench", "value", "value");
+        if(vanillaEnchants&&vanillaEnchants.length) optionals.vanillaEnchants = vanillaEnchants.map(enchantFormat);
         return new SimpleItem(name,id,meta,count,optionals);
     }
 } module.exports = SimpleItem;
@@ -90,7 +89,6 @@ class SimpleItem{
  * @returns {Object}
  */
 function enchantFormat(ench){
-    console.log(ench)
     const info = mcenchants.find(el=>el.id==ench.id.value);
     if(!info) return {key:'unknown',tier:0};
     return {key:info.displayName,tier:ench.lvl.value};
