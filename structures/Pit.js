@@ -433,7 +433,7 @@ class Pit{
         this.playtime;
         Object.defineProperty(this,'playtime',{
             enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','playtime_minutes')
+            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','playtime_minutes')||0
         });
 
         /**
