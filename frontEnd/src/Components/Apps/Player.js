@@ -70,9 +70,9 @@ class Player extends React.Component {
                 </StaticCard>
                 {this.state.user.profileDisplay?(
                   <StaticCard title={this.state.user.profileDisplay.title}>
-                    <div style={{maxWidth:'320px'}}>
-                      <p style={{marginBottom:'10px'}}>{this.state.user.profileDisplay.message}</p>
-                      <a href={this.state.user.profileDisplay.url}>{this.state.user.profileDisplay.linkTitle||this.state.user.profileDisplay.url}</a>
+                    <div style={{maxWidth:'300px'}}>
+                      <p>{this.state.user.profileDisplay.message}</p>
+                      {this.state.user.profileDisplay.url?<a style={{marginTop:'10px'}} href={this.state.user.profileDisplay.url}>{this.state.user.profileDisplay.linkTitle||this.state.user.profileDisplay.url}</a>:''}
                     </div>
                   </StaticCard>
                 ):''}
