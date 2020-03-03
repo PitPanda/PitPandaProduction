@@ -42,9 +42,9 @@ class ItemSearch extends React.Component {
                 if(json.success){
                     for(let item of targets){
                         item.checked = true;
-                        item.desc[0] = '§7Owner: '+json.leveled;
+                        item.desc[0] = '§7Owner: '+json.name;
                     }
-                    knownUUIDS[owner]=json.leveled;
+                    knownUUIDS[owner]=json.name;
                 }else{
                     for(let item of targets){
                         item.desc[0] = '§7Owner: §4ERROR';
