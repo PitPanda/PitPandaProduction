@@ -1234,7 +1234,10 @@ class Pit{
         return new Promise(resolve=>{
             if(this.raw_inventories.main)return resolve(this.raw_inventories.main);
             const rawInv = this.getStat('stats','Pit','profile','inv_contents','data');
-            if(!rawInv) return resolve([]);
+            if(!rawInv) {
+                this.raw_inventories.main=[];
+                return resolve([]);
+            }
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's main inventory
@@ -1255,7 +1258,10 @@ class Pit{
         return new Promise(resolve=>{
             if(this.raw_inventories.armor)return resolve(this.raw_inventories.armor);
             const rawInv = this.getStat('stats','Pit','profile','inv_armor','data');
-            if(!rawInv) return resolve([]);
+            if(!rawInv) {
+                this.raw_inventories.armor=[];
+                return resolve([]);
+            }
             this.parseInv(Buffer.from(rawInv)).then(arr=>{
                 arr.reverse();
                 /**
@@ -1274,9 +1280,12 @@ class Pit{
      */
     loadEnderchest(){
         return new Promise(resolve=>{
-            if(this.raw_inventories.enderchest)return resolve(this.raw_inventories.stash);
+            if(this.raw_inventories.enderchest)return resolve(this.raw_inventories.enderchest);
             const rawInv = this.getStat('stats','Pit','profile','inv_enderchest','data');
-            if(!rawInv) return resolve([]);
+            if(!rawInv) {
+                this.raw_inventories.enderchest=[];
+                return resolve([]);
+            }
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's enderchest
@@ -1296,7 +1305,10 @@ class Pit{
         return new Promise(resolve=>{
             if(this.raw_inventories.stash)return resolve(this.raw_inventories.stash);
             const rawInv = this.getStat('stats','Pit','profile','item_stash','data');
-            if(!rawInv) return resolve([]);
+            if(!rawInv) {
+                this.raw_inventories.stash=[];
+                return resolve([]);
+            }
             this.parseInv(Buffer.from(rawInv)).then(items=>{
                 /**
                  * Player's stash
