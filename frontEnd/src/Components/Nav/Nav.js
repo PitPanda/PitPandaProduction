@@ -6,20 +6,21 @@ function Nav(props){
     function onClick(ref){
         props.history.push(ref);
     }
-    let [selected, setSelected] = useState(0);
-    useEffect(()=>{
-        return props.history.listen((location)=>{
-            let best = 0;
-            for(let i = 0; i < buttons.length; i++){
-                if(location.pathname.startsWith(buttons[i].path)) best = i;
-            }
-            setSelected(best);
-        });
-    });
     const buttons = [
         {name:'Pit Panda',path:'/'},
         {name:'Mystic Searcher',path:'/itemsearch'}
     ];
+    const findBest = (path) => {
+        let best = 0;
+        for(let i = 0; i < buttons.length; i++){
+            if(path.startsWith(buttons[i].path)) best = i;
+        }
+        return best;
+    }
+    let [selected, setSelected] = useState(findBest(window.location.pathname));
+    useEffect(()=>{
+        return props.history.listen((location)=>setSelected(findBest(location.pathname)));
+    });
     return (
         <ul className='nav'>
             {buttons.map((info,index)=>(

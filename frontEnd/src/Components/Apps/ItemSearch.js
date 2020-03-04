@@ -14,11 +14,24 @@ class ItemSearch extends React.Component {
         queryString:''
     };
 
+    componentDidMount(){
+        if(this.props.match.params.query) this.query(this.props.match.params.query);
+        this.unlisten = this.props.history.listen((location)=>{
+            this.query(location.pathname.substring('/itemsearch/'.length));
+        });
+    }
+
+    componentWillUnmount(){
+        this.unlisten();
+    }
+
     query=(queryString)=>{
-        console.log(queryString);
-        if(queryString.length===0||this.state.queryString===queryString)return;
+        if(queryString.length===0||this.state.queryString===queryString)
+            return this.setState({results:new Array(9).fill({fake:true}),loading:false,lastsize:0,page:0,queryString});;
+        const path = '/api/itemsearch/'+queryString;
+        console.log(path);
         this.setState({loading:true,page:0,queryString});
-        fetch(`/api/itemSearch/${queryString}`).then(res=>res.json()).then(json => {
+        fetch(path).then(res=>res.json()).then(json => {
             if(!json.success) return;
             this.readyItems(json.items);
             const result = json.items.map(item=>item.item);
@@ -26,6 +39,8 @@ class ItemSearch extends React.Component {
             this.setState({results:result,loading:false,lastsize:result.length});
         });
     }
+
+    updatePath=(queryString)=>this.props.history.push(`/itemsearch/${queryString}`);
     
     requestOwner=(index)=>{
         if(!this.state.results[index].fake&&!this.state.results[index].checked){
@@ -92,7 +107,6 @@ class ItemSearch extends React.Component {
         }else{
             let path = `${window.location.origin}/players/${this.state.results[i].owner}`;
             let win = window.open(path);
-            console.log(path,win);
             win.focus();
         }
     }
@@ -101,7 +115,7 @@ class ItemSearch extends React.Component {
         return (
             <div style={{textAlign:'center'}}>
                 <h1 className="page-header" style={{marginBottom:'200px'}}>Pit Panda Mystic Search</h1>
-                <QueryBox query={this.query}/>
+                <QueryBox query={this.updatePath}/>
                 <div style={{display:'inline-block',textAlign:'left',margin:'20px'}}>
                     <StaticCard title="Results">
                         <MinecraftInventory style={{display:'block'}} key={this.state.queryString} inventory={this.state.results} onContextMenu={this.directToOwner} onClick={this.requestOwner} colors={true}/>
