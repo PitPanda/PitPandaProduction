@@ -34,6 +34,7 @@ class ItemSearch extends React.Component {
             let knownUUIDS = this.state.knownUUIDS;
             let targets = results.filter(item=>item.owner===owner);
             for(let item of targets){
+                item.checked = true;
                 item.desc[0] = '§7Owner: Loading';
             }
             this.setState({results});
@@ -41,12 +42,12 @@ class ItemSearch extends React.Component {
                 console.log(json);
                 if(json.success){
                     for(let item of targets){
-                        item.checked = true;
                         item.desc[0] = '§7Owner: '+json.name;
                     }
                     knownUUIDS[owner]=json.name;
                 }else{
                     for(let item of targets){
+                        item.checked = false;
                         item.desc[0] = '§7Owner: §4ERROR';
                     }
                 }
