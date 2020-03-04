@@ -53,7 +53,7 @@ function MinecraftItemSlot(props){
         if(name.toLowerCase().includes('overpowered')) cls = 'overpowered';
     }
     return (
-        <div className={`item ${cls}`} onClick={props.onClick}>
+        <div className={`item ${cls}`} onClick={props.onClick} onContextMenu={props.onContextMenu}>
             <MinecraftItemImg id={id} meta={meta} count={count}/>
             {
                 (name.length>0||desc.length>0)?

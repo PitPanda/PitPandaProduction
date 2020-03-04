@@ -13,7 +13,7 @@ class Player extends React.Component {
 
   componentDidMount(){
     this.loadUser(`/players/${(this.props.match.params.id||'').trim()}`);
-    this.unlisten = this.props.history.listen((location,action,c)=>{
+    this.unlisten = this.props.history.listen((location)=>{
       this.loadUser(location.pathname);
     });
   }
@@ -28,12 +28,6 @@ class Player extends React.Component {
       console.log(json);
       if(json.success) {
         this.setState({user:json.data,error:undefined});
-        document.title = `Pit Panda - ${json.data.name}`;
-        let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/png';
-        link.rel = 'icon';
-        link.href = `https://crafatar.com/avatars/${json.data.uuid}?overlay=true`;
-        document.getElementsByTagName('head')[0].appendChild(link);
       } else this.setState({error:json.error,user:undefined});
     }).catch((err)=>{
       this.setState({error:err,user:undefined});

@@ -6,7 +6,7 @@ import QueryBox from '../QueryBox/QueryBox';
 const pageSize = 72;
 class ItemSearch extends React.Component {
     state={
-        results:[],
+        results:new Array(9).fill({fake:true}),
         loading:false,
         lastsize:0,
         knownUUIDS:{},
@@ -14,11 +14,22 @@ class ItemSearch extends React.Component {
         queryString:''
     };
 
+    componentDidMount(){
+        if(this.props.match.params.query) this.query('itemsearch/'+this.props.match.params.query);
+        this.unlisten = this.props.history.listen((location)=>{
+            this.query(location.pathname);
+        });
+    }
+
+    componentWillUnmount(){
+        this.unlisten();
+    }
+
     query=(queryString)=>{
         console.log(queryString);
         if(queryString.length===0||this.state.queryString===queryString)return;
         this.setState({loading:true,page:0,queryString});
-        fetch(`/api/itemSearch/${queryString}`).then(res=>res.json()).then(json => {
+        fetch(`/api/${queryString}`).then(res=>res.json()).then(json => {
             if(!json.success) return;
             this.readyItems(json.items);
             const result = json.items.map(item=>item.item);
@@ -26,6 +37,8 @@ class ItemSearch extends React.Component {
             this.setState({results:result,loading:false,lastsize:result.length});
         });
     }
+
+    updatePath=(queryString)=>this.props.history.push(`/itemsearch/${queryString}`);
     
     requestOwner=(index)=>{
         if(!this.state.results[index].fake&&!this.state.results[index].checked){
@@ -84,14 +97,27 @@ class ItemSearch extends React.Component {
         });
     }
 
+    directToOwner = (i,e) =>{
+        e.preventDefault();
+        if(this.state.results[i].fake)return;
+        if(!e.ctrlKey){
+            this.props.history.push(`/players/${this.state.results[i].owner}`);
+        }else{
+            let path = `${window.location.origin}/players/${this.state.results[i].owner}`;
+            let win = window.open(path);
+            console.log(path,win);
+            win.focus();
+        }
+    }
+
     render() {
         return (
             <div style={{textAlign:'center'}}>
                 <h1 className="page-header" style={{marginBottom:'200px'}}>Pit Panda Mystic Search</h1>
-                <QueryBox query={this.query}/>
+                <QueryBox query={this.updatePath}/>
                 <div style={{display:'inline-block',textAlign:'left',margin:'20px'}}>
                     <StaticCard title="Results">
-                        <MinecraftInventory style={{display:'block'}} key={this.state.queryString} inventory={this.state.results} onClick={this.requestOwner} colors={true}/>
+                        <MinecraftInventory style={{display:'block'}} key={this.state.queryString} inventory={this.state.results} onContextMenu={this.directToOwner} onClick={this.requestOwner} colors={true}/>
                         {this.state.lastsize===pageSize&&this.state.results.length!==0&&!this.state.loading?
                         <div style={{margin:'auto',textAlign:'center'}}>
                             <button onClick={this.loadMore} className='srchBtn'>Load More</button>

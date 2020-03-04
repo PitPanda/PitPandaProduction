@@ -49,10 +49,18 @@ class MinecraftInventory extends React.Component {
         return (
             <div style={this.state.style} className="MinecraftInventory">
                 {(this.state.inventory||[]).map((item,index)=>(
-                    <MinecraftItemSlot key={(item.uuid||'')+index} item={item} colors={this.props.colors} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
+                    <MinecraftItemSlot 
+                        key={(item.uuid||'')+index} item={item} colors={this.props.colors}
+                        onClick={this.props.onClick?e=>this.props.onClick(index,e):()=>{}}
+                        onContextMenu={this.props.onContextMenu?e=>this.props.onContextMenu(index,e):()=>{}}
+                    />
                 ))}
                 {this.state.filler.map((blank,index)=>(
-                    <MinecraftItemSlot key={'filler'+index} item={blank} onClick={this.props.onClick?()=>this.props.onClick(index):()=>{}}/>
+                    <MinecraftItemSlot 
+                        key={'filler'+index} item={blank} 
+                        onClick={this.props.onClick?e=>this.props.onClick(index,e):()=>{}} 
+                        onContextMenu={this.props.onContextMenu?e=>this.props.onContextMenu(index,e):()=>{}}
+                    />
                 ))}
             </div>
         );

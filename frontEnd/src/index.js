@@ -10,11 +10,11 @@ import Nav from './Components/Nav/Nav';
 ReactDOM.render((
     <>
         <BrowserRouter>
-        <Nav/>
+            <Nav/>
             <Switch>
                 <Route exact path="/" component={withRouter(PlayerForm)}/>
                 <Route exact path="/players/:id" component={withRouter(Player)}/>
-                <Route exact path="/itemsearch" component={withRouter(ItemSearch)}/>
+                <Route exact path="/itemsearch/:query?" component={withRouter(ItemSearch)}/>
                 <Redirect to="/"/>
             </Switch>
         </BrowserRouter>
