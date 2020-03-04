@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom';
 import './Nav.css';
 
 function Nav(props){
-    console.log(props);
     function onClick(ref){
         props.history.push(ref);
     }
