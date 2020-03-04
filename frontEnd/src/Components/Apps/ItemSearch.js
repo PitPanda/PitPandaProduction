@@ -26,8 +26,9 @@ class ItemSearch extends React.Component {
     }
 
     query=(queryString)=>{
-        if(queryString.length===0||this.state.queryString===queryString)
+        if(queryString.length===0)
             return this.setState({results:new Array(9).fill({fake:true}),loading:false,lastsize:0,page:0,queryString});
+        if(this.state.queryString===queryString) return;
         this.setState({loading:true,page:0,queryString});
         fetch('/api/itemsearch/'+queryString).then(res=>res.json()).then(json => {
             if(!json.success) return;
