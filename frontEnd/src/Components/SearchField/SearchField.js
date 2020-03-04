@@ -120,8 +120,8 @@ class SearchField extends Component {
 
     onKeyDown = e => {
         const { activeSuggestion, filteredSuggestions, showSuggestions } = this.state;
-        if(showSuggestions && filteredSuggestions.length && filteredSuggestions.length !== this.props.suggestions.length){
-            if (e.keyCode === 13 || e.keyCode === 9) {
+        if(e.currentTarget.value!=='' && showSuggestions && filteredSuggestions.length && filteredSuggestions.length !== this.props.suggestions.length){
+            if (e.keyCode === 13 || (e.keyCode === 9 && !e.shiftKey)) {
                 if(filteredSuggestions[activeSuggestion]){
                     this.select(activeSuggestion);
                 }else{
