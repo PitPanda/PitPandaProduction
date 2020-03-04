@@ -86,7 +86,7 @@ class ItemSearch extends React.Component {
     render() {
         return (
             <div style={{textAlign:'center'}}>
-                <h1 className="page-header" style={{marginBottom:'200px'}}>Pit Panda Mystic Search (Alpha)</h1>
+                <h1 className="page-header" style={{marginBottom:'200px'}}>Pit Panda Mystic Search</h1>
                 <QueryBox query={this.query}/>
                 <div style={{display:'inline-block',textAlign:'left',margin:'20px'}}>
                     <StaticCard title="Results">

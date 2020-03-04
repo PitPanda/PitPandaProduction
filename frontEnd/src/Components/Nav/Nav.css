@@ -1,0 +1,23 @@
+ul.nav li {
+    display: inline-block;
+    width:200px;
+    padding:10px;
+    text-align: center;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+}
+
+ul.nav li:hover {
+    color:#ccc;
+    cursor: pointer;
+}
+
+ul.nav {
+    width:100%;
+    background-color: #2b2b2b;
+    border-bottom: 2px solid #222;
+    color: #999999;
+    padding:10px;
+}
