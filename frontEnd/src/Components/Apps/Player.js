@@ -13,13 +13,17 @@ class Player extends React.Component {
 
   componentDidMount(){
     this.loadUser(`/players/${(this.props.match.params.id||'').trim()}`);
-    this.props.history.listen((location,action,c)=>{
+    this.unlisten = this.props.history.listen((location,action,c)=>{
       this.loadUser(location.pathname);
     });
   }
 
+  componentWillUnmount(){
+    this.unlisten();
+  }
+
   loadUser = (path) => {
-    if(path.length<=1)return;
+    if(!path.startsWith('/players/'))return;
     fetch(`/api${path}`).then(res=>res.json()).then(json => {
       console.log(json);
       if(json.success) {
