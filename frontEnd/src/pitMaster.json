@@ -675,6 +675,23 @@
 					"Meta": 0
 				}
 			},
+			"fishing_club":{
+				"Name": "Fishing Club",
+				"Extra":{"Formatting":"Reveal", "IgnoreIndex":1},
+				"Description":[
+					"§7 Unlocked:",
+					" §8- §7Can now actually find fish from fishing.",
+					" §8- §7Earn §b+25XP §7 from everything you catch.",
+					" §8- §7Can now find §bdiamond §7armor from fishing.",
+					" §8- §7Fish §b+20% §7faster.",
+					" §8- §7Can now find §baqua pants §7 from fishing."
+				],
+				"Costs":[5,5,5,5,5],
+				"Item":{
+					"Id": 326,
+					"Meta": 0
+				}
+			},
 			"extra_hearts":{
 				"Name": "Extra Hearts",
 				"Description":[
@@ -724,23 +741,6 @@
 				"Costs":[5,5,5,5],
 				"Item":{
 					"Id": 262,
-					"Meta": 0
-				}
-			},
-			"fishing_club":{
-				"Name": "Fishing Club",
-				"Extra":{"Formatting":"Reveal", "IgnoreIndex":1},
-				"Description":[
-					"§7 Unlocked:",
-					" §8- §7Can now actually find fish from fishing.",
-					" §8- §7Earn §b+25XP §7 from everything you catch.",
-					" §8- §7Can now find §bdiamond §7armor from fishing.",
-					" §8- §7Fish §b+20% §7faster.",
-					" §8- §7Can now find §baqua pants §7 from fishing."
-				],
-				"Costs":[5,5,5,5,5],
-				"Item":{
-					"Id": 326,
 					"Meta": 0
 				}
 			},
