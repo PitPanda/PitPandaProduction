@@ -1018,6 +1018,18 @@
 					"Meta": 0
 				}
 			},
+			"echest_space":{
+				"Name": "Inventory Management",
+				"Description":[
+					"§5+$ row §7in enderchest."
+				],
+				"Levels":["1","2","3"],
+				"Costs":[50,100,150],
+				"Item":{
+					"Id": 130,
+					"Meta": 0
+				}
+			},
 			"raw_numbers":{
 				"Name": "Raw Numbers",
 				"Description":[
