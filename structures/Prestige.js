@@ -14,7 +14,7 @@ class Prestige{
      * @param {number} gold 
      * @param {Object[]} renownunlocks
      */
-    constructor(prestige,time,unlocks,gold,renownunlocks=[]){
+    constructor(prestige,time,unlocks=[],gold=0,renownunlocks=[]){
         /**
          * The prestige someone was at before prestiging
          * @type {number}
