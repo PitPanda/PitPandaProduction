@@ -1535,7 +1535,7 @@ class Pit{
                 `${Colors.GRAY}Prestige: ${Colors.GREEN}${formatNumber(this.prestige)}`,
                 `${Colors.GRAY}Current Renown: ${Colors.GREEN}${formatNumber(this.renown)}`,
                 `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${formatNumber(this.lifetimeRenown)}`,
-                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${formatNumber(this.renownShop.length)}/78`
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${formatNumber(this.renownShop.length)}/81`
             ]
             const off = new Item(`${Colors.RED}Offensive Stats`,offlore,267);
             const def = new Item(`${Colors.BLUE}Defensive Stats`,deflore,307);
