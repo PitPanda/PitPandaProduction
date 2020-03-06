@@ -346,7 +346,7 @@ class Pit{
             get: ()=>{
                 if(!this._renownProgress) Object.defineProperty(this,'_renownProgress',{
                     enumerable: false,
-                    value: new Progress(this.renownShop.length,78,this.renownShop.length===78?'Max Shop':false,this.renownShopSpent,1680)
+                    value: new Progress(this.renownShop.length,81,this.renownShop.length===81?'Max Shop':false,this.renownShopSpent,1980)
                 });
                 return this._renownProgress;
             }
@@ -1041,6 +1041,26 @@ class Pit{
         });
 
         /**
+         * Player's faction allegiance
+         * @type {string}
+         */
+        this.allegiance;
+        Object.defineProperty(this,'allegiance',{
+            enumerable:true,
+            get:()=>this.getStat('stats','Pit','profile','genesis_allegiance')
+        });
+
+        /**
+         * Player's faction allegiance points
+         * @type {number}
+         */
+        this.allegiancePoints;
+        Object.defineProperty(this,'allegiancePoints',{
+            enumerable:true,
+            get:()=>this.getStat('stats','Pit','profile','genesis_points')
+        });
+
+        /**
          * Player's well
          * @type {SimpleItem[]}
          */
@@ -1105,6 +1125,14 @@ class Pit{
     }
 
     /**
+     * Perks but with common names
+     * @type {string[]}
+     */
+    get prettyPerks(){
+        return this.perks.map(perk=>Perks[perk].Name);
+    }    
+
+    /**
      * xp/hours 
      * @type {number}
      */
@@ -1158,6 +1186,22 @@ class Pit{
      */
     get damageReceivedSafe(){
         return this.damageReceived||1;
+    }
+
+    /**
+     * player should spawn in their faction base
+     * @type {boolean}
+     */
+    get shouldSpawnInBase(){
+        return this.getStat('stats','Pit','profile','genesis_spawn_in_base');
+    }
+
+    /**
+     * timestamp of last faction change (i think)
+     * @type {number} date resolvable
+     */
+    get shouldSpawnInBase(){
+        return this.getStat('stats','Pit','profile','genesis_allegiance_time');
     }
 
     /**
@@ -1474,14 +1518,15 @@ class Pit{
                 `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${formatNumber(this.jumpsIntoPit)}`,
                 `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${formatNumber(this.launcherLaunches)}`,
                 `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
-                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${formatNumber(this.tradeGold)}/50,000`
+                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${formatNumber(this.tradeGold)}/50,000`,
+                `${Colors.GRAY}Genesis Points: ${this.allegiance?`${this.allegiance==='DEMON'?Colors.DARK_RED:Colors.AQUA}${formatNumber(this.allegiancePoints)}`:`${Colors.GREEN}N/A`}`,
             ];
             const farmlore = [
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${formatNumber(this.wheatFarmed)}`,
                 `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
                 `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
-                `${Colors.GRAY}Gold From Selling Fish: ${Colors.GOLD}${formatNumber(this.goldFromSellingFish)}g`,
-                `${Colors.GRAY}Gold From Farming: ${Colors.GOLD}${formatNumber(this.goldFromFarming)}g`,
+                `${Colors.GRAY}Fish Sold: ${Colors.GOLD}${formatNumber(this.goldFromSellingFish)}g`,
+                `${Colors.GRAY}Hay Bales Sold: ${Colors.GOLD}${formatNumber(this.goldFromFarming)}g`,
                 `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${formatNumber(this.kingsQuestCompletions)}`,
                 `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${formatNumber(this.sewerTreasuresFound)}`,
                 `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${formatNumber(this.nightQuestsCompleted)}`
