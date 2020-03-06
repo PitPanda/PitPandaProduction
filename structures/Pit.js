@@ -78,13 +78,14 @@ class Pit{
                     enumerable: false,
                     value: [
                         new Prestige(0,undefined,this.getStat('stats','Pit','profile','unlocks'),this.getStat('stats','Pit','profile',`cash_during_prestige_0`)),
-                        ...(this.getStat('stats','Pit','profile','prestiges')||[])
-                            .map(pres=>
+                        ...this.prestigesRaw
+                            .map((pres,index,original)=>
                                 new Prestige(
                                     pres.index,
                                     pres.timestamp,
                                     this.getStat('stats','Pit','profile',`unlocks_${pres.index}`),
-                                    this.getStat('stats','Pit','profile',`cash_during_prestige_${pres.index}`)
+                                    this.getStat('stats','Pit','profile',`cash_during_prestige_${pres.index}`),
+                                    this.renownShopUnlocksRaw.filter(({acquireDate})=>acquireDate > pres.timestamp && acquireDate < (getRef(original,index+1,'timestamp')||Infinity))
                                 )
                             )
                     ]
@@ -100,7 +101,7 @@ class Pit{
         this.prestige;
         Object.defineProperty(this,'prestige',{
             enumerable:true,
-            get: ()=>(this.getStat('stats','Pit','profile','prestiges')||[]).length
+            get: ()=>this.prestigesRaw.length
         });
 
         /**
@@ -1081,15 +1082,31 @@ class Pit{
     }
 
     /**
+     * raw api prestige array
+     * @returns {{tier:number,timestamp:number,key:String}[]}
+     */
+    get prestigesRaw(){
+        return this.getStat('stats','Pit','profile','prestiges')||[];
+    }
+
+    /**
      * UnlockCollection formatted version of unlocks
      * @type {UnlockCollection}
      */
     get renownShopCollection(){
         if(!this._renownShop) Object.defineProperty(this,'_renownShop',{
             enumerable: false,
-            value: new UnlockCollection(this.getStat('stats','Pit','profile','renown_unlocks')||[],this.raw)
+            value: new UnlockCollection(this.renownShopUnlocksRaw,this.raw)
         });
         return this._renownShop;
+    }
+
+    /**
+     * raw api for renown unlocks
+     * @type {Object[]}
+     */
+    get renownShopUnlocksRaw(){
+        return this.getStat('stats','Pit','profile','renown_unlocks')||[];
     }
 
     /**

@@ -6,16 +6,15 @@ const UnlockEntry = require('./UnlockEntry');
  * Represents a pit prestige
  */
 class Prestige{
-    raw_unlocks;
-    _unlocks;
     /**
      * Constructs a Prestige
      * @param {number} prestige 
      * @param {number} time
      * @param {Object[]} unlocks 
      * @param {number} gold 
+     * @param {Object[]} renownunlocks
      */
-    constructor(prestige,time,unlocks,gold){
+    constructor(prestige,time,unlocks,gold,renownunlocks=[]){
         /**
          * The prestige someone was at before prestiging
          * @type {number}
@@ -43,14 +42,10 @@ class Prestige{
          * @type {Object[]}
          */
         this.raw_unlocks;
-        Object.defineProperty(this,'raw_unlocks',{value:unlocks,enumerable:false});
-
-        /**
-         * Cached Unlocks Array
-         * @type {UnlockEntry[]}
-         */
-        this._unlocks;
-        Object.defineProperty(this,'_unlocks',{enumerable:false});
+        Object.defineProperty(this,'raw_unlocks',{
+            value:unlocks.concat(renownunlocks).sort((a,b)=>a.acquireDate<b.acquireDate?-1:1),
+            enumerable:false
+        });
 
         /**
          * processed array of unlocks
@@ -68,7 +63,14 @@ class Prestige{
      * @type {UnlockCollection}
      */
     get unlocksCollection(){
-        if (!this._unlocks) this._unlocks = new UnlockCollection(this.raw_unlocks||[]);
+        if (!this._unlocks) {
+            /**
+             * Cached Unlocks Array
+             * @type {UnlockEntry[]}
+             */
+            this._unlocks;
+            Object.defineProperty(this,'_unlocks',{enumerable:false,value:new UnlockCollection(this.raw_unlocks||[])});
+        }
         return this._unlocks;
     }
 } module.exports = Prestige;
