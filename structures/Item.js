@@ -59,13 +59,17 @@ class Item{
             getRef(item,'tag','value','display','value','Name','value') ||
             getItemNameFromId(id,meta);
         
-        const lore = 
+        let lore = 
             (getRef(item, "tag","value","display","value","Lore","value","value")||[])
             .concat(
                 (getRef(item, "tag", "value", "ench", "value", "value")||[])
                 .map(getEnchantDescription)
             );
-        
+        if(id===288&&!lore.length)lore = [
+            `${ColorCodes.DARK_RED}WARNING!`,
+            `${ColorCodes.GRAY}This is NOT a ${ColorCodes.DARK_AQUA}Funky Feather${ColorCodes.GRAY}.`
+        ];
+
         const count = getRef(item,"Count","value");
 
         return new Item(name,lore,id,meta,count);
