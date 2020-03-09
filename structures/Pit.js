@@ -438,6 +438,26 @@ class Pit{
         });
 
         /**
+         * Last kills
+         * @type {{victim:string,timestamp:number}[]}
+         */
+        this.recentKills;
+        Object.defineProperty(this,'recentKills',{
+            enumerable:true,
+            get: ()=>this.getStat('stats','Pit','profile','recent_kills')||[]
+        });
+
+        /**
+         * Last kills simplified
+         * @type {string[]}
+         */
+        this.recentKillsSimple;
+        Object.defineProperty(this,'recentKillsSimple',{
+            enumerable:true,
+            get: ()=>this.recentKills.map(kill=>kill.victim)
+        });
+
+        /**
          * Times the player has opened the enderchest
          * @type {number}
          */

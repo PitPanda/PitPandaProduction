@@ -56,13 +56,13 @@ class UnlockEntry{
             this.type = 'Perk';
             this.displayName = Perks[this.key].Name;
         } else if(RenownUpgrades[this.key]){
-            this.type = 'RenownUpgrade';
+            this.type = 'Renown';
             this.displayName = RenownUpgrades[this.key].Name;
             if(isTiered(RenownUpgrades[this.key])) this.tier = raw.tier;
             this.cost = RenownUpgrades[this.key].Costs[raw.tier];
         }
 
-        Object.defineProperty(this, 'type', {enumerable: false});
+        //Object.defineProperty(this, 'type', {enumerable: false});
 
     }
 } module.exports = UnlockEntry;

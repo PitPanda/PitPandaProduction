@@ -140,15 +140,16 @@ class Player extends React.Component {
                 }/>
                 <NumberedCard key={this.state.user.uuid} content={this.state.user.prestiges.map(prestige=>(
                   <div>
-                    {prestige.timestamp?<h2 style={{marginBottom:'10px'}}>Unlocked on {(new Date(prestige.timestamp)).toLocaleString()}</h2>:''}
+                    {prestige.timestamp?<h3 style={{marginBottom:'10px'}}>Unlocked on {(new Date(prestige.timestamp)).toLocaleString()}</h3>:''}
+                    {prestige.gold?<h3 style={{marginBottom:'10px'}}>Completed with {frontendTools.abbrNum(prestige.gold,2)} gold earned</h3>:''}
                     <table style={{width:'100%'}}>
                       <tbody>
                         <tr>
-                          <td><strong>Upgrade</strong></td><td><strong>Unlock time</strong></td>
+                        <td><strong>Type</strong></td><td><strong>Upgrade</strong></td><td><strong>Unlock time</strong></td>
                         </tr>
                         {prestige.unlocks.length>0?prestige.unlocks.slice().reverse().map((item,i)=>
                           <tr key={i}>
-                            <td>{item.displayName} {(typeof item.tier === 'number')?item.tier+1:''}</td><td>{(new Date(item.timestamp)).toLocaleString()}</td>
+                            <td>{item.type}</td><td>{item.displayName} {(typeof item.tier === 'number')?item.tier+1:''}</td><td>{(new Date(item.timestamp)).toLocaleString()}</td>
                           </tr>
                         ):(
                           <tr>
