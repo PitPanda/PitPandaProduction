@@ -1,4 +1,4 @@
-const {getRef,formatNumber,romanNumGen} = require('../apiTools');
+const {getRef,formatNumber,romanNumGen} = require('../apiTools/apiTools');
 const pitMaster = require('../frontEnd/src/pitMaster.json');
 const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
 const Item = require('./Item');

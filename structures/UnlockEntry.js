@@ -1,5 +1,5 @@
 const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../frontEnd/src/pitMaster.json');
-const {isTiered} = require('../apiTools');
+const {isTiered} = require('../apiTools/apiTools');
 
 /**
  * Represents a unlock renwon shop, perk, upgrade

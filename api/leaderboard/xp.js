@@ -1,8 +1,8 @@
 const Player = require('../../models/Player');
-const hypixelAPI = require('../../playerRequest');
 const router = require('express').Router();
+const getUsername = require('../../apiTools/usernameRequest');
 
-const perPage = 10;
+const perPage = 25;
 
 const endpoint = (req,res)=>{
     const page = req.params.page || 0;
@@ -13,11 +13,9 @@ const endpoint = (req,res)=>{
         .sort('-xp')
         .then(results=>{
             Promise.all(
-                results.map(player=>
-                    hypixelAPI(player._id))
+                results.map(player=>getUsername(player._id))
             ).then(players=>
-                res.status(200).json(players.map(player=>
-                    player.levelFormattedName))
+                res.status(200).json(players.map(player=>({uuid:player.uuid,name:player.leveled})))
             )
         });
 };

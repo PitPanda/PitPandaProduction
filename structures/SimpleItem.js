@@ -1,4 +1,4 @@
-const {getRef,romanNumGen,toHex,getItemNameFromId} = require('../apiTools');
+const {getRef,romanNumGen,toHex,getItemNameFromId} = require('../apiTools/apiTools');
 const mcenchants = require('../enchants.json');
 
 

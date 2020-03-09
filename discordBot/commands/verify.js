@@ -1,7 +1,7 @@
 const TradeCenter = require('../TradeCenter.json');
 const Command = require('./Command');
 const DiscordUser = require('../../models/DiscordUser');
-const hypixelAPI = require('../../playerRequest');
+const hypixelAPI = require('../../apiTools/playerRequest');
 
 function command(msg,rest,alias){
     const verify = alias===`verify`;

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {APIerror} = require('../apiTools');
+const {APIerror} = require('../apiTools/apiTools');
 const IPlayPitTooMuch = require('./custom/IPlayPitTooMuch');
 
 router.use('/iplaypittoomuch',IPlayPitTooMuch);

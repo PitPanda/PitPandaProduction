@@ -1,7 +1,7 @@
 const Mystic = require('../models/Mystic');
 const Item = require('../structures/Item');
-const {dbToItem} = require('../apiTools');
-const hypixelAPI = require('../playerRequest');
+const {dbToItem} = require('../apiTools/apiTools');
+const hypixelAPI = require('../apiTools/playerRequest');
 const Pit = require('../structures/Pit');
 
 const router = require('express').Router();

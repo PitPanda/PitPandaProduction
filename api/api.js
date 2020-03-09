@@ -3,9 +3,10 @@ const players = require('./players');
 const dump = require('./dump');
 const item = require('./item');
 const itemSearch = require('./itemSearch');
-const {APIerror} = require('../apiTools');
+const {APIerror} = require('../apiTools/apiTools');
 const username = require('./username');
 const custom = require('./custom');
+const leaderboard = require('./leaderboard');
 const mongoose = require('mongoose');
 const ApiStat = require('../models/ApiStat');
 
@@ -22,7 +23,7 @@ router.use('*',(req,res,next)=>{
     if(args[1]==='custom')path+=`/${args[2]}`
     if(!statBatch[path])statBatch[path]=1;
     else if(statBatch[path]===batchSize){
-        statBatch[path]=0;
+        statBatch[path]=1;
         ApiStat(path).findOneAndUpdate({date:Math.floor(Date.now()/86400e3)},{$inc:{count:batchSize}},{upsert:true}).catch(console.error);
     } statBatch[path]++;
     console.log(`requested ${req.originalUrl.substring(5)}`);
@@ -35,6 +36,7 @@ router.use('/item',item);
 router.use('/itemSearch',itemSearch);
 router.use('/username',username);
 router.use('/custom',custom);
+router.use('/leaderboard',leaderboard);
 
 router.use('*', APIerror('Invalid Endpoint'))
 

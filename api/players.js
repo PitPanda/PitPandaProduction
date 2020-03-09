@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const hypixelAPI = require('../playerRequest');
+const hypixelAPI = require('../apiTools/playerRequest');
 const Player = require('../models/Player');
 
 router.use('/:tag', (req,res)=>{
     hypixelAPI(req.params.tag).then(target=>{
-        res.status(200);
-        if(target.error) res.json({success:false,error:target.error});
+        if(target.error) res.status(400).json({success:false,error:target.error});
         else {
             Promise.all([target.loadInventorys(),Player.findOne({_id:target.uuid})]).then(([,player])=>{
                 data = {};
@@ -24,7 +23,7 @@ router.use('/:tag', (req,res)=>{
                 data.xpProgress = target.xpProgress;
                 data.goldProgress = target.goldProgress;
                 data.renownProgress = target.renownProgress;
-                res.json({success:true,data});
+                res.status(200).json({success:true,data});
             });
         }
     });

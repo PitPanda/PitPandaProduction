@@ -1,5 +1,5 @@
-const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics},Extra:{ColorCodes:Colors}} = require('./frontEnd/src/pitMaster.json');
-const mcitems = require('./minecraftItems.json');
+const {Pit:{Upgrades, RenownUpgrades, Perks, Mystics},Extra:{ColorCodes:Colors}} = require('../frontEnd/src/pitMaster.json');
+const mcitems = require('../minecraftItems.json');
 
 /**
  * Generates a function to send to router to display a given error message
@@ -12,8 +12,7 @@ function APIerror (message) {
     errorFn.toString = () => message;
     errorFn.json = json;
     return errorFn;
-}
-module.exports.APIerror = APIerror;
+} module.exports.APIerror = APIerror;
 
 /**
  * Gets properties for an object and returns undefined if
@@ -139,7 +138,7 @@ function getItemNameFromId(id,meta){
     return (secondcheck||firstcheck[0]).name;
 } module.exports.getItemNameFromId = getItemNameFromId;
 
-const Item = require('./structures/Item');
+const Item = require('../structures/Item');
 /**
  * converts document to item
  * @param {Document} doc 

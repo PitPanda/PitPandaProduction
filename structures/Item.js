@@ -1,4 +1,4 @@
-const {getRef,romanNumGen,toHex,getItemNameFromId} = require('../apiTools');
+const {getRef,romanNumGen,toHex,getItemNameFromId} = require('../apiTools/apiTools');
 const {Extra:{ColorCodes}} = require('../frontEnd/src/pitMaster.json');
 const mcenchants = require('../enchants.json');
 

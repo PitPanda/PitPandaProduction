@@ -1,6 +1,6 @@
 const Mystic = require('../models/Mystic');
 const Item = require('../structures/Item');
-const {dbToItem} = require('../apiTools');
+const {dbToItem} = require('../apiTools/apiTools');
 
 const router = require('express').Router();
 

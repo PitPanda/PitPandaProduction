@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const hypixelAPI = require('../../playerRequest');
+const hypixelAPI = require('../../apiTools/playerRequest');
 const Player = require('../../models/Player');
 
 router.use('/:tag', (req,res)=>{
