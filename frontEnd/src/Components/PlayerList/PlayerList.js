@@ -43,14 +43,16 @@ function PlayerList(props){
     }
     return (
         <>
-            {initiated?(
-                <>
-                    {loaded.map((player,index)=><PlayerEntry getUser={getUser} key={index} uuid={player.victim} hover={new Date(player.timestamp).toLocaleString()}/>)}
-                    {hasMore?<input type="button" className="srchBtn" value="Load More" style={{margin:0}} onClick={loadMore}/>:''}
-                </>
-            ):(
-                <input type="button" className="srchBtn" value="Load" style={{margin:0}} onClick={initiate}/>
-            )}
+            {loaded.map((player,index)=><PlayerEntry getUser={getUser} key={index} uuid={player.victim} hover={new Date(player.timestamp).toLocaleString()}/>)}
+            {hasMore?(
+                <div style={{textAlign:'center'}}>
+                    {initiated?(
+                        <input type="button" className="srchBtn" value="Load More" style={{marginTop:'10px'}} onClick={loadMore}/>
+                    ):(
+                        <input type="button" className="srchBtn" value="Load" style={{margin:0}} onClick={initiate}/>
+                    )}
+                </div>
+            ):''}
         </>
     );
 } export default PlayerList;
