@@ -48,6 +48,12 @@ class UnlockEntry{
          */
         this.tier;
 
+        /**
+         * renown cost for renown upgrades only
+         * @type {number}
+         */
+        this.cost;
+
         if(Upgrades[this.key]){
             this.type = 'Upgrade';
             this.displayName = Upgrades[this.key].Name;
@@ -59,10 +65,10 @@ class UnlockEntry{
             this.type = 'Renown';
             this.displayName = RenownUpgrades[this.key].Name;
             if(isTiered(RenownUpgrades[this.key])) this.tier = raw.tier;
-            this.cost = RenownUpgrades[this.key].Costs[raw.tier];
+            Object.defineProperty(this,'cost',{
+                enumerable:false,
+                value:RenownUpgrades[this.key].Costs[raw.tier]
+            });
         }
-
-        //Object.defineProperty(this, 'type', {enumerable: false});
-
     }
 } module.exports = UnlockEntry;

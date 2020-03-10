@@ -6,6 +6,7 @@ import MinecraftText from '../Minecraft/MinecraftText';
 import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import PlayerForm from './PlayerForm';
+import PlayerList from '../PlayerList/PlayerList';
 import frontendTools from '../../scripts/frontendTools';
 
 class Player extends React.Component {
@@ -97,6 +98,11 @@ class Player extends React.Component {
                     />
                   </div>
                 }/>
+                {this.state.user.recentKills.length?(
+                  <StaticCard title="Recent Kills">
+                    <PlayerList players={this.state.user.recentKills}/>
+                  </StaticCard>
+                ):''}
               </div>
               <div id="main" style={{
                 display: 'inline-block',
@@ -138,10 +144,10 @@ class Player extends React.Component {
                     <MinecraftInventory key='genstats' inventory={this.state.user.inventories.generalStats} width={this.state.user.inventories.generalStats.length} style={{margin:'0 auto', display:'block'}}/>
                   </div>
                 }/>
-                <NumberedCard key={this.state.user.uuid} content={this.state.user.prestiges.map(prestige=>(
+                <NumberedCard key={this.state.user.uuid} content={this.state.user.prestiges.map((prestige,index)=>(
                   <div>
                     {prestige.timestamp?<h3 style={{marginBottom:'10px'}}>Unlocked on {(new Date(prestige.timestamp)).toLocaleString()}</h3>:''}
-                    {prestige.gold?<h3 style={{marginBottom:'10px'}}>Completed with {frontendTools.abbrNum(prestige.gold,2)} gold earned</h3>:''}
+                    {prestige.gold&&this.state.user.prestiges.length-1!==index?<h3 style={{marginBottom:'10px'}}>Completed with {frontendTools.abbrNum(prestige.gold,2)} gold earned</h3>:''}
                     <table style={{width:'100%'}}>
                       <tbody>
                         <tr>

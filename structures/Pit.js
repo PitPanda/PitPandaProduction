@@ -444,7 +444,7 @@ class Pit{
         this.recentKills;
         Object.defineProperty(this,'recentKills',{
             enumerable:true,
-            get: ()=>this.getStat('stats','Pit','profile','recent_kills')||[]
+            get: ()=>(this.getStat('stats','Pit','profile','recent_kills')||[]).reverse()
         });
 
         /**
@@ -934,42 +934,7 @@ class Pit{
                 this.loadWell()
             ])
         });
-
-        const playerDoc = new Player({
-            _id:this.uuid,
-            name:this.name,
-            displayName:this.levelFormattedName,
-            kills: this.kills,
-            assists: this.assists,
-            damageDealt: this.damageDealt,
-            damageReceived: this.damageReceived,
-            damageRatio: this.damageRatio,
-            highestStreak: this.highestStreak,
-            deaths: this.deaths,
-            kdr: this.killDeathRatio,
-            xp: this.xp,
-            gold: this.currentGold,
-            lifetimeGold: this.lifetimeGold,
-            playtime: this.playtime,
-            contracts: this.contractsCompleted,
-            gapples: this.gapplesEaten,
-            gheads: this.gheadsEaten,
-            lavaBuckets: this.lavaBucketsPlaced,
-            soups: this.soupsDrank,
-            tierThrees: this.mysticsEnchanted[2],
-            darkPants: this.darkPantsCreated,
-            leftClicks: this.leftClicks,
-            chatMessages: this.chatMessages,
-            wheatFarmed: this.wheatFarmed,
-            fishedAnything: this.fishedAnything,
-            blocksBroken: this.blocksBroken,
-            kingsQuests: this.kingsQuestCompletions,
-            sewerTreasures: this.sewerTreasuresFound,
-            nightQuests: this.nightQuestsCompleted,
-            renown: this.renown,
-            lifetimeRenown: this.lifetimeRenown
-        });
-        Player.findOneAndUpdate({_id:this.uuid},{$set:playerDoc},{upsert:true}).catch(console.error);
+        Player.findOneAndUpdate({_id:this.uuid},{$set:this.playerDoc},{upsert:true}).catch(console.error);
 
         /**
          * Player's main inventory
@@ -1622,6 +1587,47 @@ class Pit{
                 return resolve(items);
             }
         }));
+    }
+
+    /**
+     * player's doc like on the db
+     * @type {Document}
+     */
+    get playerDoc(){
+        return new Player({
+            _id:this.uuid,
+            name:this.name,
+            displayName:this.levelFormattedName,
+            kills: this.kills,
+            assists: this.assists,
+            damageDealt: this.damageDealt,
+            damageReceived: this.damageReceived,
+            damageRatio: this.damageRatio,
+            highestStreak: this.highestStreak,
+            deaths: this.deaths,
+            kdr: this.killDeathRatio,
+            xp: this.xp,
+            gold: this.currentGold,
+            lifetimeGold: this.lifetimeGold,
+            playtime: this.playtime,
+            contracts: this.contractsCompleted,
+            gapples: this.gapplesEaten,
+            gheads: this.gheadsEaten,
+            lavaBuckets: this.lavaBucketsPlaced,
+            soups: this.soupsDrank,
+            tierThrees: this.mysticsEnchanted[2],
+            darkPants: this.darkPantsCreated,
+            leftClicks: this.leftClicks,
+            chatMessages: this.chatMessages,
+            wheatFarmed: this.wheatFarmed,
+            fishedAnything: this.fishedAnything,
+            blocksBroken: this.blocksBroken,
+            kingsQuests: this.kingsQuestCompletions,
+            sewerTreasures: this.sewerTreasuresFound,
+            nightQuests: this.nightQuestsCompleted,
+            renown: this.renown,
+            lifetimeRenown: this.lifetimeRenown
+        });
     }
 
     /**

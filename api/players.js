@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const hypixelAPI = require('../apiTools/playerRequest');
 const Player = require('../models/Player');
+const getName = require('../apiTools/playerDocRequest');
 
 router.use('/:tag', (req,res)=>{
     hypixelAPI(req.params.tag).then(target=>{
@@ -23,7 +24,7 @@ router.use('/:tag', (req,res)=>{
                 data.xpProgress = target.xpProgress;
                 data.goldProgress = target.goldProgress;
                 data.renownProgress = target.renownProgress;
-                data.recentKills = target.recentKillsSimple;
+                data.recentKills = target.recentKills;
                 res.status(200).json({success:true,data});
             });
         }
