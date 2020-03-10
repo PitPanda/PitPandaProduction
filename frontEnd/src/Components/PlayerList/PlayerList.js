@@ -20,7 +20,7 @@ function PlayerList(props){
     function loadMore(){
         setLoaded(loaded.concat(groupQueue[0]));
         setGroupQueue(groupQueue.slice(1));
-        setHasMore(groupQueue.length);
+        setHasMore(groupQueue.length-1);
     }
     function getUser(uuid){
         const promise = new Promise(resolve=>{
