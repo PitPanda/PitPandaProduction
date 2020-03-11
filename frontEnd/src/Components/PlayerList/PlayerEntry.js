@@ -5,8 +5,8 @@ function PlayerList(props){
     let [text, setText] = useState("§7Loading");
     props.getUser(props.uuid).then(setText);
     return (
-        <div title={props.hover}>
+        <a title={props.hover} style={{display:'block'}} href={`/players/${props.uuid}`}>
             <MinecraftText raw={text}/>
-        </div>
+        </a>
     );
 } export default PlayerList;
