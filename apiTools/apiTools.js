@@ -9,7 +9,7 @@ const mcitems = require('../minecraftItems.json');
 function APIerror (message) {
     const json = {success:false,error:message};
     const errorFn = ((req,res)=>res.status(404).json(json));
-    errorFn.toString = () => message;
+    errorFn.toString = () => {error:message};
     errorFn.json = json;
     return errorFn;
 } module.exports.APIerror = APIerror;
