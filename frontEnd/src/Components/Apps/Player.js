@@ -99,7 +99,7 @@ class Player extends React.Component {
                   </div>
                 }/>
                 {this.state.user.recentKills.length?(
-                  <StaticCard title="Recent Kills">
+                  <StaticCard title="Recent Kills" key={this.state.user.uuid}>
                     <PlayerList players={this.state.user.recentKills}/>
                   </StaticCard>
                 ):''}
