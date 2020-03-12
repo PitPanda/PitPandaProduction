@@ -1,7 +1,7 @@
 const Player = require('../models/Player');
 const getDoc = require('./playerDocRequest');
 
-const perPage = 25;
+const perPage = 20;
 
 const leaderboardGrabber = (primaryKey, page=0, direction=-1)=>{
     return new Promise((resolve,reject)=>{

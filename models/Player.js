@@ -48,6 +48,10 @@ const PlayerSchema = mongoose.Schema({
     profileDisplay: {
         type: profileDisplaySchema,
         default: undefined
+    },
+    scammer: {
+        type: Boolean,
+        default: undefined
     }
 });
 

@@ -75,6 +75,13 @@ class Player extends React.Component {
                     </div>
                   </StaticCard>
                 ):''}
+                {this.state.user.scammer?(
+                  <StaticCard title="Scammer">
+                    <div style={{maxWidth:'300px'}}>
+                      This player has been marked as scammer by the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="Coming Soon">Trade Center Discord</a> staff
+                    </div>
+                  </StaticCard>
+                ):''}
                 <StaticCard title="Status" content={
                   <div style={{fontSize:'16px'}}>
                     <MinecraftText className='text-title' style={{color:this.state.user.online?'green':'red'}} text={this.state.user.online?'Online':'Offline'}/><br/>

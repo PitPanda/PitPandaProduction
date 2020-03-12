@@ -19,6 +19,7 @@ Mystics.extraordinary = {Name:'§fExtraordinary',Type:'resource',NoNumber:true};
 Mystics.unthinkable = {Name:'§fUnthinkable',Type:'resource',NoNumber:true};
 Mystics.overpowered = {Name:'§fOverpowered',Type:'resource',NoNumber:true};
 Mystics.miraculous = {Name:'§fMiraculous',Type:'resource',NoNumber:true};
+Mystics.million = {Name:'§fOne in a Million',Type:'resource',NoNumber:true};
 Mystics.nonce = {Name:'§fNonce',Type:'resource'};
 Mystics.color = {Name:'§fColor',Type:'pants',Colors:{
     red:'0',

@@ -1,4 +1,4 @@
-const Command = require('./Command');
+const Command = require('../Command');
 const {WebhookClient, RichEmbed} = require('discord.js');
 const PendingRep = require('../../models/PendingRep');
 const {WebHook} = require('../CoreConfig.json');
@@ -25,8 +25,8 @@ function command(msg,rest){
     );
     const rep = new PendingRep({
         _id: msg.id,
-        sender: msg.author.id,
-        receiver: target.id,
+        from: msg.author.id,
+        to: target.id,
         comment,
         evidence
     });
@@ -34,10 +34,11 @@ function command(msg,rest){
 }
 
 module.exports = new Command(
-    'rep',
-    command,
     {
+        name:'rep',
+        fn:command,
         description:'Rep a user with proof of trade\nEx: $rep <@671700686152531978> [feathers for repair kit] i.imgur.com/7udIRdV.png',
-        example:`**$rep [@user] [[comment]] [evidence]**`
+        example:`**$rep [@user] [[comment]] [evidence]**`,
+        permlevel:1
     }
 );

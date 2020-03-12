@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const PendingRepSchema = mongoose.Schema({
     _id: String,
-    sender: String, 
-    receiver: String,
+    from: String, 
+    to: String,
     comment: String,
     evidence: String
 });

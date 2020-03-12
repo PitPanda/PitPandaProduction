@@ -1,14 +1,12 @@
-const Command = require('./Command');
+const Command = require('../Command');
 
 function command(msg){
     msg.reply('https://discord.gg/MBCQQgz');
 }
 
-module.exports = new Command(
-    'invite',
-    command,
-    {
-        description:'Server invite link',
-        example:`**$invite**`
-    }
-);
+module.exports = new Command({
+    name:'invite',
+    fn:command,
+    description:'Server invite link',
+    example:`**$invite**`
+});

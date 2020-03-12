@@ -1658,6 +1658,7 @@ class Pit{
             if(maxLives===100) flags.push('artifact');
             const lives = getRef(item, "tag", "value", "ExtraAttributes", "value","Lives","value");
             if(flags.includes('artifact')&&flags.includes('extraordinary'))flags.push('miraculous');
+            if(flags.includes('artifact')&&flags.includes('unthinkable'))flags.push('million');
             if(flags.includes('artifact')&&tokenCount>=7)flags.push('overpowered');
             const mystic = {
                 owner: this.uuid,

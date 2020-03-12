@@ -1,5 +1,5 @@
 const TradeCenter = require('../TradeCenter.json');
-const Command = require('./Command');
+const Command = require('../Command');
 const DiscordUser = require('../../models/DiscordUser');
 const hypixelAPI = require('../../apiTools/playerRequest');
 
@@ -36,11 +36,11 @@ function command(msg,rest,alias){
 }
 
 module.exports = new Command(
-    'verify',
-    command,
     {
+        name:'verify',
+        fn:command,
         description:'Verify & Update your roles in the discord',
-        example:`**$verify [username]**`
-    },
-    ['prestige']
+        example:`**$verify [username]**`,
+        aliases:['prestige']
+    }
 );

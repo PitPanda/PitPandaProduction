@@ -1,5 +1,5 @@
 const TradeCenter = require('../TradeCenter.json');
-const Command = require('./Command');
+const Command = require('../Command');
 
 function command(msg,rest){
     const color = rest[0];
@@ -26,11 +26,10 @@ function command(msg,rest){
     } else msg.reply('You must be a Nitro Booster or Staff to use this command!');
 }
 
-module.exports = new Command(
-    'color',
-    command,
-    {
-        description:'Set your role color. (Nitro Boosters and Staff only)',
-        example:`**$color [######]**`
-    }
-);
+module.exports = new Command({
+    name:'color',
+    fn:command,
+    description:'Set your role color. (Nitro Boosters and Staff only)',
+    example:`**$color [######]**`,
+    permlevel:2
+});

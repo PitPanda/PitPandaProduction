@@ -4,18 +4,18 @@
  */
 class Command{
     /**
-     * Construct a new command
-     * @param {string} name common name
-     * @param {command} fn command itself
-     * @param {{description:string,example:string}} info description for the help command
-     * @param {string[]=} aliases aliases for the command
+     * @constructor
+     * @param {{name:String,fn:Function,example:String,description:String,aliases:String[],permlevel:Number}} options
      */
-    constructor(name,fn,info,aliases=[]){
+    constructor({name,fn,example,description,aliases=[],permlevel=0}){
         this.name = name;
         this.fn = fn;
-        this.info = info;
+        this.description = description;
+        this.example = example;
         this.aliases = [name,...aliases];
+        this.permission = permlevel;
     }
+
 }
 
 /**

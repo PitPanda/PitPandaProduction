@@ -3,7 +3,7 @@ const Player = require('../models/Player');
 /**
  * gets the username for a player
  * @param {string} uuid 
- * @returns {Promise<Document>}
+ * @returns {Promise<Doc>}
  */
 function getDoc(uuid){
     return new Promise(resolve=>{
