@@ -12,7 +12,6 @@ function PlayerList(props){
     let [hasMore, setHasMore] = useState(groupQueue.length);
     let [initiated, setInitiated] = useState(false);
     let [loaded, setLoaded] = useState([]);
-    console.log(groupQueue);
     function initiate(){
         setInitiated(true);
         loadMore();

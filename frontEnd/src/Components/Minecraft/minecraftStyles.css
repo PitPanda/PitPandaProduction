@@ -110,11 +110,15 @@
 }
 
 .miraculous:hover, .miraculous.shown{
-  animation: colorchange 3s infinite;
-  -webkit-animation: colorchange 3s infinite;
+  animation: rainbow 3s infinite;
+  -webkit-animation: rainbow 3s infinite;
 }
 
-@keyframes colorchange{
+.unthinkable:hover, .unthinkable.shown{
+  border-color: #ff00ff;
+}
+
+@keyframes rainbow{
   0%  {border-color: blue;}
   17%  {border-color: purple;}
   34% {border-color: red;}

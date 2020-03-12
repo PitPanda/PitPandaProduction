@@ -16,6 +16,7 @@ Mystics.rare = {Name:'§fRare',Type:'resource',NoNumber:true};
 Mystics.legendary = {Name:'§fLegendary',Type:'resource',NoNumber:true};
 Mystics.bountiful = {Name:'§fBountiful',Type:'resource',NoNumber:true};
 Mystics.extraordinary = {Name:'§fExtraordinary',Type:'resource',NoNumber:true};
+Mystics.unthinkable = {Name:'§fUnthinkable',Type:'resource',NoNumber:true};
 Mystics.overpowered = {Name:'§fOverpowered',Type:'resource',NoNumber:true};
 Mystics.miraculous = {Name:'§fMiraculous',Type:'resource',NoNumber:true};
 Mystics.nonce = {Name:'§fNonce',Type:'resource'};

@@ -47,6 +47,7 @@ function MinecraftItemSlot(props){
         if(name.toLowerCase().includes('bountiful')) cls = 'bountiful';
         if(name.toLowerCase().includes('legendary')) cls = 'legendary';
         if(name.toLowerCase().includes('extraordinary')) cls = 'extraordinary';
+        if(name.toLowerCase().includes('unthinkable')) cls = 'unthinkable';
         if(name.toLowerCase().includes('evil')) cls = 'evil';
         if(name.toLowerCase().includes('artifact')) cls = 'artifact';
         if(name.toLowerCase().includes('miraculous')) cls = 'miraculous';

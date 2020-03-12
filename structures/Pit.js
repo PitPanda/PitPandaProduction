@@ -1645,6 +1645,7 @@ class Pit{
             const rareCount = enchants.filter(({key})=>Mystics[key].Name.includes('RARE')).length;
             if(rareCount>=1) flags.push('rare');
             if(rareCount>=2) flags.push('extraordinary');
+            if(rareCount>=3) flags.push('unthinkable');
             const resourceCount = enchants.filter(({key})=>Mystics[key].Type=="resource").length;
             if(resourceCount===3) flags.push('bountiful');
             const tokenCount = enchants.reduce((acc,{level})=>acc+level,0);
