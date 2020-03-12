@@ -1,4 +1,5 @@
 const TradeCenter = require('./TradeCenter.json');
+const Discord = require('discord.js');
 
 function invalidPermissions(msg,required,current){
     switch(required){
