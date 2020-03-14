@@ -12,6 +12,7 @@ function PlayerList(props){
     let [hasMore, setHasMore] = useState(groupQueue.length);
     let [initiated, setInitiated] = useState(false);
     let [loaded, setLoaded] = useState([]);
+    if(props.instant&&!initiated) initiate();
     function initiate(){
         setInitiated(true);
         loadMore();
@@ -42,7 +43,7 @@ function PlayerList(props){
     }
     return (
         <>
-            {loaded.map((player,index)=><PlayerEntry getUser={getUser} key={index} uuid={player.victim} hover={new Date(player.timestamp).toLocaleString()}/>)}
+            {loaded.map((player,index)=><PlayerEntry getUser={getUser} key={index} uuid={player.tag} hover={player.hover}/>)}
             {hasMore?(
                 <div style={{textAlign:'center'}}>
                     {initiated?(

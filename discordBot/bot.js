@@ -33,7 +33,7 @@ client.on('message',msg=>{
 
     let executed = false;
     if(command==='help'){
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
             .setTitle('Trade Center Bot usage')
             .setColor('#9040ff');
         for(const cmd of state.commandList){

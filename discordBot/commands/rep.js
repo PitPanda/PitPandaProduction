@@ -1,5 +1,5 @@
 const Command = require('../Command');
-const {WebhookClient, RichEmbed} = require('discord.js');
+const {WebhookClient, MessageEmbed} = require('discord.js');
 const PendingRep = require('../../models/PendingRep');
 const {WebHook} = require('../CoreConfig.json');
 const RepLogHook = new WebhookClient(...WebHook);
@@ -16,7 +16,7 @@ function command(msg,rest){
     const evidence = reason.substring(end+2) + ' ' + msg.attachments.map(attatch=>attatch.url).join(' ');
     msg.reply('Your rep is now being reviewed by staff.');
     RepLogHook.send(
-        new RichEmbed()
+        new MessageEmbed()
             .setDescription(`**${msg.author} repped ${target}**`)
             .addField('Comment',comment)
             .addField('Evidence',evidence)

@@ -1,5 +1,5 @@
 const Command = require('../Command');
-const {RichEmbed} = require('discord.js');
+const {MessageEmbed} = require('discord.js');
 const DiscordUser = require('../../models/DiscordUser');
 const playerDocRequest = require('../../apiTools/playerDocRequest');
 
@@ -19,7 +19,7 @@ function command(msg,rest,_,permlevel){
         let title = `**<@${User._id}>'s reps**`;
         if(pages>1) title += ` (Page ${page+1}/${pages})`;
         const reps = User.reps.slice(page*10,(page+1)*10).map(rep=>`<@${rep.from}>: ${rep.comment} ${permlevel>=3?`(id: ${rep._id})`:''}`);
-        let embed = new RichEmbed()
+        let embed = new MessageEmbed()
             .setDescription([title,'',...reps].join('\n'))
             .setColor('#9040ff');
         msg.channel.send(embed);

@@ -2,9 +2,10 @@ const Command = require('../Command');
 const PendingRep = require('../../models/PendingRep');
 const DiscordUser = require('../../models/DiscordUser');
 const {invalidPermissions} = require('../permissions');
-const {RichEmbed} = require('discord.js');
+const {MessageEmbed} = require('discord.js');
 
 function command(msg,rest,_,permlevel){
+    if(!rest[0]) return msg.reply("Please provide an action (accept, deny, delete, or inspect) and a case ID");
     switch(rest[0]){
         case 'accept':
             if(permlevel<6) return invalidPermissions(msg,6,permlevel);
@@ -47,7 +48,7 @@ function command(msg,rest,_,permlevel){
                 if(!User) return msg.reply('Couldn\'t find a rep with that id');
                 let rep = User.reps.find(rep=>rep._id===rest[1]);
                 msg.channel.send(
-                    new RichEmbed()
+                    new MessageEmbed()
                         .setDescription(`**Inspecting <@${rep.from}>'s rep to <@${User._id}>**`)
                         .addField('Comment',rep.comment)
                         .addField('Evidence',rep.evidence)

@@ -13,7 +13,7 @@ function hypixelAPIconstructor(){
     const keys = require('../keys');
     let i = 0;
     const getKey = () => {
-        if(i==keys.length)i=0;
+        if(i===keys.length)i=0;
         return keys[i++];
     }
     return (tag => {
