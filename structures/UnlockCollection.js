@@ -56,30 +56,6 @@ class UnlockCollection{
         const name = `${tier>0?'§9':'§c'}${up.Name} ${isTiered(key)?romanNumGen(tier):''}`;
         return new Item(name,up.Description,up.Item.Id,up.Item.Meta,tier);
     }
-
-    /*
-            
-            renownups.push(
-                createItem(
-                    `
-                        ${(tier<0)?"§c":"§9"}
-                        ${upgrade.Name} 
-                        ${
-                            (
-                                (upgrade.Levels||[]).length>1||
-                                upgrade.Extra.Formatting=="Seperated"||
-                                upgrade.Extra.Formatting=="Reveal"
-                            )?romanNumGen(tier+1):''
-                        }
-                    `,
-                    upgrade.Description,
-                    upgrade.Item.Id,
-                    upgrade.Item.Meta,
-                    tier+1
-                )
-            );
-                       
-            */
 }
 
 /**
@@ -91,20 +67,18 @@ class UnlockCollection{
 function subDescription(upgrade,tier,api){
     upgrade = JSON.parse(JSON.stringify(upgrade));
     const format = getRef(upgrade,'Extra','Formatting');
+    tier = Math.max(tier,0);
     if(format=="Reveal"){
-        if(tier<0)tier=0;
         upgrade.Description = upgrade.Description.slice(0,1+tier+upgrade.Extra.IgnoreIndex);
     }else if(format=="Seperated"){
-        if(tier<0)tier=0;
         upgrade.Description = upgrade.Description[tier];
     }else if(format=="ApiReference"){
-        if(tier<0)tier=0;
         let data = getRef(api,...upgrade.Extra.Ref.slice(1));
         if(upgrade.Extra.Function=='toHex') data = toHex(data);
         upgrade.Description = upgrade.Description.map(line=>line.replace('$',data));
         upgrade.Item.Meta = upgrade.Item.Meta.replace('$',data);
     }else{
-        upgrade.Description = upgrade.Description.map(line=>line.replace('$',(tier<0)?0:upgrade.Levels[tier]));
+        upgrade.Description = upgrade.Description.map(line=>line.replace('$',upgrade.Levels[tier]));
     }
     return upgrade;
 }
