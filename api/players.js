@@ -9,8 +9,10 @@ router.use('/:tag', (req,res)=>{
         else {
             Promise.all([target.loadInventorys(),Player.findOne({_id:target.uuid})]).then(([,player])=>{
                 data = {};
-                data.profileDisplay = player.profileDisplay;
-                data.scammer = player.scammer;
+                if(player){
+                    data.profileDisplay = player.profileDisplay;
+                    data.scammer = player.scammer;
+                }
                 data.uuid = target.uuid;
                 data.name = target.name;
                 data.bounty = target.bounty;
