@@ -42,7 +42,7 @@ function command(msg,rest,_,permlevel){
                     })
                 });
             }
-        }, //DiscordUser.updateOne({reps:{$elemMatch:{_id:rest[1]}}},{$pull:{reps:{_id:rest[1]}}}).then(results=>{
+        },
         remove:Doc=>{
             if(!Doc.scammer) msg.reply('This player isnt even a scammer what are you doing fool');
             else Player.updateOne({_id:Doc._id},{$unset:{scammer:""}}).then(results=>{
