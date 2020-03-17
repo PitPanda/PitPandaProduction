@@ -7,6 +7,7 @@ function command(msg,rest,alias){
     const verify = alias===`verify`;
     if(!rest[0]) return msg.reply(`Please include your username. Ex: \`.${verify?'verify':'prestige'} mcpqndq\``);
     hypixelAPI(rest[0]).then(result=>{
+        const gmrm = msg.member.roles;
         if(result.error) return msg.reply(result.error);
         if(result.discord!==msg.author.tag) return msg.reply('Your discord set ingame does not match!');
 
@@ -15,12 +16,12 @@ function command(msg,rest,alias){
         else msg.reply("Your prestige role has been updated!");
 
         //only attempt to add verified role if they do not already have
-        if(!msg.member.roles.some(p=>p.id===TradeCenter.Verified))
-            msg.member.addRole(TradeCenter.Verified,"Bot Verification");
+        if(!msg.member.roles.cache.get(TradeCenter.Verified))
+        gmrm.add(TradeCenter.Verified,"Bot Verification");
         
         //Remove existing prestige roles and add the new one
-        msg.member.removeRoles(msg.member.roles.filter(p=>/^Prestige/.test(p.name)&&p.id!=TradeCenter.PrestigeRoles[result.prestige]))
-            .then(member=>member.addRole(TradeCenter.PrestigeRoles[result.prestige],"Bot Prestige Role"));
+        gmrm.remove(gmrm.cache.filter(p=>/^Prestige/.test(p.name)&&p.id!==TradeCenter.PrestigeRoles[result.prestige]))
+            .then(member=>gmrm.add(TradeCenter.PrestigeRoles[result.prestige],"Bot Prestige Role"));
 
         //attempt to set their nick to their ign
         if(msg.member.displayName!=result.username) msg.member.setNickname(result.username,"Updating nick to their ingame name")
@@ -30,7 +31,7 @@ function command(msg,rest,alias){
             _id: msg.author.id,
             uuid: result.uuid
         });
-        console.log(user);
+        
         DiscordUser.findOneAndUpdate({_id:msg.author.id},{$set:user},{upsert:true}).catch(console.error);
     });
 }
