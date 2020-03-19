@@ -1,27 +1,6 @@
 const mongoose = require('mongoose');
-
-const scammerScema = mongoose.Schema({
-    discordid: {
-        type:String,
-        default: undefined
-    },
-    alts: {
-        type:[String],
-        default: undefined
-    },
-    main: {
-        type: String,
-        default: undefined,
-    },
-    notes: String
-},{_id:false});
-
-const profileDisplaySchema = mongoose.Schema({
-    url: String,
-    linkTitle: String,
-    message: String,
-    title: String
-},{_id:false});
+const profileDisplaySchema = require('./ProfileDisplaySchema');
+const scammerSchema = require('./ScammerSchema');
 
 const PlayerSchema = mongoose.Schema({
     _id: String,
@@ -66,9 +45,9 @@ const PlayerSchema = mongoose.Schema({
         default: undefined
     },
     scammer: {
-        type: scammerScema,
+        type: scammerSchema,
         default: undefined
     }
 });
 
-module.exports = mongoose.model('Players',PlayerSchema);
+module.exports = mongoose.model('Players', PlayerSchema);
