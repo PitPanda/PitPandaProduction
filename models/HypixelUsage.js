@@ -4,8 +4,8 @@ const HypixelUsageSchema = mongoose.Schema({
     count: Number,
     date: {
         type: Number,
-        default: ()=>Math.floor(Date.now()/86400e3)
+        default: () => Math.floor(Date.now() / 86400e3)
     }
 });
 
-module.exports = mongoose.model('HypixelUsage',HypixelUsageSchema);
+module.exports = mongoose.model('HypixelUsage', HypixelUsageSchema);
