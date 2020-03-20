@@ -1,22 +1,22 @@
-const {Pit: {Upgrades, Perks, RenownUpgrades}} = require('../frontEnd/src/pitMaster.json');
-const {isTiered} = require('../apiTools/apiTools');
+const { Pit: { Upgrades, Perks, RenownUpgrades } } = require('../frontEnd/src/pitMaster.json');
+const { isTiered } = require('../apiTools/apiTools');
 
 /**
  * Represents a unlock renwon shop, perk, upgrade
  */
-class UnlockEntry{
+class UnlockEntry {
     /**
      * Cunstructs a Unlock Entry
      * @param {Object} raw 
      */
-    constructor(raw){
+    constructor(raw) {
         /**
          * raw unlock data
          * @type {Object}
          */
         this.raw;
-        Object.defineProperty(this,'raw',{value:raw,enumerable:false});
-        
+        Object.defineProperty(this, 'raw', { value: raw, enumerable: false });
+
         /**
          * Internal upgrade key name
          * @type {string}
@@ -54,20 +54,20 @@ class UnlockEntry{
          */
         this.cost;
 
-        if(Upgrades[this.key]){
+        if (Upgrades[this.key]) {
             this.type = 'Upgrade';
             this.displayName = Upgrades[this.key].Name;
             this.tier = raw.tier;
-        } else if(Perks[this.key]){
+        } else if (Perks[this.key]) {
             this.type = 'Perk';
             this.displayName = Perks[this.key].Name;
-        } else if(RenownUpgrades[this.key]){
+        } else if (RenownUpgrades[this.key]) {
             this.type = 'Renown';
             this.displayName = RenownUpgrades[this.key].Name;
-            if(isTiered(RenownUpgrades[this.key])) this.tier = raw.tier;
-            Object.defineProperty(this,'cost',{
-                enumerable:false,
-                value:RenownUpgrades[this.key].Costs[raw.tier]
+            if (isTiered(RenownUpgrades[this.key])) this.tier = raw.tier;
+            Object.defineProperty(this, 'cost', {
+                enumerable: false,
+                value: RenownUpgrades[this.key].Costs[raw.tier]
             });
         }
     }

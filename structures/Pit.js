@@ -1,47 +1,50 @@
-const {getRef,formatNumber,romanNumGen} = require('../apiTools/apiTools');
+const { getRef } = require('../apiTools/apiTools');
 const pitMaster = require('../frontEnd/src/pitMaster.json');
-const {Pit: {Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics}, Extra: {ColorCodes:Colors,RankPrefixes,RankNameColors}} = pitMaster;
+const { Pit: { Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics }, Extra: { ColorCodes: Colors, RankPrefixes, RankNameColors } } = pitMaster;
 const Item = require('./Item');
 const SimpleItem = require('./SimpleItem');
 const Prestige = require('./Prestige');
 const Progress = require('./Progress');
 const UnlockCollection = require('./UnlockCollection');
-const {inflate} = require('pako');
+const { inflate } = require('pako');
 const nbt = require('nbt');
 const Mystic = require('../models/Mystic');
 const Player = require('../models/Player');
 
+const TextHelpers = require('../utils/TextHelpers');
+const textHelpers = new TextHelpers();
+
 /**
  * Represents the player output from the Hypixel API
  */
-class Pit{
+class Pit {
     /**
      * Constructor for thr Pit class
      * @param {Object} json 
      */
-    constructor(json){
+    constructor(json) {
 
         /**
          * Raw hypixel output json
          * @type {Object}
          */
         this.raw;
-        Object.defineProperty(this,'raw',{value:json.player,enumerable:false});
+        Object.defineProperty(this, 'raw', { value: json.player, enumerable: false });
 
-        if(!json.success)return{error:json.err||'Failed to reach the api'};
-        if(!json.player)return{error:'Player not found'};
-        if(!this.getStat('stats','Pit'))return{error:'Player has not played the Pit'};
+        if (!json.success) return { error: json.err || 'Failed to reach the api' };
+        if (!json.player) return { error: 'Player not found' };
+        if (!this.getStat('stats', 'Pit')) return { error: 'Player has not played the Pit' };
 
-        
+
 
         /**
          * User's linked discord account
          * @type {string}
          */
         this.discord;
-        Object.defineProperty(this,'discord',{
-            enumerable:true,
-            get: ()=>this.getStat('socialMedia','links','DISCORD')
+        Object.defineProperty(this, 'discord', {
+            enumerable: true,
+            get: () => this.getStat('socialMedia', 'links', 'DISCORD')
         });
 
         /**
@@ -55,9 +58,9 @@ class Pit{
          * @type {object}
          */
         this.raw_inventories;
-        Object.defineProperty(this,'raw_inventories',{
-            enumerable:false,
-            value:{}
+        Object.defineProperty(this, 'raw_inventories', {
+            enumerable: false,
+            value: {}
         });
 
         /**
@@ -71,21 +74,21 @@ class Pit{
          * @type {Prestige[]}
          */
         this.prestiges;
-        Object.defineProperty(this,'prestiges',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._prestiges) Object.defineProperty(this,'_prestiges',{
+        Object.defineProperty(this, 'prestiges', {
+            enumerable: true,
+            get: () => {
+                if (!this._prestiges) Object.defineProperty(this, '_prestiges', {
                     enumerable: false,
                     value: [
-                        new Prestige(0,undefined,this.getStat('stats','Pit','profile','unlocks'),this.getStat('stats','Pit','profile',`cash_during_prestige_0`)),
+                        new Prestige(0, undefined, this.getStat('stats', 'Pit', 'profile', 'unlocks'), this.getStat('stats', 'Pit', 'profile', `cash_during_prestige_0`)),
                         ...this.prestigesRaw
-                            .map((pres,index,original)=>
+                            .map((pres, index, original) =>
                                 new Prestige(
                                     pres.index,
                                     pres.timestamp,
-                                    this.getStat('stats','Pit','profile',`unlocks_${pres.index}`),
-                                    this.getStat('stats','Pit','profile',`cash_during_prestige_${pres.index}`),
-                                    this.renownShopUnlocksRaw.filter(({acquireDate})=>acquireDate > pres.timestamp && acquireDate < (getRef(original,index+1,'timestamp')||Infinity))
+                                    this.getStat('stats', 'Pit', 'profile', `unlocks_${pres.index}`),
+                                    this.getStat('stats', 'Pit', 'profile', `cash_during_prestige_${pres.index}`),
+                                    this.renownShopUnlocksRaw.filter(({ acquireDate }) => acquireDate > pres.timestamp && acquireDate < (getRef(original, index + 1, 'timestamp') || Infinity))
                                 )
                             )
                     ]
@@ -99,9 +102,9 @@ class Pit{
          * @type {number}
          */
         this.prestige;
-        Object.defineProperty(this,'prestige',{
-            enumerable:true,
-            get: ()=>this.prestigesRaw.length
+        Object.defineProperty(this, 'prestige', {
+            enumerable: true,
+            get: () => this.prestigesRaw.length
         });
 
         /**
@@ -109,9 +112,9 @@ class Pit{
          * @type {string}
          */
         this.name;
-        Object.defineProperty(this,'name',{
-            enumerable:true,
-            get: ()=>this.getStat('displayname')||'Unknown'
+        Object.defineProperty(this, 'name', {
+            enumerable: true,
+            get: () => this.getStat('displayname') || 'Unknown'
         });
 
         /**
@@ -119,9 +122,9 @@ class Pit{
          * @type {string}
          */
         this.uuid;
-        Object.defineProperty(this,'uuid',{
-            enumerable:true,
-            get: ()=>this.getStat('uuid')||'Unknown'
+        Object.defineProperty(this, 'uuid', {
+            enumerable: true,
+            get: () => this.getStat('uuid') || 'Unknown'
         });
 
         /**
@@ -129,13 +132,13 @@ class Pit{
          * @type {string}
          */
         this.rank;
-        Object.defineProperty(this,'rank',{
-            enumerable:true,
-            get: ()=>{
+        Object.defineProperty(this, 'rank', {
+            enumerable: true,
+            get: () => {
                 let rank = this.getStat('newPackageRank') || this.getStat('PackageRank') || 'NON';
-                if(this.getStat('monthlyPackageRank') =='SUPERSTAR') rank = 'SUPERSTAR';
+                if (this.getStat('monthlyPackageRank') == 'SUPERSTAR') rank = 'SUPERSTAR';
                 const staff = this.getStat('rank');
-                if(staff && staff!='NORMAL') rank = staff;
+                if (staff && staff != 'NORMAL') rank = staff;
                 return rank;
             }
         });
@@ -145,10 +148,10 @@ class Pit{
          * @type {string}
          */
         this.formattedName;
-        Object.defineProperty(this,'formattedName',{
-            enumerable:true,
-            get: ()=>{
-                return this.prefix + (this.rank!=='NON'?' ':'') + this.name;
+        Object.defineProperty(this, 'formattedName', {
+            enumerable: true,
+            get: () => {
+                return this.prefix + (this.rank !== 'NON' ? ' ' : '') + this.name;
             }
         });
 
@@ -157,9 +160,9 @@ class Pit{
          * @type {string}
          */
         this.levelFormattedName;
-        Object.defineProperty(this,'levelFormattedName',{
-            enumerable:true,
-            get: ()=>{
+        Object.defineProperty(this, 'levelFormattedName', {
+            enumerable: true,
+            get: () => {
                 return this.formattedLevel + ' ' + this.colouredName;
             }
         });
@@ -169,13 +172,13 @@ class Pit{
          * @type {string}
          */
         this.formattedLevel;
-        Object.defineProperty(this,'formattedLevel',{
-            enumerable:true,
-            get: ()=>{
-                let lc = pitMaster.Pit.Levels[Math.floor(this.level/10)].ColorCode;
-                if(this.prestige===0) return Colors.GRAY+'['+lc+this.level+Colors.RESET+Colors.GRAY+']';
-                let pc=pitMaster.Pit.Prestiges[this.prestige].ColorCode;
-                return pc+'['+Colors.YELLOW+romanNumGen(this.prestige)+pc+'-'+lc+this.level+Colors.RESET+pc+']';
+        Object.defineProperty(this, 'formattedLevel', {
+            enumerable: true,
+            get: () => {
+                let lc = pitMaster.Pit.Levels[Math.floor(this.level / 10)].ColorCode;
+                if (this.prestige === 0) return Colors.GRAY + '[' + lc + this.level + Colors.RESET + Colors.GRAY + ']';
+                let pc = pitMaster.Pit.Prestiges[this.prestige].ColorCode;
+                return pc + '[' + Colors.YELLOW + textHelpers.romanNumGen(this.prestige) + pc + '-' + lc + this.level + Colors.RESET + pc + ']';
             }
         });
 
@@ -184,13 +187,13 @@ class Pit{
          * @type {string}
          */
         this.prefix;
-        Object.defineProperty(this,'prefix',{
-            enumerable:true,
-            get: ()=>{
+        Object.defineProperty(this, 'prefix', {
+            enumerable: true,
+            get: () => {
                 const rank = this.rank;
                 let prefix = this.getStat('prefix') || RankPrefixes[rank] || '§7';
                 const plus = this.getStat('rankPlusColor');
-                prefix = prefix.replace('$',Colors[plus]||'§c');
+                prefix = prefix.replace('$', Colors[plus] || '§c');
                 return prefix;
             }
         });
@@ -200,12 +203,12 @@ class Pit{
          * @type {boolean}
          */
         this.online;
-        Object.defineProperty(this,'online',{
-            enumerable:true,
-            get: ()=>{
+        Object.defineProperty(this, 'online', {
+            enumerable: true,
+            get: () => {
                 const login = this.getStat('lastLogin');
                 const logout = this.getStat('lastLogout');
-                if(!login||!logout) return false;
+                if (!login || !logout) return false;
                 return login > logout;
             }
         });
@@ -214,16 +217,16 @@ class Pit{
          * unix epock timestamp (seconds) of the last time their pit profile was saved
          * @type {number}
          */
-        this.lastSave = this.getStat('stats','Pit','profile','last_save');
+        this.lastSave = this.getStat('stats', 'Pit', 'profile', 'last_save');
 
         /**
          * Player's current xp
          * @type {number}
          */
         this.xp;
-        Object.defineProperty(this,'xp',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','profile','xp')||0
+        Object.defineProperty(this, 'xp', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'profile', 'xp') || 0
         });
 
         /**
@@ -231,9 +234,9 @@ class Pit{
          * @type {number}
          */
         this.prestigeXp;
-        Object.defineProperty(this,'prestigeXp',{
-            enumerable:true,
-            get: ()=>(this.prestige>0)?this.xp-Prestiges[this.prestige-1].SumXp:this.xp
+        Object.defineProperty(this, 'prestigeXp', {
+            enumerable: true,
+            get: () => (this.prestige > 0) ? this.xp - Prestiges[this.prestige - 1].SumXp : this.xp
         });
 
         /**
@@ -241,12 +244,12 @@ class Pit{
          * @type {Progress}
          */
         this.xpProgress;
-        Object.defineProperty(this,'xpProgress',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._xpProgress) Object.defineProperty(this,'_xpProgress',{
+        Object.defineProperty(this, 'xpProgress', {
+            enumerable: true,
+            get: () => {
+                if (!this._xpProgress) Object.defineProperty(this, '_xpProgress', {
                     enumerable: false,
-                    value: new Progress(this.prestigeXp,Prestiges[this.prestige].TotalXp,(this.prestige===35&&this.prestigeXp===Prestiges[this.prestige].TotalXp)?'Max XP':undefined)
+                    value: new Progress(this.prestigeXp, Prestiges[this.prestige].TotalXp, (this.prestige === 35 && this.prestigeXp === Prestiges[this.prestige].TotalXp) ? 'Max XP' : undefined)
                 });
                 return this._xpProgress;
             }
@@ -257,10 +260,10 @@ class Pit{
          * @type {number}
          */
         this.level;
-        Object.defineProperty(this,'level',{
-            enumerable:true,
-            get(){
-                if(!this.levelCache) this.loadLevelCache();
+        Object.defineProperty(this, 'level', {
+            enumerable: true,
+            get() {
+                if (!this.levelCache) this.loadLevelCache();
                 return this.levelCache.level
             }
         });
@@ -270,10 +273,10 @@ class Pit{
          * @type {number}
          */
         this.xpToNextLevel;
-        Object.defineProperty(this,'xpToNextLevel',{
-            enumerable:true,
-            get(){
-                if(!this.levelCache) this.loadLevelCache();
+        Object.defineProperty(this, 'xpToNextLevel', {
+            enumerable: true,
+            get() {
+                if (!this.levelCache) this.loadLevelCache();
                 return this.levelCache.next || undefined;
             }
         });
@@ -283,10 +286,10 @@ class Pit{
          * @type {number}
          */
         this.xpThisLevel;
-        Object.defineProperty(this,'xpThisLevel',{
-            enumerable:true,
-            get(){
-                if(!this.levelCache) this.loadLevelCache();
+        Object.defineProperty(this, 'xpThisLevel', {
+            enumerable: true,
+            get() {
+                if (!this.levelCache) this.loadLevelCache();
                 return this.levelCache.extra || undefined;
             }
         });
@@ -296,9 +299,9 @@ class Pit{
          * @type {number}
          */
         this.currentGold;
-        Object.defineProperty(this,'currentGold',{
-            enumerable:true,
-            get: ()=>Math.round(100*(this.getStat('stats','Pit','profile','cash')||0))/100
+        Object.defineProperty(this, 'currentGold', {
+            enumerable: true,
+            get: () => Math.round(100 * (this.getStat('stats', 'Pit', 'profile', 'cash') || 0)) / 100
         });
 
         /**
@@ -306,9 +309,9 @@ class Pit{
          * @type {number}
          */
         this.prestigeGold;
-        Object.defineProperty(this,'prestigeGold',{
-            enumerable:true,
-            get: ()=>this.prestiges[this.prestige].gold
+        Object.defineProperty(this, 'prestigeGold', {
+            enumerable: true,
+            get: () => this.prestiges[this.prestige].gold
         });
 
         /**
@@ -316,12 +319,12 @@ class Pit{
          * @type {Progress}
          */
         this.goldProgress;
-        Object.defineProperty(this,'goldProgress',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._goldProgress) Object.defineProperty(this,'_goldProgress',{
+        Object.defineProperty(this, 'goldProgress', {
+            enumerable: true,
+            get: () => {
+                if (!this._goldProgress) Object.defineProperty(this, '_goldProgress', {
                     enumerable: false,
-                    value: new Progress(this.prestigeGold,Prestiges[this.prestige].GoldReq,this.prestige===35?'Max Prestige':false)
+                    value: new Progress(this.prestigeGold, Prestiges[this.prestige].GoldReq, this.prestige === 35 ? 'Max Prestige' : false)
                 });
                 return this._goldProgress;
             }
@@ -332,9 +335,9 @@ class Pit{
          * @type {UnlockEntry[]}
          */
         this.renownShop;
-        Object.defineProperty(this,'renownShop',{
-            enumerable:true,
-            get: ()=>this.renownShopCollection.raw
+        Object.defineProperty(this, 'renownShop', {
+            enumerable: true,
+            get: () => this.renownShopCollection.raw
         });
 
         /**
@@ -342,12 +345,12 @@ class Pit{
          * @type {Progress}
          */
         this.renownProgress;
-        Object.defineProperty(this,'renownProgress',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._renownProgress) Object.defineProperty(this,'_renownProgress',{
+        Object.defineProperty(this, 'renownProgress', {
+            enumerable: true,
+            get: () => {
+                if (!this._renownProgress) Object.defineProperty(this, '_renownProgress', {
                     enumerable: false,
-                    value: new Progress(this.renownShop.length,81,this.renownShop.length===81?'Max Shop':false,this.renownShopSpent,1980)
+                    value: new Progress(this.renownShop.length, 81, this.renownShop.length === 81 ? 'Max Shop' : false, this.renownShopSpent, 1980)
                 });
                 return this._renownProgress;
             }
@@ -358,12 +361,12 @@ class Pit{
          * @type {string[]}
          */
         this.perks;
-        Object.defineProperty(this,'perks',{
-            enumerable:true,
-            get: ()=>{
+        Object.defineProperty(this, 'perks', {
+            enumerable: true,
+            get: () => {
                 let arr = new Array(this.perkSlots).fill('none');
-                for(let i = 0; i < this.perkSlots; i++)
-                    arr[i] = this.getStat('stats','Pit','profile',`selected_perk_${i}`) || arr[i];
+                for (let i = 0; i < this.perkSlots; i++)
+                    arr[i] = this.getStat('stats', 'Pit', 'profile', `selected_perk_${i}`) || arr[i];
                 return arr;
             }
         });
@@ -372,16 +375,16 @@ class Pit{
          * Available Perk Slots
          * @type {number}
          */
-        this.perkSlots = (this.renownShop.find(({key})=>key=='extra_perk_slot'))?4:3;
+        this.perkSlots = (this.renownShop.find(({ key }) => key == 'extra_perk_slot')) ? 4 : 3;
 
         /**
          * Current Renown
          * @type {number}
          */
         this.renown;
-        Object.defineProperty(this,'renown',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','profile','renown')
+        Object.defineProperty(this, 'renown', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'profile', 'renown')
         });
 
         /**
@@ -389,12 +392,12 @@ class Pit{
          * @type {number}
          */
         this.lifetimeRenown;
-        Object.defineProperty(this,'lifetimeRenown',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._lifetimeRenown) Object.defineProperty(this,'_lifetimeRenown',{
+        Object.defineProperty(this, 'lifetimeRenown', {
+            enumerable: true,
+            get: () => {
+                if (!this._lifetimeRenown) Object.defineProperty(this, '_lifetimeRenown', {
                     enumerable: false,
-                    value: (this.renownShopSpent||0)+(this.renown||0)+2*(this.darkPantsCreated||0)
+                    value: (this.renownShopSpent || 0) + (this.renown || 0) + 2 * (this.darkPantsCreated || 0)
                 });
                 return this._lifetimeRenown;
             }
@@ -405,12 +408,12 @@ class Pit{
          * @type {number}
          */
         this.renownShopSpent;
-        Object.defineProperty(this,'renownShopSpent',{
-            enumerable:true,
-            get: ()=>{
-                if(!this._renownShopSpent) Object.defineProperty(this,'_renownShopSpent',{
+        Object.defineProperty(this, 'renownShopSpent', {
+            enumerable: true,
+            get: () => {
+                if (!this._renownShopSpent) Object.defineProperty(this, '_renownShopSpent', {
                     enumerable: false,
-                    value: this.renownShop.reduce((acc,entry)=>acc+entry.cost,0)
+                    value: this.renownShop.reduce((acc, entry) => acc + entry.cost, 0)
                 });
                 return this._renownShopSpent;
             }
@@ -421,10 +424,10 @@ class Pit{
          * @type {number}
          */
         this.bounty;
-        Object.defineProperty(this,'bounty',{
-            enumerable:true,
-            get:()=>(this.getStat('stats','Pit','profile','bounties')||[])
-                .reduce((acc,bump)=>acc+bump.amount,0)||undefined
+        Object.defineProperty(this, 'bounty', {
+            enumerable: true,
+            get: () => (this.getStat('stats', 'Pit', 'profile', 'bounties') || [])
+                .reduce((acc, bump) => acc + bump.amount, 0) || undefined
         });
 
         /**
@@ -432,9 +435,9 @@ class Pit{
          * @type {number}
          */
         this.playtime;
-        Object.defineProperty(this,'playtime',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','playtime_minutes')||0
+        Object.defineProperty(this, 'playtime', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'playtime_minutes') || 0
         });
 
         /**
@@ -442,9 +445,9 @@ class Pit{
          * @type {{victim:string,timestamp:number}[]}
          */
         this.recentKills;
-        Object.defineProperty(this,'recentKills',{
-            enumerable:true,
-            get: ()=>(this.getStat('stats','Pit','profile','recent_kills')||[]).reverse()
+        Object.defineProperty(this, 'recentKills', {
+            enumerable: true,
+            get: () => (this.getStat('stats', 'Pit', 'profile', 'recent_kills') || []).reverse()
         });
 
         /**
@@ -452,9 +455,9 @@ class Pit{
          * @type {string[]}
          */
         this.recentKillsSimple;
-        Object.defineProperty(this,'recentKillsSimple',{
-            enumerable:true,
-            get: ()=>this.recentKills.map(kill=>kill.victim)
+        Object.defineProperty(this, 'recentKillsSimple', {
+            enumerable: true,
+            get: () => this.recentKills.map(kill => kill.victim)
         });
 
         /**
@@ -462,9 +465,9 @@ class Pit{
          * @type {number}
          */
         this.enderchestOpened;
-        Object.defineProperty(this,'enderchestOpened',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','enderchest_opened')
+        Object.defineProperty(this, 'enderchestOpened', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enderchest_opened')
         });
 
         /**
@@ -472,9 +475,9 @@ class Pit{
          * @type {number}
          */
         this.joins;
-        Object.defineProperty(this,'joins',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','joins')
+        Object.defineProperty(this, 'joins', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'joins')
         });
 
         /**
@@ -482,9 +485,9 @@ class Pit{
          * @type {number}
          */
         this.chatMessages;
-        Object.defineProperty(this,'chatMessages',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','chat_messages')
+        Object.defineProperty(this, 'chatMessages', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'chat_messages')
         });
 
         /**
@@ -492,9 +495,9 @@ class Pit{
          * @type {string} formatted color without the #
          */
         this.hatColor
-        Object.defineProperty(this,'hatColor',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','profile','hat_color')
+        Object.defineProperty(this, 'hatColor', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'profile', 'hat_color')
         });
 
         /**
@@ -502,9 +505,9 @@ class Pit{
          * @type {number}
          */
         this.leftClicks;
-        Object.defineProperty(this,'leftClicks',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','left_clicks')
+        Object.defineProperty(this, 'leftClicks', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'left_clicks')
         });
 
         /**
@@ -512,9 +515,9 @@ class Pit{
          * @type {number}
          */
         this.kills;
-        Object.defineProperty(this,'kills',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','kills')
+        Object.defineProperty(this, 'kills', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'kills')
         });
 
         /**
@@ -522,9 +525,9 @@ class Pit{
          * @type {number}
          */
         this.deaths;
-        Object.defineProperty(this,'deaths',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','deaths')
+        Object.defineProperty(this, 'deaths', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'deaths')
         });
 
         /**
@@ -532,9 +535,9 @@ class Pit{
          * @type {number}
          */
         this.meleeDamageDealt;
-        Object.defineProperty(this,'meleeDamageDealt',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','melee_damage_dealt')
+        Object.defineProperty(this, 'meleeDamageDealt', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'melee_damage_dealt')
         });
 
         /**
@@ -542,9 +545,9 @@ class Pit{
          * @type {number}
          */
         this.swordHits;
-        Object.defineProperty(this,'swordHits',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','sword_hits')
+        Object.defineProperty(this, 'swordHits', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'sword_hits')
         });
 
         /**
@@ -552,9 +555,9 @@ class Pit{
          * @type {number}
          */
         this.lifetimeGold;
-        Object.defineProperty(this,'lifetimeGold',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','cash_earned')
+        Object.defineProperty(this, 'lifetimeGold', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'cash_earned')
         });
 
         /**
@@ -562,9 +565,9 @@ class Pit{
          * @type {number}
          */
         this.arrowsFired;
-        Object.defineProperty(this,'arrowsFired',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','arrows_fired')
+        Object.defineProperty(this, 'arrowsFired', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'arrows_fired')
         });
 
         /**
@@ -572,9 +575,9 @@ class Pit{
          * @type {number}
          */
         this.bowDamageDealt;
-        Object.defineProperty(this,'bowDamageDealt',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','bow_damage_dealt')
+        Object.defineProperty(this, 'bowDamageDealt', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'bow_damage_dealt')
         });
 
 
@@ -583,9 +586,9 @@ class Pit{
          * @type {number}
          */
         this.bowDamageReceived;
-        Object.defineProperty(this,'bowDamageReceived',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','bow_damage_received')
+        Object.defineProperty(this, 'bowDamageReceived', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'bow_damage_received')
         });
 
 
@@ -594,9 +597,9 @@ class Pit{
          * @type {number}
          */
         this.damageReceived;
-        Object.defineProperty(this,'damageReceived',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','damage_received')
+        Object.defineProperty(this, 'damageReceived', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'damage_received')
         });
 
 
@@ -605,9 +608,9 @@ class Pit{
          * @type {number}
          */
         this.jumpsIntoPit;
-        Object.defineProperty(this,'jumpsIntoPit',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','jumped_into_pit')
+        Object.defineProperty(this, 'jumpsIntoPit', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'jumped_into_pit')
         });
 
 
@@ -616,9 +619,9 @@ class Pit{
          * @type {number}
          */
         this.meleeDamageReceived;
-        Object.defineProperty(this,'meleeDamageReceived',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','melee_damage_received')
+        Object.defineProperty(this, 'meleeDamageReceived', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'melee_damage_received')
         });
 
 
@@ -627,9 +630,9 @@ class Pit{
          * @type {number}
          */
         this.arrowHits;
-        Object.defineProperty(this,'arrowHits',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','arrow_hits')
+        Object.defineProperty(this, 'arrowHits', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'arrow_hits')
         });
 
 
@@ -638,9 +641,9 @@ class Pit{
          * @type {number}
          */
         this.damageDealt;
-        Object.defineProperty(this,'damageDealt',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','damage_dealt')
+        Object.defineProperty(this, 'damageDealt', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'damage_dealt')
         });
 
 
@@ -649,9 +652,9 @@ class Pit{
          * @type {number}
          */
         this.assists;
-        Object.defineProperty(this,'assists',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','assists')
+        Object.defineProperty(this, 'assists', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'assists')
         });
 
 
@@ -660,9 +663,9 @@ class Pit{
          * @type {number}
          */
         this.highestStreak;
-        Object.defineProperty(this,'highestStreak',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','max_streak')
+        Object.defineProperty(this, 'highestStreak', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'max_streak')
         });
 
         /**
@@ -670,9 +673,9 @@ class Pit{
          * @type {number}
          */
         this.blocksPlaced;
-        Object.defineProperty(this,'blocksPlaced',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','blocks_placed')
+        Object.defineProperty(this, 'blocksPlaced', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'blocks_placed')
         });
 
         /**
@@ -680,9 +683,9 @@ class Pit{
          * @type {number}
          */
         this.launcherLaunches;
-        Object.defineProperty(this,'launcherLaunches',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','launched_by_launchers')
+        Object.defineProperty(this, 'launcherLaunches', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'launched_by_launchers')
         });
 
         /**
@@ -690,9 +693,9 @@ class Pit{
         * @type {number}
         */
         this.diamondItemsPurchased;
-        Object.defineProperty(this,'diamondItemsPurchased',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','diamond_items_purchased')
+        Object.defineProperty(this, 'diamondItemsPurchased', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'diamond_items_purchased')
         });
 
         /**
@@ -700,9 +703,9 @@ class Pit{
          * @type {number}
          */
         this.wheatFarmed;
-        Object.defineProperty(this,'wheatFarmed',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','wheat_farmed')
+        Object.defineProperty(this, 'wheatFarmed', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'wheat_farmed')
         });
 
         /**
@@ -710,9 +713,9 @@ class Pit{
          * @type {number}
          */
         this.sewerTreasuresFound;
-        Object.defineProperty(this,'sewerTreasuresFound',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','sewer_treasures_found')
+        Object.defineProperty(this, 'sewerTreasuresFound', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'sewer_treasures_found')
         });
 
         /**
@@ -720,9 +723,9 @@ class Pit{
          * @type {number}
          */
         this.contractsCompleted;
-        Object.defineProperty(this,'contractsCompleted',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','contracts_completed')
+        Object.defineProperty(this, 'contractsCompleted', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'contracts_completed')
         });
 
         /**
@@ -730,9 +733,9 @@ class Pit{
          * @type {number}
          */
         this.contractsStarted;
-        Object.defineProperty(this,'contractsStarted',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','contracts_started')
+        Object.defineProperty(this, 'contractsStarted', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'contracts_started')
         });
 
         /**
@@ -740,9 +743,9 @@ class Pit{
          * @type {number}
          */
         this.nightQuestsCompleted;
-        Object.defineProperty(this,'nightQuestsCompleted',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','night_quests_completed')
+        Object.defineProperty(this, 'nightQuestsCompleted', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'night_quests_completed')
         });
 
         /**
@@ -750,12 +753,12 @@ class Pit{
          * @type {Array<number>} [tier1, tier2, tier3]
          */
         this.mysticsEnchanted;
-        Object.defineProperty(this,'mysticsEnchanted',{
-            enumerable:true,
-            get: ()=>[
-                this.getStat('stats','Pit','pit_stats_ptl','enchanted_tier1')||0,
-                this.getStat('stats','Pit','pit_stats_ptl','enchanted_tier2')||0,
-                this.getStat('stats','Pit','pit_stats_ptl','enchanted_tier3')||0
+        Object.defineProperty(this, 'mysticsEnchanted', {
+            enumerable: true,
+            get: () => [
+                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier1') || 0,
+                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier2') || 0,
+                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier3') || 0
             ]
         });
 
@@ -764,9 +767,9 @@ class Pit{
          * @type {number}
          */
         this.darkPantsCreated;
-        Object.defineProperty(this,'darkPantsCreated',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','dark_pants_crated')
+        Object.defineProperty(this, 'darkPantsCreated', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'dark_pants_crated')
         });
 
         /**
@@ -774,9 +777,9 @@ class Pit{
          * @type {number}
          */
         this.darkPantsT2;
-        Object.defineProperty(this,'darkPantsT2',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','dark_pants_t2')
+        Object.defineProperty(this, 'darkPantsT2', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'dark_pants_t2')
         });
 
         /**
@@ -784,9 +787,9 @@ class Pit{
          * @type {number}
          */
         this.tradeGold;
-        Object.defineProperty(this,'tradeGold',{
-            enumerable:true,
-            get: ()=>this.trades.reduce((acc,trade)=>acc+trade.amount,0)
+        Object.defineProperty(this, 'tradeGold', {
+            enumerable: true,
+            get: () => this.trades.reduce((acc, trade) => acc + trade.amount, 0)
         });
 
         /**
@@ -794,9 +797,9 @@ class Pit{
          * @type {number}
          */
         this.tradeCount;
-        Object.defineProperty(this,'tradeCount',{
-            enumerable:true,
-            get: ()=>this.trades.length
+        Object.defineProperty(this, 'tradeCount', {
+            enumerable: true,
+            get: () => this.trades.length
         });
 
         /**
@@ -804,9 +807,9 @@ class Pit{
          * @type {number}
          */
         this.lavaBucketsPlaced;
-        Object.defineProperty(this,'lavaBucketsPlaced',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','lava_bucket_emptied')
+        Object.defineProperty(this, 'lavaBucketsPlaced', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'lava_bucket_emptied')
         });
 
         /**
@@ -814,9 +817,9 @@ class Pit{
          * @type {number}
          */
         this.blocksBroken;
-        Object.defineProperty(this,'blocksBroken',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','blocks_broken')
+        Object.defineProperty(this, 'blocksBroken', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'blocks_broken')
         });
 
         /**
@@ -824,9 +827,9 @@ class Pit{
          * @type {number}
          */
         this.gheadsEaten;
-        Object.defineProperty(this,'gheadsEaten',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','ghead_eaten')
+        Object.defineProperty(this, 'gheadsEaten', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'ghead_eaten')
         });
 
         /**
@@ -834,9 +837,9 @@ class Pit{
          * @type {number}
          */
         this.hiddenJewelsTriggered;
-        Object.defineProperty(this,'hiddenJewelsTriggered',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','hidden_jewel_triggers')
+        Object.defineProperty(this, 'hiddenJewelsTriggered', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'hidden_jewel_triggers')
         });
 
         /**
@@ -844,9 +847,9 @@ class Pit{
          * @type {number}
          */
         this.gapplesEaten;
-        Object.defineProperty(this,'gapplesEaten',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gapple_eaten')
+        Object.defineProperty(this, 'gapplesEaten', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gapple_eaten')
         });
 
         /**
@@ -854,9 +857,9 @@ class Pit{
          * @type {number}
          */
         this.soupsDrank;
-        Object.defineProperty(this,'soupsDrank',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','soups_drank')
+        Object.defineProperty(this, 'soupsDrank', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'soups_drank')
         });
 
         /**
@@ -864,9 +867,9 @@ class Pit{
          * @type {number}
          */
         this.goldFromFarming;
-        Object.defineProperty(this,'goldFromFarming',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gold_from_farming')
+        Object.defineProperty(this, 'goldFromFarming', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_farming')
         });
 
         /**
@@ -874,9 +877,9 @@ class Pit{
          * @type {number}
          */
         this.goldFromSellingFish;
-        Object.defineProperty(this,'goldFromSellingFish',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','gold_from_selling_fish')
+        Object.defineProperty(this, 'goldFromSellingFish', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_selling_fish')
         });
 
         /**
@@ -884,9 +887,9 @@ class Pit{
          * @type {number}
          */
         this.fishingRodCasts;
-        Object.defineProperty(this,'fishingRodCasts',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','fishing_rod_launched')
+        Object.defineProperty(this, 'fishingRodCasts', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fishing_rod_launched')
         });
 
         /**
@@ -894,9 +897,9 @@ class Pit{
          * @type {number}
          */
         this.fishedFish;
-        Object.defineProperty(this,'fishedFish',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','fishes_fished')
+        Object.defineProperty(this, 'fishedFish', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fishes_fished')
         });
 
         /**
@@ -904,9 +907,9 @@ class Pit{
          * @type {number}
          */
         this.fishedAnything;
-        Object.defineProperty(this,'fishedAnything',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','fished_anything')
+        Object.defineProperty(this, 'fishedAnything', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fished_anything')
         });
 
         /**
@@ -914,9 +917,9 @@ class Pit{
          * @type {number}
          */
         this.kingsQuestCompletions;
-        Object.defineProperty(this,'kingsQuestCompletions',{
-            enumerable:true,
-            get: ()=>this.getStat('stats','Pit','pit_stats_ptl','king_quest_completion')
+        Object.defineProperty(this, 'kingsQuestCompletions', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'king_quest_completion')
         });
 
         /**
@@ -924,7 +927,7 @@ class Pit{
          * @type {Promise<Item[][] | void>}
          */
         this.NBTInventoryPromise;
-        Object.defineProperty(this,'NBTInventoryPromise',{
+        Object.defineProperty(this, 'NBTInventoryPromise', {
             enumerable: false,
             value: Promise.all([
                 this.loadInventory(),
@@ -934,16 +937,16 @@ class Pit{
                 this.loadWell()
             ])
         });
-        Player.findOneAndUpdate({_id:this.uuid},{$set:this.playerDoc},{upsert:true}).catch(console.error);
+        Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.playerDoc }, { upsert: true }).catch(console.error);
 
         /**
          * Player's main inventory
          * @type {Item[]}
          */
         this.inventories.main;
-        Object.defineProperty(this.inventories,'main',{
-            enumerable:true,
-            get:()=>this.raw_inventories.main.map(Item.buildFromNBT)
+        Object.defineProperty(this.inventories, 'main', {
+            enumerable: true,
+            get: () => this.raw_inventories.main.map(Item.buildFromNBT)
         });
 
         /**
@@ -951,9 +954,9 @@ class Pit{
          * @type {Item[]}
          */
         this.inventories.armor;
-        Object.defineProperty(this.inventories,'armor',{
-            enumerable:true,
-            get:()=>this.raw_inventories.armor.map(Item.buildFromNBT)
+        Object.defineProperty(this.inventories, 'armor', {
+            enumerable: true,
+            get: () => this.raw_inventories.armor.map(Item.buildFromNBT)
         });
 
         /**
@@ -961,9 +964,9 @@ class Pit{
          * @type {Item[]}
          */
         this.inventories.enderchest;
-        Object.defineProperty(this.inventories,'enderchest',{
-            enumerable:true,
-            get:()=>this.raw_inventories.enderchest.map(Item.buildFromNBT)
+        Object.defineProperty(this.inventories, 'enderchest', {
+            enumerable: true,
+            get: () => this.raw_inventories.enderchest.map(Item.buildFromNBT)
         });
 
         /**
@@ -971,9 +974,9 @@ class Pit{
          * @type {Item[]}
          */
         this.inventories.stash;
-        Object.defineProperty(this.inventories,'stash',{
-            enumerable:true,
-            get:()=>this.raw_inventories.stash.map(Item.buildFromNBT)
+        Object.defineProperty(this.inventories, 'stash', {
+            enumerable: true,
+            get: () => this.raw_inventories.stash.map(Item.buildFromNBT)
         });
 
         /**
@@ -981,9 +984,9 @@ class Pit{
          * @type {Item[]}
          */
         this.inventories.well;
-        Object.defineProperty(this.inventories,'well',{
-            enumerable:true,
-            get:()=>this.raw_inventories.well.map(Item.buildFromNBT)
+        Object.defineProperty(this.inventories, 'well', {
+            enumerable: true,
+            get: () => this.raw_inventories.well.map(Item.buildFromNBT)
         });
 
         /**
@@ -991,9 +994,9 @@ class Pit{
          * @type {SimpleItem[]}
          */
         this.simplified_inventories.main;
-        Object.defineProperty(this.simplified_inventories,'main',{
-            enumerable:true,
-            get:()=>this.raw_inventories.main.map(SimpleItem.buildFromNBT)
+        Object.defineProperty(this.simplified_inventories, 'main', {
+            enumerable: true,
+            get: () => this.raw_inventories.main.map(SimpleItem.buildFromNBT)
         });
 
         /**
@@ -1001,9 +1004,9 @@ class Pit{
          * @type {SimpleItem[]}
          */
         this.simplified_inventories.armor;
-        Object.defineProperty(this.simplified_inventories,'armor',{
-            enumerable:true,
-            get:()=>this.raw_inventories.armor.map(SimpleItem.buildFromNBT)
+        Object.defineProperty(this.simplified_inventories, 'armor', {
+            enumerable: true,
+            get: () => this.raw_inventories.armor.map(SimpleItem.buildFromNBT)
         });
 
         /**
@@ -1011,9 +1014,9 @@ class Pit{
          * @type {SimpleItem[]}
          */
         this.simplified_inventories.enderchest;
-        Object.defineProperty(this.simplified_inventories,'enderchest',{
-            enumerable:true,
-            get:()=>this.raw_inventories.enderchest.map(SimpleItem.buildFromNBT)
+        Object.defineProperty(this.simplified_inventories, 'enderchest', {
+            enumerable: true,
+            get: () => this.raw_inventories.enderchest.map(SimpleItem.buildFromNBT)
         });
 
         /**
@@ -1021,9 +1024,9 @@ class Pit{
          * @type {SimpleItem[]}
          */
         this.simplified_inventories.stash;
-        Object.defineProperty(this.simplified_inventories,'stash',{
-            enumerable:true,
-            get:()=>this.raw_inventories.stash.map(SimpleItem.buildFromNBT)
+        Object.defineProperty(this.simplified_inventories, 'stash', {
+            enumerable: true,
+            get: () => this.raw_inventories.stash.map(SimpleItem.buildFromNBT)
         });
 
         /**
@@ -1031,9 +1034,9 @@ class Pit{
          * @type {string}
          */
         this.allegiance;
-        Object.defineProperty(this,'allegiance',{
-            enumerable:true,
-            get:()=>this.getStat('stats','Pit','profile','genesis_allegiance')
+        Object.defineProperty(this, 'allegiance', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'profile', 'genesis_allegiance')
         });
 
         /**
@@ -1041,9 +1044,9 @@ class Pit{
          * @type {number}
          */
         this.allegiancePoints;
-        Object.defineProperty(this,'allegiancePoints',{
-            enumerable:true,
-            get:()=>this.getStat('stats','Pit','profile','genesis_points')
+        Object.defineProperty(this, 'allegiancePoints', {
+            enumerable: true,
+            get: () => this.getStat('stats', 'Pit', 'profile', 'genesis_points')
         });
 
         /**
@@ -1051,9 +1054,9 @@ class Pit{
          * @type {SimpleItem[]}
          */
         this.simplified_inventories.well;
-        Object.defineProperty(this.simplified_inventories,'well',{
-            enumerable:true,
-            get:()=>this.raw_inventories.well.map(SimpleItem.buildFromNBT)
+        Object.defineProperty(this.simplified_inventories, 'well', {
+            enumerable: true,
+            get: () => this.raw_inventories.well.map(SimpleItem.buildFromNBT)
         });
     }
 
@@ -1062,26 +1065,26 @@ class Pit{
      * @param  {...string} path 
      * @returns {any}
      */
-    getStat(...path){
-        return getRef(this.raw,...path);
+    getStat(...path) {
+        return getRef(this.raw, ...path);
     }
 
     /**
      * raw api prestige array
      * @returns {{tier:number,timestamp:number,key:String}[]}
      */
-    get prestigesRaw(){
-        return this.getStat('stats','Pit','profile','prestiges')||[];
+    get prestigesRaw() {
+        return this.getStat('stats', 'Pit', 'profile', 'prestiges') || [];
     }
 
     /**
      * UnlockCollection formatted version of unlocks
      * @type {UnlockCollection}
      */
-    get renownShopCollection(){
-        if(!this._renownShop) Object.defineProperty(this,'_renownShop',{
+    get renownShopCollection() {
+        if (!this._renownShop) Object.defineProperty(this, '_renownShop', {
             enumerable: false,
-            value: new UnlockCollection(this.renownShopUnlocksRaw,this.raw)
+            value: new UnlockCollection(this.renownShopUnlocksRaw, this.raw)
         });
         return this._renownShop;
     }
@@ -1090,23 +1093,23 @@ class Pit{
      * raw api for renown unlocks
      * @type {Object[]}
      */
-    get renownShopUnlocksRaw(){
-        return this.getStat('stats','Pit','profile','renown_unlocks')||[];
+    get renownShopUnlocksRaw() {
+        return this.getStat('stats', 'Pit', 'profile', 'renown_unlocks') || [];
     }
 
     /**
      * marks if the player has pit_stats_ptl or not
      * @type {boolean}
      */
-    get hasStats(){
-        return Boolean(this.getStat('stats','Pit','pit_stats_ptl'));
+    get hasStats() {
+        return Boolean(this.getStat('stats', 'Pit', 'pit_stats_ptl'));
     }
-    
+
     /**
      * Playtime (minutes) but never 0
      * @type {number}
      */
-    get playtimeSafe(){
+    get playtimeSafe() {
         return this.playtime || 1;
     }
 
@@ -1114,160 +1117,160 @@ class Pit{
      * Playtime in hours
      * @type {number}
      */
-    get playtimeHours(){
-        return this.playtime/60;
+    get playtimeHours() {
+        return this.playtime / 60;
     }
 
     /**
      * Playtime (hours) but never 0
      * @type {number}
      */
-    get playtimeHoursSafe(){
-        return this.playtimeSafe/60;
+    get playtimeHoursSafe() {
+        return this.playtimeSafe / 60;
     }
 
     /**
      * Perks but with common names
      * @type {string[]}
      */
-    get prettyPerks(){
-        return this.perks.map(perk=>Perks[perk].Name);
-    }    
+    get prettyPerks() {
+        return this.perks.map(perk => Perks[perk].Name);
+    }
 
     /**
      * xp/hours 
      * @type {number}
      */
-    get xpHourly(){
-        return this.xp/this.playtimeHoursSafe;
+    get xpHourly() {
+        return this.xp / this.playtimeHoursSafe;
     }
 
     /**
      * gold/hours 
      * @type {number}
      */
-    get goldHourly(){
-        return this.lifetimeGold/this.playtimeHoursSafe;
+    get goldHourly() {
+        return this.lifetimeGold / this.playtimeHoursSafe;
     }
 
     /**
      * player deaths but never 0
      * @type {number}
      */
-    get deathsSafe(){
-        return this.deaths||1;
+    get deathsSafe() {
+        return this.deaths || 1;
     }
 
     /**
      * kills/deaths
      * @type {number}
      */
-    get killDeathRatio(){
-        return this.kills/this.deathsSafe;
+    get killDeathRatio() {
+        return this.kills / this.deathsSafe;
     }
 
     /**
      * (kills+assists)/deaths
      * @type {number}
      */
-    get killAssistDeathRatio(){
-        return (this.kills+this.assists)/this.deathsSafe;
+    get killAssistDeathRatio() {
+        return (this.kills + this.assists) / this.deathsSafe;
     }
 
     /**
      * (kills+assists)/hours
      * @type {number}
      */
-    get killAssistHourly(){
-        return (this.kills+this.assists)/this.playtimeHoursSafe;
+    get killAssistHourly() {
+        return (this.kills + this.assists) / this.playtimeHoursSafe;
     }
 
     /**
      * damage received but not 0
      * @type {number}
      */
-    get damageReceivedSafe(){
-        return this.damageReceived||1;
+    get damageReceivedSafe() {
+        return this.damageReceived || 1;
     }
 
     /**
      * player should spawn in their faction base
      * @type {boolean}
      */
-    get shouldSpawnInBase(){
-        return this.getStat('stats','Pit','profile','genesis_spawn_in_base');
+    get shouldSpawnInBase() {
+        return this.getStat('stats', 'Pit', 'profile', 'genesis_spawn_in_base');
     }
 
     /**
      * timestamp of last faction change (i think)
      * @type {number} date resolvable
      */
-    get shouldSpawnInBase(){
-        return this.getStat('stats','Pit','profile','genesis_allegiance_time');
+    get shouldSpawnInBase() {
+        return this.getStat('stats', 'Pit', 'profile', 'genesis_allegiance_time');
     }
 
     /**
      * damage given / damage received
      * @type {number}
      */
-    get damageRatio(){
-        return this.damageDealt/this.damageReceivedSafe;
+    get damageRatio() {
+        return this.damageDealt / this.damageReceivedSafe;
     }
-    
+
     /**
      * arrows fired but not 0
      * @type {number}
      */
-    get arrowsFiredSafe(){
-        return this.arrowsFired||1;
+    get arrowsFiredSafe() {
+        return this.arrowsFired || 1;
     }
 
     /**
      * bow accuracy [0,1]
      * @type {number}
      */
-    get bowAccuracy(){
-        return this.arrowHits/this.arrowsFiredSafe;
+    get bowAccuracy() {
+        return this.arrowHits / this.arrowsFiredSafe;
     }
-    
+
     /**
      * Calculates Player level from xp and prestige
      * @param {number} prestige
      * @param {number} xp 
      * @returns {Object} {level: Player level, extra: xp progress into next level, next: xp required for next level}
      */
-    static calcLevel(prestige, xp){
+    static calcLevel(prestige, xp) {
         let multiplier = Prestiges[prestige].Multiplier;
         let level = 0;
         let extra = 0;
         let next = 0;
-        while(xp>0&&level<120){
-            const levelXp = Levels[Math.floor(level/10)].Xp*multiplier;
-            if(xp>=levelXp*10){
-                xp-=levelXp*10;
-                level+=10;
-                if(xp==0) {
-                    if(!level==120) extra=Levels[Math.floor(level/10)].Xp*multiplier;
+        while (xp > 0 && level < 120) {
+            const levelXp = Levels[Math.floor(level / 10)].Xp * multiplier;
+            if (xp >= levelXp * 10) {
+                xp -= levelXp * 10;
+                level += 10;
+                if (xp == 0) {
+                    if (!level == 120) extra = Levels[Math.floor(level / 10)].Xp * multiplier;
                 }
-            }else{
-                const gain = Math.floor(xp/levelXp);
-                level+=gain;
-                xp-=gain*levelXp;
-                next = levelXp-xp;
+            } else {
+                const gain = Math.floor(xp / levelXp);
+                level += gain;
+                xp -= gain * levelXp;
+                next = levelXp - xp;
                 extra = xp;
-                xp=0;
+                xp = 0;
             }
         }
-        return {level, extra, next};
+        return { level, extra, next };
     }
 
     /**
      * loads a hidden cache of player level details
      * @returns {void}
      */
-    loadLevelCache = ()=>{
-        Object.defineProperty(this,'levelCache',{
-            value: Pit.calcLevel(this.prestige,this.prestigeXp),
+    loadLevelCache = () => {
+        Object.defineProperty(this, 'levelCache', {
+            value: Pit.calcLevel(this.prestige, this.prestigeXp),
             enumerable: false
         });
     }
@@ -1276,20 +1279,20 @@ class Pit{
      * Loads and caches the player's inventory
      * @returns {Promise<any[] | void>}
      */
-    loadInventory(){
-        return new Promise(resolve=>{
-            if(this.raw_inventories.main)return resolve(this.raw_inventories.main);
-            const rawInv = this.getStat('stats','Pit','profile','inv_contents','data');
-            if(!rawInv) {
-                this.raw_inventories.main=[];
+    loadInventory() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.main) return resolve(this.raw_inventories.main);
+            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_contents', 'data');
+            if (!rawInv) {
+                this.raw_inventories.main = [];
                 return resolve([]);
             }
-            this.parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items => {
                 /**
                  * Player's main inventory
                  * @type {any[]} 
                  */
-                items = items.slice(9).concat(items.slice(0,9));
+                items = items.slice(9).concat(items.slice(0, 9));
                 this.raw_inventories.main = items;
                 resolve(items);
             });
@@ -1300,15 +1303,15 @@ class Pit{
      * Loads and caches the player's Armor
      * @returns {Promise<any[] | void>} 
      */
-    loadArmor(){
-        return new Promise(resolve=>{
-            if(this.raw_inventories.armor)return resolve(this.raw_inventories.armor);
-            const rawInv = this.getStat('stats','Pit','profile','inv_armor','data');
-            if(!rawInv) {
-                this.raw_inventories.armor=[];
+    loadArmor() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.armor) return resolve(this.raw_inventories.armor);
+            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_armor', 'data');
+            if (!rawInv) {
+                this.raw_inventories.armor = [];
                 return resolve([]);
             }
-            this.parseInv(Buffer.from(rawInv)).then(arr=>{
+            this.parseInv(Buffer.from(rawInv)).then(arr => {
                 arr.reverse();
                 /**
                  * Player's armor
@@ -1324,15 +1327,15 @@ class Pit{
      * Loads and caches the player's Enderchest
      * @returns {Promise<any[] | void>} 
      */
-    loadEnderchest(){
-        return new Promise(resolve=>{
-            if(this.raw_inventories.enderchest)return resolve(this.raw_inventories.enderchest);
-            const rawInv = this.getStat('stats','Pit','profile','inv_enderchest','data');
-            if(!rawInv) {
-                this.raw_inventories.enderchest=[];
+    loadEnderchest() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.enderchest) return resolve(this.raw_inventories.enderchest);
+            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_enderchest', 'data');
+            if (!rawInv) {
+                this.raw_inventories.enderchest = [];
                 return resolve([]);
             }
-            this.parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items => {
                 /**
                  * Player's enderchest
                  * @type {any[]} 
@@ -1347,15 +1350,15 @@ class Pit{
      * Loads and caches the player's Stash
      * @returns {Promise<any[] | void>} 
      */
-    loadStash(){
-        return new Promise(resolve=>{
-            if(this.raw_inventories.stash)return resolve(this.raw_inventories.stash);
-            const rawInv = this.getStat('stats','Pit','profile','item_stash','data');
-            if(!rawInv) {
-                this.raw_inventories.stash=[];
+    loadStash() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.stash) return resolve(this.raw_inventories.stash);
+            const rawInv = this.getStat('stats', 'Pit', 'profile', 'item_stash', 'data');
+            if (!rawInv) {
+                this.raw_inventories.stash = [];
                 return resolve([]);
             }
-            this.parseInv(Buffer.from(rawInv)).then(items=>{
+            this.parseInv(Buffer.from(rawInv)).then(items => {
                 /**
                  * Player's stash
                  * @type {any[]} 
@@ -1370,22 +1373,22 @@ class Pit{
      * Loads and caches the player's Mystic Well
      * @returns {Promise<any[] | void>}
      */
-    loadWell(){
-        return new Promise(resolve=>{
-            if(this.raw_inventories.well) return resolve(this.raw_inventories.well);
+    loadWell() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.well) return resolve(this.raw_inventories.well);
             const invs = [
-                this.getStat('stats','Pit','profile','mystic_well_item','data'),
-                this.getStat('stats','Pit','profile','mystic_well_pants','data')
+                this.getStat('stats', 'Pit', 'profile', 'mystic_well_item', 'data'),
+                this.getStat('stats', 'Pit', 'profile', 'mystic_well_pants', 'data')
             ];
             Promise.all(
-                invs.map(inv=>
-                    new Promise(res=>
-                        inv ? 
-                            this.parseInv(Buffer.from(inv)).then(res) : 
+                invs.map(inv =>
+                    new Promise(res =>
+                        inv ?
+                            this.parseInv(Buffer.from(inv)).then(res) :
                             res([])
                     )
                 )
-            ).then(result=>{
+            ).then(result => {
                 result = result.flat(1);
                 /**
                  * Player's Mystic Well Items
@@ -1401,7 +1404,7 @@ class Pit{
      * Loads all inventories
      * @returns {Promise<Item[][] | void>}
      */
-    loadInventorys(){
+    loadInventorys() {
         return Promise.all([
             this.NBTInventoryPromise,
             this.buildPerkInventory(),
@@ -1415,12 +1418,12 @@ class Pit{
      * Builds an inventory format of their Perks
      * @type {void | Item[]}
      */
-    buildPerkInventory(){
+    buildPerkInventory() {
         const perks = this.perks;
-        const inv = perks.map(key=>{
-            if(key==='none')return {};
+        const inv = perks.map(key => {
+            if (key === 'none') return {};
             const perk = Perks[key];
-            return new Item('§9'+perk.Name,perk.Description,perk.Item.Id,perk.Item.Meta);
+            return new Item('§9' + perk.Name, perk.Description, perk.Item.Id, perk.Item.Meta);
         });
         /**
          * Player's selected perks
@@ -1434,7 +1437,7 @@ class Pit{
      * Builds an inventory format of their Upgrades
      * @type {void | Item[]}
      */
-    buildUpgradeInventory(){
+    buildUpgradeInventory() {
         const inv = Object.keys(Upgrades).map(this.prestiges[this.prestige].unlocksCollection.buildItem);
         /**
          * Player's Upgrades
@@ -1448,7 +1451,7 @@ class Pit{
      * Builds an inventory format of their Upgrades
      * @type {void | Item[]}
      */
-    buildRenownUpgradeInventory(){
+    buildRenownUpgradeInventory() {
         const inv = Object.keys(RenownUpgrades).map(this.renownShopCollection.buildItem);
         /**
          * Player's Renown Shop Upgrades
@@ -1462,95 +1465,95 @@ class Pit{
      * Builds a inventory of their player statistics
      * @type {void | Item[]}
      */
-    buildStatsInventory(){
+    buildStatsInventory() {
         /**
          * General stats inventory
          * @type {Item[]}
          */
         this.inventories.generalStats;
-        if(this.hasStats){
+        if (this.hasStats) {
             const offlore = [
-                `${Colors.GRAY}Kills: ${Colors.GREEN}${formatNumber(this.kills)}`,
-                `${Colors.GRAY}Assists: ${Colors.GREEN}${formatNumber(this.assists)}`,
-                `${Colors.GRAY}Sword Hits: ${Colors.GREEN}${formatNumber(this.swordHits)}`,
-                `${Colors.GRAY}Arrows Shot: ${Colors.GREEN}${formatNumber(this.arrowsFired)}`,
-                `${Colors.GRAY}Arrows Hit: ${Colors.GREEN}${formatNumber(this.arrowHits)}`,
-                `${Colors.GRAY}Damage Dealt: ${Colors.GREEN}${formatNumber(this.damageDealt)}`,
-                `${Colors.GRAY}Melee Damage Dealt: ${Colors.GREEN}${formatNumber(this.meleeDamageDealt)}`,
-                `${Colors.GRAY}Bow Damage Dealt: ${Colors.GREEN}${formatNumber(this.bowDamageDealt)}`,
-                `${Colors.GRAY}Highest Streak: ${Colors.GREEN}${formatNumber(this.highestStreak)}`
+                `${Colors.GRAY}Kills: ${Colors.GREEN}${textHelpers.formatNumber(this.kills)}`,
+                `${Colors.GRAY}Assists: ${Colors.GREEN}${textHelpers.formatNumber(this.assists)}`,
+                `${Colors.GRAY}Sword Hits: ${Colors.GREEN}${textHelpers.formatNumber(this.swordHits)}`,
+                `${Colors.GRAY}Arrows Shot: ${Colors.GREEN}${textHelpers.formatNumber(this.arrowsFired)}`,
+                `${Colors.GRAY}Arrows Hit: ${Colors.GREEN}${textHelpers.formatNumber(this.arrowHits)}`,
+                `${Colors.GRAY}Damage Dealt: ${Colors.GREEN}${textHelpers.formatNumber(this.damageDealt)}`,
+                `${Colors.GRAY}Melee Damage Dealt: ${Colors.GREEN}${textHelpers.formatNumber(this.meleeDamageDealt)}`,
+                `${Colors.GRAY}Bow Damage Dealt: ${Colors.GREEN}${textHelpers.formatNumber(this.bowDamageDealt)}`,
+                `${Colors.GRAY}Highest Streak: ${Colors.GREEN}${textHelpers.formatNumber(this.highestStreak)}`
             ];
             const deflore = [
-                `${Colors.GRAY}Deaths: ${Colors.GREEN}${formatNumber(this.deaths)}`,
-                `${Colors.GRAY}Damage Taken: ${Colors.GREEN}${formatNumber(this.damageReceived)}`,
-                `${Colors.GRAY}Melee Damage Taken: ${Colors.GREEN}${formatNumber(this.meleeDamageReceived)}`,
-                `${Colors.GRAY}Bow Damage Taken: ${Colors.GREEN}${formatNumber(this.bowDamageReceived)}`
+                `${Colors.GRAY}Deaths: ${Colors.GREEN}${textHelpers.formatNumber(this.deaths)}`,
+                `${Colors.GRAY}Damage Taken: ${Colors.GREEN}${textHelpers.formatNumber(this.damageReceived)}`,
+                `${Colors.GRAY}Melee Damage Taken: ${Colors.GREEN}${textHelpers.formatNumber(this.meleeDamageReceived)}`,
+                `${Colors.GRAY}Bow Damage Taken: ${Colors.GREEN}${textHelpers.formatNumber(this.bowDamageReceived)}`
             ];
             const perflore = [
-                `${Colors.GRAY}XP: ${Colors.AQUA}${formatNumber(this.xp)}`,
-                `${Colors.GRAY}XP/hour: ${Colors.AQUA}${formatNumber(Math.round(this.xpHourly))}`,
-                `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${formatNumber(this.lifetimeGold)}g`,
-                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${formatNumber(Math.round(this.goldHourly))}g`,
-                `${Colors.GRAY}K/D: ${Colors.GREEN}${formatNumber(this.killDeathRatio)}`,
-                `${Colors.GRAY}K+A/D: ${Colors.GREEN}${formatNumber(this.killAssistDeathRatio)}`,
-                `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${formatNumber(this.killAssistHourly)}`,
-                `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${formatNumber(this.damageRatio)}`,
-                `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${formatNumber(Math.round(this.bowAccuracy*1000)/10)}%`,
-                `${Colors.GRAY}Hours played: ${Colors.GREEN}${formatNumber(Math.round(this.playtimeHours))}`,
-                `${Colors.GRAY}Contracts Started: ${Colors.GREEN}${formatNumber(this.contractsStarted)}`,
-                `${Colors.GRAY}Contracts Completed: ${Colors.GREEN}${formatNumber(this.contractsCompleted)}`
+                `${Colors.GRAY}XP: ${Colors.AQUA}${textHelpers.formatNumber(this.xp)}`,
+                `${Colors.GRAY}XP/hour: ${Colors.AQUA}${textHelpers.formatNumber(Math.round(this.xpHourly))}`,
+                `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${textHelpers.formatNumber(this.lifetimeGold)}g`,
+                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${textHelpers.formatNumber(Math.round(this.goldHourly))}g`,
+                `${Colors.GRAY}K/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killDeathRatio)}`,
+                `${Colors.GRAY}K+A/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistDeathRatio)}`,
+                `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistHourly)}`,
+                `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${textHelpers.formatNumber(this.damageRatio)}`,
+                `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.bowAccuracy * 1000) / 10)}%`,
+                `${Colors.GRAY}Hours played: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.playtimeHours))}`,
+                `${Colors.GRAY}Contracts Started: ${Colors.GREEN}${textHelpers.formatNumber(this.contractsStarted)}`,
+                `${Colors.GRAY}Contracts Completed: ${Colors.GREEN}${textHelpers.formatNumber(this.contractsCompleted)}`
             ];
             const perkmyslore = [
-                `${Colors.GRAY}Golden Apples Eaten: ${Colors.GREEN}${formatNumber(this.gapplesEaten)}`,
-                `${Colors.GRAY}Golden Heads Eaten: ${Colors.GREEN}${formatNumber(this.gheadsEaten)}`,
-                `${Colors.GRAY}Lava Buckets Emptied: ${Colors.GREEN}${formatNumber(this.lavaBucketsPlaced)}`,
-                `${Colors.GRAY}Fishing Rods Launched: ${Colors.GREEN}${formatNumber(this.fishingRodCasts)}`,
-                `${Colors.GRAY}Soups Drank: ${Colors.GREEN}${formatNumber(this.soupsDrank)}`,
-                `${Colors.GRAY}T1 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[0])}`,
-                `${Colors.GRAY}T2 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[1])}`,
-                `${Colors.GRAY}T3 Mystics Enchanted: ${Colors.GREEN}${formatNumber(this.mysticsEnchanted[2])}`,
-                `${Colors.GRAY}Dark Pants Created: ${Colors.GREEN}${formatNumber(this.darkPantsCreated)}`
+                `${Colors.GRAY}Golden Apples Eaten: ${Colors.GREEN}${textHelpers.formatNumber(this.gapplesEaten)}`,
+                `${Colors.GRAY}Golden Heads Eaten: ${Colors.GREEN}${textHelpers.formatNumber(this.gheadsEaten)}`,
+                `${Colors.GRAY}Lava Buckets Emptied: ${Colors.GREEN}${textHelpers.formatNumber(this.lavaBucketsPlaced)}`,
+                `${Colors.GRAY}Fishing Rods Launched: ${Colors.GREEN}${textHelpers.formatNumber(this.fishingRodCasts)}`,
+                `${Colors.GRAY}Soups Drank: ${Colors.GREEN}${textHelpers.formatNumber(this.soupsDrank)}`,
+                `${Colors.GRAY}T1 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[0])}`,
+                `${Colors.GRAY}T2 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[1])}`,
+                `${Colors.GRAY}T3 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[2])}`,
+                `${Colors.GRAY}Dark Pants Created: ${Colors.GREEN}${textHelpers.formatNumber(this.darkPantsCreated)}`
             ];
             const misclore = [
-                `${Colors.GRAY}Left Clicks: ${Colors.GREEN}${formatNumber(this.leftClicks)}`,
-                `${Colors.GRAY}Diamond Items Purchased: ${Colors.GREEN}${formatNumber(this.diamondItemsPurchased)}`,
-                `${Colors.GRAY}Chat messages: ${Colors.GREEN}${formatNumber(this.chatMessages)}`,
-                `${Colors.GRAY}Blocks Placed: ${Colors.GREEN}${formatNumber(this.blocksPlaced)}`,
-                `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${formatNumber(this.blocksBroken)}`,
-                `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${formatNumber(this.jumpsIntoPit)}`,
-                `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${formatNumber(this.launcherLaunches)}`,
+                `${Colors.GRAY}Left Clicks: ${Colors.GREEN}${textHelpers.formatNumber(this.leftClicks)}`,
+                `${Colors.GRAY}Diamond Items Purchased: ${Colors.GREEN}${textHelpers.formatNumber(this.diamondItemsPurchased)}`,
+                `${Colors.GRAY}Chat messages: ${Colors.GREEN}${textHelpers.formatNumber(this.chatMessages)}`,
+                `${Colors.GRAY}Blocks Placed: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksPlaced)}`,
+                `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksBroken)}`,
+                `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${textHelpers.formatNumber(this.jumpsIntoPit)}`,
+                `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${textHelpers.formatNumber(this.launcherLaunches)}`,
                 `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
-                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${formatNumber(this.tradeGold)}/50,000`,
-                `${Colors.GRAY}Genesis Points: ${this.allegiance?`${this.allegiance==='DEMON'?Colors.DARK_RED:Colors.AQUA}${formatNumber(this.allegiancePoints)}`:`${Colors.GREEN}N/A`}`,
+                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}/50,000`,
+                `${Colors.GRAY}Genesis Points: ${this.allegiance ? `${this.allegiance === 'DEMON' ? Colors.DARK_RED : Colors.AQUA}${textHelpers.formatNumber(this.allegiancePoints)}` : `${Colors.GREEN}N/A`}`,
             ];
             const farmlore = [
-                `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${formatNumber(this.wheatFarmed)}`,
-                `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
-                `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${formatNumber(this.fishedAnything)}`,
-                `${Colors.GRAY}Fish Sold: ${Colors.GOLD}${formatNumber(this.goldFromSellingFish)}g`,
-                `${Colors.GRAY}Hay Bales Sold: ${Colors.GOLD}${formatNumber(this.goldFromFarming)}g`,
-                `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${formatNumber(this.kingsQuestCompletions)}`,
-                `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${formatNumber(this.sewerTreasuresFound)}`,
-                `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${formatNumber(this.nightQuestsCompleted)}`
+                `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
+                `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
+                `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
+                `${Colors.GRAY}Fish Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromSellingFish)}g`,
+                `${Colors.GRAY}Hay Bales Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromFarming)}g`,
+                `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${textHelpers.formatNumber(this.kingsQuestCompletions)}`,
+                `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${textHelpers.formatNumber(this.sewerTreasuresFound)}`,
+                `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${textHelpers.formatNumber(this.nightQuestsCompleted)}`
             ];
             const presstats = [
-                `${Colors.GRAY}Prestige: ${Colors.GREEN}${formatNumber(this.prestige)}`,
-                `${Colors.GRAY}Current Renown: ${Colors.GREEN}${formatNumber(this.renown)}`,
-                `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${formatNumber(this.lifetimeRenown)}`,
-                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${formatNumber(this.renownShop.length)}/81`
+                `${Colors.GRAY}Prestige: ${Colors.GREEN}${textHelpers.formatNumber(this.prestige)}`,
+                `${Colors.GRAY}Current Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.renown)}`,
+                `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.lifetimeRenown)}`,
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/81`
             ]
-            const off = new Item(`${Colors.RED}Offensive Stats`,offlore,267);
-            const def = new Item(`${Colors.BLUE}Defensive Stats`,deflore,307);
-            const perf = new Item(`${Colors.YELLOW}Performance Stats`,perflore,296);
-            const perkmys = new Item(`${Colors.GREEN}Perk/Mystic Stats`,perkmyslore,116);
-            const misc = new Item(`${Colors.LIGHT_PURPLE}Miscellaneous Stats`,misclore,49);
-            const farm = new Item(`${Colors.GOLD}Farming Stats`,farmlore,291);
-            const prestige = new Item(`${Colors.AQUA}Prestige Stats`,presstats,264);
-            const inv = [off,def,perf,perkmys,misc,farm,prestige];
+            const off = new Item(`${Colors.RED}Offensive Stats`, offlore, 267);
+            const def = new Item(`${Colors.BLUE}Defensive Stats`, deflore, 307);
+            const perf = new Item(`${Colors.YELLOW}Performance Stats`, perflore, 296);
+            const perkmys = new Item(`${Colors.GREEN}Perk/Mystic Stats`, perkmyslore, 116);
+            const misc = new Item(`${Colors.LIGHT_PURPLE}Miscellaneous Stats`, misclore, 49);
+            const farm = new Item(`${Colors.GOLD}Farming Stats`, farmlore, 291);
+            const prestige = new Item(`${Colors.AQUA}Prestige Stats`, presstats, 264);
+            const inv = [off, def, perf, perkmys, misc, farm, prestige];
             this.inventories.generalStats = inv;
             return inv;
-        }else {
-            const inv = new Item(`${Colors.DARK_RED}Error`,[`${Colors.RED}Player Does not have any stats!`],166)
+        } else {
+            const inv = new Item(`${Colors.DARK_RED}Error`, [`${Colors.RED}Player Does not have any stats!`], 166)
             this.inventories.generalStats = [inv];
             return inv;
         }
@@ -1560,17 +1563,17 @@ class Pit{
      * Player Trades in the past 24h
      * @type {number}
      */
-    get trades(){
-        return (this.getStat('stats','Pit','profile','gold_transactions')||[])
-            .filter(trade=>Date.now()-trade.timestamp<86400e3);
+    get trades() {
+        return (this.getStat('stats', 'Pit', 'profile', 'gold_transactions') || [])
+            .filter(trade => Date.now() - trade.timestamp < 86400e3);
     }
 
     /**
      * Player's ingame color formatted name without prefix
      * @type {string}
      */
-    get colouredName(){
-        return this.prefix.substring(0,2) + this.name;
+    get colouredName() {
+        return this.prefix.substring(0, 2) + this.name;
     }
 
     /**
@@ -1578,9 +1581,9 @@ class Pit{
      * @param {Buffer} byteArr 
      * @returns {Promise<any[]>} data that can be passed to Item.buildFromNBT
      */
-    parseInv(byteArr){
-        return new Promise(resolve=>nbt.parse(inflate(byteArr), (err,inv)=>{
-            if(err) return resolve([]);
+    parseInv(byteArr) {
+        return new Promise(resolve => nbt.parse(inflate(byteArr), (err, inv) => {
+            if (err) return resolve([]);
             else {
                 let items = inv.value.i.value.value;
                 items.forEach(this.logMystic.bind(this));
@@ -1593,11 +1596,11 @@ class Pit{
      * player's doc like on the db
      * @type {Document}
      */
-    get playerDoc(){
+    get playerDoc() {
         return new Player({
-            _id:this.uuid,
-            name:this.name,
-            displayName:this.levelFormattedName,
+            _id: this.uuid,
+            name: this.name,
+            displayName: this.levelFormattedName,
             kills: this.kills,
             assists: this.assists,
             damageDealt: this.damageDealt,
@@ -1635,48 +1638,48 @@ class Pit{
      * Updates the item info in the MongoDB
      * @param {Object} item nbt
      */
-    logMystic(item){
-        const rawEnchants = getRef(item, "tag", "value", "ExtraAttributes", "value","CustomEnchants","value","value");
-        if(rawEnchants && getRef(item, "tag", "value", "ExtraAttributes", "value","UpgradeTier","value")===3){
-            const enchants = rawEnchants.map(ench=>({
+    logMystic(item) {
+        const rawEnchants = getRef(item, "tag", "value", "ExtraAttributes", "value", "CustomEnchants", "value", "value");
+        if (rawEnchants && getRef(item, "tag", "value", "ExtraAttributes", "value", "UpgradeTier", "value") === 3) {
+            const enchants = rawEnchants.map(ench => ({
                 key: ench.Key.value,
                 level: ench.Level.value
             }));
             let flags = [];
-            const rareCount = enchants.filter(({key})=>Mystics[key].Name.includes('RARE')).length;
-            if(rareCount>=1) flags.push('rare');
-            if(rareCount>=2) flags.push('extraordinary');
-            if(rareCount>=3) flags.push('unthinkable');
-            const resourceCount = enchants.filter(({key})=>Mystics[key].Type=="resource").length;
-            if(resourceCount===3) flags.push('bountiful');
-            const tokenCount = enchants.reduce((acc,{level})=>acc+level,0);
-            if(tokenCount>=8) flags.push('legendary');
-            const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value","Nonce","value");
+            const rareCount = enchants.filter(({ key }) => Mystics[key].Name.includes('RARE')).length;
+            if (rareCount >= 1) flags.push('rare');
+            if (rareCount >= 2) flags.push('extraordinary');
+            if (rareCount >= 3) flags.push('unthinkable');
+            const resourceCount = enchants.filter(({ key }) => Mystics[key].Type == "resource").length;
+            if (resourceCount === 3) flags.push('bountiful');
+            const tokenCount = enchants.reduce((acc, { level }) => acc + level, 0);
+            if (tokenCount >= 8) flags.push('legendary');
+            const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value", "Nonce", "value");
             const id = getRef(item, "id", "value");
-            let meta = getRef(item,'Damage','value') || getRef(item, "tag", "value","display","value","color","value");
-            if(id>=298&&id<=301&&typeof meta == 'undefined') meta = 10511680;
-            const maxLives = getRef(item, "tag", "value", "ExtraAttributes", "value","MaxLives","value");
-            if(maxLives===100) flags.push('artifact');
-            const lives = getRef(item, "tag", "value", "ExtraAttributes", "value","Lives","value");
-            if(flags.includes('artifact')&&flags.includes('extraordinary'))flags.push('miraculous');
-            if(flags.includes('artifact')&&flags.includes('unthinkable'))flags.push('million');
-            if(flags.includes('artifact')&&tokenCount>=7)flags.push('overpowered');
+            let meta = getRef(item, 'Damage', 'value') || getRef(item, "tag", "value", "display", "value", "color", "value");
+            if (id >= 298 && id <= 301 && typeof meta == 'undefined') meta = 10511680;
+            const maxLives = getRef(item, "tag", "value", "ExtraAttributes", "value", "MaxLives", "value");
+            if (maxLives === 100) flags.push('artifact');
+            const lives = getRef(item, "tag", "value", "ExtraAttributes", "value", "Lives", "value");
+            if (flags.includes('artifact') && flags.includes('extraordinary')) flags.push('miraculous');
+            if (flags.includes('artifact') && flags.includes('unthinkable')) flags.push('million');
+            if (flags.includes('artifact') && tokenCount >= 7) flags.push('overpowered');
             const mystic = {
                 owner: this.uuid,
                 enchants,
                 nonce,
                 lives,
                 maxLives,
-                item:{
+                item: {
                     id,
                     meta,
-                    name: getRef(item,'tag','value','display','value','Name','value')
+                    name: getRef(item, 'tag', 'value', 'display', 'value', 'Name', 'value')
                 },
                 flags,
                 tokens: tokenCount,
                 lastseen: Date.now()
             };
-            return Mystic.findOneAndUpdate({nonce,enchants,maxLives},mystic,{upsert:true}).catch(console.error);
+            return Mystic.findOneAndUpdate({ nonce, enchants, maxLives }, mystic, { upsert: true }).catch(console.error);
         }
     }
 } module.exports = Pit;

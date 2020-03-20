@@ -4,7 +4,7 @@ const apiStatSchema = mongoose.Schema({
     count: Number,
     date: {
         type: Number,
-        default: ()=>Math.floor(Date.now()/86400e3)
+        default: () => Math.floor(Date.now() / 86400e3)
     }
 });
 
@@ -14,10 +14,10 @@ let knownModels = {};
  * @param {string} path
  * @returns {Model<Document, {}>}
  */
-function ApiStat(path){
-    if(!knownModels[path]) {
-        const model = mongoose.model(path,apiStatSchema);
-        knownModels[path]=model;
+function ApiStat(path) {
+    if (!knownModels[path]) {
+        const model = mongoose.model(path, apiStatSchema);
+        knownModels[path] = model;
     }
     return knownModels[path];
 }

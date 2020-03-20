@@ -5,7 +5,7 @@ const UnlockEntry = require('./UnlockEntry');
 /**
  * Represents a pit prestige
  */
-class Prestige{
+class Prestige {
     /**
      * Constructs a Prestige
      * @param {number} prestige 
@@ -14,22 +14,22 @@ class Prestige{
      * @param {number} gold 
      * @param {Object[]} renownunlocks
      */
-    constructor(prestige,time,unlocks=[],gold=0,renownunlocks=[]){
+    constructor(prestige, time, unlocks = [], gold = 0, renownunlocks = []) {
         /**
          * The prestige someone was at before prestiging
          * @type {number}
          */
         this.prestige;
-        Object.defineProperty(this,'prestige',{value:prestige,enumerable:false});
+        Object.defineProperty(this, 'prestige', { value: prestige, enumerable: false });
 
         /**
          * Unix epoch timestamp (seconds) for the completion of the prestige
          * if its their current prestige this with not be set
          * @type {number}
          */
-        this.timestamp=time;
+        this.timestamp = time;
 
-        if(gold) gold = Math.round(gold);
+        if (gold) gold = Math.round(gold);
         /**
          * Gold the player earned during this prestige
          * May not be set
@@ -42,9 +42,9 @@ class Prestige{
          * @type {Object[]}
          */
         this.raw_unlocks;
-        Object.defineProperty(this,'raw_unlocks',{
-            value:unlocks.concat(renownunlocks).sort((a,b)=>a.acquireDate<b.acquireDate?-1:1),
-            enumerable:false
+        Object.defineProperty(this, 'raw_unlocks', {
+            value: unlocks.concat(renownunlocks).sort((a, b) => a.acquireDate < b.acquireDate ? -1 : 1),
+            enumerable: false
         });
 
         /**
@@ -52,9 +52,9 @@ class Prestige{
          * @type {UnlockEntry[]}
          */
         this.unlocks;
-        Object.defineProperty(this,'unlocks',{
-            enumerable:true,
-            get: ()=>this.unlocksCollection.raw
+        Object.defineProperty(this, 'unlocks', {
+            enumerable: true,
+            get: () => this.unlocksCollection.raw
         });
     }
 
@@ -62,14 +62,14 @@ class Prestige{
      * Unlock Collection formatted unlocks
      * @type {UnlockCollection}
      */
-    get unlocksCollection(){
+    get unlocksCollection() {
         if (!this._unlocks) {
             /**
              * Cached Unlocks Array
              * @type {UnlockEntry[]}
              */
             this._unlocks;
-            Object.defineProperty(this,'_unlocks',{enumerable:false,value:new UnlockCollection(this.raw_unlocks||[])});
+            Object.defineProperty(this, '_unlocks', { enumerable: false, value: new UnlockCollection(this.raw_unlocks || []) });
         }
         return this._unlocks;
     }
