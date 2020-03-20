@@ -2,7 +2,8 @@ const router = require('express').Router();
 const {WebhookClient, MessageEmbed} = require('discord.js');
 const EventsConfig = require('../EventSetup.json');
 const hook = new WebhookClient(...EventsConfig.WebHook);
-const EventKeys = require('../models/Eventkey');
+const EventKey = require('../models/EventKey');
+const EventLog = require('../models/EventLog');
 
 const rgx = /^§(d|5)§lM(INO|AJO)R EVENT! §.§l[ A-Z0-9]{1,}/;
 
@@ -10,25 +11,30 @@ let lastevent = '';
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
-    const keyDoc = await EventKeys.findById({_id:req.headers.key});
+    const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return console.log(`invalid key tried to submit event: ${req.headers.key}`);
     let content = req.headers.eventtype;
     const input = parseValue(content).value;
     const final = stringifyComponent(input);
-    console.log(final);
     if(rgx.test(final)){
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
-        console.log(clean,lastevent);
         if(clean===lastevent) return;
-        hook.send(
-            new MessageEmbed()
-                .setTitle(clean)
-                .setDescription(`Thanks <@${keyDoc.owner}>`)
-                .setTimestamp()
-        );
         lastevent = clean;
+        const event = new EventLog({
+            reporter: keyDoc.id,
+            event: clean
+        });
+        event.save((err,final)=>{
+            if(err) return;
+            hook.send(
+                new MessageEmbed()
+                    .setTitle(clean)
+                    .setFooter(final._id)
+                    .setTimestamp()
+            );
+        })
     }
 });
 
