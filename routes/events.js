@@ -23,7 +23,7 @@ router.post('/', async (req,res)=>{
         if(clean===lastevent) return;
         lastevent = clean;
         const event = new EventLog({
-            reporter: keyDoc.id,
+            reporter: keyDoc.owner,
             event: clean
         });
         event.save((err,final)=>{
