@@ -7,6 +7,7 @@ const {APIerror} = require('../apiTools/apiTools');
 const username = require('./username');
 const custom = require('./custom');
 const leaderboard = require('./leaderboard');
+const events = require('./events');
 const mongoose = require('mongoose');
 const ApiStat = require('../models/ApiStat');
 
@@ -37,6 +38,7 @@ router.use('/itemSearch',itemSearch);
 router.use('/username',username);
 router.use('/custom',custom);
 router.use('/leaderboard',leaderboard);
+router.use('/events',events);
 
 router.use('*', APIerror('Invalid Endpoint'))
 

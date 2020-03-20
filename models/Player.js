@@ -13,6 +13,10 @@ const scammerScema = mongoose.Schema({
         type: String,
         default: undefined,
     },
+    added:{
+        type:Date,
+        default: Date.now
+    },
     notes: String
 },{_id:false});
 

@@ -1622,6 +1622,7 @@ class Pit{
             wheatFarmed: this.wheatFarmed,
             fishedAnything: this.fishedAnything,
             blocksBroken: this.blocksBroken,
+            blocksPlaced: this.blocksPlaced,
             kingsQuests: this.kingsQuestCompletions,
             sewerTreasures: this.sewerTreasuresFound,
             nightQuests: this.nightQuestsCompleted,

@@ -81,7 +81,7 @@ class Player extends React.Component {
                       This player has been marked as scammer by the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="Coming Soon">Trade Center Discord</a> staff.
                       {this.state.user.scammer.notes?<><br/><br/>Trade Center Staff notes:<br/> {this.state.user.scammer.notes}</>:''}
                       {this.state.user.scammer.discordid?<><br/><br/>Discord ID: <br/>{this.state.user.scammer.discordid}</>:''}
-                      {this.state.user.scammer.alts?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.scammer.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
+                      {this.state.user.scammer.alts.length?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.scammer.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
                       {this.state.user.scammer.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:this.state.user.scammer.main}]} instant={true} /></>:''}
                     </div>
                   </StaticCard>
