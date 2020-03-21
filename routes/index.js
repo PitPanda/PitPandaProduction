@@ -6,7 +6,7 @@ const itemSearch = require('./ItemSearch');
 const { APIerror } = require('../apiTools/apiTools');
 const username = require('./Username');
 const playerDoc = require('./PlayerDoc');
-const custom = require('./Custom');
+//const custom = require('./Custom');
 const leaderboard = require('./Leaderboard');
 const events = require('./Events');
 const mongoose = require('mongoose');
@@ -38,7 +38,7 @@ router.use('/item', item);
 router.use('/itemSearch', itemSearch);
 router.use('/username', username);
 router.use('/playerDoc', playerDoc);
-router.use('/custom', custom);
+//router.use('/custom', custom);
 router.use('/leaderboard', leaderboard);
 router.use('/events', events);
 
