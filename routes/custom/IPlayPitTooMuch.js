@@ -1,10 +1,7 @@
 const router = require('express').Router();
 const hypixelAPI = require('../../apiTools/playerRequest');
 
-//not used
-//const Player = require('../../models/Player');
-
-router.get('/:tag', async (req, res) => {
+router.use('/:tag', async (req, res) => {
     const target = await hypixelAPI(req.params.tag)
 
     if (target.error) return res.json({ success: false, error: target.error });
