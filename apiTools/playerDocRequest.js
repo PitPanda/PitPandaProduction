@@ -13,10 +13,8 @@ const getDoc = (uuid, maxAge = 86400e3) => {
         if (!player || Date.now() - player.lastsave > maxAge) { //if player is not on record or been over 24 hours since last check
             const target = await hypixelAPI(uuid);
             if (target.error) return resolve({ error: target.error });
-
             resolve(target.playerDoc);
         } else {
-            player.cached = true;
             resolve(player);
         }
     });

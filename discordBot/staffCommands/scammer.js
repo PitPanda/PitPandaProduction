@@ -67,12 +67,7 @@ function command(msg,rest,_,permlevel){
 }
 
 function getActualDoc(tag){
-    return new Promise(resolve=>{
-        getDoc(tag.replace(/[-\s]/g,''), Infinity).then(Doc=>{
-            if(Doc.cached) resolve(Doc)
-            else Player.findOne({_id:Doc._id}).then(resolve);
-        });
-    });
+    return getDoc(tag.replace(/[-\s]/g,''), Infinity);
 }
 
 function markAlt(uuid, scammer){

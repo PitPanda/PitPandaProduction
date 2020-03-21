@@ -937,7 +937,15 @@ class Pit {
                 this.loadWell()
             ])
         });
-        Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.playerDoc }, { upsert: true }).catch(console.error);
+        /**
+         * 
+         */
+        this.playerDoc;
+        Object.defineProperty(this,'playerDoc',{
+            enumerable: false,
+            value: new Promise(resolve=>Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.createPlayerDoc() }, { upsert: true }).then(resolve).catch(console.error))
+        })
+        
 
         /**
          * Player's main inventory
@@ -1596,7 +1604,7 @@ class Pit {
      * player's doc like on the db
      * @type {Document}
      */
-    get playerDoc() {
+    createPlayerDoc() {
         return new Player({
             _id: this.uuid,
             name: this.name,

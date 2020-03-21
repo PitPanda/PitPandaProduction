@@ -3,9 +3,6 @@ const router = require('express').Router();
 const hypixelAPI = require('../apiTools/playerRequest');
 const Player = require('../models/Player');
 
-//not used
-//const getName = require('../apiTools/playerDocRequest');
-
 router.get('/:tag', async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
 

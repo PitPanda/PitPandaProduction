@@ -24,7 +24,8 @@ const itemSearch = (req, res) => {
     let flags = [];
     let types = [];
     let $and = [];
-    for (const str of req.params.query.toLowerCase().split(',')) {
+    const queryString = req.query.query || req.params.query;
+    for (const str of queryString.toLowerCase().split(',')) {
         if (str.startsWith('uuid')) {
             query.owner = str.substring(4);
             continue;
@@ -63,7 +64,6 @@ const itemSearch = (req, res) => {
     if (types.length > 0) query['item.id'] = { $in: types };
     if ($and.length > 0) query.$and = $and;
     const page = req.params.page || 0;
-    //console.log(JSON.stringify(query,null,4));
     Mystic
         .find(query)
         .limit(perPage)
@@ -75,7 +75,7 @@ const itemSearch = (req, res) => {
         });
 };
 
-router.use('/:query/:page', itemSearch);
+router.use('/:query/:page', itemSearch); //deprecated
 router.use('/:query', itemSearch);
 
 module.exports = router;
