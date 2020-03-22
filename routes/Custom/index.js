@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { APIerror } = require('../../apiTools/apiTools');
-const IPlayPitTooMuch = require('./IPlayPitTooMuch');
+const inventoryContents = require('./inventoryContents');
 
-router.use('/iplaypittoomuch', IPlayPitTooMuch);
+router.use('/inventorycontents', inventoryContents);
 router.use('*', APIerror('Invalid Endpoint'));
 
 module.exports = router;

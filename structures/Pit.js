@@ -938,13 +938,14 @@ class Pit {
             ])
         });
         /**
-         * 
+         * Player's live database document
+         * @type {Promise<Document>}
          */
         this.playerDoc;
         Object.defineProperty(this,'playerDoc',{
             enumerable: false,
-            value: new Promise(resolve=>Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.createPlayerDoc() }, { upsert: true }).then(resolve).catch(console.error))
-        })
+            value: new Promise(resolve=>Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.createPlayerDoc() }, { upsert: true, new: true }).then(resolve))
+        });
         
 
         /**
