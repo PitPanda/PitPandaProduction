@@ -1,10 +1,21 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Config = require('./CoreConfig.json');
+const TradeCenter = require('./TradeCenter.json');
 const commands = require('./commandList');
 const staffCommands = require('./staffCommandList');
 const mcpqndqCommands = require('./mcpqndqCommandList');
 const {invalidPermissions,getPermissionLevel} = require('./permissions');
+
+client.on('guildMemberAdd',member=>{
+    client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(
+        `Welcome to Trade Center, ${member}!\n`+
+        ` - Be sure to read <#${TradeCenter.RulesChannel}>!\n`+
+        ` - Want to know more about the server? Check <#${TradeCenter.InfoChannel}>!\n`+
+        ` - Check <#${TradeCenter.RolesChannel}> to see all of our custom roles!`
+    )).catch(console.err);
+    member.roles.add(TradeCenter.Member);
+});
 
 client.on('message',msg=>{
     let state;

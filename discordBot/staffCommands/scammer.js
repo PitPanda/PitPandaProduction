@@ -10,7 +10,8 @@ function command(msg,rest,_,permlevel){
         let jsonString = msg.content.substring(msg.content.indexOf("```json\n")+8,msg.content.lastIndexOf("```"));
         try{
             scammer=JSON.parse(jsonString);
-            scammer.added=Date.now();
+            scammer.timestamp=Date.now();
+            scammer.addedby=msg.author.id;
             if(scammer.alts) {
                 scammer.alts=scammer.alts.map(alt=>alt.replace(/[-\s]/g,''));
                 altsPromise = Promise.all(scammer.alts.map(getActualDoc));
@@ -33,7 +34,9 @@ function command(msg,rest,_,permlevel){
                                     discordid:scammer.discordid,
                                     main:Doc.id,
                                     notes:scammer.notes,
-                                    added:Date.now()
+                                    timestamp:scammer.timestamp,
+                                    addedby: scammer.addedby,
+                                    evidence: scammer.evidence
                                 }
                                 Promise.all(altDocs.map(({_id})=>Player.updateOne({_id},{scammer:altScammer}))).then(results2=>{
                                     msg.reply('Successfully marked them as a scammer');

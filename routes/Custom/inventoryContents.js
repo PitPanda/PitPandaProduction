@@ -9,7 +9,7 @@ router.use('/:tag', async (req, res) => {
     await target.NBTInventoryPromise;
 
     const items = Object.values(target.simplified_inventories).flat(1).filter(item => item.name);
-    data = { name: target.levelFormattedName.replace(/§./g, ''), items };
+    data = { name: target.levelFormattedName.replace(/§./g, ''), items, online: target.online };
     res.json({ success: true, data });
 });
 
