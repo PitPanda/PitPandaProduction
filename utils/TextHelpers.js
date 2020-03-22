@@ -1,3 +1,5 @@
+const mcenchants = require('../enchants.json');
+
 class TextHelpers {
     /**
     * converts number to roman numeral string
