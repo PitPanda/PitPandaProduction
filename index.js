@@ -6,6 +6,7 @@ require('./discordBot/bot');
 app.use(express.static('frontEnd/build'));
 
 app.use('/api', api);
+app.use('/pitReference', (req, res) => res.status(200).sendFile(__dirname + "/frontEnd/public/pitMaster.json"));
 app.use('*', (req, res) => res.status(200).sendFile(__dirname + "/frontEnd/build/index.html"));
 
 app.listen(5000, () => console.log(`Pit Panda has just booted! Port ${5000}.`));
