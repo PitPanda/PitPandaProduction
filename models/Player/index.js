@@ -36,6 +36,15 @@ const lbPartial = {
     nightQuests: Number,
     renown: Number,
     lifetimeRenown: Number,
+    arrowShots: Number,
+    arrowHits: Number,
+    jumpsIntoPit: Number,
+    launcherLaunches: Number,
+    totalJumps: Number,
+    bounty: Number,
+    genesisPoints: Number,
+    joins: Number,
+    enderchestOpened: Number
 }
 
 const PlayerSchema = mongoose.Schema({
@@ -54,6 +63,11 @@ const PlayerSchema = mongoose.Schema({
     scammer: {
         type: scammerSchema,
         default: undefined
+    },
+    exempt: {
+        type: Boolean,
+        default: undefined,
+        index: true
     }
 });
 

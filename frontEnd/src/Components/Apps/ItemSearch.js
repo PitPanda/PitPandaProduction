@@ -2,7 +2,7 @@ import React from 'react';
 import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import StaticCard from '../Cards/StaticCard';
 import QueryBox from '../QueryBox/QueryBox';
-import getDoc, {cache} from '../../scripts/playerDoc';
+import getName, {cache} from '../../scripts/playerName';
 
 const pageSize = 72;
 class ItemSearch extends React.Component {
@@ -49,7 +49,7 @@ class ItemSearch extends React.Component {
             
             let targets = results.filter(item=>item.owner===owner);
 
-            let doc = getDoc(owner);
+            let doc = getName(owner);
             let result = doc.result;
 
             if(!result){
@@ -68,7 +68,7 @@ class ItemSearch extends React.Component {
                 console.err(doc.error);
             }else{
                 for(let item of targets){
-                    item.desc[0] = `§7Owner: ${result.displayName}`;
+                    item.desc[0] = `§7Owner: ${result.name}`;
                 }
             }
             this.setState({results});

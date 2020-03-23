@@ -1544,7 +1544,7 @@ class Pit {
             const farmlore = [
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
                 `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
-                `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
+                `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedFish)}`,
                 `${Colors.GRAY}Fish Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromSellingFish)}g`,
                 `${Colors.GRAY}Hay Bales Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromFarming)}g`,
                 `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${textHelpers.formatNumber(this.kingsQuestCompletions)}`,
@@ -1645,7 +1645,16 @@ class Pit {
             sewerTreasures: this.sewerTreasuresFound,
             nightQuests: this.nightQuestsCompleted,
             renown: this.renown,
-            lifetimeRenown: this.lifetimeRenown
+            lifetimeRenown: this.lifetimeRenown,
+            arrowShots: this.arrowsFired,
+            arrowHits: this.arrowHits,
+            jumpsIntoPit: this.jumpsIntoPit,
+            launcherLaunches: this.launcherLaunches,
+            totalJumps: (this.jumpsIntoPit||0)+(this.launcherLaunches||0),
+            bounty: this.bounty,
+            genesisPoints: this.allegiancePoints,
+            joins: this.joins,
+            enderchestOpened: this.enderchestOpened
         });
     }
 

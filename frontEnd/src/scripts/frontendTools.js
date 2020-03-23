@@ -23,7 +23,7 @@ function levelString(prestige,level){
  */
 function minutesToString(min){
     if(min < 60) return `${min}m`;
-    let str = `${Math.floor(min/60)}h`;
+    let str = `${Math.floor(min/60).toLocaleString()}h`;
     if(min%60!==0) str+=` ${Math.floor(min%60)}m`;
     return str;
 } module.exports.minutesToString = minutesToString;
