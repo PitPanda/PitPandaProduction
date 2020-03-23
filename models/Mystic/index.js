@@ -6,7 +6,8 @@ const MysticSchema = mongoose.Schema({
     enchants: [EnchantSchema],
     lastseen: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        index: true
     },
     flags: [String],
     owner: String,
@@ -16,5 +17,7 @@ const MysticSchema = mongoose.Schema({
     tokens: Number,
     item: ItemSchema
 });
+
+MysticSchema.index({enchants:1,nonce:1,maxLives:1});
 
 module.exports = mongoose.model('Mystics', MysticSchema);

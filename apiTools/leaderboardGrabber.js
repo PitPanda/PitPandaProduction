@@ -1,26 +1,21 @@
 const Player = require('../models/Player');
 const getDoc = require('./playerDocRequest');
 
-const perPage = 20;
+const perPage = 100;
 
 const leaderboardGrabber = (primaryKey, page = 0, direction = -1) => {
     return new Promise((resolve, reject) => {
-        if (!Player.schema.tree[primaryKey]) return reject('Invalid ledaerboard endpoint');
+        if (!Player.schema.tree[primaryKey]) return resolve({error:'Invalid ledaerboard endpoint'});
         Player
-            .find({ exempt: { $exists: false } })
+            .find({ exempt: { $not: { $eq: true } } })
             .limit(perPage)
             .skip(perPage * page)
-            .sort([[primaryKey, direction], ['lifetimeGold', -1], ['xp', -1]])
-            .then(results => {
-                Promise.all(
-                    results.map(player => getDoc(player._id))
-                ).then(players =>
-                    resolve(players.map(player => {
-                        let subset = { uuid: player._id, name: player.displayName }
-                        subset[primaryKey] = player[primaryKey];
-                        return subset;
-                    }))
+            .sort([[primaryKey, direction], ['lifetimeGold', -1]])
+            .then(players => 
+                resolve(
+                    players.map(player => ({ uuid: player._id, name: player.displayName, score: player[primaryKey] }))
+                        .sort((a,b)=>b[primaryKey]-a[primaryKey])
                 )
-            });
+            );
     });
 }; module.exports = leaderboardGrabber;

@@ -6,6 +6,7 @@ import Player from './Components/Apps/Player';
 import PlayerForm from './Components/Apps/PlayerForm';
 import ItemSearch from './Components/Apps/ItemSearch';
 import Nav from './Components/Nav/Nav';
+import Leaderboard from './Components/Apps/Leaderboard';
 
 ReactDOM.render((
     <>
@@ -13,6 +14,7 @@ ReactDOM.render((
             <Nav/>
             <Switch>
                 <Route exact path="/" component={withRouter(PlayerForm)}/>
+                <Route exact path="/leaderboard" component={withRouter(Leaderboard)}/>
                 <Route exact path="/players/:id" component={withRouter(Player)}/>
                 <Route exact path="/itemsearch/:query?" component={withRouter(ItemSearch)}/>
                 <Redirect to="/"/>

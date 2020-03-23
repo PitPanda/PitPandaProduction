@@ -10,7 +10,7 @@ let count = 0;
  * Constructor for API utilty function
  */
 const hypixelAPIconstructor = () => {
-    const keys = require('../keys');
+    const {APIKeys:keys} = require('../settings.json');
     let i = 0;
     const getKey = () => {
         if (i === keys.length) i = 0;

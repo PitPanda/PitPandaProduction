@@ -8,7 +8,8 @@ function Nav(props){
     }
     const buttons = [
         {name:'Pit Panda',path:'/'},
-        {name:'Mystic Searcher',path:'/itemsearch'}
+        {name:'Mystic Searcher',path:'/itemsearch'},
+        //{name:'Leaderboard (beta)',path:'/leaderboard'},
     ];
     const findBest = (path) => {
         let best = 0;

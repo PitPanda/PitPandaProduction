@@ -9,14 +9,10 @@ const playerDoc = require('./PlayerDoc');
 const custom = require('./Custom');
 const leaderboard = require('./Leaderboard');
 const events = require('./Events');
-const mongoose = require('mongoose');
 const ApiStat = require('../models/ApiStat');
 
 let statBatch = {};
 const batchSize = 10;
-
-mongoose.connect(require('../dbLogin.json'), { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('MongoDB Connected'));
-mongoose.set('useFindAndModify', false);
 
 router.use('*', (req, res, next) => {
     const args = req.originalUrl.substring(1).toLowerCase().split('/');

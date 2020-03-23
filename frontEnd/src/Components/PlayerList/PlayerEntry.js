@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
+import getDoc from '../../scripts/playerDoc';
 
-function PlayerList(props){
-    let [text, setText] = useState("§7Loading");
-    props.getUser(props.uuid).then(setText);
+const buttonStyle = {
+    display:'block',
+    backgroundColor:'none',
+    cursor:'pointer'
+}
+
+function PlayerEntry(props){
+    let doc = getDoc(props.uuid);
+    let [text, setText] = useState(doc.result?doc.result.displayName:"§7Loading");
+    if(!doc.result)doc.promise.then(doc=>setText(doc.displayName))
+    const redirect = () => props.history.push(`/players/${props.uuid}`);
     return (
-        <a title={props.hover} style={{display:'block'}} href={`/players/${props.uuid}`}>
+        <span title={props.hover} style={buttonStyle} href={`/players/${props.uuid}`} onClick={redirect}>
             <MinecraftText raw={text}/>
-        </a>
+        </span>
     );
-} export default PlayerList;
+} export default PlayerEntry;

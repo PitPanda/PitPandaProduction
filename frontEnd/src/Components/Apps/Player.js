@@ -111,7 +111,7 @@ class Player extends React.Component {
                 }/>
                 {this.state.user.recentKills.length?(
                   <StaticCard title="Recent Kills" key={this.state.user.uuid}>
-                    <PlayerList players={this.state.user.recentKills.map(kill=>({tag:kill.victim,hover:new Date(kill.timestamp).toLocaleString()}))}/>
+                    <PlayerList players={this.state.user.recentKills.map(kill=>({tag:kill.victim,hover:new Date(kill.timestamp).toLocaleString()}))}  history={this.props.history}/>
                   </StaticCard>
                 ):''}
               </div>

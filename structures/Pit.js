@@ -33,7 +33,13 @@ class Pit {
 
         if (!json.success) return { error: json.err || 'Failed to reach the api' };
         if (!json.player) return { error: 'Player not found' };
-        if (!this.getStat('stats', 'Pit')) return { error: 'Player has not played the Pit' };
+        if (!this.getStat('stats', 'Pit')) {
+            (async ()=>{
+                const uuid = this.getStat('uuid');
+                if(uuid) Player.deleteOne({_id:uuid}).exec();
+            })();
+            return { error: 'Player has not played the Pit' };
+        }
 
 
 

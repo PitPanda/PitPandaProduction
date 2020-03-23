@@ -17,9 +17,13 @@ const scammerSchema = mongoose.Schema({
     evidence: String,
     timestamp:{
         type:Date,
-        default: Date.now
+        default: Date.now,
+        index: true
     },
-    addedby:String
+    addedby:{
+        type: String,
+        index: true
+    }
 }, { _id: false });
 
 module.exports = scammerSchema;

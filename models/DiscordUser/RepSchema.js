@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
 const RepSchema = mongoose.Schema({
-    _id: String, //passed from the pending rep stage
-    from: String, //giver uuid
+    _id: String, 
+    from: {
+        type: String,
+        index: true
+    }, 
     timestamp: {
         type: Date,
         default: Date.now

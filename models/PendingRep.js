@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 
 const PendingRepSchema = mongoose.Schema({
     _id: String,
-    from: String,
-    to: String,
+    from: {
+        type:String,
+        index:true
+    },
+    to: {
+        type:String,
+        index:true
+    },
     comment: String,
     evidence: String
 });

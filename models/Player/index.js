@@ -2,14 +2,7 @@ const mongoose = require('mongoose');
 const profileDisplaySchema = require('./ProfileDisplaySchema');
 const scammerSchema = require('./ScammerSchema');
 
-const PlayerSchema = mongoose.Schema({
-    _id: String,
-    lastsave: {
-        type: Date,
-        default: Date.now
-    },
-    name: String,
-    displayName: String,
+const lbPartial = {
     kills: Number,
     assists: Number,
     damageDealt: Number,
@@ -18,7 +11,10 @@ const PlayerSchema = mongoose.Schema({
     highestStreak: Number,
     deaths: Number,
     kdr: Number,
-    xp: Number,
+    xp: {
+        type: Number,
+        index: true
+    },
     gold: Number,
     lifetimeGold: Number,
     playtime: Number,
@@ -40,6 +36,17 @@ const PlayerSchema = mongoose.Schema({
     nightQuests: Number,
     renown: Number,
     lifetimeRenown: Number,
+}
+
+const PlayerSchema = mongoose.Schema({
+    _id: String,
+    lastsave: {
+        type: Date,
+        default: Date.now
+    },
+    name: String,
+    displayName: String,
+    ...lbPartial,
     profileDisplay: {
         type: profileDisplaySchema,
         default: undefined
@@ -49,5 +56,12 @@ const PlayerSchema = mongoose.Schema({
         default: undefined
     }
 });
+
+for(const key of Object.keys(lbPartial)){
+    let index = {};
+    index[key] = -1;
+    index.lifetimeGold = -1;
+    PlayerSchema.index(index);
+}
 
 module.exports = mongoose.model('Players', PlayerSchema);

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import PlayerEntry from './PlayerEntry';
 
-let knownplayers = {};
 function PlayerList(props){
     let clone = props.players.slice();
     let tmpGroupQueue = [];
@@ -22,28 +21,9 @@ function PlayerList(props){
         setGroupQueue(groupQueue.slice(1));
         setHasMore(groupQueue.length-1);
     }
-    function getUser(uuid){
-        const promise = new Promise(resolve=>{
-            if(knownplayers[uuid]){
-                if(knownplayers[uuid].name) resolve(knownplayers[uuid].name);
-                else knownplayers[uuid].promise.then(resolve);
-            }else fetch(`/api/username/${uuid}`).then(res=>res.json()).then(json => {
-                console.log(json);
-                if(json.success) {
-                    knownplayers[uuid].name=json.name;
-                    resolve(json.name);
-                } else resolve("§4ERROR");
-            }).catch((err)=>{
-                resolve("§4ERROR");
-                console.log(err);
-            });
-        });
-        knownplayers[uuid]={promise};
-        return promise;
-    }
     return (
         <>
-            {loaded.map((player,index)=><PlayerEntry getUser={getUser} key={index} uuid={player.tag} hover={player.hover}/>)}
+            {loaded.map((player,index)=><PlayerEntry key={index} uuid={player.tag} hover={player.hover}  history={props.history}/>)}
             {hasMore?(
                 <div style={{textAlign:'center'}}>
                     {initiated?(

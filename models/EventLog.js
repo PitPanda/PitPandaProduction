@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
 const EventLogSchema = mongoose.Schema({
-    reporter: String,
+    reporter: {
+        type: String,
+        index: true
+    },
     event: String,
     timestamp: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        index: true
     }
 });
 

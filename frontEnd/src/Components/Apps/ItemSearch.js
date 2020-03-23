@@ -2,6 +2,7 @@ import React from 'react';
 import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import StaticCard from '../Cards/StaticCard';
 import QueryBox from '../QueryBox/QueryBox';
+import getDoc, {cache} from '../../scripts/playerDoc';
 
 const pageSize = 72;
 class ItemSearch extends React.Component {
@@ -9,7 +10,6 @@ class ItemSearch extends React.Component {
         results:new Array(9).fill({fake:true}),
         loading:false,
         lastsize:0,
-        knownUUIDS:{},
         page:0,
         queryString:''
     };
@@ -41,40 +41,45 @@ class ItemSearch extends React.Component {
 
     updatePath=(queryString)=>this.props.history.push(`/itemsearch/${queryString}`);
     
-    requestOwner=(index)=>{
+    requestOwner= async (index)=>{
         if(!this.state.results[index].fake&&!this.state.results[index].checked){
             let results = this.state.results;
             let owner = results[index].owner;
-            let knownUUIDS = this.state.knownUUIDS;
+
+            
             let targets = results.filter(item=>item.owner===owner);
-            for(let item of targets){
-                item.checked = true;
-                item.desc[0] = '§7Owner: Loading';
+
+            let doc = getDoc(owner);
+            let result = doc.result;
+
+            if(!result){
+                for(let item of targets){
+                    item.checked = true;
+                    item.desc[0] = '§7Owner: Loading';
+                }
+                this.setState({results});
+                result = await doc.promise;
+            }
+            if(doc.error) {
+                for(let item of targets){
+                    item.checked = false;
+                    item.desc[0] = '§7Owner: §4ERROR';
+                }
+                console.err(doc.error);
+            }else{
+                for(let item of targets){
+                    item.desc[0] = `§7Owner: ${result.displayName}`;
+                }
             }
             this.setState({results});
-            fetch(`/api/username/${owner}`).then(res=>res.json()).then(json => {
-                console.log(json);
-                if(json.success){
-                    for(let item of targets){
-                        item.desc[0] = '§7Owner: '+json.name;
-                    }
-                    knownUUIDS[owner]=json.name;
-                }else{
-                    for(let item of targets){
-                        item.checked = false;
-                        item.desc[0] = '§7Owner: §4ERROR';
-                    }
-                }
-                this.setState({results,knownUUIDS});
-            });
         }
     }
 
     readyItems = (items) => {
         for(let item of items){
             item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
-            if(this.state.knownUUIDS[item.owner]) {
-                item.item.desc.unshift('§7Owner: '+this.state.knownUUIDS[item.owner]);
+            if(cache[item.owner]&&cache[item.owner].result) {
+                item.item.desc.unshift('§7Owner: '+cache[item.owner].result.displayName);
                 item.item.checked = true;
             }
             else {

@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const apiStatSchema = mongoose.Schema({
-    count: Number,
+    count: {
+        type: Number,
+        index: true
+    },
     date: {
         type: Number,
-        default: () => Math.floor(Date.now() / 86400e3)
+        default: () => Math.floor(Date.now() / 86400e3),
+        index: true,
+        unique: true
     }
 });
 
