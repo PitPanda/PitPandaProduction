@@ -68,7 +68,7 @@ class ItemSearch extends React.Component {
                 console.err(doc.error);
             }else{
                 for(let item of targets){
-                    item.desc[0] = `§7Owner: ${result.name}`;
+                    item.desc[0] = `§7Owner: ${result}`;
                 }
             }
             this.setState({results});
@@ -79,7 +79,7 @@ class ItemSearch extends React.Component {
         for(let item of items){
             item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
             if(cache[item.owner]&&cache[item.owner].result) {
-                item.item.desc.unshift('§7Owner: '+cache[item.owner].result.displayName);
+                item.item.desc.unshift('§7Owner: '+cache[item.owner].result.name);
                 item.item.checked = true;
             }
             else {
