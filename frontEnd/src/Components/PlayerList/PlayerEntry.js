@@ -10,7 +10,7 @@ const buttonStyle = {
 
 function PlayerEntry(props){
     let doc = getName(props.uuid);
-    let [text, setText] = useState(doc.result?doc.result.name:"§7Loading");
+    let [text, setText] = useState(doc.result?doc.result:"§7Loading");
     if(!doc.result) doc.promise.then(name=>setText(name))
     const redirect = () => props.history.push(`/players/${props.uuid}`);
     return (

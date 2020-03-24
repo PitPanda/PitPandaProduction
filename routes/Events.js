@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {WebhookClient, MessageEmbed} = require('discord.js');
-const EventsConfig = require('../EventSetup.json');
-const hook = new WebhookClient(...EventsConfig.WebHook);
+const {EventWebHook} = require('../settings.json');
+const hook = new WebhookClient(...EventWebHook);
 const EventKey = require('../models/EventKey');
 const EventLog = require('../models/EventLog');
 
