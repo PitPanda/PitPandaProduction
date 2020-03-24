@@ -46,7 +46,6 @@ class ItemSearch extends React.Component {
             let results = this.state.results;
             let owner = results[index].owner;
 
-            
             let targets = results.filter(item=>item.owner===owner);
 
             let doc = getName(owner);
@@ -79,7 +78,7 @@ class ItemSearch extends React.Component {
         for(let item of items){
             item.item.desc.unshift('§7Lastseen: '+new Date(item.lastseen*1000).toLocaleString());
             if(cache[item.owner]&&cache[item.owner].result) {
-                item.item.desc.unshift('§7Owner: '+cache[item.owner].result.name);
+                item.item.desc.unshift('§7Owner: '+cache[item.owner].result);
                 item.item.checked = true;
             }
             else {
