@@ -1,11 +1,12 @@
 const Player = require('../models/Player');
+const fields = require('../models/Player/leaderboardFields');
 const getDoc = require('./playerDocRequest');
 
 const perPage = 100;
 
 const leaderboardGrabber = (primaryKey, page = 0, direction = -1) => {
     return new Promise((resolve, reject) => {
-        if (!Player.schema.tree[primaryKey]) return resolve({error:'Invalid leaderboard endpoint'});
+        if (!(primaryKey in fields)) return resolve({error:'Invalid leaderboard endpoint'});
         Player
             .find({ exempt: { $not: { $eq: true } } })
             .limit(perPage)

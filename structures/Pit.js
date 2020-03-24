@@ -943,16 +943,6 @@ class Pit {
                 this.loadWell()
             ])
         });
-        /**
-         * Player's live database document
-         * @type {Promise<Document>}
-         */
-        this.playerDoc;
-        Object.defineProperty(this,'playerDoc',{
-            enumerable: false,
-            value: new Promise(resolve=>Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.createPlayerDoc() }, { upsert: true, new: true }).then(resolve))
-        });
-        
 
         /**
          * Player's main inventory
@@ -1073,6 +1063,16 @@ class Pit {
             enumerable: true,
             get: () => this.raw_inventories.well.map(SimpleItem.buildFromNBT)
         });
+
+        /**
+         * Player's live database document
+         * @type {Promise<Document>}
+         */
+        this.playerDoc;
+        Object.defineProperty(this,'playerDoc',{
+            enumerable: false,
+            value: new Promise(resolve=>Player.findOneAndUpdate({ _id: this.uuid }, { $set: this.createPlayerDoc() }, { upsert: true, new: true }).then(resolve))
+        });
     }
 
     /**
@@ -1134,6 +1134,14 @@ class Pit {
      */
     get playtimeHours() {
         return this.playtime / 60;
+    }
+
+    /**
+     * Contract Completed / Contracts Started
+     * @type {number}
+     */
+    get contractsRatio() {
+        return this.contractsCompleted / (this.contractsStarted||1);
     }
 
     /**
@@ -1199,7 +1207,14 @@ class Pit {
     get killAssistHourly() {
         return (this.kills + this.assists) / this.playtimeHoursSafe;
     }
-
+    
+    /**
+     * kills/hours
+     * @type {number}
+     */
+    get killsHourly() {
+        return this.kills / this.playtimeHoursSafe;
+    }
     /**
      * damage received but not 0
      * @type {number}
@@ -1609,7 +1624,7 @@ class Pit {
 
     /**
      * player's doc like on the db
-     * @type {Document}
+     * @returns {Document}
      */
     createPlayerDoc() {
         return new Player({
@@ -1633,8 +1648,11 @@ class Pit {
             gheads: this.gheadsEaten,
             lavaBuckets: this.lavaBucketsPlaced,
             soups: this.soupsDrank,
+            tierOnes: this.mysticsEnchanted[0],
+            tierTwos: this.mysticsEnchanted[1],
             tierThrees: this.mysticsEnchanted[2],
             darkPants: this.darkPantsCreated,
+            darkPantsT2: this.darkPantsT2,
             leftClicks: this.leftClicks,
             chatMessages: this.chatMessages,
             wheatFarmed: this.wheatFarmed,
@@ -1648,6 +1666,27 @@ class Pit {
             lifetimeRenown: this.lifetimeRenown,
             arrowShots: this.arrowsFired,
             arrowHits: this.arrowHits,
+            bowAccuracy: this.bowAccuracy,
+            swordHits: this.swordHits,
+            meleeDamageDealt: this.meleeDamageDealt,
+            meleeDamageReceived: this.meleeDamageReceived,
+            meleeDamageRatio: this.meleeDamageRatio,
+            bowDamageDealt: this.bowDamageDealt,
+            bowDamageReceived: this.bowDamageReceived,
+            bowDamageRatio: this.bowDamageRatio,
+            allegiance: this.allegiance,
+            diamondItemsPurchased: this.diamondItemsPurchased,
+            fishedFish: this.fishedFish,
+            hiddenJewelsTriggered: this.hiddenJewelsTriggered,
+            xpHourly: this.xpHourly,
+            killsHourly: this.killsHourly,
+            goldHourly: this.goldHourly,
+            fishingRodCasts: this.fishingRodCasts,
+            hatColor: this.hatColor,
+            kadr: this.killAssistDeathRatio,
+            killAssistHourly: this.killAssistHourly,
+            contractsStarted: this.contractsStarted,
+            contractsRatio: this.contractsRatio,
             jumpsIntoPit: this.jumpsIntoPit,
             launcherLaunches: this.launcherLaunches,
             totalJumps: (this.jumpsIntoPit||0)+(this.launcherLaunches||0),

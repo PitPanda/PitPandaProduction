@@ -19,6 +19,10 @@ function toFixed(places){
     }
 }
 
+function toPercent(num){
+    return toFixed(1)(num*100)+'%';
+}
+
 const boards = new Proxy({
     kills: {
         displayName:"Top Kills",
@@ -93,6 +97,16 @@ const boards = new Proxy({
         displayName:"Top Soups Drank",
         short:"Soups Drank"
     },
+    tierOnes: {
+        displayName:"Top Tier 1 Mystics Enchanted",
+        short:"Mystics Enchanted",
+        hidden: true
+    },
+    tierTwos: {
+        displayName:"Top Tier 2 Mystics Enchanted",
+        short:"Mystics Enchanted",
+        hidden: true
+    },
     tierThrees: {
         displayName:"Top Tier 3 Mystics Enchanted",
         short:"Mystics Enchanted"
@@ -100,6 +114,11 @@ const boards = new Proxy({
     darkPants: {
         displayName:"Top Dark Pants Created",
         short:"Dark Pants Created"
+    },
+    darkPantsT2: {
+        displayName:"Top Dark Pants Created",
+        short:"Dark Pants Created",
+        hidden: true
     },
     leftClicks: {
         displayName:"Top Left Clicks",
@@ -192,6 +211,102 @@ const boards = new Proxy({
         short:"Enderchests Opened",
         hidden: true
     },
+    bowAccuracy: {
+        displayName:"Top Bow Accuracy",
+        short:"Bow Accuracy",
+        hidden: true
+    },
+    swordHits: {
+        displayName:"Top Sword Hits",
+        short:"Enderchests Opened",
+        hidden: true
+    },
+    meleeDamageDealt: {
+        displayName:"Top Melee Damage Dealt",
+        short:"Melee Damage Dealt",
+        hidden: true
+    },
+    meleeDamageReceived: {
+        displayName:"Top Melee Damage Received",
+        short:"Melee Damage Received",
+        hidden: true
+    },
+    meleeDamageRatio: {
+        displayName:"Top Melee Damage Ratio",
+        short:"Melee Damage Ratio",
+        hidden: true
+    },
+    bowDamageDealt: {
+        displayName:"Top Bow Damage Dealt",
+        short:"Bow Damage Dealt",
+        hidden: true
+    },
+    bowDamageReceived: {
+        displayName:"Top Bow Damage Received",
+        short:"Bow Damage Dealt",
+        hidden: true
+    },
+    bowDamageRatio: {
+        displayName:"Top Bow Damage Ratio",
+        short:"Bow Damage Ratio",
+        hidden: true
+    },
+    diamondItemsPurchased: {
+        displayName:"Top Diamond Items Purchased",
+        short:"Diamond Items Purchased",
+        hidden: true
+    },
+    fishedFish: {
+        displayName:"Top Fishes Fished",
+        short:"Fishes Fished",
+        hidden: true
+    },
+    hiddenJewelsTriggered: {
+        displayName:"Top Hidden Jewels Triggered",
+        short:"Hidden Jewels Triggered",
+        hidden: true
+    },
+    xpHourly: {
+        displayName:"Top XP Per Hour",
+        short:"XP/Hour",
+        hidden: true
+    },
+    goldHourly: {
+        displayName:"Top Gold Per Hour",
+        short:"Gold/Hour",
+        hidden: true
+    },
+    fishingRodCasts: {
+        displayName:"Top Fishing Rod Casts",
+        short:"Fishing Rod Casts",
+        hidden: true
+    },
+    kadr: {
+        displayName:"Top Kills + Assists / Death Ratio",
+        short:"KADR",
+        hidden: true
+    },
+    killAssistHourly: {
+        displayName:"Top Kills + Assists per Hour",
+        short:"Kills + Assists per Hour",
+        hidden: true
+    },
+    killsHourly: {
+        displayName:"Top Kills per Hour",
+        short:"Kills per Hour",
+        hidden: true
+    },
+    contractsStarted: {
+        displayName:"Top Contracts Started",
+        short:"Contracts Started",
+        hidden: true
+    },
+    contractsRatio: {
+        displayName:"Top Contracts Success Rate",
+        short:"Contract Success Rate",
+        hidden: true,
+        transform: toPercent
+    },
     error: {
         displayName:"Invalid Leaderboard",
         short:"Error",
@@ -215,8 +330,8 @@ const boards = new Proxy({
     },
     ownKeys: (target)=>{
         return Object.entries(target)
-            .sort( ( a, b ) => a[1].short < b[1].short ? -1 : 1 )
             .filter( ( [, { hidden } ] ) => !hidden )
+            .sort( ( a, b ) => a[1].short < b[1].short ? -1 : 1 )
             .map(e=>e[0]);
     }
 });

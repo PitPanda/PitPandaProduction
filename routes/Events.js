@@ -11,9 +11,11 @@ let lastevent = '';
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
+    console.log(`Key is ${req.headers.Key}`);
     if(!req.headers.Key) return;
     const keyDoc = await EventKey.findById({_id:req.headers.Key});
-    if(!keyDoc) return;
+    if(!keyDoc) return console.log(`Failed to find matching key entry`);
+    else console.log('Key is valid');
     let content = req.headers.eventtype;
     const input = parseValue(content).value;
     const final = stringifyComponent(input);
@@ -21,22 +23,23 @@ router.post('/', async (req,res)=>{
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
-        if(clean===lastevent) return;
+        if(clean===lastevent) return console.log('blocked as duplicate event');
         lastevent = clean;
         const event = new EventLog({
             reporter: keyDoc.owner,
             event: clean
         });
         event.save((err,final)=>{
-            if(err) return;
+            if(err) return console.log('error occured saving the event', err);
             hook.send(
                 new MessageEmbed()
                     .setTitle(clean)
                     .setFooter(final._id)
                     .setTimestamp()
             );
-        })
-    }
+            console.log('event sent successfully');
+        });
+    }else console.log('regex test failed');
 });
 
 router.use('/', (req,res)=>{
