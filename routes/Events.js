@@ -11,9 +11,9 @@ let lastevent = '';
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
-    console.log(`Key is ${req.headers.Key}`);
-    if(!req.headers.Key) return;
-    const keyDoc = await EventKey.findById({_id:req.headers.Key});
+    console.log(`Key is ${req.headers.key}`);
+    if(!req.headers.key) return;
+    const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return console.log(`Failed to find matching key entry`);
     else console.log('Key is valid');
     let content = req.headers.eventtype;
