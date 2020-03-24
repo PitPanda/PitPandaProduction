@@ -218,9 +218,9 @@ const boards = new Proxy({
     }
 });
 
-async function getLeaderboard(props){
+async function getLeaderboard({category='xp',page=0}){
     try{
-        const pageRequest = await fetch(`/api/leaderboard/${props.category||'xp'}?page=${props.page||0}`);
+        const pageRequest = await fetch(`/api/leaderboard/${category}?page=${page}`);
         const json = await pageRequest.json();
         console.log(json);
         if(!json.success) return {error:(json.error||'An error occured')};

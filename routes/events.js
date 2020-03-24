@@ -10,9 +10,13 @@ const rgx = /^§(d|5)§lM(INO|AJO)R EVENT! §.§l[ A-Z0-9]{1,}/;
 let lastevent = '';
 
 router.post('/', async (req,res)=>{
-    res.status(200).json({success:true});
+    if(!req.headers.key) {
+        console.log('no key provided');
+        return res.status(200).json({success:false,error:'no key provided'});
+    }
     const keyDoc = await EventKey.findById({_id:req.headers.key});
-    if(!keyDoc) return console.log(`invalid key tried to submit event: ${req.headers.key}`);
+    if(!keyDoc) return res.status(200).json({success:false,error:'invalid key'});
+    else res.status(200).json({success:true});
     let content = req.headers.eventtype;
     const input = parseValue(content).value;
     const final = stringifyComponent(input);
