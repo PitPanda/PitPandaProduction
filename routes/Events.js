@@ -8,6 +8,8 @@ const EventLog = require('../models/EventLog');
 const rgx = /^§(d|5)§lM(INO|AJO)R EVENT! §.§l[ A-Z0-9]{1,}/;
 
 let lastevent = '';
+let lastevent_id;
+let lastreporters = new Set();
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
@@ -21,7 +23,10 @@ router.post('/', async (req,res)=>{
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
+        lastreporters.add(keyDoc.owner);
         if(clean===lastevent) return;
+        if(lastevent_id) EventLog.findByIdAndUpdate(lastevent, {duplicates: [...lastreporters]}).exec();
+        duplicates = new Set();
         lastevent = clean;
         const event = new EventLog({
             reporter: keyDoc.owner,
@@ -29,6 +34,7 @@ router.post('/', async (req,res)=>{
         });
         event.save((err,final)=>{
             if(err) return;
+            lastevent_id = final._id;
             hook.send(
                 new MessageEmbed()
                     .setTitle(clean)
