@@ -59,12 +59,12 @@ class ItemSearch extends React.Component {
                 this.setState({results});
                 result = await doc.promise;
             }
-            if(doc.error) {
+            if(result.error) {
                 for(let item of targets){
                     item.checked = false;
                     item.desc[0] = '§7Owner: §4ERROR';
                 }
-                console.err(doc.error);
+                console.err(result.error);
             }else{
                 for(let item of targets){
                     item.desc[0] = `§7Owner: ${result}`;
