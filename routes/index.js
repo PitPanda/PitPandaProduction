@@ -8,7 +8,7 @@ const username = require('./Username');
 const playerDoc = require('./PlayerDoc');
 const custom = require('./Custom');
 const leaderboard = require('./Leaderboard');
-const events = require('./Events');
+//const events = require('./Events');
 const ApiStat = require('../models/ApiStat');
 
 let statBatch = {};
@@ -36,7 +36,7 @@ router.use('/username', username);
 router.use('/playerDoc', playerDoc);
 router.use('/custom', custom);
 router.use('/leaderboard', leaderboard);
-router.use('/events', events);
+//router.use('/events', events);
 
 router.use('*', APIerror('Invalid Endpoint'));
 
