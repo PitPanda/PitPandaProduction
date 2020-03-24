@@ -5,9 +5,6 @@ const keySchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    owner: {
-        type: String,
-        index: true
-    }
+    owner: String
 });
 module.exports = mongoose.model('EventKeys',keySchema);
