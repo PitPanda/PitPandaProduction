@@ -15,6 +15,8 @@ router.post('/', async (req,res)=>{
         console.log('no key provided');
         return res.status(200).json({success:false,error:'no key provided'});
     }else console.log('key:' + req.headers.key);
+    res.status(200).json({success:true});
+    /*
     const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return res.status(200).json({success:false,error:'invalid key'});
     else res.status(200).json({success:true});
@@ -40,7 +42,7 @@ router.post('/', async (req,res)=>{
                     .setTimestamp()
             );
         })
-    }
+    }*/
 });
 
 router.use('/', (req,res)=>{
