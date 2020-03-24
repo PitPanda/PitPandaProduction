@@ -10,6 +10,7 @@ const rgx = /^§(d|5)§lM(INO|AJO)R EVENT! §.§l[ A-Z0-9]{1,}/;
 let lastevent = '';
 
 router.post('/', async (req,res)=>{
+    console.log(req.headers);
     if(!req.headers.key) {
         console.log('no key provided');
         return res.status(200).json({success:false,error:'no key provided'});
