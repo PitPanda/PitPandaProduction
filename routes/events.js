@@ -13,7 +13,7 @@ router.post('/', async (req,res)=>{
     if(!req.headers.key) {
         console.log('no key provided');
         return res.status(200).json({success:false,error:'no key provided'});
-    }
+    }else console.log(req.headers.key);
     const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return res.status(200).json({success:false,error:'invalid key'});
     else res.status(200).json({success:true});
