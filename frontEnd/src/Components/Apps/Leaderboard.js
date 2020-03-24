@@ -214,7 +214,10 @@ const boards = new Proxy({
         });
     },
     ownKeys: (target)=>{
-        return Object.entries(target).filter(([,{hidden}])=>!hidden).map(e=>e[0]).sort();
+        return Object.entries(target)
+            .sort( ( a, b ) => a[1].short < b[1].short ? -1 : 1 )
+            .filter( ( [, { hidden } ] ) => !hidden )
+            .map(e=>e[0]);
     }
 });
 
