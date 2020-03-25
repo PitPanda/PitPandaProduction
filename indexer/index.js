@@ -20,6 +20,7 @@ const batchTimeout = 1000;
 let currentQueue = 0;
 let lastQueueChange = 0;
 let estimatedCount = 0;
+let lastQueueSize = 0;
 
 const queue = [];
 
@@ -48,6 +49,7 @@ const runNextBatch = async () => {
 const start = async () => {
     if (!queue.length) {
         const data = await getNextChunk();
+        lastQueueSize = data.length;
         currentQueue = currentQueue + 1; // so we can get the next 1000 players
         
         if (!data.length) currentQueue = 0; //ran out of players to index restart
@@ -70,7 +72,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status', async (req, res) => {
-    const currentPosition = (currentQueue * maxQueueSize) + (maxQueueSize - queue.length);
+    const currentPosition = (currentQueue * maxQueueSize) + (lastQueueSize - queue.length);
 
     res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });
 });
