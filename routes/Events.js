@@ -27,11 +27,7 @@ router.post('/', async (req,res)=>{
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
         if(clean===lastevent) return lastreporters.add(keyDoc.owner);
-        if(lastevent_id) {
-            console.log('updating coreportes for previous event');
-            console.log(`reporters are ${[...lastreporters]}`);
-            EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>console.log('done'));
-        }
+        if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>undefined);
         lastreporters = new Set([keyDoc.owner]);
         lastevent = clean;
         const event = new EventLog({
