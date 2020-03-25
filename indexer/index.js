@@ -14,7 +14,7 @@ const playerDoc = require('../models/Player');
 
 //constants
 const maxQueueSize = 1000;
-const maxBatchSize = 4;
+const maxBatchSize = 6;
 const batchTimeout = 1000;
 
 let currentQueue = 0;
