@@ -3,7 +3,9 @@ import {withRouter} from 'react-router-dom';
 
 function Link(props){
     const onClick = e => {
-        if(!e.ctrlKey) props.history.push(props.href);
+        if(!e.ctrlKey){
+            if(props.href!==window.location.pathname+window.location.search) props.history.push(props.href);
+        } 
         else window.open(`${window.location.origin}${props.href}`).focus();
     }
     return (

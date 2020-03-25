@@ -52,8 +52,10 @@ const start = async () => {
         lastQueueSize = data.length;
         currentQueue = currentQueue + 1; // so we can get the next 1000 players
         
-        if (!data.length) currentQueue = 0; //ran out of players to index restart
-        await getNextChunk();
+        if (!data.length) {
+            currentQueue = 0; //ran out of players to index restart
+            await getNextChunk();
+        }
     }
 
     runNextBatch();
