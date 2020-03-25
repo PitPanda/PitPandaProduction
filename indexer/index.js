@@ -19,11 +19,18 @@ const batchTimeout = 1000;
 
 let currentQueue = 0;
 let lastQueueChange = 0;
+let estimatedCount = 0;
 
 const queue = [];
 
+const queryFilter = {
+    xp: {
+        $gte: 65950
+    }
+}
+
 const getNextChunk = async () => {
-    const players = await playerDoc.find({ xp: { $gte: 65950 } }, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);
+    const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);
 
     players.forEach(p => queue.push(p._id));
     lastQueueChange = Date.now();
@@ -52,6 +59,10 @@ const start = async () => {
     setTimeout(() => start(), batchTimeout); //loop again with delay 
 }
 
+async function update(){estimatedCount = await playerDoc.find(queryFilter).countDocuments()};
+update();
+setInterval( update, 300e3)
+
 start(); //entry point
 
 app.get('/', (req, res) => {
@@ -59,7 +70,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status', async (req, res) => {
-    const estimatedCount = await playerDoc.estimatedDocumentCount();
     const currentPosition = (currentQueue * maxQueueSize) + (maxQueueSize - queue.length);
 
     res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });

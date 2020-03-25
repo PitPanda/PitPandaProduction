@@ -392,11 +392,9 @@ function Leaderboard(props) {
             if (alive) {
                 if (stats.error) setData({ entires: [], loadedType: target.category });
                 else setData({ entires: stats, loadedType: target.category });
+                const data = await getIndexerStatus();
+                setIndexData({ finished: true, ...data });
             }
-
-            const data = await getIndexerStatus();
-
-            setIndexData({ finished: true, ...data });
         })();
         return () => alive = false;
     }, [target]);
