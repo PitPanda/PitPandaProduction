@@ -10,7 +10,8 @@ const EventLogSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
         index: true
-    }
+    },
+    coreporters: [String],
 });
 
 module.exports = mongoose.model('EventLogs', EventLogSchema);
