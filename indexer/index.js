@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/status', async (req, res) => {
-    const currentPosition = (currentQueue * maxQueueSize) + (lastQueueSize - queue.length);
+    const currentPosition = ((currentQueue - 1) * maxQueueSize) + (lastQueueSize - queue.length);
 
     res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });
 });
