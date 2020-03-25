@@ -11,7 +11,7 @@ const playerDoc = require('../models/Player');
 
 //constants
 const maxQueueSize = 1000;
-const maxBatchSize = 5;
+const maxBatchSize = 1;
 const batchTimeout = 1000;
 
 let currentQueue = 0;
@@ -27,7 +27,7 @@ const getNextChunk = async () => {
 }
 
 const runNextBatch = async () => {
-    const batch = queue.splice(0, maxBatchSize + 1); // zero based indexes
+    const batch = queue.splice(0, maxBatchSize); // zero based indexes
     const players = await Promise.all(batch.map(async b => await requestPlayer(b)));
 
     return players;
@@ -37,12 +37,12 @@ const start = async () => {
     if (!queue.length) {
         const data = await getNextChunk();
         currentQueue = currentQueue + 1; // so we can get the next 1000 players
-
+        
         if (!data.length) currentQueue = 0; //ran out of players to index restart
         await getNextChunk();
     }
 
-    await runNextBatch();
+    runNextBatch();
 
     setTimeout(() => start(), batchTimeout); //loop again with delay 
 }

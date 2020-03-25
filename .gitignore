@@ -2,7 +2,4 @@
 /frontEnd/node_modules
 /discordBot/CoreConfig.json
 .vs/
-keys.json
-dbLogin.json
-EventSetup.json
 settings.json
