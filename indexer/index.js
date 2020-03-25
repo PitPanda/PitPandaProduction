@@ -14,7 +14,7 @@ const playerDoc = require('../models/Player');
 
 //constants
 const maxQueueSize = 1000;
-const maxBatchSize = 1;
+const maxBatchSize = 4;
 const batchTimeout = 1000;
 
 let currentQueue = 0;
@@ -24,11 +24,14 @@ let lastQueueSize = 0;
 
 const queue = [];
 
+/*
 const queryFilter = {
     xp: {
         $gte: 65950
     }
-}
+}*/
+
+const queryFilter = {}
 
 const getNextChunk = async () => {
     const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);

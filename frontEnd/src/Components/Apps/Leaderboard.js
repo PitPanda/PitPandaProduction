@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import StaticCard from '../Cards/StaticCard';
 import MinecraftText from '../Minecraft/MinecraftText';
 import Link from '../Link/Link';
+import PageSelector from '../PageSelector/PageSelector';
 import { minutesToString, timeSince } from '../../scripts/frontendTools';
 
 function toString(n) {
@@ -363,7 +364,7 @@ function getQuery(search) {
 
 function Leaderboard(props) {
     const [target, setTarget] = useState(getQuery(props.location.search));
-    const [data, setData] = useState({ entires: [], loadedType: 'xp' });
+    const [data, setData] = useState({ entires: [], loadedType: 'xp', loadedPage: 0 });
     const [indexData, setIndexData] = useState(
         { 
             finished: false, 
@@ -388,16 +389,21 @@ function Leaderboard(props) {
     useEffect(() => {
         let alive = true;
         (async () => {
-            let stats = await getLeaderboard(target);
+            let data = await Promise.all([getLeaderboard(target), getIndexerStatus()]);
+            console.log(data);
             if (alive) {
-                if (stats.error) setData({ entires: [], loadedType: target.category });
-                else setData({ entires: stats, loadedType: target.category });
-                const data = await getIndexerStatus();
-                setIndexData({ finished: true, ...data });
+                const [stats, indexer] = data;
+                if (stats.error) setData({ entires: [], loadedType: target.category, loadedPage: target.page });
+                else setData({ entires: stats, loadedType: target.category, loadedPage: target.page });
+                setIndexData({ finished: true, ...indexer });
             }
         })();
         return () => alive = false;
     }, [target]);
+
+    function linkBuilder(n){
+        return `/leaderboard?category=${target.category}&page=${n-1}`;
+    }
 
     return (
         <>
@@ -435,13 +441,14 @@ function Leaderboard(props) {
                 <StaticCard title={boards[data.loadedType].displayName} style={{ width: '650px', display: 'inline-block' }}>
                     {data.entires.map((user, index) => (
                         <div key={user.uuid} style={{ borderTop: (index !== 0 ? '2px solid #444' : 'none'), padding: '5px' }}>
-                            <MinecraftText style={{ width: '10%', textAlign: 'center', display: 'inline-block' }} text={`#${target.page * 100 + index + 1}`} />
+                            <MinecraftText style={{ width: '10%', textAlign: 'center', display: 'inline-block' }} text={`#${data.loadedPage * 100 + index + 1}`} />
                             <Link href={`/players/${user.uuid}`}>
                                 <MinecraftText raw={user.name} style={{ width: '50%' }} />
                             </Link>
                             <MinecraftText text={boards[data.loadedType].transform(user.score)} style={{ width: '40%', textAlign: 'right', paddingRight: '8px' }} />
                         </div>
                     ))}
+                    <PageSelector start={1} current={Number(target.page)+1} linkBuilder={linkBuilder}/>
                 </StaticCard>
             </div>
         </>

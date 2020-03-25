@@ -27,7 +27,7 @@ router.post('/', async (req,res)=>{
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
         if(clean===lastevent) return lastreporters.add(keyDoc.owner);
-        if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>undefined);
+        if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>{});
         lastreporters = new Set([keyDoc.owner]);
         lastevent = clean;
         const event = new EventLog({

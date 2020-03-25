@@ -1693,7 +1693,8 @@ class Pit {
             bounty: this.bounty,
             genesisPoints: this.allegiancePoints,
             joins: this.joins,
-            enderchestOpened: this.enderchestOpened
+            enderchestOpened: this.enderchestOpened,
+            lastinpit: new Date(this.lastSave),
         });
     }
 
