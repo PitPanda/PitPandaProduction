@@ -9,6 +9,9 @@ const rgx = /^§(d|5)§lM(INO|AJO)R EVENT! §.§l[ A-Z0-9]{1,}/;
 
 let lastevent = '';
 let lastevent_id;
+/**
+ * @type {Set<String>}
+ */
 let lastreporters = new Set();
 
 router.post('/', async (req,res)=>{
@@ -24,7 +27,11 @@ router.post('/', async (req,res)=>{
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'');
         if(clean===lastevent) return lastreporters.add(keyDoc.owner);
-        if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).exec();
+        if(lastevent_id) {
+            console.log('updating coreportes for previous event');
+            console.log(`reporters are ${[...lastreporters]}`);
+            EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>console.log('done'));
+        }
         lastreporters = new Set([keyDoc.owner]);
         lastevent = clean;
         const event = new EventLog({
