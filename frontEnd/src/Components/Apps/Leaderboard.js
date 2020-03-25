@@ -364,7 +364,20 @@ function getQuery(search) {
 function Leaderboard(props) {
     const [target, setTarget] = useState(getQuery(props.location.search));
     const [data, setData] = useState({ entires: [], loadedType: 'xp' });
-    const [indexData, setIndexData] = useState({ finished: false, currentPosition: 0, estimatedCount: 0, info: { currentQueueCount: 0, maxBatchSize: 1, maxQueueSize: 1000, batchTimeout: 1000, lastQueueChange: 0 } });
+    const [indexData, setIndexData] = useState(
+        { 
+            finished: false, 
+            currentPosition: 0, 
+            estimatedCount: 0, 
+            info: { 
+                currentQueueCount: 0, 
+                maxBatchSize: 1, 
+                maxQueueSize: 1000, 
+                batchTimeout: 1000, 
+                lastQueueChange: 0 
+            } 
+        }
+    );
 
     useEffect(() => {
         return props.history.listen(

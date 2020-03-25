@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
 
 app.get('/status', async (req, res) => {
     const estimatedCount = await playerDoc.estimatedDocumentCount();
-    const currentPosition = ((currentQueue - 1) * maxQueueSize) + (maxQueueSize - queue.length);
+    const currentPosition = (currentQueue * maxQueueSize) + (maxQueueSize - queue.length);
 
     res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });
 });
