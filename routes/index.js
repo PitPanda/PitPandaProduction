@@ -11,7 +11,6 @@ const leaderboard = require('./Leaderboard');
 const events = require('./Events');
 const indexer = require('./Indexer');
 const ApiStat = require('../models/ApiStat');
-const fetch = require('node-fetch');
 
 let statBatch = {};
 const batchSize = 10;

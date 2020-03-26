@@ -343,7 +343,6 @@ async function getLeaderboard({ category = 'xp', page = 0 }) {
 
 async function getIndexerStatus() {
     const response = await fetch('/api/indexer');
-    console.log(response);
     if (!response.ok) return {error:response.statusText};
     const data = await response.json();
     console.log(data);
