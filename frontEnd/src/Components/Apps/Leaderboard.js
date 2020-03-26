@@ -6,6 +6,8 @@ import Link from '../Link/Link';
 import PageSelector from '../PageSelector/PageSelector';
 import { minutesToString, timeSince } from '../../scripts/frontendTools';
 
+const defaultCategory = 'lavaBuckets';
+
 function toString(n) {
     return toFixed(0)(n);
 }
@@ -329,7 +331,7 @@ const boards = new Proxy({
     }
 });
 
-async function getLeaderboard({ category = 'xp', page = 0 }) {
+async function getLeaderboard({ category = defaultCategory, page = 0 }) {
     try {
         const pageRequest = await fetch(`/api/leaderboard/${category}?page=${page}`);
         const json = await pageRequest.json();
@@ -351,12 +353,12 @@ async function getIndexerStatus() {
 
 function getQuery(search) {
     let query = queryString.parse(search);
-    return { category: query.category || 'xp', page: query.page || 0 };
+    return { category: query.category || defaultCategory, page: query.page || 0 };
 }
 
 function Leaderboard(props) {
     const [target, setTarget] = useState(getQuery(props.location.search));
-    const [data, setData] = useState({ entires: [], loadedType: 'xp', loadedPage: 0 });
+    const [data, setData] = useState({ entires: [], loadedType: defaultCategory, loadedPage: 0 });
     const [indexData, setIndexData] = useState(
         { 
             finished: false, 
