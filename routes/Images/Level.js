@@ -31,7 +31,6 @@ router.use('/:tag', async (req, res) => {
     const ctx = cvs.getContext('2d');
     ctx.font = '40px "Minecraft"';
     ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0,0,width,height);
     const doc = await playerDoc(req.params.tag);
     if (doc.error) {
         res.setHeader('Content-Type', 'application/json')
