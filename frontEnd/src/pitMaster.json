@@ -3733,7 +3733,7 @@
 			"VIP_PLUS": "§a[VIP§6+§a]",
 			"MVP": "§b[MVP]",
 			"MVP_PLUS": "§b[MVP$+§b]",
-			"SUPERSTAR": "§6[MVP$++§6]",
+			"SUPERSTAR": "@[MVP$++@]",
 			"HELPER": "§1[HELPER]",
 			"MODERATOR": "§2[MOD]",
 			"ADMIN": "§c[ADMIN]",

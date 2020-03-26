@@ -3,7 +3,7 @@ let currId = 0,
     obfuscators = {},
     alreadyParsed = [],
     styleMap = {
-        '§0': 'color:#FFFFFF',
+        '§0': 'color:#000000',
         '§1': 'color:#0000AA',
         '§2': 'color:#00AA00',
         '§3': 'color:#00AAAA',

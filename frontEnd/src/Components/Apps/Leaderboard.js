@@ -92,7 +92,7 @@ const boards = new Proxy({
     },
     lavaBuckets: {
         displayName: "Top Lava Buckets Emptied",
-        short: "Lava Buckets"
+        short: "Lava Buckets Emptied"
     },
     soups: {
         displayName: "Top Soups Drank",
@@ -134,18 +134,16 @@ const boards = new Proxy({
         short: "Wheat Farmed"
     },
     fishedAnything: {
-        displayName: "Top Anything Fished",
-        short: "Anything Fished"
+        displayName: "Top Fished Anything",
+        short: "Fished Anything"
     },
     blocksBroken: {
         displayName: "Top Blocks Broken",
-        short: "Blocks Broken",
-        hidden: true
+        short: "Blocks Broken"
     },
     blocksPlaced: {
         displayName: "Top Blocks Placed",
-        short: "Blocks Placed",
-        hidden: true
+        short: "Blocks Placed"
     },
     kingsQuests: {
         displayName: "Top Kings Quest Completions",
@@ -169,23 +167,19 @@ const boards = new Proxy({
     },
     arrowShots: {
         displayName: "Top Arrows Shot",
-        short: "Arrows Shot",
-        hidden: true
+        short: "Arrows Shot"
     },
     arrowHits: {
         displayName: "Top Arrow Hits",
-        short: "Arrow Hits",
-        hidden: true
+        short: "Arrow Hits"
     },
     jumpsIntoPit: {
         displayName: "Top Jumps into Mid",
-        short: "Jumps into Mid",
-        hidden: true
+        short: "Jumps into Mid"
     },
     launcherLaunches: {
         displayName: "Top Launcher Launches",
-        short: "Launcher Launches",
-        hidden: true
+        short: "Launcher Launches"
     },
     totalJumps: {
         displayName: "Top Entered Pit",
@@ -209,13 +203,13 @@ const boards = new Proxy({
     },
     enderchestOpened: {
         displayName: "Top Enderchests Opened",
-        short: "Enderchests Opened",
-        hidden: true
+        short: "Enderchests Opened"
     },
     bowAccuracy: {
         displayName: "Top Bow Accuracy",
         short: "Bow Accuracy",
-        hidden: true
+        hidden: true,
+        transform: toPercent
     },
     swordHits: {
         displayName: "Top Sword Hits",
@@ -235,7 +229,8 @@ const boards = new Proxy({
     meleeDamageRatio: {
         displayName: "Top Melee Damage Ratio",
         short: "Melee Damage Ratio",
-        hidden: true
+        hidden: true,
+        transform: toFixed(2)
     },
     bowDamageDealt: {
         displayName: "Top Bow Damage Dealt",
@@ -250,22 +245,20 @@ const boards = new Proxy({
     bowDamageRatio: {
         displayName: "Top Bow Damage Ratio",
         short: "Bow Damage Ratio",
-        hidden: true
+        hidden: true,
+        transform: toFixed(2)
     },
     diamondItemsPurchased: {
         displayName: "Top Diamond Items Purchased",
-        short: "Diamond Items Purchased",
-        hidden: true
+        short: "Diamond Items Purchased"
     },
     fishedFish: {
         displayName: "Top Fishes Fished",
-        short: "Fishes Fished",
-        hidden: true
+        short: "Fished Fish"
     },
     hiddenJewelsTriggered: {
         displayName: "Top Hidden Jewels Triggered",
-        short: "Hidden Jewels Triggered",
-        hidden: true
+        short: "Hidden Jewels Triggered"
     },
     xpHourly: {
         displayName: "Top XP Per Hour",
@@ -279,8 +272,7 @@ const boards = new Proxy({
     },
     fishingRodCasts: {
         displayName: "Top Fishing Rod Casts",
-        short: "Fishing Rod Casts",
-        hidden: true
+        short: "Fishing Rod Casts"
     },
     kadr: {
         displayName: "Top Kills + Assists / Death Ratio",
@@ -412,17 +404,21 @@ function Leaderboard(props) {
                 <div style={{ display: 'inline-block', verticalAlign: 'top', marginRight: '20px' }}>
                     <StaticCard title="Leaderboard Selector" style={{ width: '350px' }}>
                         {Reflect.ownKeys(boards).map(key => {
-                            const target = boards[key];
+                            const board = boards[key];
                             return (
-                                <div key={key}>
+                                <div key={key+target.category}>
                                     <Link href={`/leaderboard?category=${key}&page=0`}>
-                                        <MinecraftText text={target.short} />
+                                        <MinecraftText raw={(key===target.category?'§f':'')+board.short}/>
                                     </Link>
                                 </div>
                             );
                         })}
                     </StaticCard>
-
+                    <StaticCard title="Disclaimer" style={{ width: '350px' }}>
+                        This leaderboard does not contain <em>every</em> pit player.
+                        This leaderboard also does not update instantly, it should update a minimum of once a day.
+                        Technical details about the leaderboard updating is below.
+                    </StaticCard>
                     <StaticCard title="Indexer Status" style={{ width: '350px' }}>
                         <MinecraftText className='text-title' style={{ color: indexData.finished ? 'green' : 'red' }} text={indexData.finished ? 'Online' : 'Offline'} /><br />
                         <MinecraftText text={`Last queue batch ${timeSince(indexData.info.lastQueueChange)} ago`} />
@@ -448,7 +444,7 @@ function Leaderboard(props) {
                             <MinecraftText text={boards[data.loadedType].transform(user.score)} style={{ width: '40%', textAlign: 'right', paddingRight: '8px' }} />
                         </div>
                     ))}
-                    <PageSelector start={1} current={Number(target.page)+1} linkBuilder={linkBuilder}/>
+                    {data.entires.length?<PageSelector start={1} current={Number(target.page)+1} linkBuilder={linkBuilder}/>:''}
                 </StaticCard>
             </div>
         </>

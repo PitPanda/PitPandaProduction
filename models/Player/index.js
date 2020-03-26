@@ -9,7 +9,10 @@ const PlayerSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    lastinpit: Date,
+    lastinpit: {
+        type: Date,
+        index: true
+    },
     name: String,
     displayName: String,
     ...lbPartial,

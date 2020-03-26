@@ -7,9 +7,6 @@ import PlayerForm from './Components/Apps/PlayerForm';
 import ItemSearch from './Components/Apps/ItemSearch';
 import Nav from './Components/Nav/Nav';
 import Leaderboard from './Components/Apps/Leaderboard';
-import * as serviceWorker from './serviceWorker';
-
-serviceWorker.unregister();
 
 ReactDOM.render((
     <>

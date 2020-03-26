@@ -10,7 +10,7 @@ import PlayerList from '../PlayerList/PlayerList';
 import frontendTools from '../../scripts/frontendTools';
 
 class Player extends React.Component {
-  state = {user:null};
+  state = {user:null,alive:true};
 
   componentDidMount(){
     this.loadUser(`/players/${(this.props.match.params.id||'').trim()}`);
@@ -20,6 +20,7 @@ class Player extends React.Component {
   }
 
   componentWillUnmount(){
+    this.setState({alive:false});
     this.unlisten();
   }
 
@@ -27,11 +28,11 @@ class Player extends React.Component {
     if(!path.startsWith('/players/'))return;
     fetch(`/api${path}`).then(res=>res.json()).then(json => {
       console.log(json);
-      if(json.success) {
+      if(json.success && this.state.alive) {
         this.setState({user:json.data,error:undefined});
       } else this.setState({error:json.error,user:undefined});
     }).catch((err)=>{
-      this.setState({error:err,user:undefined});
+      if(this.state.alive) this.setState({error:err,user:undefined});
       console.log(err);
     });
   }
@@ -59,7 +60,7 @@ class Player extends React.Component {
                       style = {{width:'100px', height:'100px', display:'inline-block'}}
                       alt = ''
                     />
-                    <div key={this.state.user.uuid} style={{verticalAlign:'top', display:'inline-block', marginTop:'2px',marginLeft:'10px', fontSize:'17px'}}>
+                    <div key={this.state.user.uuid} style={{verticalAlign:'top', display:'inline-block', marginTop:'7px',marginLeft:'10px', fontSize:'17px'}}>
                       <MinecraftText style={{fontSize:'110%'}} raw={this.state.user.formattedName}/><br/>
                       <MinecraftText raw={`LVL: ${this.state.user.formattedLevel}`}/><br/>
                       <MinecraftText raw={`Gold: §6${this.state.user.currentGold.toLocaleString()}g`}/><br/>

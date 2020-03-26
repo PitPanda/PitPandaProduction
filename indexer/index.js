@@ -14,7 +14,7 @@ const playerDoc = require('../models/Player');
 
 //constants
 const maxQueueSize = 1000;
-const maxBatchSize = 6;
+const maxBatchSize = 1;
 const batchTimeout = 1000;
 
 let currentQueue = 0;
@@ -24,14 +24,11 @@ let lastQueueSize = 0;
 
 const queue = [];
 
-/*
 const queryFilter = {
-    xp: {
-        $gte: 65950
+    lastinpit: {
+        $gte: new Date(Date.now()-30*86400e3)
     }
-}*/
-
-const queryFilter = {}
+}
 
 const getNextChunk = async () => {
     const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);
@@ -70,7 +67,7 @@ async function update(){estimatedCount = await playerDoc.find(queryFilter).count
 update();
 setInterval( update, 300e3)
 
-start(); //entry point
+if(!Development) start(); //entry point
 
 app.get('/', (req, res) => {
     res.json({ version: 1.0 });

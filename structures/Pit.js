@@ -199,7 +199,9 @@ class Pit {
                 const rank = this.rank;
                 let prefix = this.getStat('prefix') || RankPrefixes[rank] || '§7';
                 const plus = this.getStat('rankPlusColor');
-                prefix = prefix.replace('$', Colors[plus] || '§c');
+                const rankColor = this.getStat('monthlyRankColor');
+                prefix = prefix.replace(/\$/g, Colors[plus] || '§c');
+                prefix = prefix.replace(/@/g, Colors[rankColor] || '§6');
                 return prefix;
             }
         });
@@ -544,6 +546,26 @@ class Pit {
         Object.defineProperty(this, 'meleeDamageDealt', {
             enumerable: true,
             get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'melee_damage_dealt')
+        });
+
+        /**
+         * Ratio of damage dealt to recieved for melee only
+         * @type {number}
+         */
+        this.meleeDamageRatio;
+        Object.defineProperty(this, 'meleeDamageRatio', {
+            enumerable: true,
+            get: () => this.meleeDamageDealt/(this.meleeDamageReceived||1)
+        });
+
+        /**
+         * Ratio of damage dealt to recieved for bow only
+         * @type {number}
+         */
+        this.bowDamageRatio;
+        Object.defineProperty(this, 'bowDamageRatio', {
+            enumerable: true,
+            get: () => this.bowDamageDealt/(this.bowDamageReceived||1)
         });
 
         /**
