@@ -343,9 +343,10 @@ async function getLeaderboard({ category = 'xp', page = 0 }) {
 
 async function getIndexerStatus() {
     const response = await fetch('/api/indexer');
-    if (!response.ok) return null;
+    console.log(response);
+    if (!response.ok) return {error:response.statusText};
     const data = await response.json();
-
+    console.log(data);
     return data.data;
 }
 
@@ -380,16 +381,15 @@ function Leaderboard(props) {
 
     useEffect(() => {
         let alive = true;
-        (async () => {
-            let data = await Promise.all([getLeaderboard(target), getIndexerStatus()]);
-            console.log(data);
-            if (alive) {
-                const [stats, indexer] = data;
+        getLeaderboard(target).then(stats=>{
+            if(alive){
                 if (stats.error) setData({ entires: [], loadedType: target.category, loadedPage: target.page });
                 else setData({ entires: stats, loadedType: target.category, loadedPage: target.page });
-                setIndexData({ finished: true, ...indexer });
             }
-        })();
+        }).catch(console.err);
+        getIndexerStatus().then(indexer=>{
+            if(alive && !indexer.error) setIndexData({ finished: true, ...indexer });
+        }).catch(console.err);
         return () => alive = false;
     }, [target]);
 

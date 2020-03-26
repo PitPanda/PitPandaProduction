@@ -9,6 +9,7 @@ const playerDoc = require('./PlayerDoc');
 const custom = require('./Custom');
 const leaderboard = require('./Leaderboard');
 const events = require('./Events');
+const indexer = require('./Indexer');
 const ApiStat = require('../models/ApiStat');
 const fetch = require('node-fetch');
 
@@ -38,13 +39,7 @@ router.use('/playerDoc', playerDoc);
 router.use('/custom', custom);
 router.use('/leaderboard', leaderboard);
 router.use('/events', events);
-
-router.get('/indexer', async (req, res) => {
-    const response = await fetch('http://localhost:5001/status');
-    const data = await response.json();
-
-    res.json({ success: true, data });
-});
+router.use('/indexer', indexer);
 
 router.use('*', APIerror('Invalid Endpoint'));
 
