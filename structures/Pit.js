@@ -86,14 +86,14 @@ class Pit {
                 if (!this._prestiges) Object.defineProperty(this, '_prestiges', {
                     enumerable: false,
                     value: [
-                        new Prestige(0, undefined, this.getStat('stats', 'Pit', 'profile', 'unlocks'), this.getStat('stats', 'Pit', 'profile', `cash_during_prestige_0`)),
+                        new Prestige(0, undefined, this.profile.unlocks, this.profile.cash_during_prestige_0),
                         ...this.prestigesRaw
                             .map((pres, index, original) =>
                                 new Prestige(
                                     pres.index,
                                     pres.timestamp,
-                                    this.getStat('stats', 'Pit', 'profile', `unlocks_${pres.index}`),
-                                    this.getStat('stats', 'Pit', 'profile', `cash_during_prestige_${pres.index}`),
+                                    this.profile[`unlocks_${pres.index}`],
+                                    this.profile[`cash_during_prestige_${pres.index}`],
                                     this.renownShopUnlocksRaw.filter(({ acquireDate }) => acquireDate > pres.timestamp && acquireDate < (getRef(original, index + 1, 'timestamp') || Infinity))
                                 )
                             )
@@ -225,7 +225,7 @@ class Pit {
          * unix epock timestamp (seconds) of the last time their pit profile was saved
          * @type {number}
          */
-        this.lastSave = this.getStat('stats', 'Pit', 'profile', 'last_save');
+        this.lastSave = this.profile.last_save;
 
         /**
          * Player's current xp
@@ -234,7 +234,7 @@ class Pit {
         this.xp;
         Object.defineProperty(this, 'xp', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'profile', 'xp') || 0
+            get: () => this.profile.xp || 0
         });
 
         /**
@@ -309,7 +309,7 @@ class Pit {
         this.currentGold;
         Object.defineProperty(this, 'currentGold', {
             enumerable: true,
-            get: () => Math.round(100 * (this.getStat('stats', 'Pit', 'profile', 'cash') || 0)) / 100
+            get: () => Math.round(100 * (this.profile.cash || 0)) / 100
         });
 
         /**
@@ -374,7 +374,7 @@ class Pit {
             get: () => {
                 let arr = new Array(this.perkSlots).fill('none');
                 for (let i = 0; i < this.perkSlots; i++)
-                    arr[i] = this.getStat('stats', 'Pit', 'profile', `selected_perk_${i}`) || arr[i];
+                    arr[i] = this.profile[`selected_perk_${i}`] || arr[i];
                 return arr;
             }
         });
@@ -392,7 +392,7 @@ class Pit {
         this.renown;
         Object.defineProperty(this, 'renown', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'profile', 'renown')
+            get: () => this.profile.renown
         });
 
         /**
@@ -434,7 +434,7 @@ class Pit {
         this.bounty;
         Object.defineProperty(this, 'bounty', {
             enumerable: true,
-            get: () => (this.getStat('stats', 'Pit', 'profile', 'bounties') || [])
+            get: () => (this.profile.bounties || [])
                 .reduce((acc, bump) => acc + bump.amount, 0) || undefined
         });
 
@@ -445,7 +445,7 @@ class Pit {
         this.playtime;
         Object.defineProperty(this, 'playtime', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'playtime_minutes') || 0
+            get: () => this.pitStatsPTL.playtime_minutes || 0
         });
 
         /**
@@ -455,7 +455,7 @@ class Pit {
         this.recentKills;
         Object.defineProperty(this, 'recentKills', {
             enumerable: true,
-            get: () => (this.getStat('stats', 'Pit', 'profile', 'recent_kills') || []).reverse()
+            get: () => (this.profile.recent_kills || []).reverse()
         });
 
         /**
@@ -475,7 +475,7 @@ class Pit {
         this.enderchestOpened;
         Object.defineProperty(this, 'enderchestOpened', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enderchest_opened')
+            get: () => this.pitStatsPTL.enderchest_opened
         });
 
         /**
@@ -485,7 +485,7 @@ class Pit {
         this.joins;
         Object.defineProperty(this, 'joins', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'joins')
+            get: () => this.pitStatsPTL.joins
         });
 
         /**
@@ -495,7 +495,7 @@ class Pit {
         this.chatMessages;
         Object.defineProperty(this, 'chatMessages', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'chat_messages')
+            get: () => this.pitStatsPTL.chat_messages
         });
 
         /**
@@ -505,7 +505,7 @@ class Pit {
         this.hatColor
         Object.defineProperty(this, 'hatColor', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'profile', 'hat_color')
+            get: () => this.profile.hat_color
         });
 
         /**
@@ -515,7 +515,7 @@ class Pit {
         this.leftClicks;
         Object.defineProperty(this, 'leftClicks', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'left_clicks')
+            get: () => this.pitStatsPTL.left_clicks
         });
 
         /**
@@ -525,7 +525,7 @@ class Pit {
         this.kills;
         Object.defineProperty(this, 'kills', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'kills')
+            get: () => this.pitStatsPTL.kills
         });
 
         /**
@@ -535,7 +535,7 @@ class Pit {
         this.deaths;
         Object.defineProperty(this, 'deaths', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'deaths')
+            get: () => this.pitStatsPTL.deaths
         });
 
         /**
@@ -545,7 +545,7 @@ class Pit {
         this.meleeDamageDealt;
         Object.defineProperty(this, 'meleeDamageDealt', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'melee_damage_dealt')
+            get: () => this.pitStatsPTL.melee_damage_dealt
         });
 
         /**
@@ -575,7 +575,7 @@ class Pit {
         this.swordHits;
         Object.defineProperty(this, 'swordHits', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'sword_hits')
+            get: () => this.pitStatsPTL.sword_hits
         });
 
         /**
@@ -585,7 +585,7 @@ class Pit {
         this.lifetimeGold;
         Object.defineProperty(this, 'lifetimeGold', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'cash_earned')
+            get: () => this.pitStatsPTL.cash_earned
         });
 
         /**
@@ -595,7 +595,7 @@ class Pit {
         this.arrowsFired;
         Object.defineProperty(this, 'arrowsFired', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'arrows_fired')
+            get: () => this.pitStatsPTL.arrows_fired
         });
 
         /**
@@ -605,7 +605,7 @@ class Pit {
         this.bowDamageDealt;
         Object.defineProperty(this, 'bowDamageDealt', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'bow_damage_dealt')
+            get: () => this.pitStatsPTL.bow_damage_dealt
         });
 
 
@@ -616,7 +616,7 @@ class Pit {
         this.bowDamageReceived;
         Object.defineProperty(this, 'bowDamageReceived', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'bow_damage_received')
+            get: () => this.pitStatsPTL.bow_damage_received
         });
 
 
@@ -627,7 +627,7 @@ class Pit {
         this.damageReceived;
         Object.defineProperty(this, 'damageReceived', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'damage_received')
+            get: () => this.pitStatsPTL.damage_received
         });
 
 
@@ -638,7 +638,7 @@ class Pit {
         this.jumpsIntoPit;
         Object.defineProperty(this, 'jumpsIntoPit', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'jumped_into_pit')
+            get: () => this.pitStatsPTL.jumped_into_pit
         });
 
 
@@ -649,7 +649,7 @@ class Pit {
         this.meleeDamageReceived;
         Object.defineProperty(this, 'meleeDamageReceived', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'melee_damage_received')
+            get: () => this.pitStatsPTL.melee_damage_received
         });
 
 
@@ -660,7 +660,7 @@ class Pit {
         this.arrowHits;
         Object.defineProperty(this, 'arrowHits', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'arrow_hits')
+            get: () => this.pitStatsPTL.arrow_hits
         });
 
 
@@ -671,7 +671,7 @@ class Pit {
         this.damageDealt;
         Object.defineProperty(this, 'damageDealt', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'damage_dealt')
+            get: () => this.pitStatsPTL.damage_dealt
         });
 
 
@@ -682,7 +682,7 @@ class Pit {
         this.assists;
         Object.defineProperty(this, 'assists', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'assists')
+            get: () => this.pitStatsPTL.assists
         });
 
 
@@ -693,7 +693,7 @@ class Pit {
         this.highestStreak;
         Object.defineProperty(this, 'highestStreak', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'max_streak')
+            get: () => this.pitStatsPTL.max_streak
         });
 
         /**
@@ -703,7 +703,7 @@ class Pit {
         this.blocksPlaced;
         Object.defineProperty(this, 'blocksPlaced', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'blocks_placed')
+            get: () => this.pitStatsPTL.blocks_placed
         });
 
         /**
@@ -713,7 +713,7 @@ class Pit {
         this.launcherLaunches;
         Object.defineProperty(this, 'launcherLaunches', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'launched_by_launchers')
+            get: () => this.pitStatsPTL.launched_by_launchers
         });
 
         /**
@@ -723,7 +723,7 @@ class Pit {
         this.diamondItemsPurchased;
         Object.defineProperty(this, 'diamondItemsPurchased', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'diamond_items_purchased')
+            get: () => this.pitStatsPTL.diamond_items_purchased
         });
 
         /**
@@ -733,7 +733,7 @@ class Pit {
         this.wheatFarmed;
         Object.defineProperty(this, 'wheatFarmed', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'wheat_farmed')
+            get: () => this.pitStatsPTL.wheat_farmed
         });
 
         /**
@@ -743,7 +743,7 @@ class Pit {
         this.sewerTreasuresFound;
         Object.defineProperty(this, 'sewerTreasuresFound', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'sewer_treasures_found')
+            get: () => this.pitStatsPTL.sewer_treasures_found
         });
 
         /**
@@ -753,7 +753,7 @@ class Pit {
         this.contractsCompleted;
         Object.defineProperty(this, 'contractsCompleted', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'contracts_completed')
+            get: () => this.pitStatsPTL.contracts_completed
         });
 
         /**
@@ -763,7 +763,7 @@ class Pit {
         this.contractsStarted;
         Object.defineProperty(this, 'contractsStarted', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'contracts_started')
+            get: () => this.pitStatsPTL.contracts_started
         });
 
         /**
@@ -773,7 +773,7 @@ class Pit {
         this.nightQuestsCompleted;
         Object.defineProperty(this, 'nightQuestsCompleted', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'night_quests_completed')
+            get: () => this.pitStatsPTL.night_quests_completed
         });
 
         /**
@@ -784,9 +784,9 @@ class Pit {
         Object.defineProperty(this, 'mysticsEnchanted', {
             enumerable: true,
             get: () => [
-                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier1') || 0,
-                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier2') || 0,
-                this.getStat('stats', 'Pit', 'pit_stats_ptl', 'enchanted_tier3') || 0
+                this.pitStatsPTL.enchanted_tier1 || 0,
+                this.pitStatsPTL.enchanted_tier2 || 0,
+                this.pitStatsPTL.enchanted_tier3 || 0
             ]
         });
 
@@ -797,7 +797,7 @@ class Pit {
         this.darkPantsCreated;
         Object.defineProperty(this, 'darkPantsCreated', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'dark_pants_crated')
+            get: () => this.pitStatsPTL.dark_pants_crated
         });
 
         /**
@@ -807,7 +807,7 @@ class Pit {
         this.darkPantsT2;
         Object.defineProperty(this, 'darkPantsT2', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'dark_pants_t2')
+            get: () => this.pitStatsPTL.dark_pants_t2
         });
 
         /**
@@ -837,7 +837,7 @@ class Pit {
         this.lavaBucketsPlaced;
         Object.defineProperty(this, 'lavaBucketsPlaced', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'lava_bucket_emptied')
+            get: () => this.pitStatsPTL.lava_bucket_emptied
         });
 
         /**
@@ -847,7 +847,7 @@ class Pit {
         this.blocksBroken;
         Object.defineProperty(this, 'blocksBroken', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'blocks_broken')
+            get: () => this.pitStatsPTL.blocks_broken
         });
 
         /**
@@ -857,7 +857,7 @@ class Pit {
         this.gheadsEaten;
         Object.defineProperty(this, 'gheadsEaten', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'ghead_eaten')
+            get: () => this.pitStatsPTL.ghead_eaten
         });
 
         /**
@@ -867,7 +867,7 @@ class Pit {
         this.hiddenJewelsTriggered;
         Object.defineProperty(this, 'hiddenJewelsTriggered', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'hidden_jewel_triggers')
+            get: () => this.pitStatsPTL.hidden_jewel_triggers
         });
 
         /**
@@ -877,7 +877,7 @@ class Pit {
         this.gapplesEaten;
         Object.defineProperty(this, 'gapplesEaten', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gapple_eaten')
+            get: () => this.pitStatsPTL.gapple_eaten
         });
 
         /**
@@ -887,7 +887,7 @@ class Pit {
         this.soupsDrank;
         Object.defineProperty(this, 'soupsDrank', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'soups_drank')
+            get: () => this.pitStatsPTL.soups_drank
         });
 
         /**
@@ -897,7 +897,7 @@ class Pit {
         this.balesSold;
         Object.defineProperty(this, 'balesSold', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_farming')
+            get: () => this.pitStatsPTL.gold_from_farming
         });
 
         /**
@@ -907,7 +907,7 @@ class Pit {
         this.fishSold;
         Object.defineProperty(this, 'fishSold', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_selling_fish')
+            get: () => this.pitStatsPTL.gold_from_selling_fish
         });
 
         /**
@@ -917,7 +917,7 @@ class Pit {
         this.fishingRodCasts;
         Object.defineProperty(this, 'fishingRodCasts', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fishing_rod_launched')
+            get: () => this.pitStatsPTL.fishing_rod_launched
         });
 
         /**
@@ -927,7 +927,7 @@ class Pit {
         this.fishedFish;
         Object.defineProperty(this, 'fishedFish', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fishes_fished')
+            get: () => this.pitStatsPTL.fishes_fished
         });
 
         /**
@@ -937,7 +937,7 @@ class Pit {
         this.fishedAnything;
         Object.defineProperty(this, 'fishedAnything', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'fished_anything')
+            get: () => this.pitStatsPTL.fished_anything
         });
 
         /**
@@ -947,7 +947,7 @@ class Pit {
         this.kingsQuestCompletions;
         Object.defineProperty(this, 'kingsQuestCompletions', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'king_quest_completion')
+            get: () => this.pitStatsPTL.king_quest_completion
         });
 
         /**
@@ -1063,7 +1063,7 @@ class Pit {
         this.allegiance;
         Object.defineProperty(this, 'allegiance', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'profile', 'genesis_allegiance')
+            get: () => this.profile.genesis_allegiance
         });
 
         /**
@@ -1073,7 +1073,7 @@ class Pit {
         this.allegiancePoints;
         Object.defineProperty(this, 'allegiancePoints', {
             enumerable: true,
-            get: () => this.getStat('stats', 'Pit', 'profile', 'genesis_points')
+            get: () => this.profile.genesis_points
         });
 
         /**
@@ -1111,7 +1111,7 @@ class Pit {
      * @returns {{tier:number,timestamp:number,key:String}[]}
      */
     get prestigesRaw() {
-        return this.getStat('stats', 'Pit', 'profile', 'prestiges') || [];
+        return this.profile.prestiges || [];
     }
 
     /**
@@ -1131,7 +1131,7 @@ class Pit {
      * @type {Object[]}
      */
     get renownShopUnlocksRaw() {
-        return this.getStat('stats', 'Pit', 'profile', 'renown_unlocks') || [];
+        return this.profile.renown_unlocks || [];
     }
 
     /**
@@ -1250,7 +1250,7 @@ class Pit {
      * @type {boolean}
      */
     get shouldSpawnInBase() {
-        return this.getStat('stats', 'Pit', 'profile', 'genesis_spawn_in_base');
+        return this.profile.genesis_spawn_in_base;
     }
 
     /**
@@ -1258,7 +1258,7 @@ class Pit {
      * @type {number} date resolvable
      */
     get shouldSpawnInBase() {
-        return this.getStat('stats', 'Pit', 'profile', 'genesis_allegiance_time');
+        return this.profile.genesis_allegiance_time;
     }
 
     /**
@@ -1283,6 +1283,22 @@ class Pit {
      */
     get bowAccuracy() {
         return this.arrowHits / this.arrowsFiredSafe;
+    }
+
+    /**
+     * shortcut to pit_stats_ptl
+     * @type {Object}
+     */
+    get pitStatsPTL(){
+        return this.getStat('stats', 'Pit', 'pit_stats_ptl') || {};
+    }
+
+    /**
+     * shortcut to profile
+     * @type {Object}
+     */
+    get profile(){
+        return this.getStat('stats', 'Pit', 'profile') || {};
     }
 
     /**
@@ -1513,7 +1529,7 @@ class Pit {
 
     /**
      * Loads all inventories
-     * @returns {Promise<Item[][] | void>}
+     * @returns {Promise<void>} not actually void but just dont even do it
      */
     loadInventorys() {
         return Promise.all([
@@ -1523,6 +1539,19 @@ class Pit {
             this.buildRenownUpgradeInventory(),
             this.buildStatsInventory()
         ]);
+    }
+
+    /**
+     * Builds custom inventories
+     * @returns {{perks:Item[],upgrades:Item[],renownShop:Item[],generalStats:Item[]}}
+     */
+    buildCustominventories() {
+        return {
+            perks:this.buildPerkInventory(),
+            upgrades:this.buildUpgradeInventory(),
+            renownShop:this.buildRenownUpgradeInventory(),
+            generalStats:this.buildStatsInventory()
+        }
     }
 
     /**
@@ -1675,7 +1704,7 @@ class Pit {
      * @type {number}
      */
     get trades() {
-        return (this.getStat('stats', 'Pit', 'profile', 'gold_transactions') || [])
+        return (this.profile.gold_transactions || [])
             .filter(trade => Date.now() - trade.timestamp < 86400e3);
     }
 
