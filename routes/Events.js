@@ -5,7 +5,7 @@ const hook = new WebhookClient(...EventWebHook);
 const EventKey = require('../models/EventKey');
 const EventLog = require('../models/EventLog');
 
-const rgx = /^§r§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
+const rgx = /^(§r)?§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
 
 let lastevent = '';
 let lastevent_id;
