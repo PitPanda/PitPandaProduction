@@ -891,21 +891,21 @@ class Pit {
         });
 
         /**
-         * Total gold earned from farming (sold to npc)
+         * Total hay bales sold
          * @type {number}
          */
-        this.goldFromFarming;
-        Object.defineProperty(this, 'goldFromFarming', {
+        this.balesSold;
+        Object.defineProperty(this, 'balesSold', {
             enumerable: true,
             get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_farming')
         });
 
         /**
-         * Total gold earned from selling fish
+         * Total fish sold
          * @type {number}
          */
-        this.goldFromSellingFish;
-        Object.defineProperty(this, 'goldFromSellingFish', {
+        this.fishSold;
+        Object.defineProperty(this, 'fishSold', {
             enumerable: true,
             get: () => this.getStat('stats', 'Pit', 'pit_stats_ptl', 'gold_from_selling_fish')
         });
@@ -1582,8 +1582,8 @@ class Pit {
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
                 `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
                 `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedFish)}`,
-                `${Colors.GRAY}Fish Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromSellingFish)}g`,
-                `${Colors.GRAY}Hay Bales Sold: ${Colors.GOLD}${textHelpers.formatNumber(this.goldFromFarming)}g`,
+                `${Colors.GRAY}Fish Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.goldFromSellingFish)}`,
+                `${Colors.GRAY}Hay Bales Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.goldFromFarming)}`,
                 `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${textHelpers.formatNumber(this.kingsQuestCompletions)}`,
                 `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${textHelpers.formatNumber(this.sewerTreasuresFound)}`,
                 `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${textHelpers.formatNumber(this.nightQuestsCompleted)}`

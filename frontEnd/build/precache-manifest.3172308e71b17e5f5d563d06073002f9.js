@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5a1a5e7cd36a9a202ed9d0ce9a23726c",
+    "revision": "0e309d896fc926c73bea577a775c4833",
     "url": "/index.html"
   },
   {
-    "revision": "93f223238c2609271106",
-    "url": "/static/css/main.da726189.chunk.css"
+    "revision": "712d077291dfe7044cbf",
+    "url": "/static/css/main.c358e6a5.chunk.css"
   },
   {
     "revision": "a8f5843b4217e155e1e5",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/2.1c1ad97b.chunk.js.LICENSE"
   },
   {
-    "revision": "93f223238c2609271106",
+    "revision": "712d077291dfe7044cbf",
     "url": "/static/js/main.258bc4ee.chunk.js"
   },
   {
@@ -82,5 +82,17 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "195f6b98e460802afc6c6782a5666cf0",
     "url": "/static/media/blocks_items_potions.195f6b98.png"
+  },
+  {
+    "revision": "f7856e948deaede51e903eebc9df215e",
+    "url": "/static/media/minecraft-bold-italic.f7856e94.otf"
+  },
+  {
+    "revision": "79122b7f414e3e0951834d5d616b9688",
+    "url": "/static/media/minecraft-bold.79122b7f.otf"
+  },
+  {
+    "revision": "35903bfaf051f078484b641372e6bf9a",
+    "url": "/static/media/minecraft-italic.35903bfa.otf"
   }
 ]);

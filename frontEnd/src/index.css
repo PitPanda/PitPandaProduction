@@ -6,7 +6,30 @@
 
 @font-face {
   font-family: "Minecraftia";
+  font-style: normal;
+  font-weight: 400;
   src: url("./Fonts/Minecraft-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Minecraftia";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./Fonts/minecraft-bold.otf") format("opentype")
+}
+
+@font-face {
+  font-family: "Minecraftia";
+  font-style: italic;
+  font-weight: 400;
+  src: url("./Fonts/minecraft-italic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Minecraftia";
+  font-style: italic;
+  font-weight: 700;
+  src: url("./Fonts/minecraft-bold-italic.otf") format("opentype");
 }
 
 @font-face {
