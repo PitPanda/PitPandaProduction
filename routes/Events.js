@@ -16,11 +16,12 @@ let lastreporters = new Set();
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
-    if(!req.headers.key) return;
+    if(!req.headers.key) return console.log('no key');
+    console.log('key: '+req.headers.key);
     const keyDoc = await EventKey.findById({_id:req.headers.key});
-    if(!keyDoc) return;
+    if(!keyDoc) return console.log('invalid key');
     const final = req.headers.eventtype;
-    console.log(final);
+    console.log('event: '+final);
     if(rgx.test(final)){
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
