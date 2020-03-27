@@ -20,6 +20,7 @@ router.post('/', async (req,res)=>{
     const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return;
     const final = req.headers.eventtype;
+    console.log(final);
     if(rgx.test(final)){
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
