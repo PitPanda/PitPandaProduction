@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const { APIerror } = require('../../apiTools/apiTools');
-const inventoryContents = require('./inventoryContents');
+const playerItems = require('./PlayerItems');
+const wonderpants = require('./Wonderpants');
 
-router.use('/inventorycontents', inventoryContents);
+router.use('/playerItems', playerItems);
+router.use('/wonderpants', wonderpants);
 router.use('*', APIerror('Invalid Endpoint'));
 
 module.exports = router;

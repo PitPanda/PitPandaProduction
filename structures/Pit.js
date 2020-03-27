@@ -1327,6 +1327,25 @@ class Pit {
         });
     }
 
+    get inventoriesNBT(){
+        return {
+            inventory: this.inventoryNBT, 
+            enderchest: this.enderchestNBT, 
+            armor: this.armorNBT, 
+            stash: this.stashNBT,
+            mysticWellItem: this.mysticWellItemNBT,
+            mysticWellPants: this.mysticWellPantsNBT
+        };
+    }
+
+     /**
+     * NBT data for inventory slots
+     * @returns {any}
+     */
+    get inventoryNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'inv_contents', 'data');
+    }
+
     /**
      * Loads and caches the player's inventory
      * @returns {Promise<any[] | void>}
@@ -1334,7 +1353,7 @@ class Pit {
     loadInventory() {
         return new Promise(resolve => {
             if (this.raw_inventories.main) return resolve(this.raw_inventories.main);
-            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_contents', 'data');
+            const rawInv = this.inventoryNBT;
             if (!rawInv) {
                 this.raw_inventories.main = [];
                 return resolve([]);
@@ -1352,13 +1371,21 @@ class Pit {
     }
 
     /**
+     * NBT data for armor slots
+     * @returns {any}
+     */
+    get armorNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'inv_armor', 'data');
+    }
+
+    /**
      * Loads and caches the player's Armor
      * @returns {Promise<any[] | void>} 
      */
     loadArmor() {
         return new Promise(resolve => {
             if (this.raw_inventories.armor) return resolve(this.raw_inventories.armor);
-            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_armor', 'data');
+            const rawInv = this.armorNBT;
             if (!rawInv) {
                 this.raw_inventories.armor = [];
                 return resolve([]);
@@ -1376,13 +1403,21 @@ class Pit {
     }
 
     /**
+     * NBT data for enderchest slots
+     * @returns {any}
+     */
+    get enderchestNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'inv_enderchest', 'data');
+    }
+
+    /**
      * Loads and caches the player's Enderchest
      * @returns {Promise<any[] | void>} 
      */
     loadEnderchest() {
         return new Promise(resolve => {
             if (this.raw_inventories.enderchest) return resolve(this.raw_inventories.enderchest);
-            const rawInv = this.getStat('stats', 'Pit', 'profile', 'inv_enderchest', 'data');
+            const rawInv = this.enderchestNBT;
             if (!rawInv) {
                 this.raw_inventories.enderchest = [];
                 return resolve([]);
@@ -1398,6 +1433,14 @@ class Pit {
         });
     }
 
+     /**
+     * NBT data for stash slots
+     * @returns {any}
+     */
+    get stashNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'item_stash', 'data');
+    }
+
     /**
      * Loads and caches the player's Stash
      * @returns {Promise<any[] | void>} 
@@ -1405,7 +1448,7 @@ class Pit {
     loadStash() {
         return new Promise(resolve => {
             if (this.raw_inventories.stash) return resolve(this.raw_inventories.stash);
-            const rawInv = this.getStat('stats', 'Pit', 'profile', 'item_stash', 'data');
+            const rawInv = this.stashNBT;
             if (!rawInv) {
                 this.raw_inventories.stash = [];
                 return resolve([]);
@@ -1421,6 +1464,22 @@ class Pit {
         });
     }
 
+     /**
+     * NBT data for mystic well item
+     * @returns {any}
+     */
+    get mysticWellItemNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'mystic_well_item', 'data');
+    }
+
+     /**
+     * NBT data for mystic well pants
+     * @returns {any}
+     */
+    get mysticWellPantsNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'mystic_well_pants', 'data');
+    }
+
     /**
      * Loads and caches the player's Mystic Well
      * @returns {Promise<any[] | void>}
@@ -1429,8 +1488,8 @@ class Pit {
         return new Promise(resolve => {
             if (this.raw_inventories.well) return resolve(this.raw_inventories.well);
             const invs = [
-                this.getStat('stats', 'Pit', 'profile', 'mystic_well_item', 'data'),
-                this.getStat('stats', 'Pit', 'profile', 'mystic_well_pants', 'data')
+                this.mysticWellItemNBT,
+                this.mysticWellPantsNBT
             ];
             Promise.all(
                 invs.map(inv =>
