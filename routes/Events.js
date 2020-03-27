@@ -16,6 +16,7 @@ let lastreporters = new Set();
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
+    console.log(req.ip);
     if(!req.headers.key) return console.log('no key');
     console.log('key: '+req.headers.key);
     const keyDoc = await EventKey.findById({_id:req.headers.key});
