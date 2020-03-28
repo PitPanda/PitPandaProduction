@@ -1090,8 +1090,6 @@ class Pit {
             get: () => this.raw_inventories.well.map(SimpleItem.buildFromNBT)
         });
 
-
-        const doc = this.createPlayerDoc();
         /**
          * Player's live database document
          * @type {Promise<Document>}
@@ -1099,15 +1097,18 @@ class Pit {
         this.playerDoc;
         Object.defineProperty(this,'playerDoc',{
             enumerable: false,
-            value: new Promise(resolve=>Player.findByIdAndUpdate(this.uuid, { $set: doc }, { upsert: true, new: true }).then(resolve))
+            value: new Promise(resolve=>Player.findByIdAndUpdate(this.uuid, { $set: this.createPlayerDoc() }, { upsert: true, new: true }).then(resolve))
         });
 
-        Object.entries(doc.toObject()).map(async d=>{
-            const key = d[0];
-            const value = d[1];
-            if (!allowedStats.includes(key)) return;
-            await redisClient.set(key, this.uuid, value);
-        })
+        this.playerDoc.then(doc=>{
+            if(doc.exempt) return;
+            Object.entries(doc.toObject()).map(async d=>{
+                const key = d[0];
+                const value = d[1];
+                if (!allowedStats.includes(key)) return;
+                await redisClient.set(key, this.uuid, value);
+            })
+        });
     }
 
     /**

@@ -36,7 +36,7 @@ const PlayerSchema = mongoose.Schema({
 for(const key of Object.keys(lbPartial)){
     let index = {};
     index[key] = -1;
-    index.lifetimeGold = -1;
+    index._id = -1;
     PlayerSchema.index(index);
 }
 

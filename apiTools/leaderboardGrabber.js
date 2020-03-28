@@ -11,7 +11,7 @@ const leaderboardGrabber = (primaryKey, page = 0, direction = -1) => {
             .find({ exempt: { $not: { $eq: true } } })
             .limit(perPage)
             .skip(perPage * page)
-            .sort([[primaryKey, direction], ['lifetimeGold', -1]])
+            .sort([[primaryKey, direction], ['_id', -1]])
             .then(players => 
                 resolve(
                     players.map(player => ({ uuid: player._id, name: player.displayName, score: player[primaryKey] }))
