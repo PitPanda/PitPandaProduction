@@ -1,13 +1,17 @@
 const router = require('express').Router();
 
 const hypixelAPI = require('../../apiTools/playerRequest');
+const Player = require('../../models/Player');
 
 router.get('/:tag', async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
 
     if (target.error) return res.status(400).json({ success: false, error: target.error });
 
+    const doc = await Player.findOne({ _id: target.uuid });
+
     data = {};
+    if(doc && doc.scammer) data.scammer = doc.scammer.notes;
     data.uuid = target.uuid;
     data.name = target.levelFormattedName;
     data.bounty = target.bounty;

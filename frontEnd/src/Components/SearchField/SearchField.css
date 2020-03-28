@@ -55,7 +55,6 @@ body {
 .suggestion-active,
 .suggestions li:hover {
     cursor: pointer;
-    font-weight: 700;
     background-color: #222;
 }
 

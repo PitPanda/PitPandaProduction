@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.c358e6a5.chunk.css",
+    "main.css": "/static/css/main.dea1702c.chunk.css",
     "main.js": "/static/js/main.258bc4ee.chunk.js",
     "main.js.map": "/static/js/main.258bc4ee.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.ba34760b.js",
@@ -8,9 +8,9 @@
     "static/js/2.1c1ad97b.chunk.js": "/static/js/2.1c1ad97b.chunk.js",
     "static/js/2.1c1ad97b.chunk.js.map": "/static/js/2.1c1ad97b.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.3172308e71b17e5f5d563d06073002f9.js": "/precache-manifest.3172308e71b17e5f5d563d06073002f9.js",
+    "precache-manifest.aa216499650a52aa11caa7409eca9daa.js": "/precache-manifest.aa216499650a52aa11caa7409eca9daa.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.c358e6a5.chunk.css.map": "/static/css/main.c358e6a5.chunk.css.map",
+    "static/css/main.dea1702c.chunk.css.map": "/static/css/main.dea1702c.chunk.css.map",
     "static/js/2.1c1ad97b.chunk.js.LICENSE": "/static/js/2.1c1ad97b.chunk.js.LICENSE",
     "static/media/index.css": "/static/media/minecraft-italic.35903bfa.otf",
     "static/media/itemStyles.css": "/static/media/blocks_items_potions.195f6b98.png"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.ba34760b.js",
     "static/js/2.1c1ad97b.chunk.js",
-    "static/css/main.c358e6a5.chunk.css",
+    "static/css/main.dea1702c.chunk.css",
     "static/js/main.258bc4ee.chunk.js"
   ]
 }
