@@ -3,7 +3,9 @@ import MinecraftText from '../Minecraft/MinecraftText';
 import boards from '../../scripts/leaderboards';
 
 const formatPosition = (n)=>{
+    console.log(n);
     if(typeof n === 'undefined') return 'Loading';
+    if(n===null) return 'N/A';
     let color;
     if(n===1) color = 'b';
     else if(n===2) color = 'f';

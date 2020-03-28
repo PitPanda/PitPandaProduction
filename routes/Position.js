@@ -15,7 +15,10 @@ router.get('/:uuid', async (req, res) => {
 
     const results = await Promise.all(categories.map(async c => ({ rankName: c, rankValue: await redisClient.getRank(c, req.params.uuid) })));
     let rankings = {};
-    for(const result of results) rankings[result.rankName] = result.rankValue+1;
+    for(const result of results) {
+        if(result.rankValue!==null) rankings[result.rankName] = result.rankValue+1;
+        else rankings[result.rankName] = null;
+    }
     res.json({ success: true, rankings });
 });
 router.get('*', APIerror('Invalid Endpoint'));
