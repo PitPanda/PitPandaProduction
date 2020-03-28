@@ -6,6 +6,9 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', Development);
 
+const RedisClient = require('../utils/RedisClient');
+const redisClient = new RedisClient(0);
+
 const express = require('express');
 const app = express();
 
@@ -26,8 +29,21 @@ const queue = [];
 
 const queryFilter = {
     lastinpit: {
-        $gte: new Date(Date.now()-30*86400e3)
+        $gte: new Date(Date.now() - 15 * 86400e3)
     }
+}
+
+const leaderboardFields = require('../models/Player/leaderboardFields');
+const allowedStats = Object.keys(leaderboardFields);
+
+const cachePlayerStats = async (id, doc) => {
+    return await Promise.all(Object.entries(doc).map(async d => {
+        const key = d[0];
+        const value = d[1];
+
+        if (!allowedStats.includes(key)) return;
+        await redisClient.set(key, id, value);
+    }));
 }
 
 const getNextChunk = async () => {
@@ -41,7 +57,11 @@ const getNextChunk = async () => {
 
 const runNextBatch = async () => {
     const batch = queue.splice(0, maxBatchSize); // zero based indexes
-    const players = await Promise.all(batch.map(async b => await requestPlayer(b)));
+    const players = await Promise.all(batch.map(async b => {
+        const pit = await requestPlayer(b);
+        await cachePlayerStats(b, pit.createPlayerDoc().toObject()); //doesn't actually insert it but works
+    }));
+
 
     return players;
 }
@@ -51,7 +71,7 @@ const start = async () => {
         const data = await getNextChunk();
         lastQueueSize = data.length;
         currentQueue = currentQueue + 1; // so we can get the next 1000 players
-        
+
         if (!data.length) {
             currentQueue = 0; //ran out of players to index restart
             await getNextChunk();
@@ -63,11 +83,11 @@ const start = async () => {
     setTimeout(() => start(), batchTimeout); //loop again with delay 
 }
 
-async function update(){estimatedCount = await playerDoc.find(queryFilter).countDocuments()};
+const update = async () => estimatedCount = await playerDoc.find(queryFilter).countDocuments();
 update();
-setInterval( update, 300e3)
+setInterval(update, 300e3);
 
-if(!Development) start(); //entry point
+if (!Development) start(); //entry point
 
 app.get('/', (req, res) => {
     res.json({ version: 1.0 });
