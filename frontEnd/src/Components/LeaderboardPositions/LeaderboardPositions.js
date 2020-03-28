@@ -40,7 +40,7 @@ const Positions = (props) => {
     }, [props.uuid]);
     return Reflect.ownKeys(boards).map(key=>(
         <div key={key}>
-            <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
+            <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key].toLocaleString())}`} /><br/>
         </div>
     ));
 }
