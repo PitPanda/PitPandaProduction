@@ -6,9 +6,6 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', Development);
 
-const RedisClient = require('../utils/RedisClient');
-const redisClient = new RedisClient(0);
-
 const express = require('express');
 const app = express();
 
@@ -33,19 +30,6 @@ const queryFilter = {
     }
 }
 
-const leaderboardFields = require('../models/Player/leaderboardFields');
-const allowedStats = Object.keys(leaderboardFields);
-
-const cachePlayerStats = async (id, doc) => {
-    return await Promise.all(Object.entries(doc).map(async d => {
-        const key = d[0];
-        const value = d[1];
-
-        if (!allowedStats.includes(key)) return;
-        await redisClient.set(key, id, value);
-    }));
-}
-
 const getNextChunk = async () => {
     const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);
 
@@ -57,10 +41,7 @@ const getNextChunk = async () => {
 
 const runNextBatch = async () => {
     const batch = queue.splice(0, maxBatchSize); // zero based indexes
-    const players = await Promise.all(batch.map(async b => {
-        const pit = await requestPlayer(b);
-        await cachePlayerStats(b, pit.createPlayerDoc().toObject()); //doesn't actually insert it but works
-    }));
+    const players = await Promise.all(batch.map(requestPlayer));
 
 
     return players;
