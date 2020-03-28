@@ -3,20 +3,10 @@ import MinecraftText from '../Minecraft/MinecraftText';
 import boards from '../../scripts/leaderboards';
 
 const formatPosition = (n)=>{
-    console.log(n);
     if(typeof n === 'undefined') return 'Loading';
     if(n===null) return 'N/A';
-    let color;
-    if(n===1) color = 'b';
-    else if(n===2) color = 'f';
-    else if(n===3) color = 'd';
-    else if(n<=10) color = '5';
-    else if(n<=25) color = 'c';
-    else if(n<=50) color = '6';
-    else if(n<=100) color = 'e';
-    else if(n<=250) color = '9';
-    else color = '7';
-    return `§${color}#${n}`;
+    if(n<=10) return `§6#${n}`;
+    else return `§7#${n}`;
 }
 
 const Positions = (props) => {
