@@ -5,8 +5,8 @@ import boards from '../../scripts/leaderboards';
 const formatPosition = (n)=>{
     if(typeof n === 'undefined') return 'Loading';
     if(n===null) return 'N/A';
-    if(n<=10) return `§6#${n}`;
-    else return `§7#${n}`;
+    if(n<=10) return `§6#${n.toLocaleString()}`;
+    else return `§7#${n.toLocaleString()}`;
 }
 
 const Positions = (props) => {
@@ -30,7 +30,7 @@ const Positions = (props) => {
     }, [props.uuid]);
     return Reflect.ownKeys(boards).map(key=>(
         <div key={key}>
-            <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key].toLocaleString())}`} /><br/>
+            <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
         </div>
     ));
 }
