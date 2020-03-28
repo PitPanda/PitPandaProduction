@@ -9,7 +9,7 @@ const formatPosition = (n)=>{
     else return `§7#${n.toLocaleString()}`;
 }
 
-const Positions = (props) => {
+export default (props) => {
     const [positions, setPositions] = useState({});
     useEffect(()=>{
         let alive = true;
@@ -33,17 +33,4 @@ const Positions = (props) => {
             <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
         </div>
     ));
-}
-
-export default (props) => {
-    const [loaded, setLoaded] = useState(false);
-    if(loaded){
-        return (<Positions uuid={props.uuid}/>);
-    }else{
-        return (
-            <div style={{textAlign:'center'}}>
-                <input type="button" className="srchBtn" value="Load" style={{margin:0}} onClick={()=>setLoaded(true)}/>
-            </div>
-        )
-    }
 }
