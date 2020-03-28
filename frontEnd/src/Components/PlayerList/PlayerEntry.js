@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
 import getName from '../../scripts/playerName';
 
@@ -9,9 +9,16 @@ const buttonStyle = {
 }
 
 function PlayerEntry(props){
-    let doc = getName(props.uuid);
-    let [text, setText] = useState(doc.result?doc.result:"§7Loading");
-    if(!doc.result) doc.promise.then(name=>setText(name))
+    let [text, setText] = useState("§7Loading");
+    useEffect(()=>{
+        let alive = true;
+        const doc = getName(props.uuid);
+        (async()=>{
+            const name = await doc.promise;
+            if(alive) setText(name);
+        })();
+        return () => alive = false;
+    }, [props.uuid]);
     const redirect = () => props.history.push(`/players/${props.uuid}`);
     return (
         <span title={props.hover} style={buttonStyle} href={`/players/${props.uuid}`} onClick={redirect}>

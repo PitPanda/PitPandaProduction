@@ -7,6 +7,7 @@ import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import PlayerForm from './PlayerForm';
 import PlayerList from '../PlayerList/PlayerList';
+import LeaderboardPositions from '../LeaderboardPositions/LeaderboardPositions';
 import frontendTools from '../../scripts/frontendTools';
 
 class Player extends React.Component {
@@ -110,8 +111,11 @@ class Player extends React.Component {
                     />
                   </div>
                 }/>
+                <StaticCard title="Leaderboard Positions" key={'positions'+this.state.user.uuid}>
+                  <LeaderboardPositions uuid={this.state.user.uuid} />
+                </StaticCard>
                 {this.state.user.recentKills.length?(
-                  <StaticCard title="Recent Kills" key={this.state.user.uuid}>
+                  <StaticCard title="Recent Kills" key={'recentkills'+this.state.user.uuid}>
                     <PlayerList players={this.state.user.recentKills.map(kill=>({tag:kill.victim,hover:new Date(kill.timestamp).toLocaleString()}))}  history={this.props.history}/>
                   </StaticCard>
                 ):''}
