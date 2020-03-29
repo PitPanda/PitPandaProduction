@@ -55,18 +55,19 @@ const printText = (cvs, msg, options={}) =>{
     const adjustedy = y+size*(5/6);
     let bold = false;
     let italic = false;
+    let color = colors['7'];
     for(const part of parts){
         const key = part.charAt(0);
-        const color = colors[key];
+        color = colors[key] || color;
         if(key==='l') bold = true;
         else if(key==='n') italic = true;
         else if(key==='r') (bold = false) && (italic = false);
         ctx.font = `${bold?'bold':''} ${italic?'italic':''} ${size}px "Minecraft"`;
         if(shadow){
-            if(color) ctx.fillStyle = `#${color.textshadow}`;
+            ctx.fillStyle = `#${color.textshadow}`;
             ctx.fillText(part.substring(1),Math.floor(x+position+offSet),y+Math.floor(y+adjustedy+offSet));
         }
-        if(color) ctx.fillStyle = `#${color.color}`;
+        ctx.fillStyle = `#${color.color}`;
         ctx.fillText(part.substring(1),Math.floor(x+position),Math.floor(y+adjustedy));
         position += ctx.measureText(part.substring(1)).width;
     }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
 import boards from '../../scripts/leaderboards';
 import Link from '../Link/Link';
+//import { Link } from 'react-router-dom';
 
 const formatPosition = (n)=>{
     if(typeof n === 'undefined') return 'Loading';
@@ -32,7 +33,7 @@ export default (props) => {
         return () => alive = false;
     }, [props.uuid]);
     return Reflect.ownKeys(boards).map(key=>(
-        <Link href={`/leaderboard?category=${key}&page=${Math.floor(((positions[key]||1)-1)/100)}`} key={key}>
+        <Link href={`/leaderboard?category=${key}&page=${Math.floor(((positions[key]||1)-1)/100)}`} key={key} scroll={true}>
             <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
         </Link>
     ));
