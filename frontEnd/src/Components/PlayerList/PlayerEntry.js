@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
 import getName from '../../scripts/playerName';
+import {withRouter} from 'react-router-dom';
 
 const buttonStyle = {
     display:'block',
@@ -25,4 +26,4 @@ function PlayerEntry(props){
             <MinecraftText raw={text}/>
         </span>
     );
-} export default PlayerEntry;
+} export default withRouter(PlayerEntry);

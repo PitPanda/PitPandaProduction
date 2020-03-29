@@ -18,7 +18,8 @@
     "node-fetch": "^2.6.0",
     "pako": "^1.0.10",
     "redis": "^3.0.2",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "rss-parser": "^3.7.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

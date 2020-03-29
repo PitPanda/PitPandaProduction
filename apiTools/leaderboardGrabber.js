@@ -8,7 +8,7 @@ const leaderboardGrabber = (primaryKey, page = 0, direction = -1) => {
     return new Promise((resolve, reject) => {
         if (!(primaryKey in fields)) return resolve({error:'Invalid leaderboard endpoint'});
         Player
-            .find({ exempt: { $not: { $eq: true } } })
+            .find({ exempt: { $not: { $eq: true } }, [primaryKey]: {$exists: true } })
             .limit(perPage)
             .skip(perPage * page)
             .sort([[primaryKey, direction], ['_id', -1]])

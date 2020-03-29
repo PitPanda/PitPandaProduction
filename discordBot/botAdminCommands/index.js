@@ -1,5 +1,5 @@
 const commands = [
-    require('./mcpqndqCommands/eval')
+    require('./eval')
 ];
 
 module.exports = commands;

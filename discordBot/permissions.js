@@ -33,7 +33,7 @@ function invalidPermissions(msg,required,current){
 } module.exports.invalidPermissions = invalidPermissions;
 
 function getPermissionLevel(msg){
-    if(TradeCenter.BotAdmins.includes(msg.author.id)) return Infinity;
+    if(TradeCenter.BotAdmins.includes(msg.author.id)||msg.author.bot) return Infinity;
     if(msg.member.hasPermission(Discord.Permissions.FLAGS.ADMINISTRATOR)) return 8;
     if(msg.member.roles.some(role=>role.id===TradeCenter.Senior)) return 7;
     if(msg.member.roles.some(role=>role.id===TradeCenter.Moderator)) return 6;

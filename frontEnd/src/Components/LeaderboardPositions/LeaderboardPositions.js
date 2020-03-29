@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
 import boards from '../../scripts/leaderboards';
+import Link from '../Link/Link';
 
 const formatPosition = (n)=>{
     if(typeof n === 'undefined') return 'Loading';
     if(n===null) return 'N/A';
-    if(n<=10) return `§6#${n.toLocaleString()}`;
+    if(n<=3) return `§6#${n.toLocaleString()}`;
+    if(n<=10) return `§e#${n.toLocaleString()}`;
+    if(n<=25) return `§f#${n.toLocaleString()}`;
     else return `§7#${n.toLocaleString()}`;
 }
 
@@ -29,8 +32,8 @@ export default (props) => {
         return () => alive = false;
     }, [props.uuid]);
     return Reflect.ownKeys(boards).map(key=>(
-        <div key={key}>
+        <Link href={`/leaderboard?category=${key}&page=${Math.floor(((positions[key]||1)-1)/100)}`} key={key}>
             <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
-        </div>
+        </Link>
     ));
 }

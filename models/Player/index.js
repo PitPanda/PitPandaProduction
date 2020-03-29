@@ -13,6 +13,7 @@ const PlayerSchema = mongoose.Schema({
         type: Date,
         index: true
     },
+    discord: String,
     name: String,
     displayName: String,
     ...lbPartial,

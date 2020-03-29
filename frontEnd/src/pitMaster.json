@@ -7,13 +7,13 @@
 			{"Xp":75, "Color":"DARK_GREEN", "ColorCode":"§2"},
 			{"Xp":125, "Color":"GREEN", "ColorCode":"§a"},
 			{"Xp":300, "Color":"YELLOW", "ColorCode":"§e"},
-			{"Xp":600, "Color":"GOLD", "ColorCode":"§l§6"},
-			{"Xp":800, "Color":"RED", "ColorCode":"§l§c"},
-			{"Xp":900, "Color":"DARK_RED", "ColorCode":"§l§4"},
-			{"Xp":1000, "Color":"DARK_PURPLE", "ColorCode":"§l§5"},
-			{"Xp":1200, "Color":"LIGHT_PURPLE", "ColorCode":"§l§d"},
-			{"Xp":1500, "Color":"WHITE", "ColorCode":"§l§f"},
-			{"Xp":0, "Color":"AQUA", "ColorCode":"§l§b"}
+			{"Xp":600, "Color":"GOLD", "ColorCode":"§6§l"},
+			{"Xp":800, "Color":"RED", "ColorCode":"§c§l"},
+			{"Xp":900, "Color":"DARK_RED", "ColorCode":"§4§l"},
+			{"Xp":1000, "Color":"DARK_PURPLE", "ColorCode":"§5§l"},
+			{"Xp":1200, "Color":"LIGHT_PURPLE", "ColorCode":"§d§l"},
+			{"Xp":1500, "Color":"WHITE", "ColorCode":"§f§l"},
+			{"Xp":0, "Color":"AQUA", "ColorCode":"§b§l"}
 		],
 		"Upgrades":{
 			"xp_boost":{

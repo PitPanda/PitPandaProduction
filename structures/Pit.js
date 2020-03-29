@@ -1819,6 +1819,7 @@ class Pit {
             joins: this.joins,
             enderchestOpened: this.enderchestOpened,
             lastinpit: new Date(this.lastSave),
+            discord: this.discord
         });
     }
 

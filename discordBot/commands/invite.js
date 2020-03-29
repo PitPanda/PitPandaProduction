@@ -1,7 +1,7 @@
 const Command = require('../Command');
 
 function command(msg){
-    msg.reply('https://discord.gg/MBCQQgz');
+    msg.reply('https://discord.gg/CdTmYrG');
 }
 
 module.exports = new Command({

@@ -4,8 +4,7 @@ const Player = require('../models/Player');
 /**
  * gets the username for a player
  * @param {string} uuid 
- * @param {Number} maxAge
- * @param {doc} doc
+ * @param {{maxAge:number,doc:any}} options
  * @returns {Promise<Doc>}
  */
 const getDoc = (uuid, options={}) => {

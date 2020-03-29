@@ -3,7 +3,8 @@ const app = express();
 const api = require('./routes');
 const mongoose = require('mongoose');
 const {dbLogin, Development} = require('./settings.json');
-require('./discordBot/bot');
+require('./discordBot');
+require('./forumsTracker');
 
 mongoose.connect(dbLogin, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('MongoDB Connected'));
 mongoose.set('useFindAndModify', false);
