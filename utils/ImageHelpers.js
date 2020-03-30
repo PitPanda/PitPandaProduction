@@ -59,7 +59,6 @@ const printText = (cvs, msg, options={}) =>{
     let position = size*0.05;
     const offSet = Math.max(1,size*0.02);
     const adjustedy = y+size*(5/6);
-    console.log({msg,x,y,adjustedy,size,shadow});
     let bold = false;
     let italic = false;
     let color = colors['7'];

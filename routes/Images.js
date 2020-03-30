@@ -30,7 +30,7 @@ router.use('/level/:tag', async (req, res) => {
 router.use("/profile/:tag",async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
-    const img = await loadImage(`https://crafatar.com/avatars/${req.params.tag}?overlay=true`);
+    const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
     const cvs = createCanvas(0,240);
     cvs.width = ImageHelpers.measure(doc.rankName,60,cvs)+250;
     const top = 15;
