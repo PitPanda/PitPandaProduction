@@ -15,7 +15,10 @@ const PlayerSchema = mongoose.Schema({
     },
     discord: String,
     name: String,
-    displayName: String,
+    colouredName: String,
+    formattedLevel: String,
+    formattedRank: String,
+    rank: String,
     ...lbPartial,
     allegiance: String,
     hatColor: String,
@@ -33,6 +36,15 @@ const PlayerSchema = mongoose.Schema({
         index: true
     }
 });
+
+PlayerSchema.virtual('levelName').get(function(){
+    return `${this.formattedLevel} ${this.colouredName}`;
+});
+
+PlayerSchema.virtual('rankName').get(function(){
+    return `${this.formattedRank} ${this.colouredName}`;
+});
+PlayerSchema.virtual('displayName').get(function(){return this.levelName});
 
 for(const key of Object.keys(lbPartial)){
     let index = {};

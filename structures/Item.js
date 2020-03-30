@@ -2,8 +2,7 @@ const { Extra: { ColorCodes } } = require('../frontEnd/src/pitMaster.json');
 const mcenchants = require('../enchants.json');
 const mcitems = require('../minecraftItems.json');
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 /**
  * Represents a minecraft item

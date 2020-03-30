@@ -1,7 +1,6 @@
 const { getRef, getItemNameFromId } = require('../apiTools/apiTools');
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 //not used
 //const mcenchants = require('../enchants.json');

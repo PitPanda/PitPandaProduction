@@ -1,8 +1,7 @@
 const { formatNumber, abbrNum } = require('../apiTools/apiTools');
 const pitMaster = require('../frontEnd/src/pitMaster.json');
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 /**
  * Progress class (used on pitpanda for progress bars)

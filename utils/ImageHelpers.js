@@ -29,7 +29,6 @@ function or(a, b){
 }
 
 const measure = (text,size,cvs) => {
-    if(!cvs) cvs = createCanvas(0,0);
     const ctx = cvs.getContext('2d');
     let bold = false;
     let len = size*0.05;
@@ -42,17 +41,25 @@ const measure = (text,size,cvs) => {
     return len;
 }
 
+/**
+ * 
+ * @param {*} cvs 
+ * @param {string} msg 
+ * @param {{x:number,y:number,size:number,shadow:boolean}} options 
+ */
 const printText = (cvs, msg, options={}) =>{
     const x = or(options.x,0);
     const y = or(options.y,0);
     const size = or(options.size,40);
     const shadow = or(options.shadow,true);
+    if(!msg.startsWith('§'))msg='§7'+msg;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle = "#ffffff";
     let parts = msg.split('§');
     let position = size*0.05;
     const offSet = Math.max(1,size*0.02);
     const adjustedy = y+size*(5/6);
+    console.log({msg,x,y,adjustedy,size,shadow});
     let bold = false;
     let italic = false;
     let color = colors['7'];
@@ -61,14 +68,17 @@ const printText = (cvs, msg, options={}) =>{
         color = colors[key] || color;
         if(key==='l') bold = true;
         else if(key==='n') italic = true;
-        else if(key==='r') (bold = false) && (italic = false);
+        else if(key==='r') {
+            bold = false;
+            italic = false;
+        }
         ctx.font = `${bold?'bold':''} ${italic?'italic':''} ${size}px "Minecraft"`;
         if(shadow){
             ctx.fillStyle = `#${color.textshadow}`;
-            ctx.fillText(part.substring(1),Math.floor(x+position+offSet),y+Math.floor(y+adjustedy+offSet));
+            ctx.fillText(part.substring(1),Math.floor(x+position+offSet),y+Math.floor(adjustedy+offSet));
         }
         ctx.fillStyle = `#${color.color}`;
-        ctx.fillText(part.substring(1),Math.floor(x+position),Math.floor(y+adjustedy));
+        ctx.fillText(part.substring(1),Math.floor(x+position),Math.floor(adjustedy));
         position += ctx.measureText(part.substring(1)).width;
     }
 }

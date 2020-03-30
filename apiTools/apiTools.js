@@ -1,8 +1,7 @@
 const { Pit: { Upgrades, RenownUpgrades, Perks, Mystics }, Extra: { ColorCodes: Colors } } = require('../frontEnd/src/pitMaster.json');
 const mcitems = require('../minecraftItems.json');
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 /**
  * Generates a function to send to router to display a given error message

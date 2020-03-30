@@ -1,6 +1,6 @@
 const mcenchants = require('../enchants.json');
 
-class TextHelpers {
+const TextHelpers = {
     /**
     * converts number to roman numeral string
     * @param {number} int
@@ -22,7 +22,7 @@ class TextHelpers {
         roman += 'IV'.repeat(int / 4); int %= 4;
         roman += 'I'.repeat(int);
         return roman;
-    }
+    },
 
     /**
      * converts a decimal number to hex with padded 0s
@@ -34,7 +34,7 @@ class TextHelpers {
         let str = n.toString(16);
         str = '0'.repeat(6 - str.length) + str;
         return str.toUpperCase();
-    }
+    },
 
     /**
      * Formated numbers as strings
@@ -42,7 +42,7 @@ class TextHelpers {
      */
     formatNumber(n) {
         return Number(n || 0).toLocaleString();
-    }
+    },
 
     /**
      * Formats numbers nicely ex: f(1234, 2) = 1.2k
@@ -84,7 +84,7 @@ class TextHelpers {
         }
 
         return number;
-    }
+    },
 
     /**
      * Takes unformatted nbt data for enchant and formats a stirng
@@ -95,7 +95,20 @@ class TextHelpers {
         const info = mcenchants.find(el => el.id == ench.id.value);
         if (!info) return { key: 'unknown', tier: 0 };
         return { key: info.displayName, tier: ench.lvl.value };
-    }
+    },
+
+    /**
+     * Turns an time into a formatter string
+     * ex: f(1234) = '20h 34m'
+     * @param {number} minutes 
+     * @returns {string}
+     */
+    minutesToString(min){
+        if(min < 60) return `${min}m`;
+        let str = `${Math.floor(min/60).toLocaleString()}h`;
+        if(min%60!==0) str+=` ${Math.floor(min%60)}m`;
+        return str;
+    },
 }
 
 module.exports = TextHelpers;

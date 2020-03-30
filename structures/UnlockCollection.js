@@ -3,8 +3,7 @@ const Item = require('./Item');
 const { Pit: { Upgrades, RenownUpgrades, Perks } } = require('../frontEnd/src/pitMaster.json');
 const { getRef, isTiered } = require('../apiTools/apiTools');
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 /**
  * represents a set of unlocks

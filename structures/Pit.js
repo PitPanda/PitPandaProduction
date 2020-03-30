@@ -15,8 +15,7 @@ const allowedStats = Object.keys(leaderboardFields);
 const RedisClient = require('../utils/RedisClient');
 const redisClient = new RedisClient(0);
 
-const TextHelpers = require('../utils/TextHelpers');
-const textHelpers = new TextHelpers();
+const textHelpers = require('../utils/TextHelpers');
 
 /**
  * Represents the player output from the Hypixel API
@@ -1684,8 +1683,8 @@ class Pit {
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
                 `${Colors.GRAY}Fished Anything: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedAnything)}`,
                 `${Colors.GRAY}Fished Fish: ${Colors.GREEN}${textHelpers.formatNumber(this.fishedFish)}`,
-                `${Colors.GRAY}Fish Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.goldFromSellingFish)}`,
-                `${Colors.GRAY}Hay Bales Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.goldFromFarming)}`,
+                `${Colors.GRAY}Fish Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.fishSold)}`,
+                `${Colors.GRAY}Hay Bales Sold: ${Colors.GREEN}${textHelpers.formatNumber(this.balesSold)}`,
                 `${Colors.GRAY}King's Quest Completions: ${Colors.GREEN}${textHelpers.formatNumber(this.kingsQuestCompletions)}`,
                 `${Colors.GRAY}Sewer Treasures Found: ${Colors.GREEN}${textHelpers.formatNumber(this.sewerTreasuresFound)}`,
                 `${Colors.GRAY}Night Quests Completed: ${Colors.GREEN}${textHelpers.formatNumber(this.nightQuestsCompleted)}`
@@ -1748,13 +1747,15 @@ class Pit {
 
     /**
      * player's doc like on the db
-     * @returns {Document}
      */
     createPlayerDoc() {
-        return new Player({
+        const player = new Player({
             _id: this.uuid,
             name: this.name,
-            displayName: this.levelFormattedName,
+            colouredName: this.colouredName,
+            formattedLevel: this.formattedLevel,
+            formattedRank: this.prefix,
+            rank: this.rank,
             kills: this.kills,
             assists: this.assists,
             damageDealt: this.damageDealt,
@@ -1821,6 +1822,7 @@ class Pit {
             lastinpit: new Date(this.lastSave),
             discord: this.discord
         });
+        return player;
     }
 
     /**
