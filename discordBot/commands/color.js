@@ -2,6 +2,7 @@ const TradeCenter = require('../TradeCenter.json');
 const Command = require('../Command');
 
 const command = async (msg,rest) => {
+    if(!rest[0]) return msg.reply('Please specify a color in hex format');
     const color = rest[0].toUpperCase().split('').filter(c=>/^[0-9A-F]$/.test(c)).join('');
     const roleManager = msg.member.roles;
     if(!(/^#?[0-9A-F]{6}$/.test(color))) return msg.reply('Please give a color in hex format ex: #00ff00');
