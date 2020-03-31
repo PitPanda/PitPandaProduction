@@ -9,6 +9,7 @@ function command(msg,rest,alias){
     hypixelAPI(rest[0]).then(result=>{
         const gmrm = msg.member.roles;
         if(result.error) return msg.reply(result.error);
+        if(!result.discord) return msg.reply('Please link your discord ingame. tutorial: https://www.youtube.com/watch?v=LiUcDhLjLDc');
         if(result.discord!==msg.author.tag) return msg.reply('Your discord set ingame does not match!');
 
         //Give message based on alias used

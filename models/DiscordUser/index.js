@@ -10,7 +10,11 @@ const DiscordUserSchema = mongoose.Schema({
     reps: {
         type: [RepSchema],
         default: undefined
-    }
+    },
+    lastCount: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = mongoose.model('DiscordUsers', DiscordUserSchema);

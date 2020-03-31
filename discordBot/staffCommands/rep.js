@@ -129,7 +129,7 @@ module.exports = new Command(
         name: 'rep',
         fn: command,
         description:'Used for rep management',
-        example:`**$rep (accept|deny|delete|inspect) [id]**`,
+        example:`**$rep (accept|deny|delete|inspect) [case id]**`,
         permlevel:3
     }
 );

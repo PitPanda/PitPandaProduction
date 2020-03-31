@@ -10,6 +10,7 @@ const { Development } = require('../settings.json');
 
 if(!Development){
     client.on('guildMemberAdd',member=>{
+        if(member.user.bot) return;
         client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(
             `Welcome to Trade Center, ${member}!\n`+
             ` - Be sure to read <#${TradeCenter.RulesChannel}>!\n`+
