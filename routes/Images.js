@@ -46,7 +46,6 @@ router.use("/profile/:tag",async (req, res) => {
         ImageHelpers.measure(line3,nameSize,cvs),
     )+x;
     const ctx = cvs.getContext('2d');
-    console.log(req.query);
     if(req.query.bg) {
         ctx.fillStyle=`#${req.query.bg}`;
         ctx.fillRect(0,0,cvs.width,cvs.height);
@@ -62,7 +61,7 @@ router.use("/profile/:tag",async (req, res) => {
     
     ctx.drawImage(img,0,0,size,size);
     cvs.createPNGStream().pipe(res);
-    console.log(Date.now()-start);
+    console.log(`took ${Date.now()-start}ms);
 });
 
 router.use('*', APIerror('Invalid Endpoint'));
