@@ -35,12 +35,12 @@ function invalidPermissions(msg,required,current){
 function getPermissionLevel(msg){
     if(TradeCenter.BotAdmins.includes(msg.author.id)||msg.author.bot) return Infinity;
     if(msg.member.hasPermission(Discord.Permissions.FLAGS.ADMINISTRATOR)) return 8;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Senior)) return 7;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Moderator)) return 6;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Junior)) return 5;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Trial)) return 4;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Staff)) return 3;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Nitro)) return 2;
-    if(msg.member.roles.some(role=>role.id===TradeCenter.Verified)) return 1;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Senior)) return 7;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Moderator)) return 6;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Junior)) return 5;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Trial)) return 4;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Staff)) return 3;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Nitro)) return 2;
+    if(msg.member.roles.cache.some(role=>role.id===TradeCenter.Verified)) return 1;
     return 0;
 } module.exports.getPermissionLevel = getPermissionLevel;

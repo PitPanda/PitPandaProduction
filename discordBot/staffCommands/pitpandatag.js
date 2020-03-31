@@ -19,7 +19,7 @@ const command = async (msg,rest) => {
     let doc = await getDoc(rest[0]);
     doc.profileDisplay = profileDisplay;
     doc.save();
-    msg.reply(`Deleted https://pitpanda.rocks/players/${doc._id}`);
+    msg.reply(`Added https://pitpanda.rocks/players/${doc._id}`);
 }
 
 module.exports = new Command(

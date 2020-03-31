@@ -42,6 +42,7 @@ PlayerSchema.virtual('levelName').get(function(){
 });
 
 PlayerSchema.virtual('rankName').get(function(){
+    if(this.rank==='NON') return this.colouredName;
     return `${this.formattedRank} ${this.colouredName}`;
 });
 PlayerSchema.virtual('displayName').get(function(){return this.levelName});

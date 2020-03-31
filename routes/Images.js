@@ -17,7 +17,7 @@ router.use('*',(req,res,next)=>{
 
 router.use('/level/:tag', async (req, res) => {
     let shadow = req.query.shadow !== 'false';
-    let size = Number(req.query.size) || 40;
+    let size = Math.min(Number(req.query.size) || 40, 512);
     if(size>1000) size = 1000;
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
@@ -31,16 +31,38 @@ router.use("/profile/:tag",async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
     const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
-    const cvs = createCanvas(0,240);
-    cvs.width = ImageHelpers.measure(doc.rankName,60,cvs)+250;
-    const top = 15;
-    ImageHelpers.printText(cvs,doc.rankName,{size:60,shadow:false,x:250,y:top});
-    ImageHelpers.printText(cvs,`LVL: ${doc.formattedLevel}`,{size:50,shadow:false,x:250,y:top+60});
-    ImageHelpers.printText(cvs,`Gold: §6${doc.gold.toLocaleString()}g`,{size:50,shadow:false,x:250,y:top+110});
-    ImageHelpers.printText(cvs,`Played: §f${textHelpers.minutesToString(doc.playtime)}`,{size:50,shadow:false,x:250,y:top+160});
+    const start = Date.now();
+    let size = Math.min(Number(req.query.size) || 240, 512);
+    const cvs = createCanvas(0,size);
+    const x = size+size*(1/24);
+    const nameSize = size/4;
+    const line1 = `LVL: ${doc.formattedLevel}`;
+    const line2 = `Gold: §6${doc.gold.toLocaleString()}g`;
+    const line3 = `Played: §${req.query.playcolor||'f'}${textHelpers.minutesToString(doc.playtime)}`;
+    cvs.width = Math.max(
+        ImageHelpers.measure(doc.rankName,nameSize,cvs),
+        ImageHelpers.measure(line1,nameSize,cvs),
+        ImageHelpers.measure(line2,nameSize,cvs),
+        ImageHelpers.measure(line3,nameSize,cvs),
+    )+x;
     const ctx = cvs.getContext('2d');
-    ctx.drawImage(img,0,0,240,240);
+    console.log(req.query);
+    if(req.query.bg) {
+        ctx.fillStyle=`#${req.query.bg}`;
+        ctx.fillRect(0,0,cvs.width,cvs.height);
+    }
+    let shadow = req.query.shadow !== 'false';
+    const top = 15;
+    
+    const subtitleSize = size*5/24;
+    ImageHelpers.printText(cvs,doc.rankName,{size:size/4,shadow,x,y:top});
+    ImageHelpers.printText(cvs,line1,{size:subtitleSize,shadow,x,y:top+nameSize});
+    ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
+    ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
+    
+    ctx.drawImage(img,0,0,size,size);
     cvs.createPNGStream().pipe(res);
+    console.log(Date.now()-start);
 });
 
 router.use('*', APIerror('Invalid Endpoint'));

@@ -74,7 +74,7 @@ const printText = (cvs, msg, options={}) =>{
         ctx.font = `${bold?'bold':''} ${italic?'italic':''} ${size}px "Minecraft"`;
         if(shadow){
             ctx.fillStyle = `#${color.textshadow}`;
-            ctx.fillText(part.substring(1),Math.floor(x+position+offSet),y+Math.floor(adjustedy+offSet));
+            ctx.fillText(part.substring(1),Math.floor(x+position+offSet),Math.floor(adjustedy+offSet));
         }
         ctx.fillStyle = `#${color.color}`;
         ctx.fillText(part.substring(1),Math.floor(x+position),Math.floor(adjustedy));
