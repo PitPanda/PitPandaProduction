@@ -7,66 +7,123 @@ const EventLog = require('../models/EventLog');
 
 const rgx = /^(§r)?§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
 
+const major = {
+    name: 'major',
+    role: 'roleformajors',
+    color: 'ffffff',
+};
+
+const minor = {
+    name: 'minor',
+    role: 'roleforminors',
+    color: '9040ff',
+};
+
 const events = {
     'MAJOR EVENT! SPIRE':{
-        degree: 'major',
-        type: 'spire',
+        degree: major,
+        type: {
+            name: 'spire',
+            role: 'roleforspire',
+        },
     },
     'MAJOR EVENT! BLOCKHEAD':{
-        degree: 'major',
-        type: 'blockhead',
+        degree: major,
+        type: {
+            name: 'blockhead',
+            role: 'roleforblockhead',
+        },
     },
     'MAJOR EVENT! BEAST':{
-        degree: 'major',
-        type: 'beast',
+        degree: major,
+        type: {
+            name: 'beast',
+            role: 'roleforbeast',
+        },
     },
     'MAJOR EVENT! RAGE PIT':{
-        degree: 'major',
-        type: 'rage pit',
+        degree: major,
+        type: {
+            name: 'ragepit',
+            role: 'roleforragepit',
+        },
     },
     'MAJOR EVENT! SQUADS':{
-        degree: 'major',
-        type: 'squads',
+        degree: major,
+        type: {
+            name: 'squads',
+            role: 'roleforsquads',
+        },
     },
     'MAJOR EVENT! RAFFLE':{
-        degree: 'major',
-        type: 'raffle',
+        degree: major,
+        type: {
+            name: 'raffle',
+            role: 'roleforraffle',
+        },
     },
     'MAJOR EVENT! ROBBERY':{
-        degree: 'major',
-        type: 'robbery',
+        degree: major,
+        type: {
+            name: 'robbery',
+            role: 'roleforrobbery',
+        },
     },
     'MINOR EVENT! KOTH':{
-        degree: 'minor',
-        type: 'koth',
+        degree: minor,
+        type: {
+            name: 'koth',
+            role: 'roleforkoth',
+        },
     },
     'MINOR EVENT! DRAGON EGG':{
-        degree: 'minor',
-        type: 'dragon',
+        degree: minor,
+        type: {
+            name: 'dragon',
+            role: 'rolefordragon',
+        },
     },
     'MINOR EVENT! CARE PACKAGE':{
-        degree: 'minor',
-        type: 'package',
+        degree: minor,
+        type: {
+            name: 'package',
+            role: 'roleforpackage',
+        },
     },
     'MINOR EVENT! KOTL':{
-        degree: 'minor',
-        type: 'kotl',
+        degree: minor,
+        type: {
+            name: 'kotl',
+            role: 'roleforkotl',
+        },
     },
     'MINOR EVENT! 2X REWARDS':{
-        degree: 'minor',
-        type: 'double',
+        degree: minor,
+        type: {
+            name: 'double',
+            role: 'rolefordouble',
+        },
     },
     'MINOR EVENT! AUCTION!':{
-        degree: 'minor',
-        type: 'auction',
+        degree: minor,
+        type: {
+            name: 'auction',
+            role: 'roleforauction',
+        },
     },
     'MINOR EVENT! GIANT CAKE':{
-        degree: 'minor',
-        type: 'cake',
+        degree: minor,
+        type: {
+            name: 'caje',
+            role: 'roleforcake',
+        },
     },
     'MINOR EVENT! EVERYONE GETS A BOUNTY!':{
-        degree: 'minor',
-        type: 'bounty',
+        degree: minor,
+        type: {
+            name: 'bounty',
+            role: 'roleforbounty',
+        },
     },
 };
 
@@ -96,15 +153,17 @@ router.post('/', async (req,res)=>{
         const eventLog = new EventLog({
             reporter: keyDoc.owner,
             event: clean,
-            degree: event.degree,
-            type: event.type,
+            degree: event.degree.name,
+            type: event.type.name,
         });
         eventLog.save((err,final)=>{
             if(err) return;
             lastevent_id = final._id;
             hook.send(
+                `<@${event.degree.role}> <@${event.type.role}>`,
                 new MessageEmbed()
-                    .setTitle(JSON.stringify(event))
+                    .setTitle(clean)
+                    .setColor(vent.degree.color)
                     .setFooter(final._id)
                     .setTimestamp()
             );
