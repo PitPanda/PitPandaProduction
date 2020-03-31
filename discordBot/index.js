@@ -5,17 +5,19 @@ const TradeCenter = require('./TradeCenter.json');
 const commands = require('./commands');
 const staffCommands = require('./staffCommands');
 const botAdminCommands = require('./botAdminCommands');
-const {invalidPermissions,getPermissionLevel} = require('./permissions');
+const { invalidPermissions, getPermissionLevel } = require('./permissions');
+const { Development } = require('../settings.json');
 
-client.on('guildMemberAdd',member=>{
-    client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(
-        `Welcome to Trade Center, ${member}!\n`+
-        ` - Be sure to read <#${TradeCenter.RulesChannel}>!\n`+
-        ` - Want to know more about the server? Check <#${TradeCenter.InfoChannel}>!\n`+
-        ` - Check <#${TradeCenter.RolesChannel}> to see all of our custom roles!`
-    )).catch(console.err);
-    member.roles.add(TradeCenter.Member);
-});
+if(!Development){
+    client.on('guildMemberAdd',member=>{
+        client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(
+            `Welcome to Trade Center, ${member}!\n`+
+            ` - Be sure to read <#${TradeCenter.RulesChannel}>!\n`+
+            ` - Want to know more about the server? Check <#${TradeCenter.InfoChannel}>!\n`+
+            ` - Check <#${TradeCenter.RolesChannel}> to see all of our custom roles!`
+        )).catch(console.err);
+    });
+}
 
 client.on('guildMemberUpdate', (oldMem, newMem) => {
     if(oldMem.roles.cache.get(TradeCenter.Nitro) && !newMem.roles.cache.get(TradeCenter.Nitro) && !newMem.roles.cache.get(TradeCenter.Staff)){

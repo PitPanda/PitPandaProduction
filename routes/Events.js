@@ -69,6 +69,20 @@ const events = {
             role: '694629863352696902',
         },
     },
+    'MAJOR EVENT! TEAM DEATHMATCH':{
+        degree: major,
+        type: {
+            name: 'robbery',
+            role: '694644007585710192',
+        },
+    },
+    'MAJOR EVENT! PIZZA':{
+        degree: major,
+        type: {
+            name: 'robbery',
+            role: '694644010794352671',
+        },
+    },
     'MINOR EVENT! KOTH':{
         degree: minor,
         type: {
@@ -114,7 +128,7 @@ const events = {
     'MINOR EVENT! GIANT CAKE':{
         degree: minor,
         type: {
-            name: 'caje',
+            name: 'cake',
             role: '694629913545932820',
         },
     },
