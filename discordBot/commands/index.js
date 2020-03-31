@@ -6,6 +6,7 @@ const commands = [
     require('./rep'),
     require('./reps'),
     require('./scammer'),
+    require('./scammerlist'),
 ];
 
 module.exports = commands;
