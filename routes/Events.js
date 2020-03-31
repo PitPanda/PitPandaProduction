@@ -160,7 +160,7 @@ router.post('/', async (req,res)=>{
             if(err) return;
             lastevent_id = final._id;
             hook.send(
-                `<@${event.degree.role}> <@${event.type.role}>`,
+                `<@&${event.degree.role}> <@&${event.type.role}>`,
                 new MessageEmbed()
                     .setTitle(clean)
                     .setColor(event.degree.color)
