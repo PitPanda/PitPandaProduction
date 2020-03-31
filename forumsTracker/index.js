@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const rss_parser = require('rss-parser');
 const parser = new rss_parser();
-const { EventWebHook } = require('../settings.json');
-const mentionHook = new Discord.WebhookClient(...EventWebHook);
+const { ForumsWebHook, Development } = require('../settings.json');
+const mentionHook = new Discord.WebhookClient(...ForumsWebHook);
 const ForumsPost = require('../models/ForumsPost');
 const getDoc = require('../apiTools/playerDocRequest');
 
@@ -38,4 +38,4 @@ function readRss(){
         setTimeout(readRss, 600e3);
     });
 }
-readRss();
+if(!Development) readRss();
