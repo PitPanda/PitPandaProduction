@@ -14,6 +14,7 @@ function command(msg,rest){
     if(start===-1 || end===-1) return msg.reply('Your comment is not formatted correctly, please put the comment inside [brackets]');
     const comment = reason.substring(start+1,end);
     const evidence = reason.substring(end+2) + ' ' + msg.attachments.map(attatch=>attatch.url).join(' ');
+    if(evidence===' ') return msg.reply("Please provide evidence");
     msg.reply('Your rep is now being reviewed by staff.');
     RepLogHook.send(
         new MessageEmbed()
