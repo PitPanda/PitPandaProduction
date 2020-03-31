@@ -9,14 +9,14 @@ const rgx = /^(§r)?§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
 
 const major = {
     name: 'major',
-    role: 'roleformajors',
-    color: 'ffffff',
+    role: '694629838555971675',
+    color: '#ffffff',
 };
 
 const minor = {
     name: 'minor',
-    role: 'roleforminors',
-    color: '9040ff',
+    role: '694629832000012298',
+    color: '#9040ff',
 };
 
 const events = {
@@ -24,105 +24,105 @@ const events = {
         degree: major,
         type: {
             name: 'spire',
-            role: 'roleforspire',
+            role: '694629841982455899',
         },
     },
     'MAJOR EVENT! BLOCKHEAD':{
         degree: major,
         type: {
             name: 'blockhead',
-            role: 'roleforblockhead',
+            role: '694631014881951887',
         },
     },
     'MAJOR EVENT! BEAST':{
         degree: major,
         type: {
             name: 'beast',
-            role: 'roleforbeast',
+            role: '694629844671266826',
         },
     },
     'MAJOR EVENT! RAGE PIT':{
         degree: major,
         type: {
             name: 'ragepit',
-            role: 'roleforragepit',
+            role: '694629847271604324',
         },
     },
     'MAJOR EVENT! SQUADS':{
         degree: major,
         type: {
             name: 'squads',
-            role: 'roleforsquads',
+            role: '694629851059060857',
         },
     },
     'MAJOR EVENT! RAFFLE':{
         degree: major,
         type: {
             name: 'raffle',
-            role: 'roleforraffle',
+            role: '694629859707846737',
         },
     },
     'MAJOR EVENT! ROBBERY':{
         degree: major,
         type: {
             name: 'robbery',
-            role: 'roleforrobbery',
+            role: '694629863352696902',
         },
     },
     'MINOR EVENT! KOTH':{
         degree: minor,
         type: {
             name: 'koth',
-            role: 'roleforkoth',
+            role: '694629867135696906',
         },
     },
     'MINOR EVENT! DRAGON EGG':{
         degree: minor,
         type: {
             name: 'dragon',
-            role: 'rolefordragon',
+            role: '694629869899743292',
         },
     },
     'MINOR EVENT! CARE PACKAGE':{
         degree: minor,
         type: {
             name: 'package',
-            role: 'roleforpackage',
+            role: '694629873506975834',
         },
     },
     'MINOR EVENT! KOTL':{
         degree: minor,
         type: {
             name: 'kotl',
-            role: 'roleforkotl',
+            role: '694629881056854086',
         },
     },
     'MINOR EVENT! 2X REWARDS':{
         degree: minor,
         type: {
             name: 'double',
-            role: 'rolefordouble',
+            role: '694629882818330746',
         },
     },
     'MINOR EVENT! AUCTION!':{
         degree: minor,
         type: {
             name: 'auction',
-            role: 'roleforauction',
+            role: '694629910991601717',
         },
     },
     'MINOR EVENT! GIANT CAKE':{
         degree: minor,
         type: {
             name: 'caje',
-            role: 'roleforcake',
+            role: '694629913545932820',
         },
     },
     'MINOR EVENT! EVERYONE GETS A BOUNTY!':{
         degree: minor,
         type: {
             name: 'bounty',
-            role: 'roleforbounty',
+            role: '694630567148388392',
         },
     },
 };
