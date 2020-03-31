@@ -10,7 +10,7 @@ const rgx = /^(§r)?§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
 const major = {
     name: 'major',
     role: '694629838555971675',
-    color: '#ffffff',
+    color: '#fac400',
 };
 
 const minor = {
