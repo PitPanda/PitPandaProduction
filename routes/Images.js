@@ -61,7 +61,7 @@ router.use("/profile/:tag",async (req, res) => {
     
     ctx.drawImage(img,0,0,size,size);
     cvs.createPNGStream().pipe(res);
-    console.log(`took ${Date.now()-start}ms);
+    console.log(`took ${Date.now()-start}ms`);
 });
 
 router.use('*', APIerror('Invalid Endpoint'));
