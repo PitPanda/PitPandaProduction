@@ -163,7 +163,7 @@ router.post('/', async (req,res)=>{
                 `<@${event.degree.role}> <@${event.type.role}>`,
                 new MessageEmbed()
                     .setTitle(clean)
-                    .setColor(vent.degree.color)
+                    .setColor(event.degree.color)
                     .setFooter(final._id)
                     .setTimestamp()
             );
