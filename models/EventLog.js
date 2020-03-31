@@ -6,6 +6,8 @@ const EventLogSchema = mongoose.Schema({
         index: true
     },
     event: String,
+    degree: String,
+    type: String,
     timestamp: {
         type: Date,
         default: Date.now,
