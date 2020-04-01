@@ -1553,7 +1553,8 @@
 				"Name": "§9Combo: Venom",
 				"Type": "dark",
 				"Classes": [
-					"counter"
+					"counter",
+					"combo"
 				]
 			},
 			"misery": {
@@ -1605,7 +1606,8 @@
 				"Name": "§9Combo: Heal",
 				"Type": "sword",
 				"Classes": [
-					"regen"
+					"regen",
+					"combo"
 				]
 			},
 			"melee_combo_speed": {
@@ -2637,7 +2639,8 @@
 				"Type": "sword",
 				"Classes": [
 					"resource",
-					"xp"
+					"xp",
+					"combo"
 				]
 			},
 			"melee_bleed": {
