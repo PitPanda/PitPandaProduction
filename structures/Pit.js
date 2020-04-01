@@ -1843,6 +1843,8 @@ class Pit {
             if (rareCount >= 3) flags.push('unthinkable');
             const resourceCount = enchants.filter(({ key }) => Mystics[key].Classes.includes("resource")).length;
             if (resourceCount === 3) flags.push('bountiful');
+            const comboCount = enchants.filter(({ key }) => Mystics[key].Classes.includes("combo")).length;
+            if (comboCount === 3) flags.push('combolicious');
             const tokenCount = enchants.reduce((acc, { level }) => acc + level, 0);
             if (tokenCount >= 8) flags.push('legendary');
             const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value", "Nonce", "value");
