@@ -3,38 +3,37 @@ const Command = require('../Command');
 const DiscordUser = require('../../models/DiscordUser');
 const hypixelAPI = require('../../apiTools/playerRequest');
 
-function command(msg,rest,alias){
+const command = async (msg,rest,alias) => {
     const verify = alias===`verify`;
     if(!rest[0]) return msg.reply(`Please include your username. Ex: \`.${verify?'verify':'prestige'} mcpqndq\``);
-    hypixelAPI(rest[0]).then(result=>{
-        const gmrm = msg.member.roles;
-        if(result.error) return msg.reply(result.error);
-        if(!result.discord) return msg.reply('Please link your discord ingame. tutorial: https://www.youtube.com/watch?v=LiUcDhLjLDc');
-        if(result.discord!==msg.author.tag) return msg.reply('Your discord set ingame does not match!');
+    const result = await hypixelAPI(rest[0])
+    const gmrm = msg.member.roles;
+    if(result.error) return msg.reply(result.error);
+    if(!result.discord) return msg.reply('Please link your discord ingame. tutorial: https://www.youtube.com/watch?v=LiUcDhLjLDc');
+    if(result.discord!==msg.author.tag) return msg.reply('Your discord set ingame does not match!');
 
-        //Give message based on alias used
-        if(verify) msg.reply("You have been verified!");
-        else msg.reply("Your prestige role has been updated!");
+    //Give message based on alias used
+    if(verify) msg.reply("You have been verified!");
+    else msg.reply("Your prestige role has been updated!");
+    
+    //Remove existing prestige roles and add the new one
+    await gmrm.remove(gmrm.cache.filter(p => /^Prestige/.test(p.name) && p.id !== TradeCenter.PrestigeRoles[result.prestige] ))
+    await gmrm.add(TradeCenter.PrestigeRoles[result.prestige],"Bot Prestige Role");
 
-        //only attempt to add verified role if they do not already have
-        if(!msg.member.roles.cache.get(TradeCenter.Verified))
-        gmrm.add(TradeCenter.Verified,"Bot Verification");
-        
-        //Remove existing prestige roles and add the new one
-        gmrm.remove(gmrm.cache.filter(p=>/^Prestige/.test(p.name)&&p.id!==TradeCenter.PrestigeRoles[result.prestige]))
-            .then(member=>gmrm.add(TradeCenter.PrestigeRoles[result.prestige],"Bot Prestige Role"));
+    //only attempt to add verified role if they do not already have
+    if(!msg.member.roles.cache.get(TradeCenter.Verified))
+    gmrm.add(TradeCenter.Verified,"Bot Verification");
 
-        //attempt to set their nick to their ign
-        if(msg.member.displayName!=result.username) msg.member.setNickname(result.username,"Updating nick to their ingame name")
-            .catch(err=>msg.reply(`Please update your discord to reflect your ingame name. \`${result.username}\``));
-        
-        const user = new DiscordUser({
-            _id: msg.author.id,
-            uuid: result.uuid
-        });
-        
-        DiscordUser.findOneAndUpdate({_id:msg.author.id},{$set:user},{upsert:true}).catch(console.error);
+    //attempt to set their nick to their ign
+    if(msg.member.displayName!==result.username) msg.member.setNickname(result.username,"Updating nick to their ingame name")
+        .catch(err=>msg.reply(`Please update your discord to reflect your ingame name. \`${result.username}\``));
+    
+    const user = new DiscordUser({
+        _id: msg.author.id,
+        uuid: result.uuid
     });
+    
+    DiscordUser.findOneAndUpdate({_id:msg.author.id},{$set:user},{upsert:true}).catch(console.error);
 }
 
 module.exports = new Command(
