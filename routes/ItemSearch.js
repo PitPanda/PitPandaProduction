@@ -1,6 +1,14 @@
 const Mystic = require('../models/Mystic');
-const Item = require('../structures/Item');
 const { dbToItem } = require('../apiTools/apiTools');
+const {Pit:{Mystics}} = require('../frontEnd/src/pitMaster.json');
+
+const classes = {};
+Object.entries(Mystics).forEach(([key,enchant])=>{
+    enchant.Classes.forEach(cls=>{
+        if(!classes[cls])classes[cls]=[];
+        classes[cls].push(key);
+    })
+});
 
 const router = require('express').Router();
 
@@ -48,6 +56,12 @@ const itemSearch = (req, res) => {
             else if (a === 'maxlives') $and.push({ maxLives: finalB });
             else if (a === 'color') $and.push({ nonce: { $mod: [5, b] } });
             else if (a === 'nonce') $and.push({ nonce: finalB });
+            else if(a in classes) enchants.push({
+                $elemMatch: {
+                    key: {$in:classes[a]},
+                    level: finalB
+                }
+            });
             else enchants.push({
                 $elemMatch: {
                     key: a,

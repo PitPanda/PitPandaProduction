@@ -1113,7 +1113,10 @@
 					]
 				],
 				"Name": "§9\"Not\" Gladiator",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"immune_true_damage": {
 				"Descriptions": [
@@ -1132,7 +1135,10 @@
 					]
 				],
 				"Name": "§9Mirror",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"instaboom_tnt": {
 				"Descriptions": [
@@ -1161,7 +1167,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Instaboom",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"eggs": {
 				"Descriptions": [
@@ -1179,7 +1188,10 @@
 					]
 				],
 				"Name": "§9Eggs",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme"
+				]
 			},
 			"paparazzi": {
 				"Descriptions": [
@@ -1200,7 +1212,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Paparazzi",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"utility"
+				]
 			},
 			"trash_panda": {
 				"Descriptions": [
@@ -1211,7 +1226,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Trash Panda",
-				"Type": "sewer"
+				"Type": "sewer",
+				"Classes": [
+					"utility"
+				]
 			},
 			"gold_per_kill": {
 				"Descriptions": [
@@ -1226,7 +1244,11 @@
 					]
 				],
 				"Name": "§9Gold Bump",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"gold_strictly_kills": {
 				"Descriptions": [
@@ -1244,7 +1266,11 @@
 					]
 				],
 				"Name": "§9Moctezuma",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"melee_execute": {
 				"Descriptions": [
@@ -1262,7 +1288,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Executioner",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"gold_boost": {
 				"Descriptions": [
@@ -1277,7 +1306,11 @@
 					]
 				],
 				"Name": "§9Gold Boost",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"absorption_on_kill": {
 				"Descriptions": [
@@ -1295,7 +1328,10 @@
 					]
 				],
 				"Name": "§9Golden Heart",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"max_bounty_self_claim": {
 				"Descriptions": [
@@ -1319,7 +1355,10 @@
 					]
 				],
 				"Name": "§9Self-checkout",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"utility"
+				]
 			},
 			"double_jump": {
 				"Descriptions": [
@@ -1337,7 +1376,12 @@
 					]
 				],
 				"Name": "§dRARE! §9Double-jump",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility",
+					"utility",
+					"meme"
+				]
 			},
 			"increase_armor_drops": {
 				"Descriptions": [
@@ -1358,7 +1402,8 @@
 					]
 				],
 				"Name": "§9Lodbrok",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": []
 			},
 			"melee_damage_vs_bows": {
 				"Descriptions": [
@@ -1376,7 +1421,10 @@
 					]
 				],
 				"Name": "§9Beat the Spammers",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"streak_xp": {
 				"Descriptions": [
@@ -1393,7 +1441,11 @@
 					]
 				],
 				"Name": "§9Sweaty",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"xp"
+				]
 			},
 			"melee_heal_on_hit": {
 				"Descriptions": [
@@ -1408,7 +1460,10 @@
 					]
 				],
 				"Name": "§9Lifesteal",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"regen"
+				]
 			},
 			"xp_boost": {
 				"Descriptions": [
@@ -1423,7 +1478,11 @@
 					]
 				],
 				"Name": "§9XP Boost",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"xp"
+				]
 			},
 			"gold_per_diamond_piece": {
 				"Descriptions": [
@@ -1441,7 +1500,11 @@
 					]
 				],
 				"Name": "§9Sierra",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"pickpocket": {
 				"Descriptions": [
@@ -1459,7 +1522,11 @@
 					]
 				],
 				"Name": "§9Pitpocket",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"somber": {
 				"Descriptions": [
@@ -1469,7 +1536,10 @@
 					]
 				],
 				"Name": "§9Somber",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"counter"
+				]
 			},
 			"venom": {
 				"Descriptions": [
@@ -1481,7 +1551,10 @@
 					]
 				],
 				"Name": "§9Combo: Venom",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"counter"
+				]
 			},
 			"misery": {
 				"Descriptions": [
@@ -1492,7 +1565,10 @@
 					]
 				],
 				"Name": "§9Misery",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"damage"
+				]
 			},
 			"spite": {
 				"Descriptions": [
@@ -1503,7 +1579,10 @@
 					]
 				],
 				"Name": "§9Spite",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_combo_heal": {
 				"Descriptions": [
@@ -1524,7 +1603,10 @@
 					]
 				],
 				"Name": "§9Combo: Heal",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"regen"
+				]
 			},
 			"melee_combo_speed": {
 				"Descriptions": [
@@ -1542,7 +1624,11 @@
 					]
 				],
 				"Name": "§9Combo: Swift",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"combo",
+					"mobility"
+				]
 			},
 			"gold_per_crit": {
 				"Descriptions": [
@@ -1557,7 +1643,11 @@
 					]
 				],
 				"Name": "§9Critically Rich",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"melee_damage_vs_diamond": {
 				"Descriptions": [
@@ -1575,7 +1665,11 @@
 					]
 				],
 				"Name": "§9Diamond Stomp",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage",
+					"counter"
+				]
 			},
 			"melee_damage_vs_leather": {
 				"Descriptions": [
@@ -1593,7 +1687,10 @@
 					]
 				],
 				"Name": "§9Fancy Raider",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_weakness": {
 				"Descriptions": [
@@ -1611,7 +1708,10 @@
 					]
 				],
 				"Name": "§9Crush",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"utility"
+				]
 			},
 			"increased_blocking": {
 				"Descriptions": [
@@ -1629,7 +1729,10 @@
 					]
 				],
 				"Name": "§9Bruiser",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"defense"
+				]
 			},
 			"pants_radar": {
 				"Descriptions": [
@@ -1647,7 +1750,10 @@
 					]
 				],
 				"Name": "§9Pants Radar",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource"
+				]
 			},
 			"melee_damage_when_close_low_players": {
 				"Descriptions": [
@@ -1668,7 +1774,10 @@
 					]
 				],
 				"Name": "§9Shark",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_damage_when_absorption": {
 				"Descriptions": [
@@ -1686,7 +1795,10 @@
 					]
 				],
 				"Name": "§9Gold and Boosted",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_damage_when_low": {
 				"Descriptions": [
@@ -1704,7 +1816,10 @@
 					]
 				],
 				"Name": "§9Pain Focus",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_damage_when_on_grass": {
 				"Descriptions": [
@@ -1722,7 +1837,10 @@
 					]
 				],
 				"Name": "§9Grasshopper",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"damage"
+				]
 			},
 			"less_damage_vs_diamond_weapons": {
 				"Descriptions": [
@@ -1740,7 +1858,10 @@
 					]
 				],
 				"Name": "§9Diamond Allergy",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"overheal_enchant": {
 				"Descriptions": [
@@ -1755,7 +1876,10 @@
 					]
 				],
 				"Name": "§9Excess",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"less_damage_from_arrows": {
 				"Descriptions": [
@@ -1773,7 +1897,10 @@
 					]
 				],
 				"Name": "§9Ring Armor",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"gold_per_hit": {
 				"Descriptions": [
@@ -1788,7 +1915,11 @@
 					]
 				],
 				"Name": "§9Strike Gold",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"tnt": {
 				"Descriptions": [
@@ -1812,7 +1943,10 @@
 					]
 				],
 				"Name": "§9TNT",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme"
+				]
 			},
 			"damage_reduction": {
 				"Descriptions": [
@@ -1827,7 +1961,10 @@
 					]
 				],
 				"Name": "§9Protection",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"contract_rewards": {
 				"Descriptions": [
@@ -1842,7 +1979,12 @@
 					]
 				],
 				"Name": "§9Negotiator",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"resource",
+					"utility",
+					"gold"
+				]
 			},
 			"less_damage_vs_bounties": {
 				"Descriptions": [
@@ -1860,7 +2002,10 @@
 					]
 				],
 				"Name": "§9David and Goliath",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"bow_damage": {
 				"Descriptions": [
@@ -1875,7 +2020,10 @@
 					]
 				],
 				"Name": "§9Fletching",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"heal_on_shoot_self": {
 				"Descriptions": [
@@ -1891,7 +2039,10 @@
 					]
 				],
 				"Name": "§9What doesn't kill you",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"regen"
+				]
 			},
 			"respawn_with_absorption": {
 				"Descriptions": [
@@ -1906,7 +2057,10 @@
 					]
 				],
 				"Name": "§9Respawn: Absorption",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"steaks_on_kill": {
 				"Descriptions": [
@@ -1933,7 +2087,11 @@
 					]
 				],
 				"Name": "§9Steaks",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen",
+					"damage"
+				]
 			},
 			"melee_gamble": {
 				"Descriptions": [
@@ -1954,7 +2112,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Gamble!",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_strike_after_block": {
 				"Descriptions": [
@@ -1978,7 +2139,11 @@
 					]
 				],
 				"Name": "§9Duelist",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage",
+					"regen"
+				]
 			},
 			"fishing_rod_enchant": {
 				"Descriptions": [
@@ -1987,7 +2152,10 @@
 					]
 				],
 				"Name": "§9Club Rod",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"utility"
+				]
 			},
 			"water_bucket": {
 				"Descriptions": [
@@ -1999,7 +2167,10 @@
 					]
 				],
 				"Name": "§9Portable Pond",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"utility"
+				]
 			},
 			"increase_gold_pickup": {
 				"Descriptions": [
@@ -2015,7 +2186,11 @@
 					]
 				],
 				"Name": "§9Pebble",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"resource",
+					"gold"
+				]
 			},
 			"xp_per_kill": {
 				"Descriptions": [
@@ -2030,7 +2205,11 @@
 					]
 				],
 				"Name": "§9XP Bump",
-				"Type": "resource"
+				"Type": "any",
+				"Classes": [
+					"resource",
+					"xp"
+				]
 			},
 			"blocking_cancels_projectiles": {
 				"Descriptions": [
@@ -2050,7 +2229,11 @@
 					]
 				],
 				"Name": "§9Bullet Time",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"defense",
+					"regen"
+				]
 			},
 			"rogue": {
 				"Descriptions": [
@@ -2061,7 +2244,11 @@
 					]
 				],
 				"Name": "§9Rogue",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"damage",
+					"defense"
+				]
 			},
 			"regen_when_hit": {
 				"Descriptions": [
@@ -2076,7 +2263,10 @@
 					]
 				],
 				"Name": "§9Peroxide",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"less_damage_when_high_bounty": {
 				"Descriptions": [
@@ -2094,7 +2284,10 @@
 					]
 				],
 				"Name": "§9Billy",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"solitude": {
 				"Descriptions": [
@@ -2115,7 +2308,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Solitude",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"melee_combo_damage": {
 				"Descriptions": [
@@ -2133,7 +2329,11 @@
 					]
 				],
 				"Name": "§9Combo: Damage",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage",
+					"combo"
+				]
 			},
 			"etspeed_on_kill": {
 				"Descriptions": [
@@ -2148,7 +2348,10 @@
 					]
 				],
 				"Name": "§9Speedy Kill",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"melee_stun": {
 				"Descriptions": [
@@ -2168,7 +2371,11 @@
 					]
 				],
 				"Name": "§dRARE! §9Combo: Stun",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"utility",
+					"combo"
+				]
 			},
 			"jump_spammer": {
 				"Descriptions": [
@@ -2190,7 +2397,11 @@
 					]
 				],
 				"Name": "§9Jumpspammer",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage",
+					"defense"
+				]
 			},
 			"explosive_chickens": {
 				"Descriptions": [
@@ -2207,7 +2418,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Devil Chicks!",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"respawn_with_resistance": {
 				"Descriptions": [
@@ -2223,7 +2437,10 @@
 					]
 				],
 				"Name": "§9Respawn: Resistance",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"perma_speed": {
 				"Descriptions": [
@@ -2238,7 +2455,10 @@
 					]
 				],
 				"Name": "§9Gotta go fast",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"passive_health_regen": {
 				"Descriptions": [
@@ -2256,7 +2476,10 @@
 					]
 				],
 				"Name": "§9Boo-boo",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"bow_weakness_on_hit": {
 				"Descriptions": [
@@ -2272,7 +2495,10 @@
 					]
 				],
 				"Name": "§9Wasp",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"pin_down": {
 				"Descriptions": [
@@ -2293,7 +2519,10 @@
 					]
 				],
 				"Name": "§9Pin down",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"melee_damage_vs_high_hp": {
 				"Descriptions": [
@@ -2311,7 +2540,10 @@
 					]
 				],
 				"Name": "§9King Buster",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_launch": {
 				"Descriptions": [
@@ -2329,7 +2561,11 @@
 					]
 				],
 				"Name": "§dRARE! §9The Punch",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"meme",
+					"utility"
+				]
 			},
 			"speed_when_hit_few_times": {
 				"Descriptions": [
@@ -2347,7 +2583,10 @@
 					]
 				],
 				"Name": "§9Counter-Offensive",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"phoenix": {
 				"Descriptions": [
@@ -2374,7 +2613,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Phoenix",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"combo_xp": {
 				"Descriptions": [
@@ -2392,7 +2634,11 @@
 					]
 				],
 				"Name": "§9Combo: XP",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"resource",
+					"xp"
+				]
 			},
 			"melee_bleed": {
 				"Descriptions": [
@@ -2416,7 +2662,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Hemorrhage",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"utility"
+				]
 			},
 			"melee_damage_vs_low_hp": {
 				"Descriptions": [
@@ -2434,7 +2683,10 @@
 					]
 				],
 				"Name": "§9Punisher",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_healer": {
 				"Descriptions": [
@@ -2452,7 +2704,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Healer",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"utility"
+				]
 			},
 			"tough_crew": {
 				"Descriptions": [
@@ -2463,7 +2718,10 @@
 					]
 				],
 				"Name": "§9Tough Crew",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"defense"
+				]
 			},
 			"pullbow": {
 				"Descriptions": [
@@ -2483,7 +2741,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Pullbow",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"telebow": {
 				"Descriptions": [
@@ -2504,7 +2765,11 @@
 					]
 				],
 				"Name": "§dRARE! §9Telebow",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility",
+					"mobility"
+				]
 			},
 			"melee_literally_p2w": {
 				"Descriptions": [
@@ -2522,7 +2787,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Billionaire",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"sniper": {
 				"Descriptions": [
@@ -2540,7 +2808,10 @@
 					]
 				],
 				"Name": "§9Sniper",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"volley": {
 				"Descriptions": [
@@ -2555,7 +2826,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Volley",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"melee_knockback": {
 				"Descriptions": [
@@ -2573,7 +2847,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Knockback",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"utility"
+				]
 			},
 			"royalty": {
 				"Descriptions": [
@@ -2582,7 +2859,11 @@
 					]
 				],
 				"Name": "§9Royalty",
-				"Type": "helmet"
+				"Type": "helmet",
+				"Classes": [
+					"resource",
+					"xp"
+				]
 			},
 			"stereo": {
 				"Descriptions": [
@@ -2592,7 +2873,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Stereo",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"meme"
+				]
 			},
 			"mind_assault": {
 				"Descriptions": [
@@ -2605,7 +2889,10 @@
 					]
 				],
 				"Name": "§9Mind Assault",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_crit_midair": {
 				"Descriptions": [
@@ -2626,7 +2913,10 @@
 					]
 				],
 				"Name": "§9Berserker",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"less_damage_on_grass": {
 				"Descriptions": [
@@ -2648,7 +2938,11 @@
 					]
 				],
 				"Name": "§9Cricket",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense",
+					"regen"
+				]
 			},
 			"regen_speed_when_low": {
 				"Descriptions": [
@@ -2669,7 +2963,11 @@
 					]
 				],
 				"Name": "§9Revitalize",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen",
+					"mobility"
+				]
 			},
 			"gain_arrows_on_hit": {
 				"Descriptions": [
@@ -2684,7 +2982,10 @@
 					]
 				],
 				"Name": "§9Bottomless Quiver",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"rod_true_damage": {
 				"Descriptions": [
@@ -2694,7 +2995,10 @@
 					]
 				],
 				"Name": "§9Grandmaster",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"damage"
+				]
 			},
 			"first_shot": {
 				"Descriptions": [
@@ -2712,7 +3016,10 @@
 					]
 				],
 				"Name": "§9First Shot",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_heal_on_kill": {
 				"Descriptions": [
@@ -2727,7 +3034,10 @@
 					]
 				],
 				"Name": "§9Guts",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"regen"
+				]
 			},
 			"melee_avenge": {
 				"Descriptions": [
@@ -2745,7 +3055,10 @@
 					]
 				],
 				"Name": "§9Revengeance",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"bow_combo_speed": {
 				"Descriptions": [
@@ -2763,7 +3076,10 @@
 					]
 				],
 				"Name": "§9Faster than their shadow",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"bow_spammer": {
 				"Descriptions": [
@@ -2781,7 +3097,10 @@
 					]
 				],
 				"Name": "§9Spammer and Proud",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"parasite": {
 				"Descriptions": [
@@ -2796,7 +3115,10 @@
 					]
 				],
 				"Name": "§9Parasite",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"regen"
+				]
 			},
 			"bow_slow": {
 				"Descriptions": [
@@ -2816,7 +3138,11 @@
 					]
 				],
 				"Name": "§9Sprint Drain",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility",
+					"mobility"
+				]
 			},
 			"melee_damage_vs_bounties": {
 				"Descriptions": [
@@ -2834,7 +3160,10 @@
 					]
 				],
 				"Name": "§9Bounty Reaper",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"resistance_on_kill": {
 				"Descriptions": [
@@ -2852,7 +3181,10 @@
 					]
 				],
 				"Name": "§9Counter-Janitor",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"defense"
+				]
 			},
 			"regen_when_ooc": {
 				"Descriptions": [
@@ -2872,7 +3204,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Gomraw's Heart",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"wolf_pack": {
 				"Descriptions": [
@@ -2893,7 +3228,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Wolf Pack",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobs"
+				]
 			},
 			"counter_bounty_hunter": {
 				"Descriptions": [
@@ -2915,7 +3253,10 @@
 					]
 				],
 				"Name": "§9Hunt the Hunter",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"higher_max_hp": {
 				"Descriptions": [
@@ -2931,7 +3272,10 @@
 					]
 				],
 				"Name": "§9Hearts",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"fishing_rod_kb": {
 				"Descriptions": [
@@ -2941,7 +3285,10 @@
 					]
 				],
 				"Name": "§9Rodback",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"utility"
+				]
 			},
 			"melee_lightning": {
 				"Descriptions": [
@@ -2964,7 +3311,11 @@
 					]
 				],
 				"Name": "§dRARE! §9Combo: Perun's Wrath",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage",
+					"combo"
+				]
 			},
 			"explosive_bow": {
 				"Descriptions": [
@@ -2979,7 +3330,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Explosive",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"damage_per_arrow": {
 				"Descriptions": [
@@ -2997,7 +3351,10 @@
 					]
 				],
 				"Name": "§9Arrow Armory",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"escape_pod": {
 				"Descriptions": [
@@ -3024,7 +3381,12 @@
 					]
 				],
 				"Name": "§dRARE! §9Escape Pod",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"utility",
+					"regen",
+					"defense"
+				]
 			},
 			"less_damage_when_swimming": {
 				"Descriptions": [
@@ -3042,7 +3404,10 @@
 					]
 				],
 				"Name": "§9McSwimmer",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"instant_shot": {
 				"Descriptions": [
@@ -3063,7 +3428,12 @@
 					]
 				],
 				"Name": "§dRARE! §9Mega Longbow",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage",
+					"mobility",
+					"utility"
+				]
 			},
 			"mixed_combat": {
 				"Descriptions": [
@@ -3084,7 +3454,10 @@
 					]
 				],
 				"Name": "§9Mixed Combat",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"arrow_true_damage": {
 				"Descriptions": [
@@ -3099,7 +3472,10 @@
 					]
 				],
 				"Name": "§9Chipping",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"melee_speed_on_hit": {
 				"Descriptions": [
@@ -3117,7 +3493,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Speedy Hit",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"superspeed_when_low": {
 				"Descriptions": [
@@ -3135,7 +3514,10 @@
 					]
 				],
 				"Name": "§9Danger Close",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"plain_melee_damage": {
 				"Descriptions": [
@@ -3150,7 +3532,10 @@
 					]
 				],
 				"Name": "§9Sharp",
-				"Type": "sword"
+				"Type": "sword",
+				"Classes": [
+					"damage"
+				]
 			},
 			"sneak_teleport": {
 				"Descriptions": [
@@ -3168,7 +3553,11 @@
 					]
 				],
 				"Name": "§dRARE! §9Assassin",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme",
+					"utility"
+				]
 			},
 			"resistance_when_low": {
 				"Descriptions": [
@@ -3186,7 +3575,10 @@
 					]
 				],
 				"Name": "§9Last Stand",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"regen"
+				]
 			},
 			"singularity": {
 				"Descriptions": [
@@ -3204,7 +3596,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Singularity",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"refresh_speed_on_kill": {
 				"Descriptions": [
@@ -3225,7 +3620,10 @@
 					]
 				],
 				"Name": "§9Electrolytes",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobility"
+				]
 			},
 			"gold_break_obsidian": {
 				"Descriptions": [
@@ -3243,7 +3641,13 @@
 					]
 				],
 				"Name": "§9Purple Gold",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"resource",
+					"gold",
+					"meme",
+					"regen"
+				]
 			},
 			"pit_mba": {
 				"Descriptions": [
@@ -3264,7 +3668,12 @@
 					]
 				],
 				"Name": "§9Pit MBA",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"resource",
+					"gold",
+					"xp"
+				]
 			},
 			"grim_reaper": {
 				"Descriptions": [
@@ -3276,7 +3685,8 @@
 					]
 				],
 				"Name": "§9Grim Reaper",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": []
 			},
 			"chance_dont_lose_life": {
 				"Descriptions": [
@@ -3294,7 +3704,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Divine Miracle",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"utility"
+				]
 			},
 			"the_blob": {
 				"Descriptions": [
@@ -3321,7 +3734,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Pit Blob",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"mobs"
+				]
 			},
 			"wood_blocks": {
 				"Descriptions": [
@@ -3342,7 +3758,11 @@
 					]
 				],
 				"Name": "§9Creative",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme",
+					"utility"
+				]
 			},
 			"thorns": {
 				"Descriptions": [
@@ -3360,7 +3780,10 @@
 					]
 				],
 				"Name": "§9Prick",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"damage"
+				]
 			},
 			"worm": {
 				"Descriptions": [
@@ -3370,7 +3793,11 @@
 					]
 				],
 				"Name": "§9Worm",
-				"Type": "sewer"
+				"Type": "sewer",
+				"Classes": [
+					"xp",
+					"mobility"
+				]
 			},
 			"power_against_crits": {
 				"Descriptions": [
@@ -3393,7 +3820,11 @@
 					]
 				],
 				"Name": "§9Critically Funky",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"damage",
+					"defense"
+				]
 			},
 			"lucky_shot": {
 				"Descriptions": [
@@ -3411,7 +3842,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Lucky Shot",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"martyrdom": {
 				"Descriptions": [
@@ -3429,7 +3863,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Martyrdom",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme"
+				]
 			},
 			"snowballs": {
 				"Descriptions": [
@@ -3456,7 +3893,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Snowballs",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme"
+				]
 			},
 			"punch_once_in_a_while": {
 				"Descriptions": [
@@ -3476,7 +3916,11 @@
 					]
 				],
 				"Name": "§9Push comes to shove",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility",
+					"mobility"
+				]
 			},
 			"bow_to_true_damage": {
 				"Descriptions": [
@@ -3496,7 +3940,10 @@
 					]
 				],
 				"Name": "§dRARE! §9True Shot",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"damage"
+				]
 			},
 			"hedge_fund": {
 				"Descriptions": [
@@ -3508,7 +3955,10 @@
 					]
 				],
 				"Name": "§9Hedge Fund",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"gold"
+				]
 			},
 			"aegis": {
 				"Descriptions": [
@@ -3518,7 +3968,10 @@
 					]
 				],
 				"Name": "§9Aegis",
-				"Type": "dark"
+				"Type": "sewer",
+				"Classes": [
+					"defense"
+				]
 			},
 			"heartripper": {
 				"Descriptions": [
@@ -3532,7 +3985,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Heartripper",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"utility"
+				]
 			},
 			"hidden_jewel": {
 				"Descriptions": [
@@ -3543,7 +3999,10 @@
 					]
 				],
 				"Name": "§9Hidden Jewel",
-				"Type": "sewer"
+				"Type": "sewer",
+				"Classes": [
+					"utility"
+				]
 			},
 			"snowmen": {
 				"Descriptions": [
@@ -3573,7 +4032,11 @@
 					]
 				],
 				"Name": "§dRARE! §9Snowmen Army",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"meme",
+					"mobs"
+				]
 			},
 			"fractional_reserve": {
 				"Descriptions": [
@@ -3594,7 +4057,10 @@
 					]
 				],
 				"Name": "§9Fractional Reserve",
-				"Type": "pants"
+				"Type": "pants",
+				"Classes": [
+					"defense"
+				]
 			},
 			"needless_suffering": {
 				"Descriptions": [
@@ -3604,7 +4070,10 @@
 					]
 				],
 				"Name": "§9Needless Suffering",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"defense"
+				]
 			},
 			"fishers_unite": {
 				"Descriptions": [
@@ -3614,7 +4083,8 @@
 					]
 				],
 				"Name": "§9Unite",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": []
 			},
 			"homing": {
 				"Descriptions": [
@@ -3632,7 +4102,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Robinhood",
-				"Type": "bow"
+				"Type": "bow",
+				"Classes": [
+					"utility"
+				]
 			},
 			"lycanthropy": {
 				"Descriptions": [
@@ -3645,7 +4118,12 @@
 					]
 				],
 				"Name": "§9Lycanthropy",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"gold",
+					"regen",
+					"mobility"
+				]
 			},
 			"sanguisuge": {
 				"Descriptions": [
@@ -3658,7 +4136,10 @@
 					]
 				],
 				"Name": "§9Sanguisuge",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"regen"
+				]
 			},
 			"trophy": {
 				"Descriptions": [
@@ -3667,7 +4148,10 @@
 					]
 				],
 				"Name": "§9Trophy",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"utility"
+				]
 			},
 			"luck_of_the_pond": {
 				"Descriptions": [
@@ -3676,7 +4160,10 @@
 					]
 				],
 				"Name": "§9Luck of the Pond",
-				"Type": "aqua"
+				"Type": "aqua",
+				"Classes": [
+					"utility"
+				]
 			},
 			"nostalgia": {
 				"Descriptions": [
@@ -3686,7 +4173,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Nostalgia",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"defense"
+				]
 			},
 			"golden_handcuffs": {
 				"Descriptions": [
@@ -3698,7 +4188,10 @@
 					]
 				],
 				"Name": "§dRARE! §9Golden Handcuffs",
-				"Type": "dark"
+				"Type": "dark",
+				"Classes": [
+					"gold"
+				]
 			}
 		}
 	},

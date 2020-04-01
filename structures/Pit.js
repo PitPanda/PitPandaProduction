@@ -1841,14 +1841,14 @@ class Pit {
             if (rareCount >= 1) flags.push('rare');
             if (rareCount >= 2) flags.push('extraordinary');
             if (rareCount >= 3) flags.push('unthinkable');
-            const resourceCount = enchants.filter(({ key }) => Mystics[key].Type == "resource").length;
+            const resourceCount = enchants.filter(({ key }) => Mystics[key].Classes.includes("resource")).length;
             if (resourceCount === 3) flags.push('bountiful');
             const tokenCount = enchants.reduce((acc, { level }) => acc + level, 0);
             if (tokenCount >= 8) flags.push('legendary');
             const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value", "Nonce", "value");
             const id = getRef(item, "id", "value");
             let meta = getRef(item, 'Damage', 'value') || getRef(item, "tag", "value", "display", "value", "color", "value");
-            if (id >= 298 && id <= 301 && typeof meta == 'undefined') meta = 10511680;
+            if (id >= 298 && id <= 301 && typeof meta === 'undefined') meta = 10511680;
             const maxLives = getRef(item, "tag", "value", "ExtraAttributes", "value", "MaxLives", "value");
             if (maxLives === 100) flags.push('artifact');
             const lives = getRef(item, "tag", "value", "ExtraAttributes", "value", "Lives", "value");

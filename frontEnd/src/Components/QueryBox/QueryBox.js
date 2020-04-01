@@ -5,22 +5,29 @@ import pitMaster from '../../pitMaster.json';
 import uuid from 'uuid';
 
 let Mystics = pitMaster.Pit.Mystics;
+
+Object.values(Mystics).forEach(ench=>{
+    ench.Classes.forEach(cls=>{
+        if(!Mystics[cls]) Mystics[cls] = {Name:`§f${cls.charAt(0).toUpperCase() + cls.slice(1)}`,Type:'any'};
+    })
+});
+
 Mystics.pants = {Name:'§fPants',Type:'pants',NoNumber:true};
 Mystics.sword = {Name:'§fSword',Type:'sword',NoNumber:true};
 Mystics.bow = {Name:'§fBow',Type:'bow',NoNumber:true};
-Mystics.lives = {Name:'§fLives',Type:'resource'};
-Mystics.maxLives = {Name:'§fMax Lives',Type:'resource'};
-Mystics.tokens = {Name:'§fTokens',Type:'resource'};
-Mystics.artifact = {Name:'§fArtifact',Type:'resource',NoNumber:true};
-Mystics.rare = {Name:'§fRare',Type:'resource',NoNumber:true};
-Mystics.legendary = {Name:'§fLegendary',Type:'resource',NoNumber:true};
-Mystics.bountiful = {Name:'§fBountiful',Type:'resource',NoNumber:true};
-Mystics.extraordinary = {Name:'§fExtraordinary',Type:'resource',NoNumber:true};
-Mystics.unthinkable = {Name:'§fUnthinkable',Type:'resource',NoNumber:true};
-Mystics.overpowered = {Name:'§fOverpowered',Type:'resource',NoNumber:true};
-Mystics.miraculous = {Name:'§fMiraculous',Type:'resource',NoNumber:true};
-Mystics.million = {Name:'§fOne in a Million',Type:'resource',NoNumber:true};
-Mystics.nonce = {Name:'§fNonce',Type:'resource'};
+Mystics.lives = {Name:'§fLives',Type:'any'};
+Mystics.maxLives = {Name:'§fMax Lives',Type:'any'};
+Mystics.tokens = {Name:'§fTokens',Type:'any'};
+Mystics.artifact = {Name:'§fArtifact',Type:'any',NoNumber:true};
+Mystics.rare = {Name:'§fRare',Type:'any',NoNumber:true};
+Mystics.legendary = {Name:'§fLegendary',Type:'any',NoNumber:true};
+Mystics.bountiful = {Name:'§fBountiful',Type:'any',NoNumber:true};
+Mystics.extraordinary = {Name:'§fExtraordinary',Type:'any',NoNumber:true};
+Mystics.unthinkable = {Name:'§fUnthinkable',Type:'any',NoNumber:true};
+Mystics.overpowered = {Name:'§fOverpowered',Type:'any',NoNumber:true};
+Mystics.miraculous = {Name:'§fMiraculous',Type:'any',NoNumber:true};
+Mystics.million = {Name:'§fOne in a Million',Type:'any',NoNumber:true};
+Mystics.nonce = {Name:'§fNonce',Type:'any'};
 Mystics.color = {Name:'§fColor',Type:'pants',Colors:{
     red:'0',
     yellow:'1',
@@ -34,7 +41,7 @@ Mystics['color2'] = {Name:'§fBlue',Type:'pants',NoNumber:true};
 Mystics['color3'] = {Name:'§fOrange',Type:'pants',NoNumber:true};
 Mystics['color4'] = {Name:'§fGreen',Type:'pants',NoNumber:true};
 
-const valid = ['pants','sword','bow','resource'];
+const valid = ['pants','sword','bow','any'];
 const formatted = Object.entries(Mystics)
     .filter(([,ench])=>valid.includes(ench.Type))
     .sort(([,a],[,b])=>a.Name.substring(a.Name.indexOf('§9')+2)<b.Name.substring(b.Name.indexOf('§9')+2)?-1:1);
@@ -75,7 +82,7 @@ class QueryBox extends React.Component{
         inputs[index].type=type;
         let foundType;
         for(const input of inputs){
-            if(input.type&&input.type!=='resource'){
+            if(input.type&&input.type!=='any'){
                 foundType=input.type;
                 this.setState({type:input.type})
             }
@@ -106,7 +113,7 @@ class QueryBox extends React.Component{
 
     render(){
         let suggestions = formatted;
-        if(this.state.type!=='*') suggestions = suggestions.filter(([,ench])=>['resource',this.state.type].includes(ench.Type));
+        if(this.state.type!=='*') suggestions = suggestions.filter(([,ench])=>['any',this.state.type].includes(ench.Type));
         return (
             <StaticCard title="Query" style={{width:'350px',display:'inline-block',verticalAlign:'top',margin:'20px',textAlign:'left'}}>
                 {this.state.inputs.map((input,index)=>(

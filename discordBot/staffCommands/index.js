@@ -3,7 +3,6 @@ const commands = [
     require('./reps'),
     require('./scammer'),
     require('./embed'),
-    require('./pitpandatag'),
     require('../staffCommands/whois'),
 ];
 

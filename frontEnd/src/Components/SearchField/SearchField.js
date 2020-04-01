@@ -35,7 +35,7 @@ class SearchField extends Component {
     // Event fired when the input value is changed
     onChange = e => {
         const { suggestions } = this.props;
-        const userInput = e.currentTarget.value.split('').filter(str=>/[-+!"':a-zA-Z0-9 ]/.test(str)).join('');
+        const userInput = e.currentTarget.value.split('').filter(str=>/[-+_!"':a-zA-Z0-9 ]/.test(str)).join('');
 
         // Filter our suggestions that don't contain the user's input
         const filteredSuggestions = suggestions.filter(
@@ -59,10 +59,10 @@ class SearchField extends Component {
     };
 
     reportString(value,showNumber,number,text){
-        if(text==='') return this.props.report('', '', 'resource');
+        if(text==='') return this.props.report('', '', 'any');
         value=value.toLowerCase();
         number=number.toLowerCase();
-        let type = 'resource';
+        let type = 'any';
         let match = this.props.suggestions.find(s=>value===s[0]);
         if(!match){
             match = this.props.suggestions.find(s=>s[1].Name.replace(/§./g,'').toLowerCase() === value);

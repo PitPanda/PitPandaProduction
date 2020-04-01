@@ -53,6 +53,7 @@ client.on('message',msg=>{
     if(userPerms<state.minimumPerm) return msg.reply('You do not have permission to use these commands!');
 
     let [command, ...args] = getArgs(msg,state.prefix);
+    if(!command) return;
 
     let executed = false;
     if(command==='help'){
