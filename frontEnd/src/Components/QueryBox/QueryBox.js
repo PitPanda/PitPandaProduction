@@ -22,6 +22,7 @@ Mystics.artifact = {Name:'§fArtifact',Type:'any',NoNumber:true};
 Mystics.rare = {Name:'§fRare',Type:'any',NoNumber:true};
 Mystics.legendary = {Name:'§fLegendary',Type:'any',NoNumber:true};
 Mystics.bountiful = {Name:'§fBountiful',Type:'any',NoNumber:true};
+Mystics.combolicious = {Name:'§fCombolicious',Type:'any',NoNumber:true};
 Mystics.extraordinary = {Name:'§fExtraordinary',Type:'any',NoNumber:true};
 Mystics.unthinkable = {Name:'§fUnthinkable',Type:'any',NoNumber:true};
 Mystics.overpowered = {Name:'§fOverpowered',Type:'any',NoNumber:true};
