@@ -1403,7 +1403,9 @@
 				],
 				"Name": "§9Lodbrok",
 				"Type": "pants",
-				"Classes": []
+				"Classes": [
+					"resource"
+				]
 			},
 			"melee_damage_vs_bows": {
 				"Descriptions": [
