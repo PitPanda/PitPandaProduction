@@ -1,9 +1,9 @@
 const commands = [
     require('./rep'),
     require('./reps'),
-    require('./scammer'),
+    require('./flag'),
     require('./embed'),
-    require('../staffCommands/whois'),
+    require('./whois'),
 ];
 
 module.exports = commands;

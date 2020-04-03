@@ -27,7 +27,7 @@ const command = async (msg, rest)=> {
         }
     }
     const role = await msg.guild.roles.fetch(TraderOfTheMonth);
-    await role.members.map(member=>member.roles.remove(role));
+    await Promise.all(role.members.map(member=>member.roles.remove(role)));
     const winner = await msg.guild.members.fetch(bestid);
     winner.roles.add(role);
     msg.reply(`${winner} won this month.`);

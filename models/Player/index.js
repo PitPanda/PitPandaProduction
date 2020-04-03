@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const profileDisplaySchema = require('./ProfileDisplaySchema');
-const scammerSchema = require('./ScammerSchema');
+const flagSchema = require('./FlagSchema');
 const lbPartial = require('./leaderboardFields');
 
 const PlayerSchema = mongoose.Schema({
@@ -26,10 +26,8 @@ const PlayerSchema = mongoose.Schema({
         type: profileDisplaySchema,
         default: undefined
     },
-    scammer: {
-        type: scammerSchema,
-        default: undefined
-    },
+    flag: flagSchema,
+    scammer: flagSchema,
     exempt: {
         type: Boolean,
         default: undefined,

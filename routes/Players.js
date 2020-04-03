@@ -12,7 +12,7 @@ router.get('/:tag', async (req, res) => {
         data = {};
         if (player) {
             data.profileDisplay = player.profileDisplay;
-            data.scammer = player.scammer;
+            data.flag = player.flag;
         }
         data.uuid = target.uuid;
         data.name = target.name;

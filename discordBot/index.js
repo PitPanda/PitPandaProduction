@@ -30,7 +30,7 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 client.on('message',msg=>{
 
     let userPerms = getPermissionLevel(msg);
-    if(userPerms < 8 && /https?:\/\/discord\.gg\/[a-zA-Z]{1,}/i.test(msg.content)) msg.delete();
+    if(userPerms < 8 && /discord\.gg\/[a-zA-Z]{1,}/i.test(msg.content)) msg.delete();
 
     let state;
     if(msg.content.startsWith(Config.Prefix)) state = {
@@ -53,9 +53,7 @@ client.on('message',msg=>{
     if(userPerms<state.minimumPerm) return msg.reply('You do not have permission to use these commands!');
 
     let [command, ...args] = getArgs(msg,state.prefix);
-    if(!command) return;
 
-    let executed = false;
     if(command==='help'){
         let embed = new Discord.MessageEmbed()
             .setTitle('Trade Center Bot usage')
@@ -65,17 +63,12 @@ client.on('message',msg=>{
         }
         embed.addField(`**${state.prefix}help**`,'This menu');
         msg.channel.send(embed);
-        executed=true;
     } else for(const cmd of state.commandList){
         if(cmd.aliases.includes(command)){
             if(cmd.permission>userPerms) return invalidPermissions(msg,cmd.permission,userPerms);
             cmd.fn(msg,args,command,userPerms);
-            executed = true;
             break;
         }
-    }
-    if(!executed){
-        msg.reply(`I'm not sure what you are trying to do?`);
     }
 });
 

@@ -5,6 +5,7 @@ const command = async (msg,rest) => {
     if(!rest[0]) msg.reply('please include the username or uuid of the player you would like to edit');
     if(rest[1]==='remove') {
         let doc = await getDoc(rest[0]);
+        if(doc.error) return msg.reply(`Error occured: ${doc.error}`);
         doc.profileDisplay = undefined;
         doc.save();
         return msg.reply(`Deleted https://pitpanda.rocks/players/${doc._id}`);
@@ -17,6 +18,7 @@ const command = async (msg,rest) => {
         return msg.reply(`Uhoh failed to understand your JSON input error:\n${e}`);
     }
     let doc = await getDoc(rest[0]);
+    if(doc.error) return msg.reply(`Error occured: ${doc.error}`);
     doc.profileDisplay = profileDisplay;
     doc.save();
     msg.reply(`Added https://pitpanda.rocks/players/${doc._id}`);

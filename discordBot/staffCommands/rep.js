@@ -116,8 +116,6 @@ function updateReps(msg, id, reps){
             for(const role of TradeRoles){
                 if(reps>=role.reps){
                     gm.roles.add(role.id);
-                }else{
-                    gm.roles.remove(role.id);
                 }
             }
         }

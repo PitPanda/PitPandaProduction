@@ -10,6 +10,8 @@ import PlayerList from '../PlayerList/PlayerList';
 import LeaderboardPositions from '../LeaderboardPositions/LeaderboardPositions';
 import frontendTools from '../../scripts/frontendTools';
 
+const upperFirst = str => str.charAt(0).toUpperCase() + str.substring(1);
+
 class Player extends React.Component {
   state = {user:null,alive:true};
 
@@ -77,14 +79,14 @@ class Player extends React.Component {
                     </div>
                   </StaticCard>
                 ):''}
-                {this.state.user.scammer?(
-                  <StaticCard title="Scammer">
+                {this.state.user.flag?(
+                  <StaticCard title={upperFirst(this.state.user.flag.type)}>
                     <div style={{maxWidth:'300px'}}>
-                      This player has been marked as scammer by the <a href="https://discord.gg/CdTmYrG">Trade Center Discord</a> staff.
-                      {this.state.user.scammer.notes?<><br/><br/>Trade Center Staff notes:<br/> {this.state.user.scammer.notes}</>:''}
-                      {this.state.user.scammer.discordid?<><br/><br/>Discord ID: <br/>{this.state.user.scammer.discordid}</>:''}
-                      {(this.state.user.scammer.alts&&this.state.user.scammer.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.scammer.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
-                      {this.state.user.scammer.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:this.state.user.scammer.main}]} instant={true} /></>:''}
+                      This player has been marked as {this.state.user.flag.type} by the <a href="https://discord.gg/CdTmYrG">Trade Center Discord</a> staff.
+                      {this.state.user.flag.notes?<><br/><br/>Trade Center Staff notes:<br/> {this.state.user.flag.notes}</>:''}
+                      {this.state.user.flag.discordid?<><br/><br/>Discord ID: <br/>{this.state.user.flag.discordid}</>:''}
+                      {(this.state.user.flag.alts&&this.state.user.flag.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.flag.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
+                      {this.state.user.flag.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:this.state.user.flag.main}]} instant={true} /></>:''}
                     </div>
                   </StaticCard>
                 ):''}
