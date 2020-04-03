@@ -28,7 +28,6 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 });
 
 client.on('message',msg=>{
-    console.log(msg.content);
     const content = msg.content.replace(/(@(here|everyone))|(<@&[0-9]{1,}>)/gi,'stopbro');
     let userPerms = getPermissionLevel(msg);
     if(userPerms < 8 && /discord\.gg\/[a-zA-Z]{1,}/i.test(msg.content)) msg.delete();
