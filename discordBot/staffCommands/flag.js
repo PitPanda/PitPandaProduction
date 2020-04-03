@@ -3,16 +3,6 @@ const Player = require('../../models/Player');
 const getDoc = require('../../apiTools/playerDocRequest');
 const { MessageEmbed } = require('discord.js');
 
-/*
-Player.find({scammer:{$exists:true}}).then(scammers=>{
-    for(let scammer of scammers){
-        scammer.flag={...scammer.scammer};
-        scammer.flag.type='scammer';
-        scammer.save();
-        console.log(scammer.flag);
-    };
-});*/
-
 function command(msg,rest,_,permlevel){
     if(rest.length<2) return msg.reply('Insufficient parameters');
     let flag;

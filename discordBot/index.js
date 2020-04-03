@@ -28,22 +28,22 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 });
 
 client.on('message',msg=>{
-
+    const content = msg.content.replace(/@(here|everyone)/gi,'stopbro');
     let userPerms = getPermissionLevel(msg);
     if(userPerms < 8 && /discord\.gg\/[a-zA-Z]{1,}/i.test(msg.content)) msg.delete();
 
     let state;
-    if(msg.content.startsWith(Config.Prefix)) state = {
+    if(content.startsWith(Config.Prefix)) state = {
         commandList:commands,
         minimumPerm: 0,
         prefix:Config.Prefix
     };
-    else if(msg.content.startsWith(`s${Config.Prefix}`)) state = {
+    else if(content.startsWith(`s${Config.Prefix}`)) state = {
         commandList:staffCommands,
         minimumPerm: 3,
         prefix:`s${Config.Prefix}`
     };
-    else if(msg.content.startsWith(`a${Config.Prefix}`)) state = {
+    else if(content.startsWith(`a${Config.Prefix}`)) state = {
         commandList:botAdminCommands,
         minimumPerm: 8,
         prefix:`a${Config.Prefix}`
@@ -52,7 +52,7 @@ client.on('message',msg=>{
     
     if(userPerms<state.minimumPerm) return msg.reply('You do not have permission to use these commands!');
 
-    let [command, ...args] = getArgs(msg,state.prefix);
+    let [command, ...args] = getArgs(content,state.prefix);
 
     if(command==='help'){
         let embed = new Discord.MessageEmbed()
@@ -72,8 +72,8 @@ client.on('message',msg=>{
     }
 });
 
-function getArgs(msg,prefix){
-    return msg.content.substring(prefix.length).toLowerCase().replace(/\s{1,}/g,' ').split(/\s/);
+function getArgs(content,prefix){
+    return content.substring(prefix.length).toLowerCase().replace(/\s{1,}/g,' ').split(/\s/);
 }
 
 client.login(Config.Token);

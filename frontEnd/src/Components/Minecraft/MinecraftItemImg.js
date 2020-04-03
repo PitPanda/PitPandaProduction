@@ -3,7 +3,7 @@ import './itemStyles.css';
 import './minecraftStyles.css';
 
 const mapped = [
-    'ffAA00',
+    'FFAA00',
     '55FF55',
     '5555FF',
     'FFFF55',

@@ -27,7 +27,6 @@ const PlayerSchema = mongoose.Schema({
         default: undefined
     },
     flag: flagSchema,
-    scammer: flagSchema,
     exempt: {
         type: Boolean,
         default: undefined,
