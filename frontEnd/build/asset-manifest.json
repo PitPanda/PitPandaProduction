@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.dea1702c.chunk.css",
+    "main.js": "/static/js/main.630579b6.chunk.js",
+    "main.js.map": "/static/js/main.630579b6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ba34760b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ba34760b.js.map",
+    "static/js/2.3feefd12.chunk.js": "/static/js/2.3feefd12.chunk.js",
+    "static/js/2.3feefd12.chunk.js.map": "/static/js/2.3feefd12.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.0f29bb475b6613b9f12e0266fd2c3e18.js": "/precache-manifest.0f29bb475b6613b9f12e0266fd2c3e18.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.dea1702c.chunk.css.map": "/static/css/main.dea1702c.chunk.css.map",
+    "static/js/2.3feefd12.chunk.js.LICENSE": "/static/js/2.3feefd12.chunk.js.LICENSE",
+    "static/media/index.css": "/static/media/minecraft-italic.35903bfa.otf",
+    "static/media/itemStyles.css": "/static/media/blocks_items_potions.195f6b98.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ba34760b.js",
+    "static/js/2.3feefd12.chunk.js",
+    "static/css/main.dea1702c.chunk.css",
+    "static/js/main.630579b6.chunk.js"
+  ]
+}

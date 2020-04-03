@@ -26,6 +26,6 @@ module.exports = new Command({
     name:'patron',
     fn:command,
     description:'add or remove patrons',
-    example:`**$patron [add|remove]`,
+    example:`**$patron [add|remove]**`,
     permlevel: Infinity
 });
