@@ -32,7 +32,7 @@ router.use("/profile/:tag",async (req, res) => {
     if(doc.error) return error(doc, res);
     const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
     const start = Date.now();
-    let size = Math.min(Number(req.query.size) || 240, 512);
+    let size = Math.min(Number(req.query.size) || 160, 512);
     const cvs = createCanvas(0,size);
     const x = size+size*(1/24);
     const nameSize = size/4;
@@ -51,7 +51,7 @@ router.use("/profile/:tag",async (req, res) => {
         ctx.fillRect(0,0,cvs.width,cvs.height);
     }
     let shadow = req.query.shadow !== 'false';
-    const top = 15;
+    const top = size*3/48;
     
     const subtitleSize = size*5/24;
     ImageHelpers.printText(cvs,doc.rankName,{size:size/4,shadow,x,y:top});

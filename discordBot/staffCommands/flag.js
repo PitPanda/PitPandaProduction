@@ -34,6 +34,7 @@ function command(msg,rest,_,permlevel){
                         if(results.n) {
                             if(results.nModified) {
                                 const altflag = {
+                                    type:flag.type,
                                     discordid:flag.discordid,
                                     main:Doc.id,
                                     notes:flag.notes,

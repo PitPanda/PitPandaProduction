@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import MinecraftText from '../Minecraft/MinecraftText';
 import getName from '../../scripts/playerName';
 import {withRouter} from 'react-router-dom';
+import Link from '../Link/Link';
 
 const buttonStyle = {
     display:'block',
@@ -16,14 +17,16 @@ function PlayerEntry(props){
         const doc = getName(props.uuid);
         (async()=>{
             const name = await doc.promise;
-            if(alive) setText(name);
+            if(alive) {
+                if(name.error) setText('§4ERROR');
+                else setText(name);
+            }
         })();
         return () => alive = false;
     }, [props.uuid]);
-    const redirect = () => props.history.push(`/players/${props.uuid}`);
     return (
-        <span title={props.hover} style={buttonStyle} href={`/players/${props.uuid}`} onClick={redirect}>
+        <Link title={props.hover} style={buttonStyle} href={`/players/${props.uuid}`}>
             <MinecraftText raw={text}/>
-        </span>
+        </Link>
     );
 } export default withRouter(PlayerEntry);
