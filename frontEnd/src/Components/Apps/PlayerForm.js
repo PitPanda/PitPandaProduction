@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class PlayerForm extends React.Component {
     
@@ -29,4 +30,4 @@ class PlayerForm extends React.Component {
     }
 }
 
-export default PlayerForm;
+export default withRouter(PlayerForm);

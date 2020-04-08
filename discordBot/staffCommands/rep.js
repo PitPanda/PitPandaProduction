@@ -8,7 +8,7 @@ const {TradeRoles} = require('../TradeCenter.json');
 
 async function command(msg,rest,_,permlevel){
     if(!rest[0]) return msg.reply("Please provide an action (accept, deny, delete, or inspect) and a case ID");
-    switch(rest[0]){
+    switch(rest[0].toLowerCase()){
         case 'accept':
             if(permlevel<6) return invalidPermissions(msg,6,permlevel);
             if(rest.length<2) return msg.reply('You are missing something?');

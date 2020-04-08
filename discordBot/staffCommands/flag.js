@@ -30,13 +30,13 @@ function command(msg,rest,_,permlevel){
             else {
                 altsPromise.then(altDocs=>{
                     flag.alts=altDocs.map(alt=>alt._id);
-                    Player.updateOne({_id:Doc.id},{flag}).then(results=>{
+                    Player.updateOne({_id:Doc._id},{flag}).then(results=>{
                         if(results.n) {
                             if(results.nModified) {
                                 const altflag = {
                                     type:flag.type,
                                     discordid:flag.discordid,
-                                    main:Doc.id,
+                                    main:Doc._id,
                                     notes:flag.notes,
                                     timestamp:flag.timestamp,
                                     addedby: flag.addedby,
@@ -60,7 +60,7 @@ function command(msg,rest,_,permlevel){
                     if(results.nModified){
                         if(Doc.flag.alts) Promise.all(Doc.flag.alts.map(alt=>Player.updateOne({_id:alt},{$unset:{flag:""}})))
                             .then(()=>msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`));
-                        else if(Doc.flag.main) Player.updateOne({_id:Doc.flag.main},{$pull:{"flag.alts":Doc.id}})
+                        else if(Doc.flag.main) Player.updateOne({_id:Doc.flag.main},{$pull:{"flag.alts":Doc._id}})
                             .then(()=>msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`));
                         else msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
                     } else msg.reply('Honestly I dont know if its possible to reach this reply, if it ever happens something very weird has happened. please tell mcpqndq.');
@@ -93,8 +93,8 @@ function command(msg,rest,_,permlevel){
             msg.channel.send(embed);
         }
     }
-    if(!methods[rest[0]]) return msg.reply(`unknown subcommand \`${rest[0]}\``);
-    getActualDoc(rest[1]).then(methods[rest[0]]);
+    if(!methods[rest[0].toLowerCase()]) return msg.reply(`unknown subcommand \`${rest[0].toLowerCase()}\``);
+    getActualDoc(rest[1].toLowerCase()).then(methods[rest[0].toLowerCase()]);
 }
 
 function getActualDoc(tag){

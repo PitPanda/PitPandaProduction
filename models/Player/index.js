@@ -15,6 +15,7 @@ const PlayerSchema = mongoose.Schema({
     },
     discord: String,
     name: String,
+    nameLower: String,
     colouredName: String,
     formattedLevel: String,
     formattedRank: String,

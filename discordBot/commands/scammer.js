@@ -3,7 +3,7 @@ const getDoc = require('../../apiTools/playerDocRequest');
 
 const command = async (msg,rest) => {
     if(!rest[0]) msg.reply('Please provide a username');
-    const doc = await getDoc(rest[0]);
+    const doc = await getDoc(rest[0].toLowerCase());
     if(doc.error) return msg.reply(`An error has occured: ${doc.error}`);
     const name = doc.displayName.replace(/§./g,'');
     if(!doc.flag) return msg.reply(`${name} has not been marked as a scammer.`);

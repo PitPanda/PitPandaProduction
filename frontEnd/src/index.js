@@ -1,22 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import {BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './index.css';
 import Player from './Components/Apps/Player';
 import PlayerForm from './Components/Apps/PlayerForm';
 import ItemSearch from './Components/Apps/ItemSearch';
 import Nav from './Components/Nav/Nav';
 import Leaderboard from './Components/Apps/Leaderboard';
+import Signatures from './Components/Apps/Signatures';
 
 ReactDOM.render((
     <>
         <BrowserRouter>
             <Nav/>
             <Switch>
-                <Route exact path="/" component={withRouter(PlayerForm)}/>
-                <Route exact path="/leaderboard" component={withRouter(Leaderboard)}/>
-                <Route exact path="/players/:id" component={withRouter(Player)}/>
-                <Route exact path="/itemsearch/:query?" component={withRouter(ItemSearch)}/>
+                <Route exact path="/" component={PlayerForm}/>
+                <Route exact path="/leaderboard" component={Leaderboard}/>
+                <Route exact path="/signatures" component={Signatures}/>
+                <Route exact path="/players/:id" component={Player}/>
+                <Route exact path="/itemsearch/:query?" component={ItemSearch}/>
                 <Redirect to="/"/>
             </Switch>
         </BrowserRouter>

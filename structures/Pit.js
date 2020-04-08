@@ -1752,6 +1752,7 @@ class Pit {
         const player = new Player({
             _id: this.uuid,
             name: this.name,
+            nameLower: this.name.toLowerCase(),
             colouredName: this.colouredName,
             formattedLevel: this.formattedLevel,
             formattedRank: this.prefix,
@@ -1830,8 +1831,9 @@ class Pit {
      * @param {Object} item nbt
      */
     logMystic(item) {
-        const rawEnchants = getRef(item, "tag", "value", "ExtraAttributes", "value", "CustomEnchants", "value", "value");
-        if (rawEnchants && getRef(item, "tag", "value", "ExtraAttributes", "value", "UpgradeTier", "value") === 3) {
+        const attributes = getRef(item, "tag", "value", "ExtraAttributes", "value");
+        const rawEnchants = getRef(attributes, "CustomEnchants", "value", "value");
+        if (rawEnchants && getRef(attributes, "UpgradeTier", "value") === 3) {
             const enchants = rawEnchants.map(ench => ({
                 key: ench.Key.value,
                 level: ench.Level.value
@@ -1847,13 +1849,13 @@ class Pit {
             if (comboCount === 3) flags.push('combolicious');
             const tokenCount = enchants.reduce((acc, { level }) => acc + level, 0);
             if (tokenCount >= 8) flags.push('legendary');
-            const nonce = getRef(item, "tag", "value", "ExtraAttributes", "value", "Nonce", "value");
+            const nonce = getRef(attributes, "Nonce", "value");
             const id = getRef(item, "id", "value");
             let meta = getRef(item, 'Damage', 'value') || getRef(item, "tag", "value", "display", "value", "color", "value");
             if (id >= 298 && id <= 301 && typeof meta === 'undefined') meta = 10511680;
-            const maxLives = getRef(item, "tag", "value", "ExtraAttributes", "value", "MaxLives", "value");
+            const maxLives = getRef(attributes, "MaxLives", "value");
             if (maxLives === 100) flags.push('artifact');
-            const lives = getRef(item, "tag", "value", "ExtraAttributes", "value", "Lives", "value");
+            const lives = getRef(attributes, "Lives", "value");
             if (flags.includes('artifact') && flags.includes('extraordinary')) flags.push('miraculous');
             if (flags.includes('artifact') && flags.includes('unthinkable')) flags.push('million');
             if (flags.includes('artifact') && tokenCount >= 7) flags.push('overpowered');

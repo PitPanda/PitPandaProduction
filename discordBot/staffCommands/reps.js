@@ -1,14 +1,10 @@
 const Command = require('../Command');
-const PendingRep = require('../../models/PendingRep');
 const DiscordUser = require('../../models/DiscordUser');
-const {invalidPermissions} = require('../permissions');
 const {MessageEmbed} = require('discord.js');
-const {getRef} = require('../../apiTools/apiTools');
-const {TradeRoles} = require('../TradeCenter.json');
 
 async function command(msg,rest,_,permlevel){
     if(!rest[0]) return msg.reply("Please provide an action (sent or recieved) and a user ID");
-    switch(rest[0]){
+    switch(rest[0].toLowerCase()){
         case 'received':
             if(!rest[1]) return msg.reply('But who?');
             let target = msg.mentions.users.first();

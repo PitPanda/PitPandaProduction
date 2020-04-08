@@ -3,6 +3,7 @@ import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import StaticCard from '../Cards/StaticCard';
 import QueryBox from '../QueryBox/QueryBox';
 import getName, {cache} from '../../scripts/playerName';
+import { withRouter } from 'react-router-dom';
 
 const pageSize = 72;
 class ItemSearch extends React.Component {
@@ -133,4 +134,4 @@ class ItemSearch extends React.Component {
     }
 }
 
-export default ItemSearch;
+export default withRouter(ItemSearch);

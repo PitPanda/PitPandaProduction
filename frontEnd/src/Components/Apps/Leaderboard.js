@@ -6,6 +6,7 @@ import Link from '../Link/Link';
 import PageSelector from '../PageSelector/PageSelector';
 import { timeSince } from '../../scripts/frontendTools';
 import boards from '../../scripts/leaderboards';
+import { withRouter } from 'react-router-dom';
 
 const defaultCategory = 'lavaBuckets';
 
@@ -130,4 +131,4 @@ function Leaderboard(props) {
     );
 }
 
-export default Leaderboard;
+export default withRouter(Leaderboard);

@@ -6,7 +6,7 @@ const command = async (msg, rest) => {
     if(!rest[1]) return msg.reply('But who');
     let doc = await DiscordUser.findById(rest[1]);
     if(!doc) doc = new DiscordUser({_id:rest[1]});
-    switch(rest[0]){
+    switch(rest[0].toLowerCase()){
         case 'add': {
             doc.patron = true;
             await doc.save();

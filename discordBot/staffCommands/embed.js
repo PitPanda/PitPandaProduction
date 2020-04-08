@@ -1,5 +1,4 @@
 const Command = require('../Command');
-const Player = require('../../models/Player');
 
 function command(msg,rest){
     let cID = rest[0].split('').filter(c=>/[0-9]/.test(c)).join('');

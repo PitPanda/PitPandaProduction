@@ -2,17 +2,18 @@ const hypixelAPI = require('./playerRequest');
 const Player = require('../models/Player');
 
 /**
- * gets the username for a player
- * @param {string} uuid 
+ * gets the player doc
+ * @param {string} tag 
  * @param {{maxAge:number,doc:any}} options
  * @returns {Promise<Doc>}
  */
-const getDoc = async (uuid, options={}) => {
+const getDoc = async (tag, options={}) => {
     const maxAge = options.maxAge;
     let doc = options.doc;
-    if(!doc) doc = await Player.findOne({ _id: uuid });
+    if(!doc) doc = await Player.findOne({$or:[{ _id: tag }, { nameLower: tag.toLowerCase() }]});
     if (!doc || !isAged(doc,maxAge)) {
-        const target = await hypixelAPI(uuid);
+        console.log('To hypixel!');
+        const target = await hypixelAPI(tag);
         if (target.error) {
             if(doc) return doc
             return { error: target.error };

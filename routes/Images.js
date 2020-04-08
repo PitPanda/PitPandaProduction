@@ -32,7 +32,7 @@ router.use("/profile/:tag",async (req, res) => {
     if(doc.error) return error(doc, res);
     const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
     const start = Date.now();
-    let size = Math.min(Number(req.query.size) || 160, 512);
+    let size = Math.min(Number(req.query.size) || 128, 512);
     const cvs = createCanvas(0,size);
     const x = size+size*(1/24);
     const nameSize = size/4;

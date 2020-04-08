@@ -11,7 +11,7 @@ const command = async (msg, rest) => {
         try{
             target = await msg.client.users.fetch(rest[0]);
         }catch(e){
-            playerdoc = await getDoc(rest[0]);
+            playerdoc = await getDoc(rest[0].toLowerCase());
             if(playerdoc._id) {
                 discorddoc = await DiscordUser.findOne({uuid:playerdoc._id});
                 if(discorddoc) target = {id:discorddoc._id};

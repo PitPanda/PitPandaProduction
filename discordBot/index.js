@@ -53,7 +53,7 @@ client.on('message',msg=>{
     if(userPerms<state.minimumPerm) return msg.reply('You do not have permission to use these commands!');
 
     let [command, ...args] = getArgs(content,state.prefix);
-
+    command = command.toLowerCase();
     if(command==='help'){
         let embed = new Discord.MessageEmbed()
             .setTitle('Trade Center Bot usage')
@@ -73,7 +73,7 @@ client.on('message',msg=>{
 });
 
 function getArgs(content,prefix){
-    return content.substring(prefix.length).toLowerCase().replace(/\s{1,}/g,' ').split(/\s/);
+    return content.substring(prefix.length).replace(/\s{1,}/g,' ').split(/\s/);
 }
 
 client.login(Config.Token);

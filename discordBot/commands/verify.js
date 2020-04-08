@@ -6,7 +6,7 @@ const hypixelAPI = require('../../apiTools/playerRequest');
 const command = async (msg,rest,alias) => {
     const verify = alias===`verify`;
     if(!rest[0]) return msg.reply(`Please include your username. Ex: \`.${verify?'verify':'prestige'} mcpqndq\``);
-    const result = await hypixelAPI(rest[0])
+    const result = await hypixelAPI(rest[0].toLowerCase())
     const gmrm = msg.member.roles;
     if(result.error) return msg.reply(result.error);
     if(!result.discord) return msg.reply('Please link your discord ingame. tutorial: https://www.youtube.com/watch?v=LiUcDhLjLDc');

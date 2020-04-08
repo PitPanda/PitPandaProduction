@@ -9,6 +9,7 @@ import PlayerForm from './PlayerForm';
 import PlayerList from '../PlayerList/PlayerList';
 import LeaderboardPositions from '../LeaderboardPositions/LeaderboardPositions';
 import frontendTools from '../../scripts/frontendTools';
+import { withRouter } from 'react-router-dom';
 
 const upperFirst = str => str.charAt(0).toUpperCase() + str.substring(1);
 
@@ -198,4 +199,4 @@ class Player extends React.Component {
   }
 }
 
-export default Player;
+export default withRouter(Player);
