@@ -12,7 +12,6 @@ const getDoc = async (tag, options={}) => {
     let doc = options.doc;
     if(!doc) doc = await Player.findOne({$or:[{ _id: tag }, { nameLower: tag.toLowerCase() }]});
     if (!doc || !isAged(doc,maxAge)) {
-        console.log('To hypixel!');
         const target = await hypixelAPI(tag);
         if (target.error) {
             if(doc) return doc
