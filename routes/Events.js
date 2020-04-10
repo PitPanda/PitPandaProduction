@@ -162,10 +162,12 @@ let lastreporters = new Set();
 const feed = {
     subs: [],
     subscribe(callback){
+        console.log('A new event listener connected');
         const listener = {
             callback,
             kill: () => {
                 this.subs = this.subs.filter(cur=>cur!==listener);
+                console.log('An event listener left');
             },
         };
         this.subs.push(listener);
