@@ -172,7 +172,7 @@ const feed = {
         return listener;
     },
     emit(event){
-        console.log(`Emitting event to ${subs.length} connected listeners`);
+        console.log(`Emitting event to ${this.subs.length} connected listeners`);
         this.subs.forEach(listener=>listener.callback(event));
     },
 }
