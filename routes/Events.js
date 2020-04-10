@@ -5,7 +5,7 @@ const hook = new WebhookClient(...EventWebHook);
 const EventKey = require('../models/EventKey');
 const EventLog = require('../models/EventLog');
 
-const rgx = /^(§r)?§(d|5)§lM(INO|AJO)R EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
+const rgx = /^(§r)?§(d|5)§l(MINOR|MAJOR|FAKE) EVENT! (§r)?§.§l[ A-Z0-9]{1,}/;
 
 const major = {
     name: 'major',
@@ -20,6 +20,17 @@ const minor = {
 };
 
 const events = {
+    'FAKE EVENT! THIS IS TEST':{
+        degree: {
+            name: 'fake',
+            role: 'no one',
+            color: '#9040ff',
+        },
+        type: {
+            name: 'test',
+            role: 'no one',
+        },
+    },
     'MAJOR EVENT! SPIRE':{
         degree: major,
         type: {
@@ -148,6 +159,23 @@ let lastevent_id;
  */
 let lastreporters = new Set();
 
+const feed = {
+    subs: [],
+    subscribe(callback){
+        const listener = {
+            callback,
+            kill: () => {
+                this.subs = this.subs.filter(cur=>cur!==listener);
+            },
+        };
+        this.subs.push(listener);
+        return listener;
+    },
+    emit(event){
+        this.subs.forEach(listener=>listener.callback(event));
+    },
+}
+
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
     if(!req.headers.key) return;
@@ -181,8 +209,17 @@ router.post('/', async (req,res)=>{
                     .setFooter(final._id)
                     .setTimestamp()
             );
+            feed.emit({
+                degree: event.degree.name,
+                type: event.type.name,
+            });
         });
     }
+});
+
+router.ws('/', (ws) => {
+    const listener = feed.subscribe(event => ws.send(JSON.stringify(event)));
+    ws.on('close', listener.kill.bind(listener));
 });
 
 router.use('/', (req,res)=>{
