@@ -83,14 +83,14 @@ const events = {
     'MAJOR EVENT! TEAM DEATHMATCH':{
         degree: major,
         type: {
-            name: 'robbery',
+            name: 'tdm',
             role: '694644007585710192',
         },
     },
     'MAJOR EVENT! PIZZA':{
         degree: major,
         type: {
-            name: 'robbery',
+            name: 'pizza',
             role: '694644010794352671',
         },
     },
