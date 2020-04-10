@@ -162,7 +162,6 @@ let lastreporters = new Set();
 const feed = {
     subs: [],
     subscribe(callback){
-        console.log(`A new event listener connected. total: ${this.subs.length}`);
         const listener = {
             callback,
             kill: () => {
@@ -171,6 +170,7 @@ const feed = {
             },
         };
         this.subs.push(listener);
+        console.log(`A new event listener connected. total: ${this.subs.length}`);
         return listener;
     },
     emit(event){
