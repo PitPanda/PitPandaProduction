@@ -162,12 +162,12 @@ let lastreporters = new Set();
 const feed = {
     subs: [],
     subscribe(callback){
-        console.log('A new event listener connected');
+        console.log(`A new event listener connected. total: ${this.subs.length}`);
         const listener = {
             callback,
             kill: () => {
                 this.subs = this.subs.filter(cur=>cur!==listener);
-                console.log('An event listener left');
+                console.log(`An event listener left. total: ${this.subs.length}`);
             },
         };
         this.subs.push(listener);
@@ -223,6 +223,7 @@ router.post('/', async (req,res)=>{
 router.ws('/', (ws) => {
     const listener = feed.subscribe(event => ws.send(JSON.stringify(event)));
     ws.on('close', listener.kill.bind(listener));
+    ws.on('message', ()=>ws.send('3'));
 });
 
 router.use('/', (req,res)=>{
