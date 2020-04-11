@@ -5,7 +5,7 @@ import './minecraftStyles.css';
 
 const colors = [
     'cRed',
-    'cYellow',
+    'eYellow',
     '9Blue',
     '6Orange',
     'aGreen',
