@@ -4,26 +4,11 @@ import MinecraftItemImg from './MinecraftItemImg';
 import './minecraftStyles.css';
 
 const colors = [
-    {
-        name: 'red',
-        code: 'c',
-    },
-    {
-        name: 'yellow',
-        code: 'e',
-    },
-    {
-        name: 'blue',
-        code: '9',
-    },
-    {
-        name: 'orange',
-        code: '6',
-    },
-    {
-        name: 'green',
-        code: 'a',
-    },
+    'cRed',
+    'cYellow',
+    '9Blue',
+    '6Orange',
+    'aGreen',
 ];
 
 function MinecraftItemSlot(props){
@@ -41,7 +26,7 @@ function MinecraftItemSlot(props){
         if(name.toLowerCase().includes('overpowered')) cls = 'overpowered';
     }
     if((id===261 || id===283) && nonce > 20 && !name.includes('III')){
-        desc = [...desc,'',(`§7Requires §${colors[nonce%5].code}${colors[nonce%5].name} pants §7to Tier 3`)];
+        desc = [...desc,'',(`§7Requires §${colors[nonce%5]} Pants §7to Tier 3`)];
     }
     return (
         <div className={`item ${cls}`} onClick={props.onClick} onContextMenu={props.onContextMenu}>
