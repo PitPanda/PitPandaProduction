@@ -1,5 +1,5 @@
-ul.nav li {
-    display: inline-block;
+div.nav div {
+    display: inline-block !important;
     width:200px;
     padding:10px;
     text-align: center;
@@ -9,16 +9,16 @@ ul.nav li {
     transition: 0.2s;
 }
 
-ul.nav li:hover {
+div.nav div:hover {
     color:#ccc;
     cursor: pointer;
 }
 
-ul.nav li.active {
+div.nav div.active {
     font-family: robotobold;
 }
 
-ul.nav {
+div.nav {
     width:100%;
     background-color: #2b2b2b;
     border-bottom: 2px solid #222;
