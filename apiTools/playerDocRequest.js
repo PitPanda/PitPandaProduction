@@ -10,7 +10,10 @@ const Player = require('../models/Player');
 const getDoc = async (tag, options={}) => {
     const maxAge = options.maxAge;
     let doc = options.doc;
-    if(!doc) doc = await Player.findOne({$or:[{ _id: tag }, { nameLower: tag.toLowerCase() }]});
+    if(!doc) {
+        if(tag.length===32) doc = await Player.findById(tag);
+        else doc = await Player.findOne({ nameLower: tag.toLowerCase() });
+    }
     if (!doc || !isAged(doc,maxAge)) {
         const target = await hypixelAPI(tag);
         if (target.error) {

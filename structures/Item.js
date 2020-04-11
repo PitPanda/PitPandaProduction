@@ -18,7 +18,7 @@ class Item {
      * @param {number} count 
      * @returns {Item}
      */
-    constructor(name = '', desc = [], id = 0, meta = 0, count = 1) {
+    constructor(name = '', desc = [], id = 0, meta = 0, count = 1, nonce) {
         /**
          * Item's custom name if it has one or its minecraft default name
          * @type {string}
@@ -44,6 +44,7 @@ class Item {
          * @type {number}
          */
         this.count = count;
+        this.nonce = nonce;
     }
 
     /**
@@ -87,7 +88,9 @@ class Item {
 
         const count = getRef(item, "Count", "value");
 
-        return new Item(name, lore, id, meta, count);
+        const nonce = getRef(item, 'tag','value','ExtraAttributes','value','Nonce','value');
+
+        return new Item(name, lore, id, meta, count, nonce);
     }
 } module.exports = Item;
 

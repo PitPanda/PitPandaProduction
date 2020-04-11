@@ -66,6 +66,7 @@ const dbToItem = doc => {
         owner: doc.owner,
         lastseen: Math.floor(doc.lastseen / 1e3),
         id: doc._id,
+        nonce: doc.nonce,
         item: new Item(
             doc.item.name,
             [`${Colors.GRAY}Lives: ${doc.lives > 3 ? Colors.GREEN : Colors.RED}${doc.lives}${Colors.GRAY}/${doc.maxLives}`, ...doc.enchants.map(({ key, level }) => [

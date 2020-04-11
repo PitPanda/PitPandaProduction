@@ -7,15 +7,18 @@ const PlayerSchema = mongoose.Schema({
     _id: String,
     lastsave: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     lastinpit: {
         type: Date,
-        index: true
+        index: true,
     },
     discord: String,
     name: String,
-    nameLower: String,
+    nameLower: {
+        type: String,
+        index: true,
+    },
     colouredName: String,
     formattedLevel: String,
     formattedRank: String,
@@ -25,14 +28,14 @@ const PlayerSchema = mongoose.Schema({
     hatColor: String,
     profileDisplay: {
         type: profileDisplaySchema,
-        default: undefined
+        default: undefined,
     },
     flag: flagSchema,
     exempt: {
         type: Boolean,
         default: undefined,
-        index: true
-    }
+        index: true,
+    },
 });
 
 PlayerSchema.virtual('levelName').get(function(){

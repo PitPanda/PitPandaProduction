@@ -21,6 +21,7 @@ const minor = {
 
 const events = {
     'FAKE EVENT! THIS IS TEST':{
+        ignore: true,
         degree: {
             name: 'fake',
             role: 'no one',
@@ -204,7 +205,7 @@ router.post('/', async (req,res)=>{
         eventLog.save((err,final)=>{
             if(err) return;
             lastevent_id = final._id;
-            hook.send(
+            if(!event.ignore) hook.send(
                 `<@&${event.degree.role}> <@&${event.type.role}>`,
                 new MessageEmbed()
                     .setTitle(clean)
