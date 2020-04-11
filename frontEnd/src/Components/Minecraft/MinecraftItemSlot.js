@@ -41,7 +41,7 @@ function MinecraftItemSlot(props){
         if(name.toLowerCase().includes('overpowered')) cls = 'overpowered';
     }
     if((id===261 || id===283) && nonce > 20 && !name.includes('III')){
-        desc = [...desc,(`§${colors[nonce%5].code}Requires ${colors[nonce%5].name}`)];
+        desc = [...desc,'',(`§${colors[nonce%5].code}Requires ${colors[nonce%5].name} to Tier 3`)];
     }
     return (
         <div className={`item ${cls}`} onClick={props.onClick} onContextMenu={props.onContextMenu}>
