@@ -29,7 +29,7 @@ const leaderboardGrabber = async (primaryKey, page = 0, perPage = 100) => {
         {
             uuid: id,
             name: names.find(name=>name._id===id).displayName,
-            score,
+            score: Math.round(score*1000)/1000,
         }
     ));;
 };
