@@ -187,6 +187,7 @@ router.post('/', async (req,res)=>{
     if(!keyDoc) return console.log('invalid key');
     const final = req.headers.eventtype;
     if(rgx.test(final)){
+        const received = Date.now();
         let end = final.indexOf('§7');
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'').trim();
@@ -211,11 +212,13 @@ router.post('/', async (req,res)=>{
                     .setTitle(clean)
                     .setColor(event.degree.color)
                     .setFooter(final._id)
-                    .setTimestamp()
+                    .setTimestamp(received)
             );
             feed.emit({
                 degree: event.degree.name,
                 type: event.type.name,
+                timestamp: received,
+                id: final._id,
             });
         });
     } else console.log(`Event from ${keyDoc.owner} failed regex test: ${final}`);
