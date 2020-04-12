@@ -218,7 +218,7 @@ router.post('/', async (req,res)=>{
                 type: event.type.name,
             });
         });
-    }
+    } else console.log(`Event from ${keyDoc.owner} failed regex test: ${final}`);
 });
 
 router.ws('/', (ws) => {
