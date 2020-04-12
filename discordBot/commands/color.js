@@ -26,5 +26,6 @@ module.exports = new Command({
     fn:command,
     description:'Set your role color. (Nitro Boosters and Staff only)',
     example:`**$color [hex]**`,
-    permlevel:2
+        type: 'tradecenter',
+        permlevel:2
 });

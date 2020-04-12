@@ -42,6 +42,7 @@ module.exports = new Command(
         fn:command,
         description:'Verify & Update your roles in the discord',
         example:`**$verify [ign]**`,
+        type: 'tradecenter',
         aliases:['prestige']
     }
 );

@@ -40,6 +40,7 @@ module.exports = new Command(
         name:'whois',
         fn:command,
         description:'Check the ingame name of a verified user',
+        type: 'tradecenter',
         example:`**$whois [@user]**`
     }
 );

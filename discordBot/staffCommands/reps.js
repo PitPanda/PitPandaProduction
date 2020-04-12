@@ -2,7 +2,7 @@ const Command = require('../Command');
 const DiscordUser = require('../../models/DiscordUser');
 const {MessageEmbed} = require('discord.js');
 
-async function command(msg,rest,_,permlevel){
+async function command(msg,rest){
     if(!rest[0]) return msg.reply("Please provide an action (sent or recieved) and a user ID");
     switch(rest[0].toLowerCase()){
         case 'received':
@@ -55,6 +55,7 @@ module.exports = new Command(
         fn: command,
         description:'View player\'s reps',
         example:`**$rep (sent|received) [user id]**`,
+        type: 'tradecenter',
         permlevel:3
     }
 );

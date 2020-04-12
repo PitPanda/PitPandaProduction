@@ -22,6 +22,7 @@ module.exports = new Command(
         fn:command,
         description:'Check the scammer list',
         example:`**$scammerlist [page?]**`,
+        type: 'tradecenter',
         permlevel:0
     }
 );

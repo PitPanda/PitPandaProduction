@@ -17,6 +17,7 @@ module.exports = new Command(
         name:'pitpanda',
         fn:command,
         description:'Link to a player\'s pitpanda page',
+        type: 'tradecenter',
         example:`**$pitpanda [ign]**`
     }
 );

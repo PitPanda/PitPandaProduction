@@ -15,6 +15,7 @@ module.exports = new Command(
         name:'scammer',
         fn:command,
         description:'Check if a player is a scammer',
+        type: 'tradecenter',
         example:`**$scammer [ign]**`
     }
 );

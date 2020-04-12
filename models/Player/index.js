@@ -48,11 +48,4 @@ PlayerSchema.virtual('rankName').get(function(){
 });
 PlayerSchema.virtual('displayName').get(function(){return this.levelName});
 
-for(const key of Object.keys(lbPartial)){
-    let index = {};
-    index[key] = -1;
-    index._id = -1;
-    PlayerSchema.index(index);
-}
-
 module.exports = mongoose.model('Players', PlayerSchema);

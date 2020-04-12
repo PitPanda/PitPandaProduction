@@ -14,5 +14,6 @@ module.exports = new Command({
     fn:command,
     description:'Run code',
     example:`**$eval \\\`\\\`\\\`js code\\\`\\\`\\\`**`,
+    type: 'tradecenter',
     permlevel: Infinity
 });

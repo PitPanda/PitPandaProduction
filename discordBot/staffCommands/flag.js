@@ -107,6 +107,7 @@ module.exports = new Command(
         fn: command,
         description:'Mark an ingame player with a warning on pitpanda',
         example:`**$flag (add|remove|inspect) [uuid]**`,
+        type: 'tradecenter',
         permlevel:7
     }
 );

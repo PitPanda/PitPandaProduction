@@ -5,8 +5,9 @@ const TradeCenter = require('./TradeCenter.json');
 const commands = require('./commands');
 const staffCommands = require('./staffCommands');
 const botAdminCommands = require('./botAdminCommands');
-const { invalidPermissions, getPermissionLevel } = require('./permissions');
+const pitPandaAdminCommands = require('./pitPandaAdminCommands');
 const { Development } = require('../settings.json');
+const Permission = require('./Permission');
 
 if(!Development){
     client.on('guildMemberAdd',member=>{
@@ -29,28 +30,37 @@ client.on('guildMemberUpdate', (oldMem, newMem) => {
 
 client.on('message',msg=>{
     const content = msg.content.replace(/(@(here|everyone))|(<@&[0-9]{1,}>)/gi,'stopbro');
-    let userPerms = getPermissionLevel(msg);
-    if(userPerms < 8 && /discord\.gg\/[a-z0-9]{1,}/i.test(msg.content)) return msg.delete();
+    let perms = new Permission(msg.member);
+    if(!perms.hasPermission('tradecenter',8) && /discord\.gg\/[a-z0-9]{1,}/i.test(msg.content)) return msg.delete();
 
     let state;
     if(content.startsWith(Config.Prefix)) state = {
         commandList:commands,
         minimumPerm: 0,
+        type: 'tradecenter',
         prefix:Config.Prefix
     };
     else if(content.startsWith(`s${Config.Prefix}`)) state = {
         commandList:staffCommands,
         minimumPerm: 3,
+        type: 'tradecenter',
         prefix:`s${Config.Prefix}`
     };
     else if(content.startsWith(`a${Config.Prefix}`)) state = {
         commandList:botAdminCommands,
         minimumPerm: 8,
+        type: 'tradecenter',
         prefix:`a${Config.Prefix}`
+    };
+    else if(content.startsWith(`p${Config.Prefix}`)) state = {
+        commandList:pitPandaAdminCommands,
+        minimumPerm: 1,
+        type: 'pitpanda',
+        prefix:`p${Config.Prefix}`
     };
     else return;
     
-    if(userPerms<state.minimumPerm) return msg.reply('You do not have permission to use these commands!');
+    if(!perms.hasPermission(state.type,state.minimumPerm)) return msg.reply('You do not have permission to use these commands!');
 
     let [command, ...args] = getArgs(content,state.prefix);
     command = command.toLowerCase();
@@ -65,8 +75,8 @@ client.on('message',msg=>{
         msg.channel.send(embed);
     } else for(const cmd of state.commandList){
         if(cmd.aliases.includes(command)){
-            if(cmd.permission>userPerms) return invalidPermissions(msg,cmd.permission,userPerms);
-            cmd.fn(msg,args,command,userPerms);
+            if(!perms.hasPermission(cmd.type, cmd.permission)) return msg.reply('You do not have permission to use this command!');
+            cmd.fn(msg,args,command,perms);
             break;
         }
     }

@@ -39,5 +39,6 @@ module.exports = new Command({
     fn:command,
     description:'Declare the trader of the month',
     example:`**$${commandName}**`,
+    type: 'tradecenter',
     permlevel: 8
 });

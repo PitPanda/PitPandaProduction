@@ -24,6 +24,7 @@ module.exports = new Command(
         fn: command,
         description:'Send a custom embed in a target channel. Use [this](https://leovoel.github.io/embed-visualizer/) to create embeds',
         example:`**$embed [#channel] \\\`\\\`\\\`json [embed] \\\`\\\`\\\`**`,
+        type: 'tradecenter',
         permlevel:7
     }
 );

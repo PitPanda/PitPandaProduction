@@ -31,6 +31,7 @@ module.exports = new Command(
         fn:command,
         description:'Check some\'s reps',
         example:`**$reps [@user?] [page?]**`,
+        type: 'tradecenter',
         permlevel:1
     }
 );

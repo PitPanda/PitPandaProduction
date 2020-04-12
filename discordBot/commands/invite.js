@@ -8,5 +8,6 @@ module.exports = new Command({
     name:'invite',
     fn:command,
     description:'Server invite link',
-    example:`**$invite**`
+        type: 'tradecenter',
+        example:`**$invite**`
 });

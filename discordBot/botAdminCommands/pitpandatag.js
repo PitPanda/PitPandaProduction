@@ -30,6 +30,7 @@ module.exports = new Command(
         fn: command,
         description:`Set a player's profile display on pit panda`,
         example:`**$pitpandatag [username|uuid] \\\`\\\`\\\`json [info] \\\`\\\`\\\`**`,
+        type: 'tradecenter',
         permlevel:8
     }
 );

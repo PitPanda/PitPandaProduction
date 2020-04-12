@@ -41,6 +41,7 @@ module.exports = new Command(
         fn:command,
         description:'Rep a user with proof of trade\nEx: $rep <@671700686152531978> [feathers for repair kit] i.imgur.com/7udIRdV.png',
         example:`**$rep [@user] [[comment]] [evidence]**`,
+        type: 'tradecenter',
         permlevel:1
     }
 );

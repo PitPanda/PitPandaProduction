@@ -1,16 +1,15 @@
 const Command = require('../Command');
 const PendingRep = require('../../models/PendingRep');
 const DiscordUser = require('../../models/DiscordUser');
-const {invalidPermissions} = require('../permissions');
 const {MessageEmbed} = require('discord.js');
 const {getRef} = require('../../apiTools/apiTools');
 const {TradeRoles} = require('../TradeCenter.json');
 
-async function command(msg,rest,_,permlevel){
+async function command(msg,rest,_,perms){
     if(!rest[0]) return msg.reply("Please provide an action (accept, deny, delete, or inspect) and a case ID");
     switch(rest[0].toLowerCase()){
         case 'accept':
-            if(permlevel<6) return invalidPermissions(msg,6,permlevel);
+            if(!perms.hasPermission('staff',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             PendingRep.findOneAndDelete({_id:rest[1]}).then(rep=>{
                 if(!rep) return msg.reply('Couldn\'t find that rep!');
@@ -30,7 +29,7 @@ async function command(msg,rest,_,permlevel){
             })
             break;
         case 'deny':
-            if(permlevel<6) return invalidPermissions(msg,6,permlevel);
+            if(!perms.hasPermission('staff',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             PendingRep.findOneAndDelete({_id:rest[1]}).then(rep=>{
                 if(!rep) msg.reply('Couldn\'t find that rep!');
@@ -38,7 +37,7 @@ async function command(msg,rest,_,permlevel){
             });
             break;
         case 'delete':
-            if(permlevel<6) return invalidPermissions(msg,6,permlevel);
+            if(!perms.hasPermission('staff',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             DiscordUser.findOne({reps:{$elemMatch:{_id:rest[1]}}}).then(doc=>{
                 if(!doc) return msg.reply('Couldn\'t find that rep!');
@@ -128,6 +127,7 @@ module.exports = new Command(
         fn: command,
         description:'Used for rep management',
         example:`**$rep (accept|deny|delete|inspect) [case id]**`,
+        type: 'tradecenter',
         permlevel:3
     }
 );

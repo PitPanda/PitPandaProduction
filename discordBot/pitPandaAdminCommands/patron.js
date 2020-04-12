@@ -27,5 +27,6 @@ module.exports = new Command({
     fn:command,
     description:'add or remove patrons',
     example:`**$patron [add|remove]**`,
+    type: 'all',
     permlevel: Infinity
 });
