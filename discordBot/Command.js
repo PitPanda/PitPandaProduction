@@ -7,13 +7,14 @@ class Command{
      * @constructor
      * @param {{name:String,fn:Function,example:String,description:String,aliases:String[],permlevel:Number}} options
      */
-    constructor({name,fn,example,description,aliases=[],permlevel=0}){
+    constructor({name,fn,example,description,aliases=[],permlevel=0,type='tradecenter'}){
         this.name = name;
         this.fn = fn;
         this.description = description;
         this.example = example;
         this.aliases = [name,...aliases];
         this.permission = permlevel;
+        this.type = type;
     }
 
 }

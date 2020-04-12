@@ -57,7 +57,7 @@ class RedisClient {
 
     getRange(setName, topPos, bottomPos) {
         const promise = new Promise((resolve, reject) => {
-            this.client.zrevrange(setName, topPos, bottomPos, "WITHSCORES", (err, res) => {
+            this.client.zrevrange(setName, topPos, bottomPos-1, "WITHSCORES", (err, res) => {
                 if (err) return reject(err);
                 resolve(res);
             });

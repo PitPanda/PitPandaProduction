@@ -18,7 +18,7 @@ const leaderboardGrabber = async (primaryKey, page = 0, perPage = 100) => {
 const leaderboardGrabber = async (primaryKey, page = 0, perPage = 100) => {
     page = parseInt(page)
     if (!(primaryKey in fields)) return {error:'Invalid leaderboard endpoint'};
-    const res = (await redisClient.getRange(primaryKey, perPage*page, perPage*(page+1)-1))
+    const res = (await redisClient.getRange(primaryKey, perPage*page, perPage*(page+1)))
         .reduce((acc,current)=>{
             const last = acc[acc.length-1];
             if( !last || last.length===2) acc.push([current]);
