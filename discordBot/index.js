@@ -75,7 +75,6 @@ client.on('message',msg=>{
         msg.channel.send(embed);
     } else for(const cmd of state.commandList){
         if(cmd.aliases.includes(command)){
-            console.log(perms, cmd);
             if(!perms.hasPermission(cmd.type, cmd.permission)) return msg.reply('You do not have permission to use this command!');
             cmd.fn(msg,args,command,perms);
             break;
