@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const EnchantSchema = require('./EnchantSchema');
+const PastOwnerScema = require('./PastOwnerScema');
 const ItemSchema = require('./ItemSchema');
 
 const MysticSchema = mongoose.Schema({
@@ -15,7 +16,8 @@ const MysticSchema = mongoose.Schema({
     lives: Number,
     maxLives: Number,
     tokens: Number,
-    item: ItemSchema
+    item: ItemSchema,
+    pastOwners: [PastOwnerScema]
 });
 
 MysticSchema.index({enchants:1,nonce:1,maxLives:1});

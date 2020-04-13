@@ -26,6 +26,7 @@ const PlayerSchema = mongoose.Schema({
     ...lbPartial,
     allegiance: String,
     hatColor: String,
+    searches: Number,
     profileDisplay: {
         type: profileDisplaySchema,
         default: undefined,

@@ -1100,7 +1100,7 @@ class Pit {
         this.playerDoc;
         Object.defineProperty(this,'playerDoc',{
             enumerable: false,
-            value: new Promise(resolve=>Player.findByIdAndUpdate(this.uuid, { $set: this.createPlayerDoc() }, { upsert: true, new: true }).then(resolve))
+            value: new Promise(resolve=>Player.findByIdAndUpdate(this.uuid, { $set: this.createPlayerDoc(), $inc: {searches: 1} }, { upsert: true, new: true }).then(resolve))
         });
 
         this.playerDoc.then(doc=>{
