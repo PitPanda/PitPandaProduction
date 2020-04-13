@@ -18,6 +18,18 @@ class RedisClient {
         return promise;
     }
 
+    delete(setName, key){
+        const promise = new Promise((resolve, reject) => {
+            this.client.zrem(setName, key, (err, res) => {
+                if (err) return reject(err);
+
+                resolve(res);
+            });
+        });
+
+        return promise;
+    }
+
     get(setName, key) {
         const promise = new Promise((resolve, reject) => {
             this.client.zscore(setName, key, (err, res) => {

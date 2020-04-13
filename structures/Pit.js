@@ -39,7 +39,11 @@ class Pit {
         if (!this.getStat('stats', 'Pit')) {
             (async ()=>{
                 const uuid = this.getStat('uuid');
-                if(uuid) Player.deleteOne({_id:uuid}).exec();
+                if(uuid) {
+                    Player.deleteOne({_id:uuid}).exec();
+                    Object.keys(leaderboardFields)
+                        .forEach(key=>redisClient.delete(key, uuid));
+                }
             })();
             return { error: 'Player has not played the Pit' };
         }
