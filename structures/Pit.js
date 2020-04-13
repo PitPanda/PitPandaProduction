@@ -1876,7 +1876,7 @@ class Pit {
                 },
                 flags,
                 tokens: tokenCount,
-                lastseen: Date.now()
+                $push: { pastOwners: { uuid: this.uuid } }
             };
             return Mystic.findOneAndUpdate({ nonce, enchants, maxLives }, mystic, { upsert: true }).catch(console.error);
         }
