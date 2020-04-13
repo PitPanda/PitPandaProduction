@@ -14,7 +14,7 @@ const leaderboardGrabber = async (primaryKey, page = 0, perPage = 100) => {
             return acc;
         },[]);
     const names = await Player.find({ _id: { $in: res.map(([id])=>id) } }, { _id: 1, colouredName: 1, formattedLevel: 1 });
-    return res.filter(Boolean).map(([id,score])=>{
+    return res.map(([id,score])=>{
         const doc = names.find(name=>name._id===id);
         let name = doc?doc.displayName:'Stat wiped?';
         return {
