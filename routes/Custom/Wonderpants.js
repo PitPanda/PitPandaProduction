@@ -11,7 +11,10 @@ router.get('/:tag', async (req, res) => {
     const doc = await Player.findOne({ _id: target.uuid });
 
     data = {};
-    if(doc && doc.scammer) data.scammer = doc.scammer.notes;
+    if(doc && doc.flag) {
+        const {addedby, timestamp, evidence, ...flag} = doc.toJSON().flag;
+        data.flag = flag;
+    }
     data.uuid = target.uuid;
     data.name = target.levelFormattedName;
     data.bounty = target.bounty;

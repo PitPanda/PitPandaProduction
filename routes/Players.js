@@ -12,7 +12,10 @@ router.get('/:tag', async (req, res) => {
         data = {};
         if (player) {
             data.profileDisplay = player.profileDisplay;
-            data.flag = player.flag;
+            if(player.flag){
+                const {addedby, timestamp, evidence, ...flag} = player.toJSON().flag;
+                data.flag = flag;
+            }
         }
         data.uuid = target.uuid;
         data.name = target.name;
