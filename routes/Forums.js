@@ -40,11 +40,11 @@ function readRss(){
             const title = item.title;
             const author = item.creator;
             const proto = {_id,timestamp,link,title,author};
-            store.emit(proto)
             const doc = new ForumsPost(proto);
             const previous = await ForumsPost.findByIdAndUpdate(_id, doc, { upsert: true });
             if(!previous){
-                const doc = await getDoc(author);
+              const doc = await getDoc(author);
+              store.emit(proto);
                 mentionHook.send(
                     new Discord.MessageEmbed()
                         .setColor((doc.hatColor)?Number(doc.hatColor).toString(16):'ffaa00')
