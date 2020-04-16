@@ -8,6 +8,26 @@ const mentionHook = new Discord.WebhookClient(...ForumsWebHook);
 const ForumsPost = require('../models/ForumsPost');
 const getDoc = require('../apiTools/playerDocRequest');
 
+const feed = {
+    subs: [],
+    subscribe(callback){
+        const listener = {
+            callback,
+            kill: () => {
+                this.subs = this.subs.filter(cur=>cur!==listener);
+                console.log(`An event listener left. total: ${this.subs.length}`);
+            },
+        };
+        this.subs.push(listener);
+        console.log(`A new event listener connected. total: ${this.subs.length}`);
+        return listener;
+    },
+    emit(event){
+        console.log(`Emitting event to ${this.subs.length} connected listeners`);
+        this.subs.forEach(listener=>listener.callback(event));
+    },
+}
+
 let lastGroup = [];
 
 function readRss(){
@@ -43,26 +63,6 @@ function readRss(){
     });
 }
 if(!Development) readRss();
-
-const feed = {
-    subs: [],
-    subscribe(callback){
-        const listener = {
-            callback,
-            kill: () => {
-                this.subs = this.subs.filter(cur=>cur!==listener);
-                console.log(`An event listener left. total: ${this.subs.length}`);
-            },
-        };
-        this.subs.push(listener);
-        console.log(`A new event listener connected. total: ${this.subs.length}`);
-        return listener;
-    },
-    emit(event){
-        console.log(`Emitting event to ${this.subs.length} connected listeners`);
-        this.subs.forEach(listener=>listener.callback(event));
-    },
-}
 
 router.ws('/', (ws) => {
     const listener = feed.subscribe(event => ws.send(JSON.stringify(event)));
