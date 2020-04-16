@@ -8,7 +8,7 @@ const mentionHook = new Discord.WebhookClient(...ForumsWebHook);
 const ForumsPost = require('../models/ForumsPost');
 const getDoc = require('../apiTools/playerDocRequest');
 
-const feed = {
+const store = {
     subs: [],
     subscribe(callback){
         const listener = {
@@ -40,7 +40,7 @@ function readRss(){
             const title = item.title;
             const author = item.creator;
             const proto = {_id,timestamp,link,title,author};
-            feed.emit(proto)
+            store.emit(proto)
             const doc = new ForumsPost(proto);
             const previous = await ForumsPost.findByIdAndUpdate(_id, doc, { upsert: true });
             if(!previous){
@@ -65,7 +65,7 @@ function readRss(){
 if(!Development) readRss();
 
 router.ws('/', (ws) => {
-    const listener = feed.subscribe(event => ws.send(JSON.stringify(event)));
+    const listener = store.subscribe(event => ws.send(JSON.stringify(event)));
     ws.on('close', listener.kill.bind(listener));
     ws.on('message', ()=>ws.send('3'));
 });
