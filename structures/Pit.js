@@ -14,6 +14,7 @@ const leaderboardFields = require('../models/Player/leaderboardFields');
 const allowedStats = Object.keys(leaderboardFields);
 const RedisClient = require('../utils/RedisClient');
 const redisClient = new RedisClient(0);
+const moment = require('moment');
 
 const textHelpers = require('../utils/TextHelpers');
 
@@ -637,6 +638,25 @@ class Pit {
             get: () => this.pitStatsPTL.damage_received
         });
 
+        /**
+         * Timestamp of last combat log
+         * @type {number}
+         */
+        this.last_combat_log;
+        Object.defineProperty(this, 'last_combat_log', {
+            enumerable: true,
+            get: () => this.profile.last_midfight_disconnect
+        });
+
+        /**
+         * Timestamp of next combat log
+         * @type {number}
+         */
+        this.next_combat_log;
+        Object.defineProperty(this, 'next_combat_log', {
+            enumerable: true,
+            get: () => 86400e3-(Date.now()-this.last_combat_log),
+        });
 
         /**
          * Total jumps in the pit (center only)
@@ -1682,6 +1702,7 @@ class Pit {
                 `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
                 `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}/50,000`,
                 `${Colors.GRAY}Genesis Points: ${this.allegiance ? `${this.allegiance === 'DEMON' ? Colors.DARK_RED : Colors.AQUA}${textHelpers.formatNumber(this.allegiancePoints)}` : `${Colors.GREEN}N/A`}`,
+                `${Colors.GRAY}Next Combat Log: ${Colors.GREEN}${(this.next_combat_log>0)?moment(Date.now()+this.next_combat_log).fromNow():'Available'}`,
             ];
             const farmlore = [
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
@@ -1875,8 +1896,7 @@ class Pit {
                     name: getRef(item, 'tag', 'value', 'display', 'value', 'Name', 'value')
                 },
                 flags,
-                tokens: tokenCount,
-                $push: { pastOwners: { uuid: this.uuid } }
+                tokens: tokenCount
             };
             return Mystic.findOneAndUpdate({ nonce, enchants, maxLives }, mystic, { upsert: true }).catch(console.error);
         }

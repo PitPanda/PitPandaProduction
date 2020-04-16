@@ -42,8 +42,8 @@ const boards = new Proxy({
         hidden: true
     },
     highestStreak: {
-        displayName: "Top Streaks",
-        short: "Streaks"
+        displayName: "Longest Streaks",
+        short: "Max Streak"
     },
     deaths: {
         displayName: "Top Deaths",
@@ -94,12 +94,12 @@ const boards = new Proxy({
     },
     tierOnes: {
         displayName: "Top Tier 1 Mystics Enchanted",
-        short: "Mystics Enchanted",
+        short: "Tier 1 Mystics Enchanted",
         hidden: true
     },
     tierTwos: {
         displayName: "Top Tier 2 Mystics Enchanted",
-        short: "Mystics Enchanted",
+        short: "Tier 2 Mystics Enchanted",
         hidden: true
     },
     tierThrees: {
