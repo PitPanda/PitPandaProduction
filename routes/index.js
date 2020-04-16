@@ -10,6 +10,7 @@ const custom = require('./Custom');
 const images = require('./Images');
 const leaderboard = require('./Leaderboard');
 const events = require('./Events');
+const forums = require('./Forums');
 const indexer = require('./Indexer');
 const ApiStat = require('../models/ApiStat');
 const position =  require('./Position');
@@ -43,6 +44,7 @@ router.use('/custom', custom);
 router.use('/images', images);
 router.use('/leaderboard', leaderboard);
 router.use('/events', events);
+router.use('/forums', forums);
 router.use('/indexer', indexer);
 router.use('/position', position);
 
