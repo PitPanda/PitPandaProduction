@@ -3,7 +3,8 @@ const { APIerror } = require('../apiTools/apiTools');
 const leaderboardGrabber = require('../apiTools/leaderboardGrabber');
 
 router.get('/:type', async (req, res) => {
-    const leaderboard = await leaderboardGrabber(req.params.type, req.query.page || 0, req.query.pageSize);
+    let size = req.query.pageSize ? Math.min(500, req.query.pageSize) : 100;
+    const leaderboard = await leaderboardGrabber(req.params.type, req.query.page || 0, size);
 
     if (leaderboard.error) return res.status(400).json({ success: false, error: leaderboard.error||'Something went wrong.' });
 
