@@ -18,6 +18,11 @@ const moment = require('moment');
 
 const textHelpers = require('../utils/TextHelpers');
 
+function removeFromLB(uuid){
+    Object.keys(leaderboardFields)
+        .forEach(key=>redisClient.delete(key, uuid));
+}
+
 /**
  * Represents the player output from the Hypixel API
  */
@@ -42,8 +47,7 @@ class Pit {
                 const uuid = this.getStat('uuid');
                 if(uuid) {
                     Player.deleteOne({_id:uuid}).exec();
-                    Object.keys(leaderboardFields)
-                        .forEach(key=>redisClient.delete(key, uuid));
+                    removeFromLB(uuid);
                 }
             })();
             return { error: 'Player has not played the Pit' };
@@ -1124,7 +1128,7 @@ class Pit {
         });
 
         this.playerDoc.then(doc=>{
-            if(doc.exempt) return;
+            if(doc.exempt) return removeFromLB(doc._id);
             Object.entries(doc.toObject()).map(async d=>{
                 const key = d[0];
                 const value = d[1];
