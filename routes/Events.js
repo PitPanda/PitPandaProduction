@@ -182,7 +182,7 @@ const feed = {
 
 router.post('/', async (req,res)=>{
     res.status(200).json({success:true});
-    if(!req.headers.key) return;
+    if(!req.headers.key) return console.log('no key provided?');
     const keyDoc = await EventKey.findById({_id:req.headers.key});
     if(!keyDoc) return console.log('invalid key');
     const final = req.headers.eventtype;
@@ -192,7 +192,7 @@ router.post('/', async (req,res)=>{
         if(end===-1)end=final.length;
         const clean = final.substring(0,end).replace(/§./g,'').trim();
         const event = events[clean];
-        if(!event) return console.log(`!!!!!!! something that did not classify was submitted to events: ${clean}`);
+        if(!event) return console.error(`!!!!!!! something that did not classify was submitted to events: ${final}`);
         if(event===lastevent) return lastreporters.add(keyDoc.owner);
         if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>{});
         lastreporters = new Set([keyDoc.owner]);
@@ -204,7 +204,7 @@ router.post('/', async (req,res)=>{
             type: event.type.name,
         });
         eventLog.save((err,final)=>{
-            if(err) return;
+            if(err) return console.error('Error saving event!');
             lastevent_id = final._id;
             if(!event.ignore) hook.send(
                 `<@&${event.degree.role}> <@&${event.type.role}>`,
