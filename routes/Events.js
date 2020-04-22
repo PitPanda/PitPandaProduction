@@ -193,7 +193,11 @@ router.post('/', async (req,res)=>{
         const clean = final.substring(0,end).replace(/§./g,'').trim();
         const event = events[clean];
         if(!event) return console.error(`!!!!!!! something that did not classify was submitted to events: ${final}`);
-        if(event===lastevent) return lastreporters.add(keyDoc.owner);
+        if(event===lastevent) {
+            console.log('Recieved valid event, but it has already been acknowledged');
+            lastreporters.add(keyDoc.owner);
+            return;
+        }
         if(lastevent_id) EventLog.findByIdAndUpdate(lastevent_id, {$set:{coreporters: [...lastreporters]}}).then(()=>{});
         lastreporters = new Set([keyDoc.owner]);
         lastevent = event;

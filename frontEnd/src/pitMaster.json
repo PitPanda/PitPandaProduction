@@ -262,6 +262,31 @@
 					"Meta": 0
 				}
 			},
+			"assistant_streaker":{
+				"Name": "Assistant (to the) Streaker",
+				"Description":[
+					"§7Assists count their",
+					"§aparticipation towards",
+					"§7killstreaks."
+				],
+				"Cost":8000,
+				"Item":{
+					"Id": 188,
+					"Meta": 0
+				}
+			},
+			"coop_cat":{
+				"Name": "Co-op Cat",
+				"Description":[
+					"§7Earn §b+50% XP §7and",
+					"§6+50%g §7on all assists."
+				],
+				"Cost":6000,
+				"Item":{
+					"Id": 383,
+					"Meta": 98
+				}
+			},
 			"conglomerate":{
 				"Name": "Conglomerate",
 				"Description":[
@@ -416,6 +441,17 @@
 				"Item":{
 					"Id": 301,
 					"Meta": "FFFFFF"
+				}
+			},
+			"thick":{
+				"Name": "Thick",
+				"Description":[
+					"§7You have §c+2 Max ❤§7."
+				],
+				"Cost":10000,
+				"Item":{
+					"Id": 360,
+					"Meta": 0
 				}
 			},
 			"kung_fu_knowledge":{
