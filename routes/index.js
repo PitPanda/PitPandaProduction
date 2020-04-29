@@ -43,7 +43,7 @@ router.use('/playerDoc', playerDoc);
 router.use('/custom', custom);
 router.use('/images', images);
 router.use('/leaderboard', leaderboard);
-//router.use('/events', events);
+router.use('/events', events);
 router.use('/forums', forums);
 router.use('/indexer', indexer);
 router.use('/position', position);
