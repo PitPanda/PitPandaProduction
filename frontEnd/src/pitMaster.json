@@ -433,7 +433,6 @@
 					"",
 					"§aTasty Soup",
 					"§9Speed I (0:07)",
-					"§9Regeneration I (0:07)",
 					"§a1.5❤ Heal §7+ §61❤ Absorption",
 					"§cNext melee hit +15% damage"
 				],
@@ -531,7 +530,7 @@
 				"Description":[
 					"§7Gain:",
 					"§7 ■ §6+7g",
-					"§7 ■ §f12 arrows §7(max 128)",
+					"§7 ■ §f16 arrows §7(max 128)",
 					"§7 ■ §eSpeed §7for 10 seconds"
 				],
 				"Interval":3,
@@ -547,7 +546,7 @@
 				"Description":[
 					"§7Earn §6+8g",
 					"",
-					"§7Stack §c+2% damage §7 vs bountied players",
+					"§7Stack §c+4% damage §7 vs bountied players",
 					"§7up to §ct+40%§7."
 				],
 				"Interval":3,
@@ -590,7 +589,10 @@
 				"Name": "Fight or Flight",
 				"Description":[
 					"§7If below half §c❤:",
-					"§7Gain §eSpeed I §7and §9Resistance I §7 for 7 seconds."
+					"§7Gain §eSpeed I §7and §9Resistance I §7 for 7 seconds.",
+					"",
+					"§7Otherwise:",
+					"§7Deal §c+20% §7damage for 7 seconds."
 				],
 				"Interval":5,
 				"Cost":5000,
@@ -888,7 +890,7 @@
 					" §a■ §7Earn §6+75% gold §7from kills.",
 					"",
 					"§7BUT:",
-					" §c■ §7Recieve §c+0.1❤ §7damage per 10 kills above 50.",
+					" §c■ §7Recieve §c+0.1❤ §7damage per 5 kills above 50.",
 					"",
 					"§7On death:",
 					" §e■ §7Keep the §bDiamond Helmet§7."
@@ -957,7 +959,7 @@
 			"grand_finale":{
 				"Name": "Grand Finale",
 				"Description":[
-					"§7Triggers on: §c50 kills",
+					"§7Triggers on: §c100 kills",
 					"",
 					"§7On trigger:",
 					" §a■ §7EXPLODE!!!",
@@ -995,7 +997,7 @@
 					"",
 					"§7On death:",
 					" §b■ §7Earn the stored §bXP§7, but",
-					"§7multiply it by §b0.01x §7per kill",
+					"§7multiply it by §b0.005x §7per kill",
 					"§7above 100, up to §b1x§7."
 				],
 				"Cost":50000,
@@ -1771,7 +1773,6 @@
 					"",
 					"§aTasty Soup",
 					"§9Speed I (0:07)",
-					"§9Regeneration I (0:07)",
 					"§a1.5❤ Heal §7+ §61❤ Absorption",
 					"§cNext melee hit +15% damage",
 					"",
@@ -1988,7 +1989,7 @@
 					"§6First-Aid Egg",
 					"§eSpecial item",
 					"§7Heals §c2.5❤",
-					"§710 seconds cooldown.",
+					"§720 seconds cooldown.",
 					"",
 					"§7§oWill become available",
 					"§7§ofor purchase in the items",
@@ -2409,11 +2410,11 @@
 			"melee_execute": {
 				"Descriptions": [
 					[
-						"§7Hitting an enemy to below §c1.5❤",
+						"§7Hitting an enemy to below §c1❤",
 						"§c§7instantly kills them"
 					],
 					[
-						"§7Hitting an enemy to below §c2❤",
+						"§7Hitting an enemy to below §c1.5❤",
 						"§c§7instantly kills them"
 					],
 					[
