@@ -26,7 +26,7 @@ const queue = [];
 
 const queryFilter = {
     lastinpit: {
-        $gte: new Date(Date.now() - 15 * 86400e3)
+        $gte: new Date(Date.now() - 14 * 86400e3)
     }
 }
 

@@ -269,7 +269,7 @@
 .item_175 {background-position:-320px -768px;}
 .item_175_1 {background-position: -416px -768px;}
 .item_175_4 {background-position:-352px -768px;}
-
+.item_188 {background-size: 32px;background-image:url(./imgs/188.png);}
 .item_256 {background-position:288px 0px;}
 .item_257 {background-position:-320px 0px;}
 .item_258 {background-position:-352px 0px;}
@@ -323,38 +323,14 @@
 .item_299 {background-image: url(./imgs/299.png);}
 .item_300 {background-image: url(./imgs/300.png);}
 .item_301 {background-image: url(./imgs/301.png);}
-.item_300_FFAA00 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -288px -800px;
-}
-.item_300_55FF55 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -320px -800px;
-}
-.item_300_5555FF {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -352px -800px;
-}
-.item_300_FFFF55 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -384px -800px;
-}
-.item_300_FF5555 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -416px -800px;
-}
-.item_300_55FFFF {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -448px -800px;
-}
-.item_300_7DC383 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -480px -800px;
-}
-.item_300_000000 {
-  background-image: url(./imgs/blocks_items.png);
-  background-position: -512px -800px;
-}
+.item_300_FFAA00 {background-position: -288px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_55FF55 {background-position: -320px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_5555FF {background-position: -352px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_FFFF55 {background-position: -384px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_FF5555 {background-position: -416px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_55FFFF {background-position: -448px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_7DC383 {background-position: -480px -800px;background-image: url(./imgs/blocks_items.png);}
+.item_300_000000 {background-position: -512px -800px;background-image: url(./imgs/blocks_items.png);}
 
 .item_302 {background-position:-352px -160px;}
 .item_303 {background-position:-384px -160px;}

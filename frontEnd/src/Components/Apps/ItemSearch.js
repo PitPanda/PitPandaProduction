@@ -65,7 +65,7 @@ class ItemSearch extends React.Component {
                     item.checked = false;
                     item.desc[0] = '§7Owner: §4ERROR';
                 }
-                console.err(result.error);
+                console.error(result.error);
             }else{
                 for(let item of targets){
                     item.desc[0] = `§7Owner: ${result}`;

@@ -17,7 +17,7 @@ if(!Development){
             ` - Be sure to read <#${TradeCenter.RulesChannel}>!\n`+
             ` - Want to know more about the server? Check <#${TradeCenter.InfoChannel}>!\n`+
             ` - Check <#${TradeCenter.RolesChannel}> to see all of our custom roles!`
-        )).catch(console.err);
+        )).catch(console.error);
     });
 }
 

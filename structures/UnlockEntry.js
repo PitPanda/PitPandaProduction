@@ -1,4 +1,4 @@
-const { Pit: { Upgrades, Perks, RenownUpgrades } } = require('../frontEnd/src/pitMaster.json');
+const { Pit: { Upgrades, Killstreaks, Perks, RenownUpgrades } } = require('../frontEnd/src/pitMaster.json');
 const { isTiered } = require('../apiTools/apiTools');
 
 /**
@@ -61,6 +61,9 @@ class UnlockEntry {
         } else if (Perks[this.key]) {
             this.type = 'Perk';
             this.displayName = Perks[this.key].Name;
+        } else if (Killstreaks[this.key]) {
+            this.type = 'Killstreak';
+            this.displayName = Killstreaks[this.key].Name;
         } else if (RenownUpgrades[this.key]) {
             this.type = 'Renown';
             this.displayName = RenownUpgrades[this.key].Name;

@@ -22,7 +22,7 @@
 					"§7Earn §b+$% XP §7from all",
 					"§7sources."
 				],
-				"Levels":["10","20","30","40","50"],
+				"Levels":["10","20","30","40","50","60"],
 				"Item":{
 					"Id":351,
 					"Meta":12
@@ -34,7 +34,7 @@
 					"§7Earn §6+$% gold (g) §7from",
 					"§7kills and coin pickups."
 				],
-				"Levels":["10","20","30","40","50"],
+				"Levels":["10","20","30","40","50","60"],
 				"Item":{
 					"Id":351,
 					"Meta":14
@@ -45,7 +45,7 @@
 				"Description":[
 					"§7Deal §c+$% §7 melee damage."
 				],
-				"Levels":["1","2","3","4","5"],
+				"Levels":["1","2","3","4","5","6"],
 				"Item":{
 					"Id":351,
 					"Meta":1
@@ -56,7 +56,7 @@
 				"Description":[
 					"§7Deal §c+$% §7 bow damage."
 				],
-				"Levels":["3","6","9","12","15"],
+				"Levels":["3","6","9","12","15","18"],
 				"Item":{
 					"Id":351,
 					"Meta":11
@@ -67,7 +67,7 @@
 				"Description":[
 					"§7Receive §9-$% §7damage."
 				],
-				"Levels":["1","2","3","4","5"],
+				"Levels":["1","2","3","4","5","6"],
 				"Item":{
 					"Id":351,
 					"Meta":6
@@ -79,7 +79,7 @@
 					"§7Your blocks stay §a+$%",
 					"§7longer."
 				],
-				"Levels":["60","120","180","240","300"],
+				"Levels":["60","120","180","240","300","360"],
 				"Item":{
 					"Id":351,
 					"Meta":15
@@ -91,7 +91,7 @@
 					"§dFirst $ kills §7each life",
 					"§7reward §6+5g §b+5 XP§7."
 				],
-				"Levels":["1","2","3","4","5"],
+				"Levels":["1","2","3","4","5","6"],
 				"Item":{
 					"Id":354,
 					"Meta":0
@@ -264,6 +264,20 @@
 			},
 			"assistant_streaker":{
 				"Name": "Assistant (to the) Streaker",
+				"Extra":{
+					"Formatting":"ApiReference", 
+					"Function":"containsKey", 
+					"Ref": ["player","stats","Pit","profile","renown_unlocks"],
+					"Target": "unlock_perk_assistant_streaker",
+					"Action":"Append",
+					"Content":[
+						"",
+						"§7Don't lose §clives §7on",
+						"§7mystic items from dying",
+						"§7after activating a",
+						"§cmegastreak§7."
+					]
+				 },
 				"Description":[
 					"§7Assists count their",
 					"§aparticipation towards",
@@ -434,8 +448,8 @@
 				"Description":[
 					"§7Cannot wear boots.",
 					"§7While you have speed:",
-					"§8◼ §7Deal §c+15% §7damage",
-					"§8◼ §7Receive §9-15% §7damage"
+					"§8◼ §7Deal §c+18% §7damage",
+					"§8◼ §7Receive §9-18% §7damage"
 				],
 				"Cost":8000,
 				"Item":{
@@ -469,6 +483,556 @@
 				}
 			}
 		},
+		"Killstreaks":{
+			"second_gapple":{
+				"Name": "Second Gapple",
+				"Description":[
+					"§7Gain §b5 XP§7, §6g §7and an",
+					"§7extra golden apple"
+				],
+				"Interval":3,
+				"Cost":1500,
+				"Item":{
+					"Id": 322,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"extra_xp":{
+				"Name": "Explicious",
+				"Description":[
+					"§7Gain §b5 XP§7, §6g §7and an",
+					"§7extra golden apple"
+				],
+				"Interval":3,
+				"Cost":3000,
+				"Item":{
+					"Id": 351,
+					"Meta": 12
+				},
+				"Category":"Minor"
+			},
+			"res_and_regen":{
+				"Name": "R&R",
+				"Description":[
+					"§7Gain §9Resistance I §7and",
+					"§cRegen II §7 for 3s."
+				],
+				"Interval":3,
+				"Cost":4000,
+				"Item":{
+					"Id": 396,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"arquebusier":{
+				"Name": "Arquebusier",
+				"Description":[
+					"§7Gain:",
+					"§7 ■ §6+7g",
+					"§7 ■ §f12 arrows §7(max 128)",
+					"§7 ■ §eSpeed §7for 10 seconds"
+				],
+				"Interval":3,
+				"Cost":5000,
+				"Item":{
+					"Id": 262,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"khanate":{
+				"Name": "Khanate",
+				"Description":[
+					"§7Earn §6+8g",
+					"",
+					"§7Stack §c+2% damage §7 vs bountied players",
+					"§7up to §ct+40%§7."
+				],
+				"Interval":3,
+				"Cost":6000,
+				"Item":{
+					"Id": 314,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"leech":{
+				"Name": "Leech",
+				"Description":[
+					"§7Next hit heals for §c0.5❤",
+					"§7+ §c20% §7of its damage."
+				],
+				"Interval":3,
+				"Cost":6000,
+				"Item":{
+					"Id": 383,
+					"Meta": 93
+				},
+				"Category":"Minor"
+			},
+			"tough_skin":{
+				"Name": "Tough Skin",
+				"Description":[
+					"§7Receive §9-3% §7damage.",
+					"§7Stacks up to §9-24%§7."
+				],
+				"Interval":5,
+				"Cost":3000,
+				"Item":{
+					"Id": 299,
+					"Meta": "A06540"
+				},
+				"Category":"Minor"
+			},
+			"fight_or_flight":{
+				"Name": "Fight or Flight",
+				"Description":[
+					"§7If below half §c❤:",
+					"§7Gain §eSpeed I §7and §9Resistance I §7 for 7 seconds."
+				],
+				"Interval":5,
+				"Cost":5000,
+				"Item":{
+					"Id": 385,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"pungent":{
+				"Name": "Pungent",
+				"Description":[
+					"§7Obtain a §cSmelly Bomb§7:",
+					"§7Applies §9Slowness I §7 to players",
+					"§7within 3 blocks for 5 seconds."
+				],
+				"Interval":5,
+				"Cost":9000,
+				"Item":{
+					"Id": 376,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"speed_two":{
+				"Name": "Hero's Haste",
+				"Description":[
+					"§7Gain §eSpeed II §7 for 5",
+					"§7seconds"
+				],
+				"Interval":5,
+				"Cost":15000,
+				"Item":{
+					"Id": 403,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"feast":{
+				"Name": "Feast",
+				"Description":[
+					"§7Obtain a §6AAA-Rated Steak:",
+					"§7 ■ §c+20% damage",
+					"§7 ■ §eSpeed I",
+					"§7 ■ §9Resistance I",
+					"§7Insta-eat (0:10)"
+				],
+				"Interval":7,
+				"Cost":4000,
+				"Item":{
+					"Id": 423,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"counter_strike":{
+				"Name": "Counter-Strike",
+				"Description":[
+					"§7Deal §c+15% damage §7and block",
+					"§91❤ §7per hit for 8s."
+				],
+				"Interval":7,
+				"Cost":5000,
+				"Item":{
+					"Id": 417,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"gold_nanofactory":{
+				"Name": "Gold Nano-Factory",
+				"Description":[
+					"§7Obtain a molecular assembler:",
+					"§7Spawns §67 gold ingots.",
+					"§7Grants §cRegen IV §7 for 2 seconds."
+				],
+				"Interval":7,
+				"Cost":6000,
+				"Item":{
+					"Id": 371,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"tactical_retreat":{
+				"Name": "Tactical Retreat",
+				"Description":[
+					"§7Gain §cRegeneration IV",
+					"§7and §cWeakness IV for 5",
+					"§7seconds."
+				],
+				"Interval":7,
+				"Cost":5000,
+				"Item":{
+					"Id": 172,
+					"Meta": 2
+				},
+				"Category":"Minor"
+			},
+			"glass_sword":{
+				"Name": "Glass Pickaxe",
+				"Description":[
+					"§7Get a single-use weapon",
+					"§7with §9+8.5 Damage §7and",
+					"§c+0.5❤ §7true damage."
+				],
+				"Interval":7,
+				"Cost":6000,
+				"Item":{
+					"Id": 278,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"shield_aura":{
+				"Name": "Aura of Protection",
+				"Description":[
+					"§7Gain an §aAura of Protection §7spell item.",
+					"",
+					"§aAura of Protection",
+					"§9Resistance II §7(0:04)",
+					"§eTrue Damage §7immunity (0:15)"
+				],
+				"Interval":10,
+				"Cost":8000,
+				"Item":{
+					"Id": 341,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"ice_cube":{
+				"Name": "Ice Cube",
+				"Description":[
+					"§7Get an §bIce Cube §7item.",
+					"",
+					"§7Single-Use on melee strike.",
+					"§7Deals §c1❤ §7true damage to victim.",
+					"§7Gain §b40 XP§7.",
+					"§7Attacks slow enemies for 10 seconds."
+				],
+				"Interval":10,
+				"Cost":9000,
+				"Item":{
+					"Id": 174,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"super_streaker":{
+				"Name": "Super Streaker",
+				"Description":[
+					"§7Gain §b+50 XP§7.",
+					"",
+					"Stack a buff of §b+5% XP §7from kills.",
+					"§7(Up to §b+50%)"
+				],
+				"Interval":10,
+				"Cost":20000,
+				"Item":{
+					"Id": 297,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"gold_stack":{
+				"Name": "Gold Stack",
+				"Description":[
+					"§7Permanently gain §6+0.1g §7per kill.",
+					"§7Maxium: §6+3.7g"
+				],
+				"Interval":10,
+				"Cost":25000,
+				"Item":{
+					"Id": 14,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"xp_stack":{
+				"Name": "XP Stack",
+				"Description":[
+					"§7Permanently gain §b+0.05 XP §7per kill.",
+					"§7Maxium: §b+7.4 XP"
+				],
+				"Interval":10,
+				"Cost":25000,
+				"Item":{
+					"Id": 56,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"monster":{
+				"Name": "Monster",
+				"Description":[
+					"§7Gain an extra max §c❤ §7(max 2)."
+				],
+				"Interval":25,
+				"Cost":10000,
+				"Item":{
+					"Id": 260,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"sponge_steve":{
+				"Name": "Spongesteve",
+				"Description":[
+					"§7Gain §610❤ Absoption§7."
+				],
+				"Interval":25,
+				"Cost":12000,
+				"Item":{
+					"Id": 19,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"apostle":{
+				"Name": "Apostle to RNGesus",
+				"Description":[
+					"§7Roll a number between 1-100:",
+					"§e ■ §727 or 43: §e+1 Renown",
+					"§e ■ §742: §6+10❤ absorption",
+					"§e ■ §750: §bDiamond Helmet",
+					"§e ■ §713 or 66: §5+1 Chunk of Vile",
+					"§e ■ §777 or 88: §d+1 Mystic Drop",
+					"§e ■ §799: Smited for §c❤",
+					"§e ■ §7Multiple of 2: §cRegeneration I §f(0:20)",
+					"§e ■ §7Multiple of 3: §eSpeed I §f(0:15)",
+					"§e ■ §7Multiple of 4: §cRegeneration II §f(0:10)",
+					"§e ■ §7Multiple of 7: Gain between §6500g§7-§65,000g",
+					"§e ■ §7Multiple of 8: Gain between §b500§7-§b5,000 XP",
+					"§e ■ §7Multiple of 12: §b+4❤ absorption",
+					"§e ■ §7Multiple of 13: §c+25% damage §f(0:30)"
+				],
+				"Interval":25,
+				"Cost":12000,
+				"Item":{
+					"Id": 19,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"withercraft":{
+				"Name": "Withercraft",
+				"Description":[
+					"§7Consume a §5Chunk of Vile",
+					"§7to regain §c1 life §7on a",
+					"§7random §dmystic §7item in",
+					"§7your §5Ender Chest§7."
+				],
+				"Interval":25,
+				"Cost":70000,
+				"Item":{
+					"Id": 381,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
+			"overdrive":{
+				"Name": "Overdrive",
+				"Description":[
+					"§7Triggers on: §c50 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7Perma §eSpeed I§7.",
+					" §a■ §7Earn §b+100% XP §7from kills.",
+					" §a■ §7Earn §6+50% gold §7from kills.",
+					"",
+					"§7BUT:",
+					" §c■ §7Recieve §c+0.1❤ §7§overy",
+					"§7true damage per 5 kills over 50.",
+					"",
+					"§7On death:",
+					" §e■ §7Gain §b4,000 XP§7."
+				],
+				"Cost":0,
+				"Item":{
+					"Id": 377,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"beastmode":{
+				"Name": "Beastmode",
+				"Description":[
+					"§7Triggers on: §c50 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7Gain a §bDiamond Helmet.",
+					" §a■ §7Deal §c+25% §7damage.",
+					" §a■ §7Earn §b+50% XP §7from kills.",
+					" §a■ §7Earn §6+75% gold §7from kills.",
+					"",
+					"§7BUT:",
+					" §c■ §7Recieve §c+0.1❤ §7damage per 10 kills above 50.",
+					"",
+					"§7On death:",
+					" §e■ §7Keep the §bDiamond Helmet§7."
+				],
+				"Cost":10000,
+				"Item":{
+					"Id": 310,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"hermit":{
+				"Name": "Hermit",
+				"Description":[
+					"§7Triggers on: §c50 kills",
+					"",
+					"§7On death:",
+					" §a■ §7Placed blocks stay 2x longer.",
+					" §c■ §7Permanent §9Slowness I§7.",
+					"",
+					"§7On trigger:",
+					" §c■ §7Permanent §9Resistance I§7.",
+					" §a■ §7True damage immunity.",
+					" §a■ §7Gain §f32 Bedrock §7+ §f16 §7 every 10 kills",
+					" §a■ §7Earn §6+5% gold §7and §b+5%",
+					"§bXP §7 from kills for each 200 kills",
+					"§7over 50, up to 200.",
+					"",
+					"§7BUT:",
+					" §c■ §7Recieve §c+0.3% §7damage per",
+					"§7kill over 50."
+				],
+				"Cost":20000,
+				"Item":{
+					"Id": 355,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"highlander":{
+				"Name": "Highlander",
+				"Description":[
+					"§7Triggers on: §c50 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7Perma §eSpeed I§7.",
+					" §a■ §7Earn §6+110% gold §7from kills.",
+					" §a■ §7Deal §c+33% damage §7vs bountied players.",
+					"",
+					"§7BUT:",
+					" §c■ §b+5000g §7max bounty.",
+					" §c■ §bReceive §c+0.3% damage",
+					"§7from §6Bounty Hunter §7wearers per",
+					"§7kill over 50.",
+					"",
+					"§7On death:",
+					" §e■ §7Earn your bounty as well."
+				],
+				"Cost":30000,
+				"Item":{
+					"Id": 317,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"grand_finale":{
+				"Name": "Grand Finale",
+				"Description":[
+					"§7Triggers on: §c50 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7EXPLODE!!!",
+					"",
+					"§7BUT:",
+					" §c■ §7Die.",
+					"",
+					"§7On death:",
+					" §e■ §7Earn §e1 Renown§7."
+				],
+				"Cost":40000,
+				"Item":{
+					"Id": 399,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"to_the_moon":{
+				"Name": "To the Moon",
+				"Description":[
+					"§7Triggers on: §c100 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7Earn §b+20% XP §7from kills.",
+					" §a■ §7Get §b+100 max XP §7from kills.",
+					"",
+					"§7BUT:",
+					" §c■ §7Recieve §c+10% §7damage per 20 kills.",
+					"    §7(starting from 100)",
+					" §c■ §7Recieve §c+0.1❤ §7true damage per 20 kills.",
+					"    §7(starting from 200)",
+					"",
+					"§7During the streak:",
+					" §b■ §7Copy and store your kills §bXP§7.",
+					"",
+					"§7On death:",
+					" §b■ §7Earn the stored §bXP§7, but",
+					"§7multiply it by §b0.01x §7per kill",
+					"§7above 100, up to §b1x§7."
+				],
+				"Cost":50000,
+				"Item":{
+					"Id": 121,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			},
+			"uberstreak":{
+				"Name": "Uberstreak",
+				"Description":[
+					"§7Triggers on: §c100 kills",
+					"",
+					"§7On trigger:",
+					" §a■ §7Gain §d+50% §7chance to find mystic items.",
+					"",
+					"§7BUT:",
+					" §d■ §7100 kills: Deal §c-40% damage §7vs non-prestiged",
+					" §d■ §7200 kills: §c-2 max ❤",
+					" §d■ §7300 kills: Potion Effects last §c-50% §7as long",
+					" §d■ §7400 kills: §cNo longer gain health",
+					"",
+					"§7During the streak:",
+					" §b■ §7Copy and store your kills §bXP§7.",
+					"",
+					"§7On death:",
+					"§7Earn a random §dUberdrop §7if you have at least 400 streak."
+				],
+				"Cost":50000,
+				"Item":{
+					"Id": 283,
+					"Meta": 0
+				},
+				"Category":"Mega"
+			}
+		},
 		"RenownUpgrades":{
 			"tenacity":{
 				"Name": "Tenacity",
@@ -480,7 +1044,23 @@
 				"Item":{
 					"Id": 378,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
+			},
+			"autobuy":{
+				"Name": "Autobuy",
+				"Description":[
+					"§7Allows you to autobuy items",
+					"§7from the shop when",
+					"§7respawning.t"
+				],
+				"Levels": [""],
+				"Costs":[5],
+				"Item":{
+					"Id": 311,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
 			},
 			"scam_artist":{
 				"Name": "Scam Artist",
@@ -494,7 +1074,8 @@
 				"Item":{
 					"Id": 319,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"renown_gold_boost":{
 				"Name": "Renown Gold Boost",
@@ -508,40 +1089,21 @@
 				"Item":{
 					"Id": 371,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"xp_bump":{
 				"Name": "Xp Bump",
 				"Description":[
 					"§7Earn §b+$ kill XP§7."
 				],
-				"Levels":["1","2","3","4","5"],
-				"Costs":[5,10,10,10,10],
+				"Levels":["1","2","3","4","5","6","7","8","9","10"],
+				"Costs":[5,10,10,10,10,10,20,40,80,160],
 				"Item":{
 					"Id": 384,
 					"Meta": 0
-				}
-			},
-			"unlock_perk_overheal":{
-				"Name": "Perk unlock: Overheal",
-				"Description":[
-					"§7Required level: §9[§c70§9]",
-					"§7Cost: §66,000g",
-					"",
-					"§eOverheal",
-					"§7Double healing item limits.",
-					"",
-					"§7§oThis is a perk unlock.",
-					"§7§oYou still have to purchase",
-					"§7§othe perk in the upgrades",
-					"§7§oshop."
-				],
-				"Levels":[""],
-				"Costs":[10],
-				"Item":{
-					"Id": 297,
-					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"mysticism":{
 				"Name": "Mysticism",
@@ -562,51 +1124,8 @@
 				"Item":{
 					"Id": 116,
 					"Meta": 0
-				}
-			},
-			"unlock_perk_barbarian":{
-				"Name": "Perk unlock: Barbarian",
-				"Description":[
-					"§7Required level: §9[§230§9]",
-					"§7Cost: §63,000g",
-					"",
-					"§eBarbarian",
-					"§7Replaces your sword with a",
-					"§7stronger axe.",
-					"",
-					"§7§oThis is a perk unlock.",
-					"§7§oYou still have to purchase",
-					"§7§othe perk in the upgrades",
-					"§7§oshop."
-				],
-				"Levels":[""],
-				"Costs":[10],
-				"Item":{
-					"Id": 258,
-					"Meta": 0
-				}
-			},
-			"unlock_perk_dirty":{
-				"Name": "Perk unlock: Dirty",
-				"Description":[
-					"§7Required level: §9[§480§9]",
-					"§7Cost: §68,000g",
-					"",
-					"§eDirty",
-					"§7Gain Resistance II (4s) on",
-					"§7kill.",
-					"",
-					"§7§oThis is a perk unlock.",
-					"§7§oYou still have to purchase",
-					"§7§othe perk in the upgrades",
-					"§7§oshop."
-				],
-				"Levels":[""],
-				"Costs":[15],
-				"Item":{
-					"Id": 3,
-					"Meta": 2
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"contractor":{
 				"Name": "Contractor",
@@ -619,7 +1138,8 @@
 				"Item":{
 					"Id": 403,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"heresy":{
 				"Name": "Heresy",
@@ -644,7 +1164,8 @@
 				"Item":{
 					"Id": 263,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"launch_trail_superb":{
 				"Name": "Superb Launch Trail",
@@ -660,7 +1181,8 @@
 				"Item":{
 					"Id": 382,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"extra_perk_slot":{
 				"Name": "Extra Perk Slot",
@@ -673,7 +1195,8 @@
 				"Item":{
 					"Id": 57,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
 			},
 			"impatient":{
 				"Name": "Impatient",
@@ -686,7 +1209,406 @@
 				"Item":{
 					"Id": 391,
 					"Meta": 0
-				}
+				},
+				"Category":"Upgrade"
+			},
+			"fishing_club":{
+				"Name": "Fishing Club",
+				"Extra":{"Formatting":"Reveal", "IgnoreIndex":1},
+				"Description":[
+					"§7 Unlocked:",
+					" §8- §7Can now actually find fish from fishing.",
+					" §8- §7Earn §b+25XP §7 from everything you catch.",
+					" §8- §7Can now find §bdiamond §7armor from fishing.",
+					" §8- §7Fish §b+20% §7faster.",
+					" §8- §7Can now find §baqua pants §7 from fishing."
+				],
+				"Costs":[5,5,5,5,5],
+				"Item":{
+					"Id": 326,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"extra_hearts":{
+				"Name": "Extra Hearts",
+				"Description":[
+					"§7Permanently gain §c+$❤"
+				],
+				"Levels":["1","2"],
+				"Costs":[20,100],
+				"Item":{
+					"Id": 260,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"extra_killstreak_slot":{
+				"Name": "Extra Killstreak",
+				"Description":[
+					"§7Unlock the extra killstreak",
+					"§7slot."
+				],
+				"Levels":[""],
+				"Costs":[50],
+				"Item":{
+					"Id": 41,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"armory":{
+				"Name": "Armory",
+				"Description":[
+					"§f+$ arrows §7on spawn."
+				],
+				"Levels":["8","16","24","32"],
+				"Costs":[5,5,5,5],
+				"Item":{
+					"Id": 262,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"fancy_hat":{
+				"Name": "Fancy Hat",
+				"Extra":{"Formatting":"ApiReference", "Function":"toHex", "Ref": ["player","stats","Pit","profile","hat_color"]},
+				"Description":[
+					"§7Color: #$",
+					"§7Permanent leather helmet.",
+					"§7Overridden by Safety First.",
+					"§7Can be §ddyed§7!"
+				],
+				"Costs":[10],
+				"Item":{
+					"Id": 298,
+					"Meta": "$"
+				},
+				"Category":"Upgrade"
+			},
+			"yummy":{
+				"Name": "Yummy",
+				"Description":[
+					"§7Golden apples and heads you",
+					"§7eat reward §6+2g§7."
+				],
+				"Levels":[""],
+				"Costs":[15],
+				"Item":{
+					"Id": 322,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"divine_intervention":{
+				"Name": "Divine Intervention",
+				"Description":[
+					"§e+$% §7chance to keep your",
+					"§7inventory on death."
+				],
+				"Levels":["5","10","15"],
+				"Costs":[50,50,50],
+				"Item":{
+					"Id": 156,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"launch_trail_blazing":{
+				"Name": "Blazing Launch Trail",
+				"Description":[
+					"§7One lit trail.",
+					"",
+					"§7§oThis is a cosmetic effect",
+					"§7§owhen using the slime",
+					"§7§olaunchers."
+				],
+				"Levels":[""],
+				"Costs":[30],
+				"Item":{
+					"Id": 377,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"apollo":{
+				"Name": "Apollo",
+				"Description":[
+					"§7Launchers send you towards",
+					"§7the nearest spawn you're",
+					"§7looking at."
+				],
+				"Levels":[""],
+				"Costs":[25],
+				"Item":{
+					"Id": 121,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"the_way":{
+				"Name": "The Way",
+				"Description":[
+					"§7No perk level requirements."
+				],
+				"Levels":[""],
+				"Costs":[50],
+				"Item":{
+					"Id": 430,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"very_yummy":{
+				"Name": "Very Yummy!",
+				"Description":[
+					"§7Upgrade §6Golden Heads§7:",
+					" §7Adds +2 seconds to §cRegen II",
+					" §7Greants §6+0.5❤ absorption"
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 396,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"self_confidence":{
+				"Name": "Self-Confidence",
+				"Description":[
+					"§7Earn bonus §6gold§7:",
+					" §7Top 5: §6+5,000g",
+					" §7Top 10: §6+2,500g",
+					" §7Top 15: §6+1,000g",
+					"§7on leadeboard major events."
+				],
+				"Levels":[""],
+				"Costs":[50],
+				"Item":{
+					"Id": 321,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"launch_trail_bang":{
+				"Name": "Bang Launch Trail",
+				"Description":[
+					"§7Go out with a bang!",
+					"",
+					"§7§oThis is a cosmetic effect",
+					"§7§owhen using the slime",
+					"§7§olaunchers."
+				],
+				"Levels":[""],
+				"Costs":[50],
+				"Item":{
+					"Id": 349,
+					"Meta": 3
+				},
+				"Category":"Upgrade"
+			},
+			"fast_pass":{
+				"Name": "Fast Pass",
+				"Description":[
+					"§7Start at level 50 after",
+					"§7prestige."
+				],
+				"Levels":[""],
+				"Costs":[100],
+				"Item":{
+					"Id": 157,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"cool_conclave":{
+				"Name": "Cool Conclave",
+				"Description":[
+					"§7Unlock the §b/cool",
+					"§7command to list the high",
+					"§7prestige players in your",
+					"§7instance."
+				],
+				"Levels":[""],
+				"Costs":[10],
+				"Item":{
+					"Id": 79,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"echest_space":{
+				"Name": "Inventory Management",
+				"Description":[
+					"§5+$ row §7in enderchest."
+				],
+				"Levels":["1","2","3"],
+				"Costs":[50,100,150],
+				"Item":{
+					"Id": 130,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"promotion":{
+				"Name": "Promotion!!",
+				"Description":[
+					"§7Upgrade the \"Assistant (to the)",
+					"§7Streaker\" perk:",
+					"",
+					"§aAssistant Streaker",
+					"§7Don't lose §clives §7on",
+					"§7mystic items from dying",
+					"§7after activating a",
+					"§cmegastreak§7."
+				],
+				"Levels":[""],
+				"Costs":[30],
+				"Item":{
+					"Id": 188,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"xp_industrial":{
+				"Name": "Experience-Industrial Complex",
+				"Description":[
+					"§7Streak §bXP §7bonus scales up to §c200 kills§7.",
+					"§b+50 max XP §7per kill."
+				],
+				"Levels":[""],
+				"Costs":[80],
+				"Item":{
+					"Id": 419,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"raw_numbers":{
+				"Name": "Raw Numbers",
+				"Description":[
+					"§7View the exact damage you",
+					"§7deal in the action bar."
+				],
+				"Levels":[""],
+				"Costs":[40],
+				"Item":{
+					"Id": 362,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"one_upper":{
+				"Name": "One Upper",
+				"Description":[
+					"§7Can purchase §d+1 tier §7on",
+					"§7passives."
+				],
+				"Levels":[""],
+				"Costs":[40],
+				"Item":{
+					"Id": 33,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"bounty_cloak":{
+				"Name": "Bounty Cloak",
+				"Description":[
+					"§7Use the bounty effect in",
+					"§7any Hypixel Lobby in the",
+					"§7collectibles!"
+				],
+				"Levels":[""],
+				"Costs":[100],
+				"Item":{
+					"Id": 348,
+					"Meta": 0
+				},
+				"Category":"Upgrade"
+			},
+			"celebrity":{
+				"Name": "Celebrity",
+				"Description":[
+					"§7Literally earn §62x gold",
+					"§7from kills."
+				],
+				"Levels":[""],
+				"Costs":[300],
+				"Item":{
+					"Id": 349,
+					"Meta": 3
+				},
+				"Category":"Upgrade"
+			},
+			"unlock_perk_overheal":{
+				"Name": "Perk unlock: Overheal",
+				"Description":[
+					"§7Required level: §9[§c70§9]",
+					"§7Cost: §66,000g",
+					"",
+					"§eOverheal",
+					"§7Double healing item limits.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[10],
+				"Item":{
+					"Id": 297,
+					"Meta": 0
+				},
+				"Category":"Perk"
+			},
+			"unlock_perk_barbarian":{
+				"Name": "Perk unlock: Barbarian",
+				"Description":[
+					"§7Required level: §9[§230§9]",
+					"§7Cost: §63,000g",
+					"",
+					"§eBarbarian",
+					"§7Replaces your sword with a",
+					"§7stronger axe.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[10],
+				"Item":{
+					"Id": 258,
+					"Meta": 0
+				},
+				"Category":"Perk"
+			},
+			"unlock_perk_dirty":{
+				"Name": "Perk unlock: Dirty",
+				"Description":[
+					"§7Required level: §9[§480§9]",
+					"§7Cost: §68,000g",
+					"",
+					"§eDirty",
+					"§7Gain Resistance II (4s) on",
+					"§7kill.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[15],
+				"Item":{
+					"Id": 3,
+					"Meta": 2
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_rambo":{
 				"Name": "Perk unlock: Rambo",
@@ -709,36 +1631,8 @@
 				"Item":{
 					"Id": 280,
 					"Meta": 0
-				}
-			},
-			"fishing_club":{
-				"Name": "Fishing Club",
-				"Extra":{"Formatting":"Reveal", "IgnoreIndex":1},
-				"Description":[
-					"§7 Unlocked:",
-					" §8- §7Can now actually find fish from fishing.",
-					" §8- §7Earn §b+25XP §7 from everything you catch.",
-					" §8- §7Can now find §bdiamond §7armor from fishing.",
-					" §8- §7Fish §b+20% §7faster.",
-					" §8- §7Can now find §baqua pants §7 from fishing."
-				],
-				"Costs":[5,5,5,5,5],
-				"Item":{
-					"Id": 326,
-					"Meta": 0
-				}
-			},
-			"extra_hearts":{
-				"Name": "Extra Hearts",
-				"Description":[
-					"§7Permanently gain §c+$❤"
-				],
-				"Levels":["1","2"],
-				"Costs":[20,100],
-				"Item":{
-					"Id": 260,
-					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_olympus":{
 				"Name": "Perk unlock: Olympus",
@@ -766,34 +1660,32 @@
 				"Item":{
 					"Id": 373,
 					"Meta": 8203
-				}
+				},
+				"Category":"Perk"
 			},
-			"armory":{
-				"Name": "Armory",
+			"unlock_perk_assistant_streaker":{
+				"Name": "Perk unlock: Assistant (to the) Streaker",
 				"Description":[
-					"§f+$ arrows §7on spawn."
+					"§7Required level: §e[50]",
+					"§7Cost: §68,000g",
+					"",
+					"§eAssistant Streaker",
+					"§7Assists count their",
+					"§aparticipation §7towards",
+					"§7killstreaks.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
 				],
-				"Levels":["8","16","24","32"],
-				"Costs":[5,5,5,5],
+				"Levels":[""],
+				"Costs":[15],
 				"Item":{
-					"Id": 262,
+					"Id": 188,
 					"Meta": 0
-				}
-			},
-			"fancy_hat":{
-				"Name": "Fancy Hat",
-				"Extra":{"Formatting":"ApiReference", "Function":"toHex", "Ref": ["player","stats","Pit","profile","hat_color"]},
-				"Description":[
-					"§7Color: #$",
-					"§7Permanent leather helmet.",
-					"§7Overridden by Safety First.",
-					"§7Can be §ddyed§7!"
-				],
-				"Costs":[10],
-				"Item":{
-					"Id": 298,
-					"Meta": "$"
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_first_strike":{
 				"Name": "Perk unlock: First Strike",
@@ -816,20 +1708,8 @@
 				"Item":{
 					"Id": 366,
 					"Meta": 0
-				}
-			},
-			"yummy":{
-				"Name": "Yummy",
-				"Description":[
-					"§7Golden apples and heads you",
-					"§7eat reward §6+2g§7."
-				],
-				"Levels":[""],
-				"Costs":[15],
-				"Item":{
-					"Id": 322,
-					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_marathon":{
 				"Name": "Perk unlock: Marathon",
@@ -840,8 +1720,8 @@
 					"§eMarathon",
 					"§7Cannot wear boots.",
 					"§7While you have speed:",
-					"§8◼ §7Deal §c+15% §7damage",
-					"§8◼ §7Receive §9-15% §7damage",
+					"§8◼ §7Deal §c+18% §7damage",
+					"§8◼ §7Receive §9-18% §7damage",
 					"",
 					"§7§oThis is a perk unlock.",
 					"§7§oYou still have to purchase",
@@ -853,36 +1733,30 @@
 				"Item":{
 					"Id": 301,
 					"Meta": "FFFFFF"
-				}
+				},
+				"Category":"Perk"
 			},
-			"divine_intervention":{
-				"Name": "Divine Intervention",
+			"unlock_perk_coop_cat":{
+				"Name": "Perk unlock: Co-op Cat",
 				"Description":[
-					"§e+$% §7chance to keep your",
-					"§7inventory on death."
-				],
-				"Levels":["5","10","15"],
-				"Costs":[50,50,50],
-				"Item":{
-					"Id": 156,
-					"Meta": 0
-				}
-			},
-			"launch_trail_blazing":{
-				"Name": "Blazing Launch Trail",
-				"Description":[
-					"§7One lit trail.",
+					"§7Required level: §e[90]",
+					"§7Cost: §66,000g",
 					"",
-					"§7§oThis is a cosmetic effect",
-					"§7§owhen using the slime",
-					"§7§olaunchers."
+					"§7Earn §b+50% XP §7and",
+					"§6+50%g §7on all assists.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
 				],
 				"Levels":[""],
-				"Costs":[30],
+				"Costs":[20],
 				"Item":{
-					"Id": 377,
-					"Meta": 0
-				}
+					"Id": 383,
+					"Meta": 98
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_soup":{
 				"Name": "Perk unlock: Soup",
@@ -911,7 +1785,8 @@
 				"Item":{
 					"Id": 282,
 					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_recon":{
 				"Name": "Perk unlock: Recon",
@@ -934,33 +1809,8 @@
 				"Item":{
 					"Id": 381,
 					"Meta": 0
-				}
-			},
-			"apollo":{
-				"Name": "Apollo",
-				"Description":[
-					"§7Launchers send you towards",
-					"§7the nearest spawn you're",
-					"§7looking at."
-				],
-				"Levels":[""],
-				"Costs":[25],
-				"Item":{
-					"Id": 121,
-					"Meta": 0
-				}
-			},
-			"the_way":{
-				"Name": "The Way",
-				"Description":[
-					"§7No perk level requirements."
-				],
-				"Levels":[""],
-				"Costs":[50],
-				"Item":{
-					"Id": 430,
-					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_conglomerate":{
 				"Name": "Perk unlock: Conglomerate",
@@ -984,23 +1834,8 @@
 				"Item":{
 					"Id": 170,
 					"Meta": 0
-				}
-			},
-			"launch_trail_bang":{
-				"Name": "Bang Launch Trail",
-				"Description":[
-					"§7Go out with a bang!",
-					"",
-					"§7§oThis is a cosmetic effect",
-					"§7§owhen using the slime",
-					"§7§olaunchers."
-				],
-				"Levels":[""],
-				"Costs":[50],
-				"Item":{
-					"Id": 349,
-					"Meta": 3
-				}
+				},
+				"Category":"Perk"
 			},
 			"unlock_perk_kung_fu_knowledge":{
 				"Name": "Perk unlock: Kung Fu Knowledge",
@@ -1024,74 +1859,337 @@
 				"Item":{
 					"Id": 363,
 					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
-			"fast_pass":{
-				"Name": "Fast Pass",
+			"unlock_perk_thick":{
+				"Name": "Perk unlock: Thick",
 				"Description":[
-					"§7Start at level 50 after",
-					"§7prestige."
+					"§7Required level: §6[§5§l90§6]",
+					"§7Cost: §610,000g",
+					"",
+					"§7You have §c+2 Max ❤§7.",
+					"",
+					"§7§oThis is a perk unlock.",
+					"§7§oYou still have to purchase",
+					"§7§othe perk in the upgrades",
+					"§7§oshop."
 				],
 				"Levels":[""],
-				"Costs":[100],
+				"Costs":[45],
 				"Item":{
-					"Id": 157,
+					"Id": 260,
 					"Meta": 0
-				}
+				},
+				"Category":"Perk"
 			},
-			"cool_conclave":{
-				"Name": "Cool Conclave",
+			"unlock_iron_pack":{
+				"Name": "Shop unlock: Iron Pack",
 				"Description":[
-					"§7Unlock the §b/cool",
-					"§7command to list the high",
-					"§7prestige players in your",
-					"§7instance."
+					"",
+					"§6Iron Pack",
+					"§7Full iron armor set.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[5],
+				"Item":{
+					"Id": 307,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"unlock_obsidian_stack":{
+				"Name": "Shop unlock: Obsidian Stack",
+				"Description":[
+					"",
+					"§6Obsidian Stack",
+					"§7It's an item.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[5],
+				"Item":{
+					"Id": 49,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"unlock_diamond_leggings":{
+				"Name": "Shop unlock: Diamond Leggings",
+				"Description":[
+					"",
+					"§6Diamond Leggings",
+					"§7Auto-equips on buy!",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 312,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"unlock_combat_spade":{
+				"Name": "Shop unlock: Combat Spade",
+				"Description":[
+					"",
+					"§6Combat Spade",
+					"§7It's an item.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
 				],
 				"Levels":[""],
 				"Costs":[10],
 				"Item":{
-					"Id": 419,
+					"Id": 277,
 					"Meta": 0
-				}
+				},
+				"Category":"Shop"
 			},
-			"echest_space":{
-				"Name": "Inventory Management",
+			"unlock_bounty_solvent":{
+				"Name": "Shop unlock: Bounty Solvent",
 				"Description":[
-					"§5+$ row §7in enderchest."
+					"",
+					"§6Bounty Solvent (1:00)",
+					"§7Receive §9-30% damage §7from",
+					"§7players with a §61000g §7bounties.",
+					"",
+					"§7Earn §6+50% gold §7from claimed bounties.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
 				],
-				"Levels":["1","2","3"],
-				"Costs":[50,100,150],
+				"Levels":[""],
+				"Costs":[10],
 				"Item":{
-					"Id": 130,
-					"Meta": 0
-				}
+					"Id": 373,
+					"Meta": 10
+				},
+				"Category":"Shop"
 			},
-			"raw_numbers":{
-				"Name": "Raw Numbers",
+			"unlock_first_aid_egg":{
+				"Name": "Shop unlock: First-Aid Egg",
 				"Description":[
-					"§7View the exact damage you",
-					"§7deal in the action bar."
+					"",
+					"§6First-Aid Egg",
+					"§eSpecial item",
+					"§7Heals §c2.5❤",
+					"§710 seconds cooldown.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[15],
+				"Item":{
+					"Id": 383,
+					"Meta": 96
+				},
+				"Category":"Shop"
+			},
+			"unlock_golden_pickaxe":{
+				"Name": "Shop unlock: Golden Pickaxe",
+				"Description":[
+					"§7Efficiency VII",
+					"",
+					"§6Golden Pickaxe",
+					"§7It's an item.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[10],
+				"Item":{
+					"Id": 285,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"unlock_jump_boost_potion":{
+				"Name": "Shop unlock: Jump Boost IV",
+				"Description":[
+					"§7Jump Boost IV (0:30)",
+					"",
+					"§6Jump Boost IV",
+					"§7It's an item.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 373,
+					"Meta": 7
+				},
+				"Category":"Shop"
+			},
+			"unlock_tactical_insertion":{
+				"Name": "Shop unlock: Tactical Insertion",
+				"Description":[
+					"",
+					"§6Tactical Insertion",
+					"§7Sets your next spawnpoint",
+					"§7where you stand.",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 369,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"unlock_Pants Bundle":{
+				"Name": "Shop unlock: Pants Bundle",
+				"Description":[
+					"",
+					"§6Pants Bundle",
+					"§7Kept on death.",
+					"§7Hold and right-click to",
+					"§7store 10 fresh pair of",
+					"§7pants",
+					"",
+					"§7§oWill become available",
+					"§7§ofor purchase in the items",
+					"§7§oshop."
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 328,
+					"Meta": 0
+				},
+				"Category":"Shop"
+			},
+			"beastmode_bundle":{
+				"Name": "Killstreaks: Beastmode",
+				"Description":[
+					"§7Includes:",
+					"§8- §aR&R",
+					"§8- §aTough Skin",
+					"§8- §aTactical Retreat",
+					"§8- §aMonster",
+					"",
+					"§7Megasteak: §aBeastmode"
+				],
+				"Levels":[""],
+				"Costs":[10],
+				"Item":{
+					"Id": 310,
+					"Meta": 0
+				},
+				"Category":"Killstreaks"
+			},
+			"hermit_bundle":{
+				"Name": "Killstreaks: Hermit",
+				"Description":[
+					"§7Includes:",
+					"§8- §9Pungent",
+					"§8- §9Glass Pickaxe",
+					"§8- §9Aura of Protection",
+					"§8- §9Ice Cube",
+					"",
+					"§7Megasteak: §9Hermit"
+				],
+				"Levels":[""],
+				"Costs":[20],
+				"Item":{
+					"Id": 355,
+					"Meta": 0
+				},
+				"Category":"Killstreaks"
+			},
+			"highlander_bundle":{
+				"Name": "Killstreaks: Highlander",
+				"Description":[
+					"§7Includes:",
+					"§8- §6Khanate",
+					"§8- §6Gold Nano-factory",
+					"§8- §6Withercraft",
+					"",
+					"§7Megasteak: §6Highlander"
 				],
 				"Levels":[""],
 				"Costs":[40],
 				"Item":{
-					"Id": 362,
+					"Id": 317,
 					"Meta": 0
-				}
+				},
+				"Category":"Killstreaks"
 			},
-			"bounty_cloak":{
-				"Name": "Bounty Cloak",
+			"grand_finale_bundle":{
+				"Name": "Killstreaks: Grand Finale",
 				"Description":[
-					"§7Use the bounty effect in",
-					"§7any Hypixel Lobby in the",
-					"§7collectibles!"
+					"§7Includes:",
+					"§8- §eLeech",
+					"§8- §eAssured Strike",
+					"§8- §eApostle to RNGesus",
+					"",
+					"§7Megasteak: §eGrand Finale"
 				],
 				"Levels":[""],
-				"Costs":[100],
+				"Costs":[60],
 				"Item":{
-					"Id": 348,
+					"Id": 399,
 					"Meta": 0
-				}
+				},
+				"Category":"Killstreaks"
+			},
+			"to_the_moon_bundle":{
+				"Name": "Killstreaks: To the Moon",
+				"Description":[
+					"§7Includes:",
+					"§8- §bSuper Streaker",
+					"§8- §bGold Stack",
+					"§8- §bXP Stack",
+					"",
+					"§7Megasteak: §bTo the Moon"
+				],
+				"Levels":[""],
+				"Costs":[150],
+				"Item":{
+					"Id": 121,
+					"Meta": 0
+				},
+				"Category":"Killstreaks"
+			},
+			"uberstreak_bundle":{
+				"Name": "Killstreaks: Uberstreak",
+				"Description":[
+					"§7Includes:",
+					"",
+					"§7Megasteak: §eUberstreak"
+				],
+				"Levels":[""],
+				"Costs":[50],
+				"Item":{
+					"Id": 283,
+					"Meta": 0
+				},
+				"Category":"Killstreaks"
 			}
 		},
 		"Prestiges":[
@@ -1525,15 +2623,15 @@
 			"gold_per_diamond_piece": {
 				"Descriptions": [
 					[
-						"§7Earn §6+§620g §7per §bdiamond",
-						"§b§7pieces your victims wear"
-					],
-					[
-						"§7Earn §6+§640g §7per §bdiamond",
+						"§7Earn §6+§630g §7per §bdiamond",
 						"§b§7pieces your victims wear"
 					],
 					[
 						"§7Earn §6+§660g §7per §bdiamond",
+						"§b§7pieces your victims wear"
+					],
+					[
+						"§7Earn §6+§690g §7per §bdiamond",
 						"§b§7pieces your victims wear"
 					]
 				],
@@ -1588,7 +2686,7 @@
 						"§7Also §apoisons §7yourself!"
 					]
 				],
-				"Name": "§9Combo: Venom",
+				"Name": "§dRARE! §9Combo: Venom",
 				"Type": "dark",
 				"Classes": [
 					"counter",
@@ -2215,14 +3313,14 @@
 			"increase_gold_pickup": {
 				"Descriptions": [
 					[
-						"§7Picked up gold rewards §6+§65g"
+						"§7Picked up gold rewards §6+10g"
 					],
 					[
-						"§7Picked up gold rewards §6+§610g"
+						"§7Picked up gold rewards §6+20g"
 					],
 					[
 						"§7Picked up gold grants §61❤ §7and",
-						"§7rewards §6+§615g"
+						"§7rewards §6+30g"
 					]
 				],
 				"Name": "§9Pebble",
@@ -2311,15 +3409,15 @@
 			"less_damage_when_high_bounty": {
 				"Descriptions": [
 					[
-						"§7Receive §9-5% §7damage when you",
+						"§7Receive §9-2% §7damage when you",
 						"§7have a §65000g bounty"
 					],
 					[
-						"§7Receive §9-10% §7damage when you",
-						"§7have a §65000g bounty"
+						"§7Receive §9-3% §7damage per",
+						"§61,000g bounty"
 					],
 					[
-						"§7Receive §9-15% §7damage when you",
+						"§7Receive §9-4% §7damage when you",
 						"§7have a §65000g bounty"
 					]
 				],
@@ -3732,15 +4830,15 @@
 			"chance_dont_lose_life": {
 				"Descriptions": [
 					[
-						"§7§b20% chance §7retain the lives on",
+						"§7§b15% chance §7retain the lives on",
 						"§7your items on death"
 					],
 					[
-						"§7§b40% chance §7retain the lives on",
+						"§7§b30% chance §7retain the lives on",
 						"§7your items on death"
 					],
 					[
-						"§7§b60% chance §7retain the lives on",
+						"§7§b45% chance §7retain the lives on",
 						"§7your items on death"
 					]
 				],
@@ -4020,7 +5118,7 @@
 						"§7Gain §c+1 bloodshard §7for each",
 						"§7life you take from mystic items on",
 						"§7kill. Accumulating §c27",
-						"§cbloodshards §7consumes 3 lives of",
+						"§cbloodshards §7consumes 2 lives of",
 						"§7this item and grants §dfresh",
 						"§dpants§7."
 					]

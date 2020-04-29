@@ -150,6 +150,8 @@ class Player extends React.Component {
                     <div key={`Perk-${this.state.user.uuid}`}>
                       <MinecraftInventory key='perks' inventory={this.state.user.inventories.perks} width={this.state.user.inventories.perks.length} style={{margin:'0 auto', display:'block'}}/>
                       <hr/>
+                      <MinecraftInventory key='killstreaks' inventory={this.state.user.inventories.killstreaks} width={this.state.user.inventories.killstreaks.length} style={{margin:'0 auto', display:'block'}}/>
+                      <hr/>
                       <MinecraftInventory key='upgrades' inventory={this.state.user.inventories.upgrades} width={7} style={{margin:'0 auto', display:'block'}}/>
                     </div>
                   ),(

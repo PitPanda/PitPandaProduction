@@ -15,6 +15,7 @@ Object.values(Mystics).forEach(ench=>{
 Mystics.pants = {Name:'§fPants',Type:'pants',NoNumber:true};
 Mystics.sword = {Name:'§fSword',Type:'sword',NoNumber:true};
 Mystics.bow = {Name:'§fBow',Type:'bow',NoNumber:true};
+Mystics.gemmed = {Name:'§fGemmed',Type:'any',NoNumber:true};
 Mystics.lives = {Name:'§fLives',Type:'any'};
 Mystics.maxLives = {Name:'§fMax Lives',Type:'any'};
 Mystics.tokens = {Name:'§fTokens',Type:'any'};

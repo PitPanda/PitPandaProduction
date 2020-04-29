@@ -1,6 +1,6 @@
 const { getRef } = require('../apiTools/apiTools');
 const pitMaster = require('../frontEnd/src/pitMaster.json');
-const { Pit: { Levels, Prestiges, Upgrades, Perks, RenownUpgrades, Mystics }, Extra: { ColorCodes: Colors, RankPrefixes, RankNameColors } } = pitMaster;
+const { Pit: { Levels, Prestiges, Upgrades, Perks, Killstreaks, RenownUpgrades, Mystics }, Extra: { ColorCodes: Colors, RankPrefixes, RankNameColors } } = pitMaster;
 const Item = require('./Item');
 const SimpleItem = require('./SimpleItem');
 const Prestige = require('./Prestige');
@@ -14,7 +14,12 @@ const leaderboardFields = require('../models/Player/leaderboardFields');
 const allowedStats = Object.keys(leaderboardFields);
 const RedisClient = require('../utils/RedisClient');
 const redisClient = new RedisClient(0);
-const moment = require('moment');
+
+const [ renownShopSize, renownShopTotalCost ] = Object.values(RenownUpgrades).reduce((acc, cur) => {
+    acc[0]+=cur.Costs.length;
+    acc[1]+=cur.Costs.reduce((a,c)=>a+c,0);
+    return acc;
+},[0,0]);
 
 const textHelpers = require('../utils/TextHelpers');
 
@@ -370,7 +375,7 @@ class Pit {
             get: () => {
                 if (!this._renownProgress) Object.defineProperty(this, '_renownProgress', {
                     enumerable: false,
-                    value: new Progress(this.renownShop.length, 81, this.renownShop.length === 81 ? 'Max Shop' : false, this.renownShopSpent, 1980)
+                    value: new Progress(this.renownShop.length, renownShopSize, this.renownShop.length === renownShopSize ? 'Max Shop' : false, this.renownShopSpent, renownShopTotalCost)
                 });
                 return this._renownProgress;
             }
@@ -392,10 +397,32 @@ class Pit {
         });
 
         /**
+         * Equiped minor kill streaks
+         * @type {string[]}
+         */
+        this.killsteaks;
+        Object.defineProperty(this, 'killsteaks', {
+            enumerable: true,
+            get: () => {
+                let arr = new Array(this.killstreakSlots).fill('none');
+                arr[0] = 'overdrive';
+                for (let i = 0; i < this.killstreakSlots; i++)
+                    arr[i] = this.profile[`selected_killstreak_${i}`] || arr[i];
+                return arr;
+            }
+        });
+
+        /**
          * Available Perk Slots
          * @type {number}
          */
         this.perkSlots = (this.renownShop.find(({ key }) => key == 'extra_perk_slot')) ? 4 : 3;
+
+        /**
+         * Available Perk Slots
+         * @type {number}
+         */
+        this.killstreakSlots = (this.renownShop.find(({ key }) => key == 'extra_killstreak_slot')) ? 4 : 3;
 
         /**
          * Current Renown
@@ -725,6 +752,53 @@ class Pit {
         Object.defineProperty(this, 'highestStreak', {
             enumerable: true,
             get: () => this.pitStatsPTL.max_streak
+        });
+
+        /**
+         * @type {number}
+         */
+        this.launchedByDemonSpawn;
+        Object.defineProperty(this, 'launchedByDemonSpawn', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.launched_by_demon_spawn
+        });
+
+        /**
+         * @type {number}
+         */
+        this.launchedByAngelSpawn;
+        Object.defineProperty(this, 'launchedByAngelSpawn', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.launched_by_angel_spawn
+        });
+
+        /**
+         * @type {number}
+         */
+        this.vampireHealedHp;
+        Object.defineProperty(this, 'vampireHealedHp', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.vampire_healed_hp
+        });
+
+        /**
+         * Gold earned by picking up golden ingots
+         * @type {number}
+         */
+        this.ingotsGold;
+        Object.defineProperty(this, 'ingotsGold', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.ingots_cash
+        });
+
+        /**
+         * Golden ingots picked up
+         * @type {number}
+         */
+        this.ingotsPickedUp;
+        Object.defineProperty(this, 'ingotsPickedUp', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.ingots_picked_up
         });
 
         /**
@@ -1576,6 +1650,7 @@ class Pit {
         return Promise.all([
             this.NBTInventoryPromise,
             this.buildPerkInventory(),
+            this.buildKillstreakInventory(),
             this.buildUpgradeInventory(),
             this.buildRenownUpgradeInventory(),
             this.buildStatsInventory()
@@ -1589,6 +1664,7 @@ class Pit {
     buildCustominventories() {
         return {
             perks:this.buildPerkInventory(),
+            killstreaks:this.buildKillstreakInventory(),
             upgrades:this.buildUpgradeInventory(),
             renownShop:this.buildRenownUpgradeInventory(),
             generalStats:this.buildStatsInventory()
@@ -1600,17 +1676,39 @@ class Pit {
      * @type {void | Item[]}
      */
     buildPerkInventory() {
-        const perks = this.perks;
-        const inv = perks.map(key => {
+        const inv = this.perks.map(key => {
             if (key === 'none') return {};
-            const perk = Perks[key];
-            return new Item('§9' + perk.Name, perk.Description, perk.Item.Id, perk.Item.Meta);
+            const base = Perks[key];
+            return new Item('§9' + base.Name, base.Description, base.Item.Id, base.Item.Meta);
         });
         /**
          * Player's selected perks
          * @type {Item[]}
          */
         this.inventories.perks = inv;
+        return inv;
+    }
+
+    /**
+     * Builds an inventory format of their Perks
+     * @type {void | Item[]}
+     */
+    buildKillstreakInventory() {
+        const inv = this.killsteaks.map(key => {
+            if (key === 'none') return {};
+            const base = Killstreaks[key];
+            return new Item(
+                '§9' + base.Name,
+                base.Interval ? [`§7Every: §c${base.Interval} kills`,'',...base.Description] : base.Description,
+                base.Item.Id, 
+                base.Item.Meta
+            );
+        });
+        /**
+         * Player's selected perks
+         * @type {Item[]}
+         */
+        this.inventories.killstreaks = inv;
         return inv;
     }
 
@@ -1706,7 +1804,6 @@ class Pit {
                 `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
                 `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}/50,000`,
                 `${Colors.GRAY}Genesis Points: ${this.allegiance ? `${this.allegiance === 'DEMON' ? Colors.DARK_RED : Colors.AQUA}${textHelpers.formatNumber(this.allegiancePoints)}` : `${Colors.GREEN}N/A`}`,
-                `${Colors.GRAY}Next Combat Log: ${Colors.GREEN}${(this.next_combat_log>0)?moment(Date.now()+this.next_combat_log).fromNow():'Available'}`,
             ];
             const farmlore = [
                 `${Colors.GRAY}Wheat Farmed: ${Colors.GREEN}${textHelpers.formatNumber(this.wheatFarmed)}`,
@@ -1722,7 +1819,7 @@ class Pit {
                 `${Colors.GRAY}Prestige: ${Colors.GREEN}${textHelpers.formatNumber(this.prestige)}`,
                 `${Colors.GRAY}Current Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.renown)}`,
                 `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.lifetimeRenown)}`,
-                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/81`
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/113`
             ]
             const off = new Item(`${Colors.RED}Offensive Stats`, offlore, 267);
             const def = new Item(`${Colors.BLUE}Defensive Stats`, deflore, 307);
@@ -1818,7 +1915,6 @@ class Pit {
             sewerTreasures: this.sewerTreasuresFound,
             nightQuests: this.nightQuestsCompleted,
             renown: this.renown,
-            lifetimeRenown: this.lifetimeRenown,
             arrowShots: this.arrowsFired,
             arrowHits: this.arrowHits,
             bowAccuracy: this.bowAccuracy,
@@ -1868,6 +1964,7 @@ class Pit {
                 level: ench.Level.value
             }));
             let flags = [];
+            if(item.tag.value.ExtraAttributes.value.UpgradeGemsUses) flags.push('gemmed')
             const rareCount = enchants.filter(({ key }) => Mystics[key].Name.includes('RARE')).length;
             if (rareCount >= 1) flags.push('rare');
             if (rareCount >= 2) flags.push('extraordinary');

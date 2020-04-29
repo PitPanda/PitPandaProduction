@@ -1,7 +1,7 @@
 const UnlockEntry = require('./UnlockEntry');
 const Item = require('./Item');
 const { Pit: { Upgrades, RenownUpgrades, Perks } } = require('../frontEnd/src/pitMaster.json');
-const { getRef, isTiered } = require('../apiTools/apiTools');
+const { getRef, isTiered, subDescription } = require('../apiTools/apiTools');
 
 const textHelpers = require('../utils/TextHelpers');
 
@@ -66,27 +66,3 @@ class UnlockCollection {
 
 module.exports = UnlockCollection;
 
-/**
- * 
- * @param {object} upgrade pitMaster upgrade data
- * @param {number} tier 
- * @param {object} api raw output
- */
-function subDescription(upgrade, tier, api) {
-    upgrade = JSON.parse(JSON.stringify(upgrade));
-    const format = getRef(upgrade, 'Extra', 'Formatting');
-    tier = Math.max(tier, 0);
-    if (format == "Reveal") {
-        upgrade.Description = upgrade.Description.slice(0, 1 + tier + upgrade.Extra.IgnoreIndex);
-    } else if (format == "Seperated") {
-        upgrade.Description = upgrade.Description[tier];
-    } else if (format == "ApiReference") {
-        let data = getRef(api, ...upgrade.Extra.Ref.slice(1));
-        if (upgrade.Extra.Function == 'toHex') data = textHelpers.toHex(data);
-        upgrade.Description = upgrade.Description.map(line => line.replace('$', data));
-        upgrade.Item.Meta = upgrade.Item.Meta.replace('$', data);
-    } else {
-        upgrade.Description = upgrade.Description.map(line => line.replace('$', upgrade.Levels[tier]));
-    }
-    return upgrade;
-}
