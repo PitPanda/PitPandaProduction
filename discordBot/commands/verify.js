@@ -3,14 +3,18 @@ const Command = require('../Command');
 const DiscordUser = require('../../models/DiscordUser');
 const hypixelAPI = require('../../apiTools/playerRequest');
 
+function invalid(tag){
+    return `Unable to verify. Make sure your discord tag ingame is set to \`${tag}\` and run \`.verify <ign>\`. Follow https://gyazo.com/3a2358687dae9b4333fd2fef932e0a17.`
+}
+
 const command = async (msg,rest,alias) => {
     const verify = alias===`verify`;
     if(!rest[0]) return msg.reply(`Please include your username. Ex: \`.${verify?'verify':'prestige'} mcpqndq\``);
     const result = await hypixelAPI(rest[0].toLowerCase())
     const gmrm = msg.member.roles;
     if(result.error) return msg.reply(result.error);
-    if(!result.discord) return msg.reply('Please link your discord ingame. tutorial: https://www.youtube.com/watch?v=LiUcDhLjLDc');
-    if(result.discord!==msg.author.tag) return msg.reply('Your discord set ingame does not match!');
+    if(!result.discord) return msg.reply(invalid(msg.author.tag));
+    if(result.discord!==msg.author.tag) return msg.reply(invalid(msg.author.tag));
 
     //Give message based on alias used
     if(verify) msg.reply("You have been verified!");

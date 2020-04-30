@@ -1203,10 +1203,9 @@ class Pit {
 
         this.playerDoc.then(doc=>{
             if(doc.exempt) return removeFromLB(doc._id);
-            Object.entries(doc.toObject()).map(async d=>{
-                const key = d[0];
-                const value = d[1];
+            Object.entries(doc.toObject()).map(async ([ key, value ])=>{
                 if (!allowedStats.includes(key)) return;
+                if(key==='lifetimeRenown') console.log(value);
                 await redisClient.set(key, this.uuid, value);
             })
         });
@@ -1894,6 +1893,7 @@ class Pit {
             xp: this.xp,
             gold: this.currentGold,
             lifetimeGold: this.lifetimeGold,
+            lifetimeRenown: this.lifetimeRenown,
             playtime: this.playtime,
             contracts: this.contractsCompleted,
             gapples: this.gapplesEaten,

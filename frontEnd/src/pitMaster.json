@@ -486,7 +486,7 @@
 			"second_gapple":{
 				"Name": "Second Gapple",
 				"Description":[
-					"§7Gain §b5 XP§7, §6g §7and an",
+					"§7Gain §b5 XP§7, §65g §7and an",
 					"§7extra golden apple"
 				],
 				"Interval":3,
@@ -842,9 +842,9 @@
 				"Name": "Withercraft",
 				"Description":[
 					"§7Consume a §5Chunk of Vile",
-					"§7to regain §c1 life §7on a",
-					"§7random §dmystic §7item in",
-					"§7your §5Ender Chest§7."
+					"§7to regain §c1 life §7on",
+					"§7the §7item in the §dMystic",
+					"§dWell§7."
 				],
 				"Interval":25,
 				"Cost":70000,
@@ -1054,7 +1054,7 @@
 				"Description":[
 					"§7Allows you to autobuy items",
 					"§7from the shop when",
-					"§7respawning.t"
+					"§7respawning."
 				],
 				"Levels": [""],
 				"Costs":[5],
@@ -1292,7 +1292,7 @@
 				"Name": "Yummy",
 				"Description":[
 					"§7Golden apples and heads you",
-					"§7eat reward §6+2g§7."
+					"§7eat reward §6+3g§7!"
 				],
 				"Levels":[""],
 				"Costs":[15],
