@@ -707,6 +707,21 @@
 				},
 				"Category":"Minor"
 			},
+			"assured_strike":{
+				"Name": "Assured Strike",
+				"Description":[
+					"§7Yur next melee hit deals",
+					"§c+35% damage §7and grants",
+					"§eSpeed I §7for 20 seconds."
+				],
+				"Interval":7,
+				"Cost":7500,
+				"Item":{
+					"Id": 412,
+					"Meta": 0
+				},
+				"Category":"Minor"
+			},
 			"shield_aura":{
 				"Name": "Aura of Protection",
 				"Description":[
@@ -833,8 +848,8 @@
 				"Interval":25,
 				"Cost":12000,
 				"Item":{
-					"Id": 19,
-					"Meta": 0
+					"Id": 44,
+					"Meta": 7
 				},
 				"Category":"Minor"
 			},
@@ -1366,7 +1381,7 @@
 				"Description":[
 					"§7Upgrade §6Golden Heads§7:",
 					" §7Adds +2 seconds to §cRegen II",
-					" §7Greants §6+0.5❤ absorption"
+					" §7Grants §6+0.5❤ absorption"
 				],
 				"Levels":[""],
 				"Costs":[20],
