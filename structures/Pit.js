@@ -1205,7 +1205,6 @@ class Pit {
             if(doc.exempt) return removeFromLB(doc._id);
             Object.entries(doc.toObject()).map(async ([ key, value ])=>{
                 if (!allowedStats.includes(key)) return;
-                if(key==='lifetimeRenown') console.log(value);
                 await redisClient.set(key, this.uuid, value);
             })
         });
