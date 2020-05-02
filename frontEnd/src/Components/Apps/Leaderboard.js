@@ -8,7 +8,7 @@ import { timeSince } from '../../scripts/frontendTools';
 import boards from '../../scripts/leaderboards';
 import { withRouter } from 'react-router-dom';
 
-const defaultCategory = 'lavaBuckets';
+const defaultCategory = 'gapples';
 
 async function getLeaderboard({ category = defaultCategory, page = 0 }) {
     try {

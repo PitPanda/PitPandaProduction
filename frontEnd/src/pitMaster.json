@@ -2109,7 +2109,7 @@
 					"§8- §aTactical Retreat",
 					"§8- §aMonster",
 					"",
-					"§7Megasteak: §aBeastmode"
+					"§7Megastreak: §aBeastmode"
 				],
 				"Levels":[""],
 				"Costs":[10],
@@ -2128,7 +2128,7 @@
 					"§8- §9Aura of Protection",
 					"§8- §9Ice Cube",
 					"",
-					"§7Megasteak: §9Hermit"
+					"§7Megastreak: §9Hermit"
 				],
 				"Levels":[""],
 				"Costs":[20],
@@ -2146,7 +2146,7 @@
 					"§8- §6Gold Nano-factory",
 					"§8- §6Withercraft",
 					"",
-					"§7Megasteak: §6Highlander"
+					"§7Megastreak: §6Highlander"
 				],
 				"Levels":[""],
 				"Costs":[40],
@@ -2164,7 +2164,7 @@
 					"§8- §eAssured Strike",
 					"§8- §eApostle to RNGesus",
 					"",
-					"§7Megasteak: §eGrand Finale"
+					"§7Megastreak: §eGrand Finale"
 				],
 				"Levels":[""],
 				"Costs":[60],
@@ -2182,7 +2182,7 @@
 					"§8- §bGold Stack",
 					"§8- §bXP Stack",
 					"",
-					"§7Megasteak: §bTo the Moon"
+					"§7Megastreak: §bTo the Moon"
 				],
 				"Levels":[""],
 				"Costs":[150],
@@ -2197,7 +2197,7 @@
 				"Description":[
 					"§7Includes:",
 					"",
-					"§7Megasteak: §eUberstreak"
+					"§7Megastreak: §eUberstreak"
 				],
 				"Levels":[""],
 				"Costs":[50],
