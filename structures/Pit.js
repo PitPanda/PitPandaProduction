@@ -1799,7 +1799,7 @@ class Pit {
                 `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksBroken)}`,
                 `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${textHelpers.formatNumber(this.jumpsIntoPit)}`,
                 `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${textHelpers.formatNumber(this.launcherLaunches)}`,
-                `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/12`,
+                `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/25`,
                 `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}/50,000`,
                 `${Colors.GRAY}Genesis Points: ${this.allegiance ? `${this.allegiance === 'DEMON' ? Colors.DARK_RED : Colors.AQUA}${textHelpers.formatNumber(this.allegiancePoints)}` : `${Colors.GREEN}N/A`}`,
             ];

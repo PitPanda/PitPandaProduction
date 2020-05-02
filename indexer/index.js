@@ -13,9 +13,9 @@ const requestPlayer = require('../apiTools/playerRequest');
 const playerDoc = require('../models/Player');
 
 //constants
-const maxQueueSize = 1000;
+const maxQueueSize = 500;
 const maxBatchSize = 1;
-const batchTimeout = 1000;
+const batchTimeout = 5000;
 
 let currentQueue = 0;
 let lastQueueChange = 0;
@@ -26,7 +26,7 @@ const queue = [];
 
 const queryFilter = {
     lastinpit: {
-        $gte: new Date(Date.now() - 14 * 86400e3)
+        $gte: new Date(Date.now() - 7 * 86400e3)
     }
 }
 
