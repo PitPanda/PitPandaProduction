@@ -1695,7 +1695,6 @@ class Pit {
         const inv = this.killsteaks.map(key => {
             if (key === 'none') return {};
             const base = Killstreaks[key];
-            console.log(key, base);
             return new Item(
                 '§9' + base.Name,
                 base.Interval ? [`§7Every: §c${base.Interval} kills`,'',...base.Description] : base.Description,
