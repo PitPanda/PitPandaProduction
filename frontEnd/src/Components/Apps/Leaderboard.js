@@ -58,13 +58,12 @@ function Leaderboard(props) {
             }
         }).catch(console.err);
         getIndexerStatus().then(indexer=>{
-            if(alive && !indexer.error) setIndexData(
-                { 
-                    online: true, 
-                    estimatedCount: indexer.estimatedCount,
-                    currentPosition: indexer.currentPosition,
-                }
-            );
+            if(alive) {
+                if(indexer.error) console.log(indexer.error);
+                else setIndexData(
+                    { online: true, ...indexer}
+                );
+            }
         }).catch(console.err);
         return () => alive = false;
     }, [target]);
@@ -91,9 +90,16 @@ function Leaderboard(props) {
                         })}
                     </StaticCard>
                     <StaticCard title="Indexer Status" style={{ width: '350px' }}>
-                        <MinecraftText className='text-title' style={{ color: indexData.online ? 'green' : 'red' }} text={indexData.online ? 'Online' : 'Offline'} /><br />
+                        <MinecraftText className='text-title' raw={'Status: ' + (indexData.online ? '§2Online' : '§4Offline')} /><br />
                         {indexData.online ? (
-                            <MinecraftText style={{ color: 'gold' }} text={`${indexData.currentPosition.toLocaleString()} / ${indexData.estimatedCount.toLocaleString()}`} />
+                            <>
+                                <MinecraftText raw={`Progress: §6${indexData.currentPosition.toLocaleString()} / ${indexData.estimatedCount.toLocaleString()}`} /><br />
+                                <MinecraftText raw={`Rate: §6${Math.round(indexData.info.maxBatchSize/(indexData.info.batchTimeout/1e5))/1e2} players/sec`} /><br />
+                                <MinecraftText raw={`Cycle Time: §6${(()=>{
+                                    const seconds = Math.round(indexData.estimatedCount/(indexData.info.maxBatchSize/indexData.info.batchTimeout)/1e3);
+                                    return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`
+                                })()}`} /><br />
+                            </>
                         ) : ''}
                     </StaticCard>
                 </div>
