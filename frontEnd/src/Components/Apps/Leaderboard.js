@@ -4,7 +4,6 @@ import StaticCard from '../Cards/StaticCard';
 import MinecraftText from '../Minecraft/MinecraftText';
 import Link from '../Link/Link';
 import PageSelector from '../PageSelector/PageSelector';
-import { timeSince } from '../../scripts/frontendTools';
 import boards from '../../scripts/leaderboards';
 import { withRouter } from 'react-router-dom';
 
@@ -42,20 +41,7 @@ function getQuery(search) {
 function Leaderboard(props) {
     const [target, setTarget] = useState(getQuery(props.location.search));
     const [data, setData] = useState({ entires: [], loadedType: defaultCategory, loadedPage: 0 });
-    const [indexData, setIndexData] = useState(
-        { 
-            finished: false, 
-            currentPosition: 0, 
-            estimatedCount: 0, 
-            info: { 
-                currentQueueCount: 0, 
-                maxBatchSize: 1, 
-                maxQueueSize: 1000, 
-                batchTimeout: 1000, 
-                lastQueueChange: 0 
-            } 
-        }
-    );
+    const [indexData, setIndexData] = useState({ online: false });
 
     useEffect(() => {
         return props.history.listen(
@@ -72,7 +58,13 @@ function Leaderboard(props) {
             }
         }).catch(console.err);
         getIndexerStatus().then(indexer=>{
-            if(alive && !indexer.error) setIndexData({ finished: true, ...indexer });
+            if(alive && !indexer.error) setIndexData(
+                { 
+                    online: true, 
+                    estimatedCount: indexer.estimatedCount,
+                    currentPosition: indexer.currentPosition,
+                }
+            );
         }).catch(console.err);
         return () => alive = false;
     }, [target]);
@@ -98,23 +90,11 @@ function Leaderboard(props) {
                             );
                         })}
                     </StaticCard>
-                    <StaticCard title="Disclaimer" style={{ width: '350px' }}>
-                        This leaderboard does not contain <em>every</em> pit player.
-                        This leaderboard also does not update instantly, it should update a minimum of once a day.
-                        Technical details about the leaderboard updating is below.
-                    </StaticCard>
                     <StaticCard title="Indexer Status" style={{ width: '350px' }}>
-                        <MinecraftText className='text-title' style={{ color: indexData.finished ? 'green' : 'red' }} text={indexData.finished ? 'Online' : 'Offline'} /><br />
-                        <MinecraftText text={`Last queue batch ${timeSince(indexData.info.lastQueueChange)} ago`} />
-                        <MinecraftText text={`Current Position`} /> <MinecraftText style={{ color: 'gold' }} text={`${indexData.currentPosition.toLocaleString()} / ${indexData.estimatedCount.toLocaleString()}`} /><br />
-                        <br />
-                        <MinecraftText text={`More Stats`} style={{ color: 'green' }} />
-                        <br />
-                        <MinecraftText text={`Max Batch Size: ${indexData.info.maxBatchSize}`} /><br />
-                        <MinecraftText text={`Max Queue Size: ${indexData.info.maxQueueSize}`} /><br />
-                        <MinecraftText text={`Batch Timeout: ${indexData.info.batchTimeout}`} /><br />
-                        <MinecraftText text={`Current Queue Iteration: ${indexData.info.currentQueueCount}`} />
-
+                        <MinecraftText className='text-title' style={{ color: indexData.online ? 'green' : 'red' }} text={indexData.online ? 'Online' : 'Offline'} /><br />
+                        {indexData.online ? (
+                            <MinecraftText style={{ color: 'gold' }} text={`${indexData.currentPosition.toLocaleString()} / ${indexData.estimatedCount.toLocaleString()}`} />
+                        ) : ''}
                     </StaticCard>
                 </div>
 
