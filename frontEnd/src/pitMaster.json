@@ -5159,6 +5159,22 @@
 					"utility"
 				]
 			},
+			"melee_hidden_jewel":{
+				"Descriptions": [
+					[],
+					[],
+					[
+						"§7Kill §c117 §7players to recycle",
+						"§7into Tier I sword with a Tier",
+						"§7III enchant."
+					]
+				],
+				"Name": "§9Hidden Jewel",
+				"Type": "sewer",
+				"Classes": [
+					"utility"
+				]
+			},
 			"snowmen": {
 				"Descriptions": [
 					[

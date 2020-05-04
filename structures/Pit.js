@@ -1963,7 +1963,7 @@ class Pit {
                 level: ench.Level.value
             }));
             let flags = [];
-            if(item.tag.value.ExtraAttributes.value.UpgradeGemsUses) flags.push('gemmed')
+            if(item.tag.value.ExtraAttributes.value.UpgradeGemsUses) flags.push('gemmed');
             const rareCount = enchants.filter(({ key }) => Mystics[key].Name.includes('RARE')).length;
             if (rareCount >= 1) flags.push('rare');
             if (rareCount >= 2) flags.push('extraordinary');
