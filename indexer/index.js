@@ -15,7 +15,7 @@ const playerDoc = require('../models/Player');
 //constants
 const maxQueueSize = 500;
 const maxBatchSize = 1;
-const batchTimeout = 10000;
+const batchTimeout = 2500;
 
 let currentQueue = 0;
 let lastQueueChange = 0;
@@ -26,8 +26,11 @@ const queue = [];
 
 const queryFilter = {
     lastinpit: {
-        $gte: new Date(Date.now() - 7 * 86400e3)
-    }
+        $gte: new Date(Date.now() - 7 * 86400e3),
+    },
+    xp: {
+        $gte: 65950,
+    },
 }
 
 const getNextChunk = async () => {
