@@ -31,7 +31,7 @@ const queryFilter = {
 }
 
 const getNextChunk = async () => {
-    const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().sort({ xp: -1 }).skip(currentQueue * maxQueueSize).limit(maxQueueSize);
+    const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().skip(currentQueue * maxQueueSize).limit(maxQueueSize);
 
     players.forEach(p => queue.push(p._id));
     lastQueueChange = Date.now();

@@ -29,7 +29,7 @@ const day = 86400e3
 const week = day * 7;
 function isAged(doc, maxAge){
     if(typeof maxAge === 'number') return Date.now() - doc.lastsave < maxAge;
-    else return (Date.now()-doc.lastsave)/day<((Date.now()-doc.lastinpit)/week)**0.8;
+    else return (Date.now()-doc.lastsave)/day<((Date.now()-doc.lastinpit)/week)**0.3+(Date.now()-doc.lastinpit)/week;
 }
 
 module.exports = getDoc;
