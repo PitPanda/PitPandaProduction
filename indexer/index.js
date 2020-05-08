@@ -26,11 +26,8 @@ const queue = [];
 
 const queryFilter = {
     lastinpit: {
-        $gte: new Date(Date.now() - 7 * 86400e3),
-    },
-    xp: {
-        $gte: 65950,
-    },
+        $gte: new Date(Date.now() - 14 * 86400e3),
+    }
 }
 
 const getNextChunk = async () => {
