@@ -31,7 +31,6 @@ router.get('/:tag', async (req, res) => {
         data.xpProgress = target.xpProgress;
         data.goldProgress = target.goldProgress;
         data.renownProgress = target.renownProgress;
-        data.recentKills = target.recentKills;
         res.status(200).json({ success: true, data });
     });
 });

@@ -158,7 +158,7 @@ class Pit {
         Object.defineProperty(this, 'rank', {
             enumerable: true,
             get: () => {
-                let rank = this.getStat('newPackageRank') || this.getStat('PackageRank') || 'NON';
+                let rank = this.getStat('newPackageRank') || this.getStat('packageRank') || 'NON';
                 if (this.getStat('monthlyPackageRank') == 'SUPERSTAR') rank = 'SUPERSTAR';
                 const staff = this.getStat('rank');
                 if (staff && staff != 'NORMAL') rank = staff;
@@ -485,26 +485,6 @@ class Pit {
         Object.defineProperty(this, 'playtime', {
             enumerable: true,
             get: () => this.pitStatsPTL.playtime_minutes || 0
-        });
-
-        /**
-         * Last kills
-         * @type {{victim:string,timestamp:number}[]}
-         */
-        this.recentKills;
-        Object.defineProperty(this, 'recentKills', {
-            enumerable: true,
-            get: () => (this.profile.recent_kills || []).reverse()
-        });
-
-        /**
-         * Last kills simplified
-         * @type {string[]}
-         */
-        this.recentKillsSimple;
-        Object.defineProperty(this, 'recentKillsSimple', {
-            enumerable: true,
-            get: () => this.recentKills.map(kill => kill.victim)
         });
 
         /**
