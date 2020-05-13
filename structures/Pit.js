@@ -871,6 +871,26 @@ class Pit {
             get: () => this.pitStatsPTL.bounties_of_500g_with_bh
         });
 
+          /**
+         * Total rage potatoes eaten
+         * @type {number}
+         */
+        this.ragePotatoesEaten;
+        Object.defineProperty(this, 'ragePotatoesEaten', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.rage_potatoes_eaten
+        });
+
+         /**
+         * Total obsidian broken
+         * @type {number}
+         */
+        this.obsidianBroken;
+        Object.defineProperty(this, 'obsidianBroken', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.obsidian_broken
+        });
+
         /**
          * Total mystics encahnted of each tier
          * @type {Array<number>} [tier1, tier2, tier3]
@@ -1932,6 +1952,10 @@ class Pit {
             totalJumps: (this.jumpsIntoPit||0)+(this.launcherLaunches||0),
             bounty: this.bounty,
             bountiesClaimed: this.bountiesClaimed,
+            ragePotatoesEaten: this.ragePotatoesEaten,
+            obsidianBroken: this.obsidianBroken,
+            ingotsPickedUp: this.ingotsPickedUp,
+            ingotsGold: this.ingotsGold,
             genesisPoints: this.allegiancePoints,
             joins: this.joins,
             enderchestOpened: this.enderchestOpened,
