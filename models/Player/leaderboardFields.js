@@ -65,6 +65,7 @@ module.exports = {
     contractsRatio: Number,
     bountiesClaimed: Number,
     ragePotatoesEaten: Number,
+    obsidianBroken: Number,
     ingotsGold: Number,
     ingotsPickedUp: Number,
     vampireHealedHp: Number,
