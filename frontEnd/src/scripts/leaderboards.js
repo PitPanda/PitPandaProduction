@@ -303,20 +303,20 @@ const boards = new Proxy({
         short: "Rage Potatoes Eaten",
     },
     obsidianBroken: {
-        display: "Top Obsidian Broken",
+        displayName: "Top Obsidian Broken",
         short: "Obsidian Broken",
     },
     ingotsGold: {
-        display: "Top Gold Earned by Ingots",
+        displayName: "Top Gold Earned by Ingots",
         short: "Gold Earned by Ingots",
         hidden: true,
     },
     ingotsPickedUp: {
-        display: "Top Ingots Picked Up",
+        displayName: "Top Ingots Picked Up",
         short: "Ingots Gathered",
     },
     vampireHealedHp: {
-        display: "Top HP Healed with Vampire",
+        displayName: "Top HP Healed with Vampire",
         short: "Vampire Healing",
     },
     error: {
