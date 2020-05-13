@@ -67,4 +67,5 @@ module.exports = {
     ragePotatoesEaten: Number,
     ingotsGold: Number,
     ingotsPickedUp: Number,
+    vampireHealedHp: Number,
 }

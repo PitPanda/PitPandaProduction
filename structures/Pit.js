@@ -1956,6 +1956,7 @@ class Pit {
             obsidianBroken: this.obsidianBroken,
             ingotsPickedUp: this.ingotsPickedUp,
             ingotsGold: this.ingotsGold,
+            vampireHealedHp: this.vampireHealedHp,
             genesisPoints: this.allegiancePoints,
             joins: this.joins,
             enderchestOpened: this.enderchestOpened,

@@ -301,7 +301,6 @@ const boards = new Proxy({
     ragePotatoesEaten: {
         displayName: "Top Rage Potatoes Eaten",
         short: "Rage Potatoes Eaten",
-        hidden: true,
     },
     obsidianBroken: {
         display: "Top Obsidian Broken",
@@ -315,6 +314,10 @@ const boards = new Proxy({
     ingotsPickedUp: {
         display: "Top Ingots Picked Up",
         short: "Ingots Gathered",
+    },
+    vampireHealedHp: {
+        display: "Top HP Healed with Vampire",
+        short: "Vampire Healing",
     },
     error: {
         displayName: "Invalid Leaderboard",
