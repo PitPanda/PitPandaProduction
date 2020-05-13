@@ -294,6 +294,10 @@ const boards = new Proxy({
         hidden: true,
         transform: toPercent
     },
+    bountiesClaimed: {
+        displayName: "Top Bounties of 500g+ Claimed with Bounty Hunter",
+        short: "Bounties Claimed",
+    },
     error: {
         displayName: "Invalid Leaderboard",
         short: "Error",

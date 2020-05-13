@@ -861,6 +861,16 @@ class Pit {
             get: () => this.pitStatsPTL.night_quests_completed
         });
 
+          /**
+         * Total bounties over 500g claimed with Bounty Hunter
+         * @type {number}
+         */
+        this.bountiesClaimed;
+        Object.defineProperty(this, 'bountiesClaimed', {
+            enumerable: true,
+            get: () => this.pitStatsPTL.bounties_of_500g_with_bh
+        });
+
         /**
          * Total mystics encahnted of each tier
          * @type {Array<number>} [tier1, tier2, tier3]
@@ -1921,6 +1931,7 @@ class Pit {
             launcherLaunches: this.launcherLaunches,
             totalJumps: (this.jumpsIntoPit||0)+(this.launcherLaunches||0),
             bounty: this.bounty,
+            bountiesClaimed: this.bountiesClaimed,
             genesisPoints: this.allegiancePoints,
             joins: this.joins,
             enderchestOpened: this.enderchestOpened,

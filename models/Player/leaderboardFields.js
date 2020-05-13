@@ -63,4 +63,5 @@ module.exports = {
     killAssistHourly: Number,
     contractsStarted: Number,
     contractsRatio: Number,
+    bountiesClaimed: Number,
 }
