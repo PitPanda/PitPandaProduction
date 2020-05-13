@@ -298,6 +298,24 @@ const boards = new Proxy({
         displayName: "Top Bounties of 500g+ Claimed with Bounty Hunter",
         short: "Bounties Claimed",
     },
+    ragePotatoesEaten: {
+        displayName: "Top Rage Potatoes Eaten",
+        short: "Rage Potatoes Eaten",
+        hidden: true,
+    },
+    obsidianBroken: {
+        display: "Top Obsidian Broken",
+        short: "Obsidian Broken",
+    },
+    ingotsGold: {
+        display: "Top Gold Earned by Ingots",
+        short: "Gold Earned by Ingots",
+        hidden: true,
+    },
+    ingotsPickedUp: {
+        display: "Top Ingots Picked Up",
+        short: "Ingots Gathered",
+    },
     error: {
         displayName: "Invalid Leaderboard",
         short: "Error",
