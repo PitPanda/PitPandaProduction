@@ -64,4 +64,7 @@ module.exports = {
     contractsStarted: Number,
     contractsRatio: Number,
     bountiesClaimed: Number,
+    ragePotatoesEaten: Number,
+    ingotsGold: Number,
+    ingotsPickedUp: Number,
 }
