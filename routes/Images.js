@@ -23,6 +23,11 @@ router.use('/level/:tag', async (req, res) => {
     if(doc.error) return error(doc, res);
     const cvs = createCanvas(0,size);
     cvs.width = ImageHelpers.measure(doc.displayName,size,cvs);
+    if(req.query.bg) {
+        const ctx = cvs.getContext('2d');
+        ctx.fillStyle=`#${req.query.bg}`;
+        ctx.fillRect(0,0,cvs.width,cvs.height);
+    }
     ImageHelpers.printText(cvs,doc.displayName,{size,shadow});
     cvs.createPNGStream().pipe(res);
 });
