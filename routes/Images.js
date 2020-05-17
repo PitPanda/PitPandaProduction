@@ -17,7 +17,7 @@ router.use('*',(req,res,next)=>{
 
 router.use('/level/:tag', async (req, res) => {
     let shadow = req.query.shadow !== 'false';
-    let size = Math.min(Number(req.query.size) || 40, 512);
+    let size = Math.max(Math.min(Number(req.query.size) || 40, 512),10);
     if(size>1000) size = 1000;
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
@@ -32,7 +32,7 @@ router.use("/profile/:tag",async (req, res) => {
     if(doc.error) return error(doc, res);
     const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
     const start = Date.now();
-    let size = Math.min(Number(req.query.size) || 128, 512);
+    let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
     const cvs = createCanvas(0,size);
     const x = size+size*(1/24);
     const nameSize = size/4;
