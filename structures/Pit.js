@@ -232,10 +232,20 @@ class Pit {
             enumerable: true,
             get: () => {
                 const login = this.getStat('lastLogin');
-                const logout = this.getStat('lastLogout');
+                const logout = this.lastLogout;
                 if (!login || !logout) return false;
                 return login > logout;
             }
+        });
+
+        /**
+         * Last Logout
+         * @type {number}
+         */
+        this.lastLogout;
+        Object.defineProperty(this, 'lastLogout', {
+            enumerable: true,
+            get: () => this.getStat('lastLogout'),
         });
 
         /**

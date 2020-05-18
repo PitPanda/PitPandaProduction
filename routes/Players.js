@@ -22,6 +22,7 @@ router.get('/:tag', async (req, res) => {
         data.bounty = target.bounty;
         data.online = target.online;
         data.lastSave = target.lastSave;
+        data.lastLogout = target.lastLogout;
         data.formattedName = target.formattedName;
         data.formattedLevel = target.formattedLevel;
         data.currentGold = target.currentGold;

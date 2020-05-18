@@ -32,7 +32,7 @@ export default (props) => {
         })();
         return () => alive = false;
     }, [props.uuid]);
-    return Reflect.ownKeys(boards).map(key=>(
+    return boards.ownKeys(false).map(key=>(
         <Link href={`/leaderboard?category=${key}&page=${Math.floor(((positions[key]||1)-1)/100)}`} key={key} scroll={true}>
             <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
         </Link>

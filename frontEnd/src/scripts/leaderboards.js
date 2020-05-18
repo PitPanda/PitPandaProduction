@@ -18,6 +18,15 @@ function toPercent(num) {
     return toFixed(1)(num * 100) + '%';
 }
 
+
+const methods = {
+    ownKeys(hidden) {
+        let entries = Object.entries(this)
+        if (!hidden) entries = entries.filter(([, { hidden }]) => !hidden)
+        return entries.sort((a, b) => a[1].short < b[1].short ? -1 : 1).map(e => e[0]);
+    },
+};
+
 const boards = new Proxy({
     kills: {
         displayName: "Top Kills",
@@ -332,6 +341,7 @@ const boards = new Proxy({
     }
 }, {
     get: (target, prop) => {
+        if (prop in methods) return methods[prop].bind(target);
         if (!(prop in target)) prop = 'error';
         return new Proxy(target[prop], {
             get: (subTarget, subProp) => {
@@ -340,12 +350,6 @@ const boards = new Proxy({
             }
         });
     },
-    ownKeys: (target) => {
-        return Object.entries(target)
-            .filter(([, { hidden }]) => !hidden)
-            .sort((a, b) => a[1].short < b[1].short ? -1 : 1)
-            .map(e => e[0]);
-    }
 });
 
 export default boards;

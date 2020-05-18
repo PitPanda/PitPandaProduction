@@ -94,7 +94,8 @@ class Player extends React.Component {
                 <StaticCard title="Status" content={
                   <div style={{fontSize:'16px'}}>
                     <MinecraftText className='text-title' style={{color:this.state.user.online?'green':'red'}} text={this.state.user.online?'Online':'Offline'}/><br/>
-                    <MinecraftText text={`Last seen in pit ${frontendTools.timeSince(this.state.user.lastSave)} ago`}/><br/>
+                    <MinecraftText text={`Last seen in The Pit ${frontendTools.timeSince(this.state.user.lastSave)} ago`}/><br/>
+                    {this.state.user.online ? '' : <><MinecraftText text={`Last seen on Hypixel ${frontendTools.timeSince(this.state.user.lastLogout)} ago`}/><br/></>}
                     {this.state.user.bounty?<MinecraftText raw={`Bounty: §6${this.state.user.bounty.toLocaleString()}g`}/>:''}
                   </div>
                 }/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import Link from '../Link/Link';
 
 class PlayerForm extends React.Component {
     
@@ -15,7 +16,7 @@ class PlayerForm extends React.Component {
     render() {
         return (
             <div id="search-header">
-                <h1 className="page-header">Pit Panda</h1>
+                <h1 className="page-header">P<Link href='/signatures'>i</Link>t Panda</h1>
                 <form onSubmit={this.handleSubmit}>
                     <h3 className="page-header">Advanced Pit Stats Grabber</h3>
                     <fieldset className="text-holder">
