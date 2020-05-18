@@ -4,6 +4,9 @@ const playerDoc = require('../apiTools/playerDocRequest');
 const { createCanvas, loadImage } = require('canvas');
 const ImageHelpers = require('../utils/ImageHelpers');
 const textHelpers = require('../utils/TextHelpers');
+const Leaderboards = require('../apiTools/lbProxy');
+
+const addCommas = n => typeof n === 'number' ? n.toLocaleString() : 'error';
 
 const error = (doc, res) => {
     res.setHeader('Content-Type', 'application/json')
@@ -30,6 +33,44 @@ router.use('/level/:tag', async (req, res) => {
     }
     ImageHelpers.printText(cvs,doc.displayName,{size,shadow});
     cvs.createPNGStream().pipe(res);
+});
+
+router.use("/leaderboards/:cat/:tag",async (req, res) => {
+    const doc = await playerDoc(req.params.tag);
+    if(doc.error) return error(doc, res);
+    const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
+    const start = Date.now();
+    let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
+    const cvs = createCanvas(0,size);
+    const x = size+size*(1/24);
+    const nameSize = size/4;
+    const line1 = `LVL: ${doc.formattedLevel}`;
+    const line2 = `Gold: §6${doc.gold.toLocaleString()}g`;
+    const category = Leaderboards[req.params.cat];
+    const line3 = `${category.short}: §d${category.transform(doc[req.params.cat])}`;
+    cvs.width = Math.max(
+        ImageHelpers.measure(doc.rankName,nameSize,cvs),
+        ImageHelpers.measure(line1,nameSize,cvs),
+        ImageHelpers.measure(line2,nameSize,cvs),
+        ImageHelpers.measure(line3,nameSize,cvs),
+    )+x;
+    const ctx = cvs.getContext('2d');
+    if(req.query.bg) {
+        ctx.fillStyle=`#${req.query.bg}`;
+        ctx.fillRect(0,0,cvs.width,cvs.height);
+    }
+    let shadow = req.query.shadow !== 'false';
+    const top = size*3/48;
+    
+    const subtitleSize = size*5/24;
+    ImageHelpers.printText(cvs,doc.rankName,{size:size/4,shadow,x,y:top});
+    ImageHelpers.printText(cvs,line1,{size:subtitleSize,shadow,x,y:top+nameSize});
+    ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
+    ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
+    
+    ctx.drawImage(img,0,0,size,size);
+    cvs.createPNGStream().pipe(res);
+    console.log(`took ${Date.now()-start}ms`);
 });
 
 router.use("/profile/:tag",async (req, res) => {

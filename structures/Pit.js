@@ -1796,7 +1796,7 @@ class Pit {
                 `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistHourly)}`,
                 `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${textHelpers.formatNumber(this.damageRatio)}`,
                 `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.bowAccuracy * 1000) / 10)}%`,
-                `${Colors.GRAY}Hours played: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.playtimeHours))}`,
+                //`${Colors.GRAY}Hours played: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.playtimeHours))}`,
                 `${Colors.GRAY}Contracts Started: ${Colors.GREEN}${textHelpers.formatNumber(this.contractsStarted)}`,
                 `${Colors.GRAY}Contracts Completed: ${Colors.GREEN}${textHelpers.formatNumber(this.contractsCompleted)}`
             ];
@@ -1812,6 +1812,7 @@ class Pit {
                 `${Colors.GRAY}Dark Pants Created: ${Colors.GREEN}${textHelpers.formatNumber(this.darkPantsCreated)}`
             ];
             const misclore = [
+                `${Colors.GRAY}Playtime: ${Colors.GREEN}${textHelpers.minutesToString(this.playtime)}`,
                 `${Colors.GRAY}Left Clicks: ${Colors.GREEN}${textHelpers.formatNumber(this.leftClicks)}`,
                 `${Colors.GRAY}Diamond Items Purchased: ${Colors.GREEN}${textHelpers.formatNumber(this.diamondItemsPurchased)}`,
                 `${Colors.GRAY}Chat messages: ${Colors.GREEN}${textHelpers.formatNumber(this.chatMessages)}`,
