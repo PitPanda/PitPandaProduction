@@ -14,7 +14,7 @@ import { withRouter } from 'react-router-dom';
 const upperFirst = str => str.charAt(0).toUpperCase() + str.substring(1);
 
 class Player extends React.Component {
-  state = {user:null,alive:true};
+  state = {user:null,alive:true,hiddens:false};
 
   componentDidMount(){
     this.loadUser(`/players/${(this.props.match.params.id||'').trim()}`);
@@ -115,8 +115,8 @@ class Player extends React.Component {
                     />
                   </div>
                 }/>
-                <StaticCard title="Leaderboard Positions" key={'positions'+this.state.user.uuid}>
-                  <LeaderboardPositions uuid={this.state.user.uuid} />
+                <StaticCard title={<>Leade<span onClick={()=>this.setState({hiddens:!this.state.hiddens})}>r</span>board Positions</>} key={'positions'+this.state.user.uuid}>
+                  <LeaderboardPositions uuid={this.state.user.uuid} hiddens={this.state.hiddens}/>
                 </StaticCard>
               </div>
               <div id="main" style={{

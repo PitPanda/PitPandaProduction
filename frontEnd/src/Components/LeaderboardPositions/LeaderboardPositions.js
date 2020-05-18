@@ -32,7 +32,7 @@ export default (props) => {
         })();
         return () => alive = false;
     }, [props.uuid]);
-    return boards.ownKeys(false).map(key=>(
+    return boards.ownKeys(props.hiddens).map(key=>(
         <Link href={`/leaderboard?category=${key}&page=${Math.floor(((positions[key]||1)-1)/100)}`} key={key} scroll={true}>
             <MinecraftText raw={`${boards[key].short}: ${formatPosition(positions[key])}`} /><br/>
         </Link>

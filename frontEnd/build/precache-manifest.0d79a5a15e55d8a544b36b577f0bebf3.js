@@ -1,39 +1,39 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "07e7675fad69127644a1b8c329609dbf",
+    "revision": "afbb6078b02db4dfe0114a373bb9ce2d",
     "url": "/index.html"
   },
   {
-    "revision": "852a5a8c52b9ed17e8b4",
-    "url": "/static/css/main.20e0ee9d.chunk.css"
+    "revision": "d2fc0a4c4d9c4d73294d",
+    "url": "/static/css/main.98be26ca.chunk.css"
   },
   {
-    "revision": "8f04d0cb1285b8e956f1",
-    "url": "/static/js/2.3fc594ab.chunk.js"
+    "revision": "83b309d8beff98062009",
+    "url": "/static/js/2.3fd78438.chunk.js"
   },
   {
-    "revision": "928d7b5eb39d16fe9a880722c974b51e",
-    "url": "/static/js/2.3fc594ab.chunk.js.LICENSE.txt"
+    "revision": "e928fe768baa9832b5bc57eae021f30c",
+    "url": "/static/js/2.3fd78438.chunk.js.LICENSE"
   },
   {
-    "revision": "852a5a8c52b9ed17e8b4",
-    "url": "/static/js/main.dcb1a256.chunk.js"
+    "revision": "d2fc0a4c4d9c4d73294d",
+    "url": "/static/js/main.48b7f52a.chunk.js"
   },
   {
-    "revision": "c4fd86af7a9909ca25e8",
-    "url": "/static/js/runtime-main.94058b0e.js"
+    "revision": "a2cd2306c7ce001917a3",
+    "url": "/static/js/runtime-main.ba34760b.js"
   },
   {
     "revision": "2c90030680a2fafd21f53fd39a0862e7",
     "url": "/static/media/Minecraft-Regular.2c900306.otf"
   },
   {
-    "revision": "3dcc0e0f2287e2e955cd8ce8cb08dae0",
-    "url": "/static/media/Roboto-Bold-webfont.3dcc0e0f.ttf"
+    "revision": "375c4f3bd35840adee24a1535bbb2018",
+    "url": "/static/media/Roboto-Bold-webfont.375c4f3b.svg"
   },
   {
-    "revision": "73d4f283372338742066c979bf9bbd22",
-    "url": "/static/media/Roboto-Bold-webfont.73d4f283.svg"
+    "revision": "3dcc0e0f2287e2e955cd8ce8cb08dae0",
+    "url": "/static/media/Roboto-Bold-webfont.3dcc0e0f.ttf"
   },
   {
     "revision": "8b18d65d6824460ad37616723e493bcd",
@@ -44,6 +44,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/Roboto-Bold-webfont.ecdd509c.eot"
   },
   {
+    "revision": "3581138bd3477ae13eca1ac9e584220a",
+    "url": "/static/media/Roboto-Light-webfont.3581138b.svg"
+  },
+  {
     "revision": "816d43bc217485bc52e309cd1b356880",
     "url": "/static/media/Roboto-Light-webfont.816d43bc.woff"
   },
@@ -52,16 +56,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/Roboto-Light-webfont.a990f611.eot"
   },
   {
-    "revision": "ae03617c87fd538d00b85155c559864b",
-    "url": "/static/media/Roboto-Light-webfont.ae03617c.svg"
-  },
-  {
     "revision": "d8472f7b6012706fc028021e5a654843",
     "url": "/static/media/Roboto-Light-webfont.d8472f7b.ttf"
-  },
-  {
-    "revision": "1d45bc40211734dc3226d06bbc836d7f",
-    "url": "/static/media/Roboto-Regular-webfont.1d45bc40.svg"
   },
   {
     "revision": "30799efa5bf74129468ad4e257551dc3",
@@ -74,6 +70,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "7f1320f7ec4f6716054d88c33235d17b",
     "url": "/static/media/Roboto-Regular-webfont.7f1320f7.ttf"
+  },
+  {
+    "revision": "da61d7ef302b8bf871dd0ae796a52f33",
+    "url": "/static/media/Roboto-Regular-webfont.da61d7ef.svg"
   },
   {
     "revision": "aea5f236bd8a02a0618bae6e693927d2",
