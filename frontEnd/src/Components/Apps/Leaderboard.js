@@ -59,7 +59,7 @@ function Leaderboard(props) {
                 if (stats.error) setData({ entires: [], loadedType: target.category, loadedPage: target.page });
                 else setData({ entires: stats, loadedType: target.category, loadedPage: target.page });
             }
-        }).catch(console.err);
+        }).catch(console.error);
         getIndexerStatus().then(indexer=>{
             if(alive) {
                 if(indexer.error) console.log(indexer.error);
@@ -67,7 +67,7 @@ function Leaderboard(props) {
                     { online: true, ...indexer}
                 );
             }
-        }).catch(console.err);
+        }).catch(console.error);
         return () => alive = false;
     }, [target]);
 
