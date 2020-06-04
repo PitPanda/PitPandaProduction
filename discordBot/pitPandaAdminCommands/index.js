@@ -1,6 +1,6 @@
 const commands = [
   require('./event'),
-  require('./patron'),
+  require('./special'),
 ];
 
 module.exports = commands;

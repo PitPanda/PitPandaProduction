@@ -1,19 +1,19 @@
 const Command = require('../Command');
-const DiscordUser = require('../../models/DiscordUser');
+const playerDoc = require('../../apiTools/playerDocRequest');
 
 const command = async (msg, rest) => {
     if(!rest[0]) return msg.reply('You can either `add` or `remove` someone');
     if(!rest[1]) return msg.reply('But who');
-    let doc = await DiscordUser.findById(rest[1]);
-    if(!doc) doc = new DiscordUser({_id:rest[1]});
+    let doc = await playerDoc(rest[1]);
+    if(doc.error) return msg.reply(`Uh Oh, ${doc.error}`); 
     switch(rest[0].toLowerCase()){
         case 'add': {
-            doc.patron = true;
+            doc.special = rest[2] || 'patron';
             await doc.save();
             return msg.reply('Successfully added');
         }
         case 'remove': {
-            doc.patron = undefined;
+            doc.special = undefined;
             await doc.save();
             return msg.reply('Successfully removed');
         }
@@ -23,10 +23,10 @@ const command = async (msg, rest) => {
 }
 
 module.exports = new Command({
-    name:'patron',
+    name:'special',
     fn:command,
-    description:'add or remove patrons',
-    example:`**$patron [add|remove]**`,
+    description:'add or remove users with special permissions',
+    example:`**$special [add|remove] [ign or uuid]**`,
     type: 'all',
     permlevel: Infinity
 });

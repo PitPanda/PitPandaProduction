@@ -15,7 +15,6 @@ const DiscordUserSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
-    patron: Boolean,
 });
 
 module.exports = mongoose.model('DiscordUsers', DiscordUserSchema);

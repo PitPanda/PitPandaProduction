@@ -9,7 +9,7 @@ async function command(msg,rest,_,perms){
     if(!rest[0]) return msg.reply("Please provide an action (accept, deny, delete, or inspect) and a case ID");
     switch(rest[0].toLowerCase()){
         case 'accept':
-            if(!perms.hasPermission('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
+            if(!perms('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             PendingRep.findOneAndDelete({_id:rest[1]}).then(rep=>{
                 if(!rep) return msg.reply('Couldn\'t find that rep!');
@@ -29,7 +29,7 @@ async function command(msg,rest,_,perms){
             })
             break;
         case 'deny':
-            if(!perms.hasPermission('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
+            if(!perms('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             PendingRep.findOneAndDelete({_id:rest[1]}).then(rep=>{
                 if(!rep) msg.reply('Couldn\'t find that rep!');
@@ -37,7 +37,7 @@ async function command(msg,rest,_,perms){
             });
             break;
         case 'delete':
-            if(!perms.hasPermission('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
+            if(!perms('tradecenter',6)) return msg.reply('You do not have permission to use this command!');
             if(rest.length<2) return msg.reply('You are missing something?');
             DiscordUser.findOne({reps:{$elemMatch:{_id:rest[1]}}}).then(doc=>{
                 if(!doc) return msg.reply('Couldn\'t find that rep!');

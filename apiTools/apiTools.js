@@ -71,7 +71,7 @@ const subDescription = (upgrade, tier, api) => {
     } else if (format == "ApiReference") {
         let data = getRef(api, ...upgrade.Extra.Ref.slice(1));
         if (upgrade.Extra.Function == 'toHex') data = textHelpers.toHex(data);
-        upgrade.Description = upgrade.Description.map(line => line.replace('$', data));
+        upgrade.Description = upgrade.Description.map(line => line.replace(RegExp('$','g'), data));
         upgrade.Item.Meta = upgrade.Item.Meta.replace('$', data);
     } else {
         upgrade.Description = upgrade.Description.map(line => line.replace('$', upgrade.Levels[tier]));

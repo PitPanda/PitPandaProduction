@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "010f2b284ff0cc8f3e091007eaf8bea6",
+    "revision": "b4f9d55c86725b45d2ef09321f369977",
     "url": "/index.html"
   },
   {
-    "revision": "9bdd6c8c4af509c97168",
-    "url": "/static/css/main.e4876f8d.chunk.css"
+    "revision": "2aee5e7c985cf2e4d261",
+    "url": "/static/css/main.9adb9e83.chunk.css"
   },
   {
     "revision": "83b309d8beff98062009",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/2.3fd78438.chunk.js.LICENSE"
   },
   {
-    "revision": "9bdd6c8c4af509c97168",
-    "url": "/static/js/main.991cd977.chunk.js"
+    "revision": "2aee5e7c985cf2e4d261",
+    "url": "/static/js/main.a8148c73.chunk.js"
   },
   {
     "revision": "a2cd2306c7ce001917a3",
@@ -76,8 +76,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/Roboto-Regular-webfont.da61d7ef.svg"
   },
   {
-    "revision": "e6704c3bdf2076586e5644b88f255293",
-    "url": "/static/media/blocks_items.e6704c3b.png"
+    "revision": "6407c78d63142484f36fc82410b33843",
+    "url": "/static/media/blocks_items.6407c78d.png"
   },
   {
     "revision": "195f6b98e460802afc6c6782a5666cf0",

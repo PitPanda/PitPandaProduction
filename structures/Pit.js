@@ -2023,7 +2023,8 @@ class Pit {
                     name: getRef(item, 'tag', 'value', 'display', 'value', 'Name', 'value')
                 },
                 flags,
-                tokens: tokenCount
+                tokens: tokenCount,
+                lastseen: this.lastLogout,
             };
             return Mystic.findOneAndUpdate({ nonce, enchants, maxLives }, mystic, { upsert: true }).catch(console.error);
         }

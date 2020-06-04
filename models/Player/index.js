@@ -37,6 +37,7 @@ const PlayerSchema = mongoose.Schema({
         default: undefined,
         index: true,
     },
+    special: String
 });
 
 PlayerSchema.virtual('levelName').get(function(){

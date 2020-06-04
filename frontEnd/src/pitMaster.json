@@ -500,8 +500,7 @@
 			"extra_xp":{
 				"Name": "Explicious",
 				"Description":[
-					"§7Gain §b5 XP§7, §6g §7and an",
-					"§7extra golden apple"
+					"§7Gain §b+12 XP§7."
 				],
 				"Interval":3,
 				"Cost":3000,
@@ -710,7 +709,7 @@
 			"assured_strike":{
 				"Name": "Assured Strike",
 				"Description":[
-					"§7Yur next melee hit deals",
+					"§7Your next melee hit deals",
 					"§c+35% damage §7and grants",
 					"§eSpeed I §7for 20 seconds."
 				],
@@ -777,7 +776,7 @@
 				"Name": "Gold Stack",
 				"Description":[
 					"§7Permanently gain §6+0.1g §7per kill.",
-					"§7Maxium: §6+3.7g"
+					"§7Maximum: §6+?g"
 				],
 				"Interval":10,
 				"Cost":25000,
@@ -791,7 +790,7 @@
 				"Name": "XP Stack",
 				"Description":[
 					"§7Permanently gain §b+0.05 XP §7per kill.",
-					"§7Maxium: §b+7.4 XP"
+					"§7Maximum: §b+? XP"
 				],
 				"Interval":10,
 				"Cost":25000,
@@ -1562,7 +1561,7 @@
 			"unlock_perk_overheal":{
 				"Name": "Perk unlock: Overheal",
 				"Description":[
-					"§7Required level: §9[§c70§9]",
+					"§7Required level: §9[§c§l70§r§9]",
 					"§7Cost: §66,000g",
 					"",
 					"§eOverheal",
@@ -1607,7 +1606,7 @@
 			"unlock_perk_dirty":{
 				"Name": "Perk unlock: Dirty",
 				"Description":[
-					"§7Required level: §9[§480§9]",
+					"§7Required level: §9[§4§l80§r§9]",
 					"§7Cost: §68,000g",
 					"",
 					"§eDirty",
@@ -1630,7 +1629,7 @@
 			"unlock_perk_rambo":{
 				"Name": "Perk unlock: Rambo",
 				"Description":[
-					"§7Required level: §9[§c70§9]",
+					"§7Required level: §9[§c§l70§r§9]",
 					"§7Cost: §66,000g",
 					"",
 					"§eRambo",
@@ -1654,7 +1653,7 @@
 			"unlock_perk_olympus":{
 				"Name": "Perk unlock: Olympus",
 				"Description":[
-					"§7Required level: §9[§c70§9]",
+					"§7Required level: §9[§c§l70§r§9]",
 					"§7Cost: §66,000g",
 					"",
 					"§eOlympus",
@@ -1707,7 +1706,7 @@
 			"unlock_perk_first_strike":{
 				"Name": "Perk unlock: First Strike",
 				"Description":[
-					"§7Required level: §e[§480§e]",
+					"§7Required level: §e[§4§l80§r§e]",
 					"§7Cost: §68,000g",
 					"",
 					"§eFirst Strike",
@@ -1731,7 +1730,7 @@
 			"unlock_perk_marathon":{
 				"Name": "Perk unlock: Marathon",
 				"Description":[
-					"§7Required level: §e[§590§e]",
+					"§7Required level: §e[§5§l90§r§e]",
 					"§7Cost: §68,000g",
 					"",
 					"§eMarathon",
@@ -1756,7 +1755,7 @@
 			"unlock_perk_coop_cat":{
 				"Name": "Perk unlock: Co-op Cat",
 				"Description":[
-					"§7Required level: §e[90]",
+					"§7Required level: §e[§5§l90§r§e]",
 					"§7Cost: §66,000g",
 					"",
 					"§7Earn §b+50% XP §7and",
@@ -1778,7 +1777,7 @@
 			"unlock_perk_soup":{
 				"Name": "Perk unlock: Soup",
 				"Description":[
-					"§7Required level: §e[§590§e]",
+					"§7Required level: §e[§5§l90§r§e]",
 					"§7Cost: §68,000g",
 					"",
 					"§eSoup",
@@ -1807,7 +1806,7 @@
 			"unlock_perk_recon":{
 				"Name": "Perk unlock: Recon",
 				"Description":[
-					"§7Required level: §e[§660§e]",
+					"§7Required level: §e[§6§l60§r§e]",
 					"§7Cost: §68,000g",
 					"",
 					"§eRecon",
@@ -1856,7 +1855,7 @@
 			"unlock_perk_kung_fu_knowledge":{
 				"Name": "Perk unlock: Kung Fu Knowledge",
 				"Description":[
-					"§7Required level: §e[§d100§e]",
+					"§7Required level: §e[§d§l100§r§e]",
 					"§7Cost: §610,000g",
 					"",
 					"§eKung Fu Knowledge",
@@ -1881,7 +1880,7 @@
 			"unlock_perk_thick":{
 				"Name": "Perk unlock: Thick",
 				"Description":[
-					"§7Required level: §6[§5§l90§6]",
+					"§7Required level: §6[§5§l90§r§6]",
 					"§7Cost: §610,000g",
 					"",
 					"§7You have §c+2 Max ❤§7.",

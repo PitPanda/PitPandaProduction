@@ -6,7 +6,6 @@ const MysticSchema = mongoose.Schema({
     enchants: [EnchantSchema],
     lastseen: {
         type: Date,
-        default: Date.now,
         index: true
     },
     flags: [String],
