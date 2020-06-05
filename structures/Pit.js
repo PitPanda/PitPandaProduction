@@ -2024,7 +2024,7 @@ class Pit {
                 },
                 flags,
                 tokens: tokenCount,
-                lastseen: this.lastLogout,
+                lastseen: new Date(this.lastSave),
             };
             return Mystic.findOneAndUpdate({ nonce, enchants, maxLives }, mystic, { upsert: true }).catch(console.error);
         }
