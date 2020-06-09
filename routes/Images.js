@@ -6,8 +6,6 @@ const ImageHelpers = require('../utils/ImageHelpers');
 const textHelpers = require('../utils/TextHelpers');
 const Leaderboards = require('../apiTools/lbProxy');
 
-const addCommas = n => typeof n === 'number' ? n.toLocaleString() : 'error';
-
 const error = (doc, res) => {
     res.setHeader('Content-Type', 'application/json')
     res.status(400).json({ success: false, error: doc.error });
@@ -38,8 +36,6 @@ router.use('/level/:tag', async (req, res) => {
 router.use("/leaderboards/:cat/:tag",async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
-    const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
-    const start = Date.now();
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
     const cvs = createCanvas(0,size);
     const x = size+size*(1/24);
@@ -67,17 +63,19 @@ router.use("/leaderboards/:cat/:tag",async (req, res) => {
     ImageHelpers.printText(cvs,line1,{size:subtitleSize,shadow,x,y:top+nameSize});
     ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
     ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
-    
-    ctx.drawImage(img,0,0,size,size);
+    try{
+        const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
+        ctx.drawImage(img,0,0,size,size);
+    }catch(e){
+        ImageHelpers.printText(cvs,'§cFailed to',{size:subtitleSize,shadow,x:0,y:top});
+        ImageHelpers.printText(cvs,'§cload',{size:subtitleSize,shadow,x:0,y:top+subtitleSize});
+    }
     cvs.createPNGStream().pipe(res);
-    console.log(`took ${Date.now()-start}ms`);
 });
 
 router.use("/profile/:tag",async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
-    const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
-    const start = Date.now();
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
     const cvs = createCanvas(0,size);
     const x = size+size*(1/24);
@@ -104,10 +102,14 @@ router.use("/profile/:tag",async (req, res) => {
     ImageHelpers.printText(cvs,line1,{size:subtitleSize,shadow,x,y:top+nameSize});
     ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
     ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
-    
-    ctx.drawImage(img,0,0,size,size);
+    try{
+        const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
+        ctx.drawImage(img,0,0,size,size);
+    }catch(e){
+        ImageHelpers.printText(cvs,'§cFailed to',{size:subtitleSize,shadow,x:0,y:top});
+        ImageHelpers.printText(cvs,'§cload',{size:subtitleSize,shadow,x:0,y:top+subtitleSize});
+    }
     cvs.createPNGStream().pipe(res);
-    console.log(`took ${Date.now()-start}ms`);
 });
 
 router.use('*', APIerror('Invalid Endpoint'));
