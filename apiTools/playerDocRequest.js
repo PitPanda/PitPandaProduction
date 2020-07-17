@@ -12,7 +12,10 @@ const getDoc = async (tag, options={}) => {
     let doc = options.doc;
     if(!doc) {
         if(tag.length===32) doc = await Player.findById(tag);
-        else doc = await Player.findOne({ nameLower: tag.toLowerCase() });
+        else {
+            doc = await Player.findOne({ nameLower: tag.toLowerCase() });
+            if(!doc && /#\d{4}$/.test(tag)) doc = await Player.findOne({ discord: tag });
+        }
     }
     if (!doc || !isAged(doc,maxAge)) {
         const target = await hypixelAPI(tag);
