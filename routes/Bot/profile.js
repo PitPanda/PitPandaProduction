@@ -21,7 +21,7 @@ router.get('/:tag', async (req, res) => {
   }
 
     data.uuid = target.uuid;
-    data.name = removeColors(target.levelFormattedName);
+    data.name = target.name;
     data.level = removeColors(target.levelFormattedName);
     data.bountiesClaimed = target.bountiesClaimed;
     data.gold = target.currentGold;
