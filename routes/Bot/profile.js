@@ -3,7 +3,7 @@ const router = require('express').Router();
 const hypixelAPI = require('../../apiTools/playerRequest');
 const Player = require('../../models/Player');
 
-export const removeColors = str => str.replace(/§./g, '');
+const removeColors = str => str.replace(/§./g, '');
 
 router.get('/:tag', async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
