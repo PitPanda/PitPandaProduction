@@ -14,6 +14,7 @@ const forums = require('./Forums');
 const indexer = require('./Indexer');
 const ApiStat = require('../models/ApiStat');
 const position =  require('./Position');
+const bot =  require('./Bot');
 
 let statBatch = {};
 const batchSize = 10;
@@ -47,6 +48,7 @@ router.use('/events', events);
 router.use('/forums', forums);
 router.use('/indexer', indexer);
 router.use('/position', position);
+router.use('/bot', bot);
 
 router.use('*', APIerror('Invalid Endpoint'));
 
