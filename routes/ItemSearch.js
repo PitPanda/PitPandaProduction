@@ -77,9 +77,9 @@ const itemSearch = (req, res) => {
             else flags.push(fix(str));
         }
     }
-    if (enchants.length > 0) query.enchants = { $all: enchants };
-    if (flags.length > 0) query.flags = { $all: flags };
     if (types.length > 0) query['item.id'] = { $in: types };
+    enchants.forEach(ench=>and.push({enchants:ench}));
+    flags.forEach(flag=>and.push({flags:flag}));
     if (and.length > 0) query.$and = and;
     const page = req.params.page || 0;
     Mystic
