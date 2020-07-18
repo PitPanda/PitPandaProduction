@@ -35,9 +35,9 @@ const itemSearch = (req, res) => {
 
     const queryString = req.query.query || req.params.query;
     for (let str of queryString.toLowerCase().split(',')) {
-        let not = (str.startsWith('!'));
+        const not = str.startsWith('!');
         if(not) str = str.substring(1);
-        let fix = not ? (q => {$not: q}) : (q => q); 
+        const fix = not ? (q => ({$not: q})) : (q => q); 
         if (str.startsWith('uuid')) {
             query.owner = fix(str.substring(4));
             continue;
