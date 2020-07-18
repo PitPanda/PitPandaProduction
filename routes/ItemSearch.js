@@ -55,11 +55,11 @@ const itemSearch = (req, res) => {
                 b = Number(str.substring(end.index));
             }
             const finalB = formatQueryNum[direction](b);
-            if (a === 'tokens') and.push(fix({ tokens: finalB }));
-            else if (a === 'lives') and.push(fix({ lives: finalB }));
-            else if (a === 'maxlives') and.push(fix({ maxLives: finalB }));
-            else if (a === 'color') and.push(fix({ nonce: { $mod: [5, b] } }));
-            else if (a === 'nonce') and.push(fix({ nonce: finalB }));
+            if (a === 'tokens') and.push({ tokens: not ? {$not:{$eq:finalB}} : finalB });
+            else if (a === 'lives') and.push({ lives: not ? {$not:{$eq:finalB}} : finalB });
+            else if (a === 'maxlives') and.push({ maxLives: not ? {$not:{$eq:finalB}} : finalB });
+            else if (a === 'color') and.push({ nonce: not ? {$not:{$eq:{ $mod: [5, b] }}} : { $mod: [5, b] } });
+            else if (a === 'nonce') and.push({ nonce: not ? {$not:{$eq:finalB}} : finalB });
             else if(a in classes) enchants.push(fix({
                 $elemMatch: {
                     key: {$in:classes[a]},
@@ -73,8 +73,8 @@ const itemSearch = (req, res) => {
                 }
             }));
         } else {
-            if (str in typeMap) types.push(fix(typeMap[str]));
-            else flags.push(fix(str));
+            if (str in typeMap) types.push(not ? {$not:{$eq:typeMap[str]}} : typeMap[str]);
+            else flags.push(not ? {$not:{$eq:str}} : str);
         }
     }
     if (types.length > 0) query['item.id'] = { $in: types };
