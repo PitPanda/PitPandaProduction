@@ -31,11 +31,15 @@ const itemSearch = (req, res) => {
     let enchants = [];
     let flags = [];
     let types = [];
-    let $and = [];
+    let and = [];
+
     const queryString = req.query.query || req.params.query;
-    for (const str of queryString.toLowerCase().split(',')) {
+    for (let str of queryString.toLowerCase().split(',')) {
+        let not = (str.startsWith('!'));
+        if(not) str = str.substring(1);
+        let fix = not ? (q => {$not: q}) : (q => q); 
         if (str.startsWith('uuid')) {
-            query.owner = str.substring(4);
+            query.owner = fix(str.substring(4));
             continue;
         }
         const end = /-?[0-9]{1,}(\+|-)?$/.exec(str);
@@ -51,32 +55,32 @@ const itemSearch = (req, res) => {
                 b = Number(str.substring(end.index));
             }
             const finalB = formatQueryNum[direction](b);
-            if (a === 'tokens') $and.push({ tokens: finalB });
-            else if (a === 'lives') $and.push({ lives: finalB });
-            else if (a === 'maxlives') $and.push({ maxLives: finalB });
-            else if (a === 'color') $and.push({ nonce: { $mod: [5, b] } });
-            else if (a === 'nonce') $and.push({ nonce: finalB });
-            else if(a in classes) enchants.push({
+            if (a === 'tokens') and.push(fix({ tokens: finalB }));
+            else if (a === 'lives') and.push(fix({ lives: finalB }));
+            else if (a === 'maxlives') and.push(fix({ maxLives: finalB }));
+            else if (a === 'color') and.push(fix({ nonce: { $mod: [5, b] } }));
+            else if (a === 'nonce') and.push(fix({ nonce: finalB }));
+            else if(a in classes) enchants.push(fix({
                 $elemMatch: {
                     key: {$in:classes[a]},
                     level: finalB
                 }
-            });
-            else enchants.push({
+            }));
+            else enchants.push(fix({
                 $elemMatch: {
                     key: a,
                     level: finalB
                 }
-            });
+            }));
         } else {
-            if (str in typeMap) types.push(typeMap[str]);
-            else flags.push(str);
+            if (str in typeMap) types.push(fix(typeMap[str]));
+            else flags.push(fix(str));
         }
     }
     if (enchants.length > 0) query.enchants = { $all: enchants };
     if (flags.length > 0) query.flags = { $all: flags };
     if (types.length > 0) query['item.id'] = { $in: types };
-    if ($and.length > 0) query.$and = $and;
+    if (and.length > 0) query.$and = and;
     const page = req.params.page || 0;
     Mystic
         .find(query)
