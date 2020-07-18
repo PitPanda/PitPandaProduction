@@ -32,6 +32,7 @@ const itemSearch = (req, res) => {
     let flags = [];
     let types = [];
     let and = [];
+    let or = [];
 
     const queryString = req.query.query || req.params.query;
     for (let str of queryString.toLowerCase().split(',')) {
@@ -77,10 +78,11 @@ const itemSearch = (req, res) => {
             else flags.push(not ? {$not:{$eq:str}} : str);
         }
     }
-    if (types.length > 0) query['item.id'] = { $in: types };
+    types.forEach(type=>or.push({'item.id':type}));
     enchants.forEach(ench=>and.push({enchants:ench}));
     flags.forEach(flag=>and.push({flags:flag}));
     if (and.length > 0) query.$and = and;
+    if (or.length > 0) query.$or = or;
     const page = req.params.page || 0;
     Mystic
         .find(query)
