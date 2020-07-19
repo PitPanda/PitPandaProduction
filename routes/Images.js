@@ -5,6 +5,7 @@ const { createCanvas, loadImage } = require('canvas');
 const ImageHelpers = require('../utils/ImageHelpers');
 const textHelpers = require('../utils/TextHelpers');
 const Leaderboards = require('../apiTools/lbProxy');
+const Mystics = require('../models/Mystic');
 
 const error = (doc, res) => {
     res.setHeader('Content-Type', 'application/json')
@@ -109,6 +110,22 @@ router.use("/profile/:tag",async (req, res) => {
         ImageHelpers.printText(cvs,'§cFailed to',{size:subtitleSize,shadow,x:0,y:top});
         ImageHelpers.printText(cvs,'§cload',{size:subtitleSize,shadow,x:0,y:top+subtitleSize});
     }
+    cvs.createPNGStream().pipe(res);
+});
+
+router.use("/item/:id",async (req, res) => {
+    const doc = await Mystics.findById(req.params.id);
+    if(doc.error) return error(doc, res);
+    const cvs = createCanvas(0,1+doc.item.item.desc);
+    const textSize = 24;
+    const lines = [doc.item.item.name, ...doc.item.item.desc];
+    cvs.width = Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
+    const ctx = cvs.getContext('2d');
+    if(req.query.bg) {
+        ctx.fillStyle=`#$120211`;
+        ctx.fillRect(0,0,cvs.width,cvs.height);
+    }
+    lines.forEach((line,index) => ImageHelpers.printText(cvs,line,{size:textSize,shadow:true,x:0,y:textSize*index}));
     cvs.createPNGStream().pipe(res);
 });
 
