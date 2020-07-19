@@ -115,18 +115,22 @@ router.use("/profile/:tag",async (req, res) => {
 
 router.use("/item/:id",async (req, res) => {
     const doc = await Mystics.findById(req.params.id);
+    console.log(doc);
     if(!doc) return error({error:'item not found'}, res);
     const data = dbToItem(doc);
-    const cvs = createCanvas(0,1+data.item.desc);
+    console.log(data);
     const textSize = 24;
+    const cvs = createCanvas(0,1+data.item.desc*textSize);
     const lines = [data.item.name, ...data.item.desc];
     cvs.width = Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
+    console.log(cvs.width);
     const ctx = cvs.getContext('2d');
     if(req.query.bg) {
         ctx.fillStyle=`#$120211`;
         ctx.fillRect(0,0,cvs.width,cvs.height);
     }
     lines.forEach((line,index) => ImageHelpers.printText(cvs,line,{size:textSize,shadow:true,x:0,y:textSize*index}));
+    console.log('finished');
     cvs.createPNGStream().pipe(res);
 });
 
