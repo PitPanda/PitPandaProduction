@@ -123,7 +123,7 @@ router.use("/item/:id",async (req, res) => {
     const cvs = createCanvas(0,height);
     const lines = [data.item.name, ...data.item.desc];
     const width = padding*2+Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
-    ctx.width = width;
+    cvs.width = width;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle=`#120211`;
     ctx.strokeStyle=`#25015b`;
