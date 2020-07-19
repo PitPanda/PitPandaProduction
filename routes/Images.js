@@ -116,9 +116,9 @@ router.use("/profile/:tag",async (req, res) => {
 router.use("/item/:id",async (req, res) => {
     const doc = await Mystics.findById(req.params.id);
     if(doc.error) return error(doc, res);
-    const cvs = createCanvas(0,1+doc.item.item.desc);
+    const cvs = createCanvas(0,1+doc.item.desc);
     const textSize = 24;
-    const lines = [doc.item.item.name, ...doc.item.item.desc];
+    const lines = [doc.item.name, ...doc.item.desc];
     cvs.width = Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
     const ctx = cvs.getContext('2d');
     if(req.query.bg) {
