@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { APIerror } = require('../apiTools/apiTools');
+const { APIerror, dbToItem } = require('../apiTools/apiTools');
 const playerDoc = require('../apiTools/playerDocRequest');
 const { createCanvas, loadImage } = require('canvas');
 const ImageHelpers = require('../utils/ImageHelpers');
@@ -115,10 +115,11 @@ router.use("/profile/:tag",async (req, res) => {
 
 router.use("/item/:id",async (req, res) => {
     const doc = await Mystics.findById(req.params.id);
-    if(doc.error) return error(doc, res);
-    const cvs = createCanvas(0,1+doc.item.desc);
+    if(!doc) return error({error:'item not found'}, res);
+    const data = dbToItem(doc);
+    const cvs = createCanvas(0,1+data.item.desc);
     const textSize = 24;
-    const lines = [doc.item.name, ...doc.item.desc];
+    const lines = [data.item.name, ...data.item.desc];
     cvs.width = Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
     const ctx = cvs.getContext('2d');
     if(req.query.bg) {
