@@ -125,8 +125,6 @@ router.use("/item/:id",async (req, res) => {
     const width = padding*2+Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
     ctx.width = width;
     const ctx = cvs.getContext('2d');
-    const width = ctx;
-    const height = 200;
     ctx.fillStyle=`#120211`;
     ctx.strokeStyle=`#25015b`;
     ctx.lineWidth = 2;
