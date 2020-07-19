@@ -6,8 +6,8 @@ const hypixelAPI = require('../apiTools/playerRequest');
 const Pit = require('../structures/Pit');
 
 router.get('/:id', async (req, res) => {
-    const itemData = await Mystic.findById(req.params.id);
-    if (!itemData) return res.status(404).json({ success: false, err: 'No Item Found.' });
+    const item = await Mystic.findById(req.params.id);
+    if (!item) return res.status(404).json({ success: false, err: 'No Item Found.' });
 
     if (req.query.extended) {
         const owner = await hypixelAPI(item.owner);
