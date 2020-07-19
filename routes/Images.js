@@ -118,15 +118,26 @@ router.use("/item/:id",async (req, res) => {
     if(!doc) return error({error:'item not found'}, res);
     const data = dbToItem(doc);
     const textSize = 24;
-    const cvs = createCanvas(0,(1+data.item.desc.length)*textSize);
+    const padding = 4;
+    const cvs = createCanvas(0,(1+data.item.desc.length)*textSize+padding*2);
     const lines = [data.item.name, ...data.item.desc];
-    cvs.width = Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
+    cvs.width = padding*2+Math.max(...lines.map(line=>ImageHelpers.measure(line,textSize,cvs)));
     const ctx = cvs.getContext('2d');
-    if(req.query.bg) {
-        ctx.fillStyle=`#$120211`;
-        ctx.fillRect(0,0,cvs.width,cvs.height);
-    }
-    lines.forEach((line,index) => ImageHelpers.printText(cvs,line,{size:textSize,shadow:true,x:0,y:textSize*index}));
+    //ctx.fillStyle=`#120211`;
+    //ctx.fillRect(4,4,cvs.width-4,cvs.height-4);
+    ctx.strokeStyle=`#25015b`;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(3, 3, 3, Math.PI, 1.5 * Math.PI);
+    ctx.lineTo(3, ctx.width-3);
+    ctx.arc(3, ctx.width-3, 3, 1.5 * Math.PI, 2 * Math.PI);
+    ctx.lineTo(ctx.height-3, ctx.width-3);
+    ctx.arc(ctx.height-3, ctx.width-3, 3, 0, 0.5 * Math.PI);
+    ctx.lineTo(ctx.height-3, 3);
+    ctx.arc(ctx.height-3, 3, 3, 0.5 * Math.PI, 1 * Math.PI);
+    ctx.lineTo(3, 3);
+    ctx.stroke();
+    lines.forEach((line,index) => ImageHelpers.printText(cvs,line,{size:textSize,shadow:true,x:padding,y:textSize*index+padding}));
     cvs.createPNGStream().pipe(res);
 });
 
