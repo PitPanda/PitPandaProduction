@@ -21,14 +21,13 @@ const rateLimitManager = fs.readFileSync('./redis/scripts/rateLimitManager.lua',
 
 app.use('/api', async (req, res, next) => {
   let token = `rl:ip:${req.ip}`;
-  let limit = 1;
+  let limit = 45;
   const [err, used] = await new Promise(resolve=>RedisClient.client.eval(rateLimitManager, 1, token, Math.floor(Date.now()/1e3), 60, limit, 1, (err, used)=>resolve([err,used])));
   if(err) {
     console.error(err);
-    console.log(used);
     return res.status(500).send({ success: false, error: err });
   }
-  if(used>=limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
+  if(used>limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
   next();
 }, api);
 app.use('/pitReference', (req, res) => res.status(200).sendFile(__dirname + "/frontEnd/src/pitMaster.json"));
