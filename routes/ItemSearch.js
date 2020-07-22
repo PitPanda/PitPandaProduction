@@ -90,7 +90,7 @@ const itemSearch = (req, res) => {
         .skip(perPage * page)
         .sort('-lastseen')
         .then(docs => {
-            const items = (req.query.raw !== 'false') ? docs : docs.map(dbToItem);
+            const items = (req.query.raw === 'true') ? docs : docs.map(dbToItem);
             res.status(200).json({ success: true, items });
         });
 };

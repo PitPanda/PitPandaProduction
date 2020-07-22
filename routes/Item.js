@@ -17,7 +17,7 @@ router.get('/:id', async (req, res) => {
 
         target.loadInventorys();
 
-        let result = (req.query.raw !== 'false') ? docs : docs.map(dbToItem);
+        let result = (req.query.raw === 'true') ? docs : docs.map(dbToItem);
 
         result.formatted = target.levelFormattedName;
         result.ownername = target.name;
