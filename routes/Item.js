@@ -17,14 +17,14 @@ router.get('/:id', async (req, res) => {
 
         target.loadInventorys();
 
-        let result = dbToItem(item);
+        let result = (req.query.raw !== 'false') ? docs : docs.map(dbToItem);
 
         result.formatted = target.levelFormattedName;
         result.ownername = target.name;
 
         return res.status(200).json({ success: true, item: result });
     } else {
-        return res.status(200).json({ success: true, item: dbToItem(item) });
+        return res.status(200).json({ success: true, item: (req.query.raw !== 'false') ? docs : dbToItem(item) });
     }
 });
 

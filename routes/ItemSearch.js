@@ -83,14 +83,14 @@ const itemSearch = (req, res) => {
     flags.forEach(flag=>and.push({flags:flag}));
     if (and.length > 0) query.$and = and;
     if (or.length > 0) query.$or = or;
-    const page = req.params.page || 0;
+    const page = req.params.page || req.query.page || 0;
     Mystic
         .find(query)
         .limit(perPage)
         .skip(perPage * page)
         .sort('-lastseen')
         .then(docs => {
-            const items = docs.map(dbToItem);
+            const items = (req.query.raw !== 'false') ? docs : docs.map(dbToItem);
             res.status(200).json({ success: true, items });
         });
 };
