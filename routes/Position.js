@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const { APIerror } = require('../apiTools/apiTools');
-
+const rateLimiter = require('../apiTools/rateLimiter');
 const RedisClient = require('../utils/RedisClient');
 const redisClient = new RedisClient(0);
 
 const leaderboardFields = require('../models/Player/leaderboardFields');
 const allStats = Object.keys(leaderboardFields);
 
-router.get('/:uuid', async (req, res) => {
+router.get('/:uuid', rateLimiter(1), async (req, res) => {
     let categories = req.query.categories;
 
     if (categories) categories = categories.split(",");

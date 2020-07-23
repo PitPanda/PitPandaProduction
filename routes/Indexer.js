@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { APIerror } = require('../apiTools/apiTools');
 const fetch = require('node-fetch');
+const rateLimiter = require('../apiTools/rateLimiter');
 
-router.use('/', async (req, res) => {
+router.use('/', rateLimiter(1), async (req, res) => {
     try{
         const response = await fetch('http://localhost:5001/status');
         const data = await response.json();

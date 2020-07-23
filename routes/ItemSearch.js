@@ -1,7 +1,7 @@
 const Mystic = require('../models/Mystic');
 const { dbToItem } = require('../apiTools/apiTools');
 const {Pit:{Mystics}} = require('../frontEnd/src/pitMaster.json');
-
+const rateLimiter = require('../apiTools/rateLimiter');
 const classes = {};
 Object.entries(Mystics).forEach(([key,enchant])=>{
     enchant.Classes.forEach(cls=>{
@@ -95,7 +95,7 @@ const itemSearch = (req, res) => {
         });
 };
 
-router.use('/:query/:page', itemSearch); //deprecated
-router.use('/:query', itemSearch);
+router.use('/:query/:page', rateLimiter(6), itemSearch); //deprecated
+router.use('/:query', rateLimiter(6), itemSearch);
 
 module.exports = router;

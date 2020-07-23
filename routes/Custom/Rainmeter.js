@@ -1,9 +1,10 @@
 const router = require('express').Router();
+const rateLimiter = require('../apiTools/rateLimiter');
 
 const hypixelAPI = require('../../apiTools/playerRequest');
 const getDoc = require('../../apiTools/playerDocRequest');
 
-router.get('/:tag', async (req, res) => {
+router.get('/:tag', rateLimiter(3), async (req, res) => {
     const target = await getDoc(req.params.tag);
     let data = {};
     if (target.error) return res.status(400).json({ error: target.error });

@@ -1,11 +1,11 @@
 const router = require('express').Router();
-
+const rateLimiter = require('../apiTools/rateLimiter');
 const Mystic = require('../models/Mystic');
 const { dbToItem } = require('../apiTools/apiTools');
 const hypixelAPI = require('../apiTools/playerRequest');
 const Pit = require('../structures/Pit');
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', rateLimiter(2), async (req, res) => {
     const item = await Mystic.findById(req.params.id);
     if (!item) return res.status(404).json({ success: false, err: 'No Item Found.' });
 

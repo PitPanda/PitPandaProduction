@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { APIerror } = require('../apiTools/apiTools');
 const leaderboardGrabber = require('../apiTools/leaderboardGrabber');
-
-router.get('/:type', async (req, res) => {
+const rateLimiter = require('../apiTools/rateLimiter');
+router.get('/:type', rateLimiter(3), async (req, res) => {
     let size = req.query.pageSize ? Math.min(500, req.query.pageSize) : 100;
     const leaderboard = await leaderboardGrabber(req.params.type, req.query.page || 0, size);
 

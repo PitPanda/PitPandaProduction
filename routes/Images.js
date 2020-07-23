@@ -6,7 +6,7 @@ const ImageHelpers = require('../utils/ImageHelpers');
 const textHelpers = require('../utils/TextHelpers');
 const Leaderboards = require('../apiTools/lbProxy');
 const Mystics = require('../models/Mystic');
-
+const rateLimiter = require('../apiTools/rateLimiter');
 const error = (doc, res) => {
     res.setHeader('Content-Type', 'application/json')
     res.status(400).json({ success: false, error: doc.error });
@@ -17,7 +17,7 @@ router.use('*',(req,res,next)=>{
     next();
 });
 
-router.use('/level/:tag', async (req, res) => {
+router.use('/level/:tag', rateLimiter(20), async (req, res) => {
     let shadow = req.query.shadow !== 'false';
     let size = Math.max(Math.min(Number(req.query.size) || 40, 512),10);
     if(size>1000) size = 1000;
@@ -34,7 +34,7 @@ router.use('/level/:tag', async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-router.use("/leaderboards/:cat/:tag",async (req, res) => {
+router.use("/leaderboards/:cat/:tag",rateLimiter(20), async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
@@ -74,7 +74,7 @@ router.use("/leaderboards/:cat/:tag",async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-router.use("/profile/:tag",async (req, res) => {
+router.use("/profile/:tag",rateLimiter(20), async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
@@ -113,7 +113,7 @@ router.use("/profile/:tag",async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-router.use("/item/:id",async (req, res) => {
+router.use("/item/:id",rateLimiter(20), async (req, res) => {
     const doc = await Mystics.findById(req.params.id);
     if(!doc) return error({error:'item not found'}, res);
     const data = dbToItem(doc);

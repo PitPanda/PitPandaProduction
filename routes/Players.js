@@ -2,8 +2,8 @@ const router = require('express').Router();
 
 const hypixelAPI = require('../apiTools/playerRequest');
 const Player = require('../models/Player');
-
-router.get('/:tag', async (req, res) => {
+const rateLimiter = require('../apiTools/rateLimiter');
+router.get('/:tag', rateLimiter(10), async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
 
     if (target.error) return res.status(400).json({ success: false, error: target.error });

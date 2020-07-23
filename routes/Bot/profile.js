@@ -1,11 +1,12 @@
 const router = require('express').Router();
 
+const rateLimiter = require('../apiTools/rateLimiter');
 const hypixelAPI = require('../../apiTools/playerRequest');
 const Player = require('../../models/Player');
 
 const removeColors = str => str.replace(/§./g, '');
 
-router.get('/:tag', async (req, res) => {
+router.get('/:tag', rateLimiter(10), async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
 
     if (target.error) return res.status(400).json({ success: false, error: target.error });
