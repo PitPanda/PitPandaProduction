@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const hypixelAPI = require('../../apiTools/playerRequest');
-const rateLimiter = require('../apiTools/rateLimiter');
+const rateLimiter = require('../../apiTools/rateLimiter');
 
 router.use('/:tag', rateLimiter(10), async (req, res) => {
     const target = await hypixelAPI(req.params.tag)

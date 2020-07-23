@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const rateLimiter = require('../apiTools/rateLimiter');
+const rateLimiter = require('../../apiTools/rateLimiter');
 
 const hypixelAPI = require('../../apiTools/playerRequest');
 const getDoc = require('../../apiTools/playerDocRequest');
