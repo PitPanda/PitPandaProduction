@@ -11,6 +11,14 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', Development);
 
+const redis = new (require('./utils/RedisClient'))(0);
+const ApiKeys = require('./models/ApiKey');
+ApiKeys.find({}).then(keys => {
+  keys.forEach(key => {
+    redis.client.hset(`apikey:${key}`, 'limit', key.limit, 'name', key.name);
+  })
+});
+
 app.set('trust proxy', true);
 
 app.use(express.static('frontEnd/build'));

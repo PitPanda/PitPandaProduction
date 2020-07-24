@@ -23,7 +23,7 @@ function PlayerList(props){
     }
     return (
         <>
-            {loaded.map((player,index)=><PlayerEntry key={index} uuid={player.tag} hover={player.hover}  history={props.history}/>)}
+            {loaded.map((player)=><PlayerEntry key={player.tag} uuid={player.tag} hover={player.hover}  history={props.history}/>)}
             {hasMore?(
                 <div style={{textAlign:'center'}}>
                     {initiated?(

@@ -22,7 +22,7 @@ const colors = {
     'd': {color:'FF55FF',textshadow:'BF15BF'},
     'e': {color:'FFFF55',textshadow:'BFBF15'},
     'f': {color:'FFFFFF',textshadow:'BFBFBF'}
-};   
+};
 
 function or(a, b){
     return (typeof a === 'undefined') ? b : a;
