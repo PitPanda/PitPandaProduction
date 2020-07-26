@@ -56,7 +56,6 @@ class QueryBox extends React.Component{
 
     state={
         inputs:[createInputData()],
-        type:'*'
     }
     buttonRef=React.createRef();
 
@@ -77,19 +76,10 @@ class QueryBox extends React.Component{
         this.setState({inputs});
     }
 
-    monitorInputs = (report,raw,type,index) => {
+    monitorInputs = (report,raw,index) => {
         let inputs = this.state.inputs;
         inputs[index].reporting=report;
         inputs[index].says=raw;
-        inputs[index].type=type;
-        let foundType;
-        for(const input of inputs){
-            if(input.type&&input.type!=='any'){
-                foundType=input.type;
-                this.setState({type:input.type})
-            }
-        }
-        if(!foundType) this.setState({type:'*'});
         if(index+1===inputs.length){
             inputs.push(createInputData());
         }
@@ -102,7 +92,6 @@ class QueryBox extends React.Component{
         toClear.forEach(input=>clearTimeout(input.timeout))
         inputs = inputs.filter((input,index)=>(input.reporting!=='')||index===inputs.length-1);
         let queryString = inputs.slice(0,-1).map(i=>i.reporting).join();
-        if(this.state.type!=='*') queryString+=','+this.state.type;
         this.props.query(queryString);
         this.setState({inputs});
     }
@@ -128,7 +117,7 @@ class QueryBox extends React.Component{
                         key={input.id} 
                         mainRef={input.ref} 
                         suggestions={suggestions} 
-                        report={(a,b,c)=>this.monitorInputs(a,b,c,index)}
+                        report={(a,b)=>this.monitorInputs(a,b,index)}
                     />
                 ))}
                 <button 

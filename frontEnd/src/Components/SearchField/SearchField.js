@@ -40,7 +40,7 @@ class SearchField extends Component {
         // Filter our suggestions that don't contain the user's input
         const filteredSuggestions = suggestions.filter(
             suggestion =>
-                suggestion[1].Name.replace(/§./g,'').toLowerCase().indexOf(userInput.toLowerCase()) > -1
+                suggestion[1].Name.replace(/§./g,'').toLowerCase().indexOf(userInput.toLowerCase().replace(/!/,'')) > -1
         );
 
         // Update the user input and filtered suggestions, reset the active
@@ -59,10 +59,11 @@ class SearchField extends Component {
     };
 
     reportString(value,showNumber,number,text){
-        if(text==='') return this.props.report('', '', 'any');
+        if(text==='') return this.props.report('', '');
         value=value.toLowerCase();
         number=number.toLowerCase();
-        let type = 'any';
+        let not = value.startsWith('!') || text.startsWith('!');
+        if(not) value = value.substring(1);
         let match = this.props.suggestions.find(s=>value===s[0]);
         if(!match){
             match = this.props.suggestions.find(s=>s[1].Name.replace(/§./g,'').toLowerCase() === value);
@@ -73,13 +74,10 @@ class SearchField extends Component {
                     number='0+';
                 }
                 if(match[1].Name.replace(/§./g,'').toLowerCase()===value) {
-                    type=match[1].Type;
                     this.setState({showNumber:!match[1].NoNumber});
                 }
                 value  = match[0];
             }
-        }else{
-            type=match[1].Type;
         }
         if(value==='color'){
             const colors = this.props.suggestions.find(s=>s[0]==='color');
@@ -88,7 +86,8 @@ class SearchField extends Component {
         if(typeof number === 'undefined' || number==='') number = '0+';
         if(number.startsWith('<')) number=number.substring(1)+'-';
         if(number.startsWith('>')) number=number.substring(1)+'+';
-        this.props.report(value+(showNumber?number:''), text, type);
+        if(not) value = '!'+value;
+        this.props.report(value+(showNumber?number:''), text);
     }
 
     onNumberChange = e => {
@@ -105,7 +104,8 @@ class SearchField extends Component {
         const reporting = this.state.filteredSuggestions[index][0];
         const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber));
         if(showNumber) setTimeout(()=>this.numRef.current.focus(),0);
-        const userInput = this.state.filteredSuggestions[index][1].Name.replace(/§./g,'')
+        const not = this.state.userInput.startsWith('!');
+        const userInput = (this.state.userInput.startsWith('!') ? '!' : '') + this.state.filteredSuggestions[index][1].Name.replace(/§./g,'');
         this.setState({
             activeSuggestion: 0,
             filteredSuggestions:[],
@@ -115,7 +115,7 @@ class SearchField extends Component {
             userNumber:'',
             userInput
         });
-        this.reportString(reporting,showNumber,this.state.userNumber,userInput, this.state.filteredSuggestions[index][1].Type);
+        this.reportString(reporting,showNumber,this.state.userNumber,userInput);
     }
 
     onKeyDown = e => {
