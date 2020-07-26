@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/static/css/main.ab6936df.chunk.css",
-    "main.js": "/static/js/main.d4b7dab4.chunk.js",
-    "main.js.map": "/static/js/main.d4b7dab4.chunk.js.map",
+    "main.js": "/static/js/main.bced46d5.chunk.js",
+    "main.js.map": "/static/js/main.bced46d5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.94058b0e.js",
     "runtime-main.js.map": "/static/js/runtime-main.94058b0e.js.map",
-    "static/js/2.63d88305.chunk.js": "/static/js/2.63d88305.chunk.js",
-    "static/js/2.63d88305.chunk.js.map": "/static/js/2.63d88305.chunk.js.map",
+    "static/js/2.40bb7efd.chunk.js": "/static/js/2.40bb7efd.chunk.js",
+    "static/js/2.40bb7efd.chunk.js.map": "/static/js/2.40bb7efd.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.25a86544b834c413bfece389a3c54c26.js": "/precache-manifest.25a86544b834c413bfece389a3c54c26.js",
+    "precache-manifest.8e4617afc51f08b61d96069c0eb7dedf.js": "/precache-manifest.8e4617afc51f08b61d96069c0eb7dedf.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.ab6936df.chunk.css.map": "/static/css/main.ab6936df.chunk.css.map",
-    "static/js/2.63d88305.chunk.js.LICENSE.txt": "/static/js/2.63d88305.chunk.js.LICENSE.txt",
+    "static/js/2.40bb7efd.chunk.js.LICENSE.txt": "/static/js/2.40bb7efd.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/minecraft-italic.35903bfa.otf",
     "static/media/itemStyles.css": "/static/media/blocks_items_potions.195f6b98.png"
   },
   "entrypoints": [
     "static/js/runtime-main.94058b0e.js",
-    "static/js/2.63d88305.chunk.js",
+    "static/js/2.40bb7efd.chunk.js",
     "static/css/main.ab6936df.chunk.css",
-    "static/js/main.d4b7dab4.chunk.js"
+    "static/js/main.bced46d5.chunk.js"
   ]
 }

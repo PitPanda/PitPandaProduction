@@ -5,11 +5,11 @@ const rateLimiter = require('../apiTools/rateLimiter');
 
 router.use('/', rateLimiter(1), async (req, res) => {
     try{
-        const response = await fetch('http://localhost:5001/status');
+        const response = await fetch('http://localhost:5001/');
         const data = await response.json();
-        res.status(200).json({ success: true, data });
+        res.status(200).json({ success: true, data: { online: true, ...data } });
     }catch(error){
-        res.status(500).json({ success: false, error })
+        res.status(200).json({ success: true, data: { online: false } })
     }
 });
 

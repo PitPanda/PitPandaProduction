@@ -63,9 +63,7 @@ function Leaderboard(props) {
         getIndexerStatus().then(indexer=>{
             if(alive) {
                 if(indexer.error) console.log(indexer.error);
-                else setIndexData(
-                    { online: true, ...indexer}
-                );
+                else setIndexData(indexer);
             }
         }).catch(console.error);
         return () => alive = false;
@@ -96,11 +94,17 @@ function Leaderboard(props) {
                         <MinecraftText className='text-title' raw={'Status: ' + (indexData.online ? '§2Online' : '§4Offline')} /><br />
                         {indexData.online ? (
                             <>
-                                <MinecraftText raw={`Progress: §6${indexData.currentPosition.toLocaleString()} / ${indexData.estimatedCount.toLocaleString()}`} /><br />
-                                <MinecraftText raw={`Rate: §6${Math.round(indexData.info.maxBatchSize/(indexData.info.batchTimeout/1e5))/1e2} players/sec`} /><br />
-                                <MinecraftText raw={`Cycle Time: §6${(()=>{
-                                    const seconds = Math.round(indexData.estimatedCount/(indexData.info.maxBatchSize/indexData.info.batchTimeout)/1e3);
-                                    return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`
+                                <MinecraftText raw={`Players Queued: §6${indexData.remaingCount.toLocaleString()}`} /><br />
+                                <MinecraftText raw={`Daily Players Indexed: §6${indexData.dailyCount.toLocaleString()}`} /><br />
+                                <MinecraftText raw={`Rate: §6${Math.round(1e5/indexData.checkTimeout)/1e2} players/sec`} /><br />
+                                <MinecraftText raw={`Daily Queue Time: §6${(()=>{
+                                    console.log(indexData);
+                                    const seconds = Math.round(indexData.dailyCount*(1e3/indexData.checkTimeout));
+                                    return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`;
+                                })()}`} /><br />
+                                <MinecraftText raw={`Remaining Queue Time: §6${(()=>{
+                                    const seconds = Math.round(indexData.remaingCount*(1e3/indexData.checkTimeout));
+                                    return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`;
                                 })()}`} /><br />
                             </>
                         ) : ''}

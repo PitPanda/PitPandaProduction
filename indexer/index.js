@@ -13,71 +13,52 @@ const requestPlayer = require('../apiTools/playerRequest');
 const playerDoc = require('../models/Player');
 
 //constants
-const maxQueueSize = 500;
-const maxBatchSize = 1;
-const batchTimeout = 2000;
+const batchSize = 500;
+const checkTimeout = 2e3;
 
-let currentQueue = 0;
-let lastQueueChange = 0;
-let estimatedCount = 0;
-let lastQueueSize = 0;
+let remaingCount = 0;
+let dailyCount = 0;
 
-const queue = [];
-
-const queryFilter = {
+const dailyFilter = {
     lastinpit: {
         $gte: new Date(Date.now() - 14 * 86400e3),
     }
 }
 
-const getNextChunk = async () => {
-    const players = await playerDoc.find(queryFilter, { _id: 1 }).lean().skip(currentQueue * maxQueueSize).limit(maxQueueSize);
-
-    players.forEach(p => queue.push(p._id));
-    lastQueueChange = Date.now();
-
-    return players;
+const recentFiler = {
+    lastsave: {
+        $lte: new Date(Date.now() - 86400e3),
+    },
 }
 
-const runNextBatch = async () => {
-    const batch = queue.splice(0, maxBatchSize); // zero based indexes
-    const players = await Promise.all(batch.map(requestPlayer));
+const queryFilter = {...dailyFilter,...recentFiler};
 
+const wait = ms => new Promise(res=>setTimeout(res,ms));
 
-    return players;
-}
-
-const start = async () => {
-    if (!queue.length) {
-        const data = await getNextChunk();
-        lastQueueSize = data.length;
-        currentQueue = currentQueue + 1; // so we can get the next 1000 players
-
-        if (!data.length) {
-            currentQueue = 0; //ran out of players to index restart
-            await getNextChunk();
-        }
+const runBatch = async () => {
+    const batch = await playerDoc.find(queryFilter, { _id: 1 }).lean().limit(batchSize);
+    const timeout = wait(checkTimeout*batchSize);
+    for(const { _id } of batch){
+        requestPlayer(_id);
+        await wait(checkTimeout);
     }
 
-    runNextBatch();
+    await timeout;
 
-    setTimeout(() => start(), batchTimeout); //loop again with delay 
+    runBatch();
 }
 
-const update = async () => estimatedCount = await playerDoc.find(queryFilter).countDocuments();
+const update = async () => {
+    remaingCount = await playerDoc.find(queryFilter).countDocuments();
+    dailyCount = await playerDoc.find(dailyFilter).countDocuments();
+}
 update();
 setInterval(update, 300e3);
 
-if (!Development) start(); //entry point
+if (!Development) runBatch(); //entry point
 
 app.get('/', (req, res) => {
-    res.json({ version: 1.0 });
-});
-
-app.get('/status', async (req, res) => {
-    const currentPosition = ((currentQueue - 1) * maxQueueSize) + (lastQueueSize - queue.length);
-
-    res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });
-});
+    res.json({dailyCount, remaingCount, checkTimeout})
+})
 
 app.listen(5001, () => console.log('Indexer booted! Port 5001.'));
