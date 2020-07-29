@@ -99,11 +99,11 @@ function Leaderboard(props) {
                                 <MinecraftText raw={`Rate: §6${Math.round(1e5/indexData.checkTimeout)/1e2} players/sec`} /><br />
                                 <MinecraftText raw={`Daily Queue Time: §6${(()=>{
                                     console.log(indexData);
-                                    const seconds = Math.round(indexData.dailyCount*(1e3/indexData.checkTimeout));
+                                    const seconds = Math.round(indexData.dailyCount*indexData.checkTimeout/1e3);
                                     return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`;
                                 })()}`} /><br />
                                 <MinecraftText raw={`Remaining Queue Time: §6${(()=>{
-                                    const seconds = Math.round(indexData.remaingCount*(1e3/indexData.checkTimeout));
+                                    const seconds = Math.round(indexData.remaingCount*indexData.checkTimeout/1e3);
                                     return `${Math.floor(seconds/3600)}h ${Math.floor((seconds%3600)/60)}m`;
                                 })()}`} /><br />
                             </>

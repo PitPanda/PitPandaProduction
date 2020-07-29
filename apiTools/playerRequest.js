@@ -2,6 +2,7 @@ const request = require('request');
 const { APIerror } = require('./apiTools');
 const Pit = require('../structures/Pit');
 const HypixelUsage = require('../models/HypixelUsage');
+const { DataResolver } = require('discord.js');
 
 const batchSize = 10;
 let count = 0;
@@ -28,7 +29,11 @@ const hypixelAPIconstructor = () => {
         return Promise.race([new Promise((resolve) => {
             request(`https://api.hypixel.net/player?key=${getKey()}&${tag.length < 32 ? 'name' : 'uuid'}=${tag}`, (err, response, body) => {
                 if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
-                else resolve(new Pit(JSON.parse(body)));
+                else try{
+                    resolve(new Pit(JSON.parse(body)));
+                }catch(e){
+                    resolve({success: false, error: `API returned with code ${response.statusCode}`});
+                }
             });
         }), new Promise((resolve) => {
             setTimeout(() => resolve(APIerror("Request Timed Out").json), 60e3);
