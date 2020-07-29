@@ -103,8 +103,6 @@ class QueryBox extends React.Component{
     }
 
     render(){
-        let suggestions = formatted;
-        if(this.state.type!=='*') suggestions = suggestions.filter(([,ench])=>['any',this.state.type].includes(ench.Type));
         return (
             <StaticCard title="Query" style={{width:'350px',display:'inline-block',verticalAlign:'top',margin:'20px',textAlign:'left'}}>
                 {this.state.inputs.map((input,index)=>(
@@ -116,7 +114,7 @@ class QueryBox extends React.Component{
                         kill={e=>this.killInput(index)} 
                         key={input.id} 
                         mainRef={input.ref} 
-                        suggestions={suggestions} 
+                        suggestions={formatted} 
                         report={(a,b)=>this.monitorInputs(a,b,index)}
                     />
                 ))}

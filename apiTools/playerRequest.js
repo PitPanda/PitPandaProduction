@@ -31,7 +31,7 @@ const hypixelAPIconstructor = () => {
                 else resolve(new Pit(JSON.parse(body)));
             });
         }), new Promise((resolve) => {
-            setTimeout(() => resolve(APIerror("Request Timed Out").json), 6000);
+            setTimeout(() => resolve(APIerror("Request Timed Out").json), 60e3);
         })]);
     });
 }
