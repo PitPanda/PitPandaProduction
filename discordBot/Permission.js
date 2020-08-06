@@ -25,8 +25,8 @@ function permission(member){
             }
             case 'pitpanda':{
                 if(!level) return true;
-                if(TradeCenter.BotAdmins.includes(member.id)) return true;
-                if(1 >= level){
+                if(TradeCenter.PitPandaAdmins.includes(member.id)) return true;
+                if(level === 1){
                     if(getStaffPermissionLevel(member) > 7) return true;
                     const user = await Discorduser.findById(member.id);
                     if(!user || !user.uuid) return false;

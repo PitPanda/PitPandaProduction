@@ -72,11 +72,44 @@ class Player extends React.Component {
                     </div>
                   </div>
                 </StaticCard>
+                {this.state.user.displays.map((display,i,a) => {
+                  const key = `${this.state.user.uuid}-${display.display_type}-${i}`;
+                  switch(display.display_type){
+                    case 'flag': {
+                      return (
+                        <StaticCard title={upperFirst(display.type)} key={key} >
+                          <div style={{maxWidth:'300px'}}>
+                            This player has been marked as {display.type} by the <a href="https://discord.gg/CdTmYrG">Trade Center Discord</a> staff.
+                            {display.notes?<><br/><br/>Trade Center Staff notes:<br/> {display.notes}</>:''}
+                            {display.discordid?<><br/><br/>Discord ID: <br/>{display.discordid}</>:''}
+                            {(display.alts&&display.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={display.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
+                            {display.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:display.main}]} instant={true} /></>:''}
+                          </div>
+                        </StaticCard>
+                      );
+                    }
+                    case 'plaque': {
+                      return (
+                        <StaticCard title={display.title} key={key}>
+                          <div style={{maxWidth:'300px'}}>
+                            {display.message?<p style={{marginBottom:display.url?'10px':''}}>{display.message}</p>:''}
+                            {display.url?<a href={display.url}>{display.linkTitle||display.url}</a>:''}
+                            {(display.alts&&display.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={display.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
+                            {display.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:display.main}]} instant={true} /></>:''}
+                          </div>
+                        </StaticCard>
+                      );
+                    }
+                    default:
+                      return '';
+                  }
+                })}
                 {this.state.user.profileDisplay?(
                   <StaticCard title={this.state.user.profileDisplay.title}>
                     <div style={{maxWidth:'300px'}}>
                       {this.state.user.profileDisplay.message?<p style={{marginBottom:this.state.user.profileDisplay.url?'10px':''}}>{this.state.user.profileDisplay.message}</p>:''}
                       {this.state.user.profileDisplay.url?<a href={this.state.user.profileDisplay.url}>{this.state.user.profileDisplay.linkTitle||this.state.user.profileDisplay.url}</a>:''}
+                      {(this.state.user.profileDisplay.alts&&this.state.user.profileDisplay.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.profileDisplay.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
                     </div>
                   </StaticCard>
                 ):''}

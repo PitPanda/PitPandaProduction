@@ -7,7 +7,8 @@ const scammerSchema = mongoose.Schema({
     },
     alts: {
         type: [String],
-        default: undefined
+        default: undefined,
+        index: true,
     },
     main: {
         type: String,

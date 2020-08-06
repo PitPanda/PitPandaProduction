@@ -104,7 +104,6 @@ class SearchField extends Component {
         const reporting = this.state.filteredSuggestions[index][0];
         const showNumber = Boolean(this.props.suggestions.find(s=>s[0]===reporting&&!s[1].NoNumber));
         if(showNumber) setTimeout(()=>this.numRef.current.focus(),0);
-        const not = this.state.userInput.startsWith('!');
         const userInput = (this.state.userInput.startsWith('!') ? '!' : '') + this.state.filteredSuggestions[index][1].Name.replace(/§./g,'');
         this.setState({
             activeSuggestion: 0,

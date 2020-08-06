@@ -19,6 +19,9 @@ const command = async (msg,rest) => {
     }
     let doc = await getDoc(rest[0]);
     if(doc.error) return msg.reply(`Error occured: ${doc.error}`);
+    if(profileDisplay.alts){
+        profileDisplay.alts = (await Promise.all(profileDisplay.alts.map(tag=>getDoc(tag,{maxAge: Infinity})))).map(d=>d._id);
+    }
     doc.profileDisplay = profileDisplay;
     doc.save();
     msg.reply(`Added https://pitpanda.rocks/players/${doc._id}`);
@@ -31,6 +34,6 @@ module.exports = new Command(
         description:`Set a player's profile display on pit panda`,
         example:`**$pitpandatag [username|uuid] \\\`\\\`\\\`json [info] \\\`\\\`\\\`**`,
         type: 'tradecenter',
-        permlevel:8
+        permlevel:Infinity
     }
 );

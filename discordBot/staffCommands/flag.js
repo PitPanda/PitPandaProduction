@@ -6,7 +6,7 @@ const { MessageEmbed } = require('discord.js');
 function command(msg,rest,_,permlevel){
     if(rest.length<2) return msg.reply('Insufficient parameters');
     let flag;
-    let altsPromise;
+    let altsPromise = new Promise(r=>r());
     if(typeof rest[3] !== 'undefined'){
         let jsonString = msg.content.substring(msg.content.indexOf("```json\n")+8,msg.content.lastIndexOf("```"));
         try{
@@ -23,7 +23,6 @@ function command(msg,rest,_,permlevel){
             return msg.reply(`Uhoh failed to understand your JSON input error:\n${e}`);
         }
     }
-    if(!altsPromise)altsPromise=Promise.all([]);
     const methods = {
         add:Doc=>{
             if(Doc.flag) msg.reply('This player is already flagged, please remove them before updating!');
@@ -31,40 +30,15 @@ function command(msg,rest,_,permlevel){
                 altsPromise.then(altDocs=>{
                     flag.alts=altDocs.map(alt=>alt._id);
                     Player.updateOne({_id:Doc._id},{flag}).then(results=>{
-                        if(results.n) {
-                            if(results.nModified) {
-                                const altflag = {
-                                    type:flag.type,
-                                    discordid:flag.discordid,
-                                    main:Doc._id,
-                                    notes:flag.notes,
-                                    timestamp:flag.timestamp,
-                                    addedby: flag.addedby,
-                                    evidence: flag.evidence
-                                }
-                                Promise.all(altDocs.map(({_id})=>Player.updateOne({_id},{flag:altflag}))).then(results2=>{
-                                    msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
-                                });
-                                
-                            } else msg.reply('Honestly I dont know if its possible to reach this reply, if it ever happens something very weird has happened. please tell mcpqndq.');
-                        }
-                        else msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
+                        if(!results.n) msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
                     })
                 });
             }
         },
         remove:Doc=>{
-            if(!Doc.flag) msg.reply('This player isnt even a flagged what are you doing fool');
+            if(!Doc.flag) msg.reply('This player isnt even a flagged what are you doing fool. Maybe you mean to remove an alt? (if so, remove the main and add back with updated list)');
             else Player.updateOne({_id:Doc._id},{$unset:{flag:""}}).then(results=>{
-                if(results.n) {
-                    if(results.nModified){
-                        if(Doc.flag.alts) Promise.all(Doc.flag.alts.map(alt=>Player.updateOne({_id:alt},{$unset:{flag:""}})))
-                            .then(()=>msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`));
-                        else if(Doc.flag.main) Player.updateOne({_id:Doc.flag.main},{$pull:{"flag.alts":Doc._id}})
-                            .then(()=>msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`));
-                        else msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
-                    } else msg.reply('Honestly I dont know if its possible to reach this reply, if it ever happens something very weird has happened. please tell mcpqndq.');
-                }
+                if(results.n && results.nModified) msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
                 else msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
             });
         },
