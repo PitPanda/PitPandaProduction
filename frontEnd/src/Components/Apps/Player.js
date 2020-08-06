@@ -104,26 +104,6 @@ class Player extends React.Component {
                       return '';
                   }
                 })}
-                {this.state.user.profileDisplay?(
-                  <StaticCard title={this.state.user.profileDisplay.title}>
-                    <div style={{maxWidth:'300px'}}>
-                      {this.state.user.profileDisplay.message?<p style={{marginBottom:this.state.user.profileDisplay.url?'10px':''}}>{this.state.user.profileDisplay.message}</p>:''}
-                      {this.state.user.profileDisplay.url?<a href={this.state.user.profileDisplay.url}>{this.state.user.profileDisplay.linkTitle||this.state.user.profileDisplay.url}</a>:''}
-                      {(this.state.user.profileDisplay.alts&&this.state.user.profileDisplay.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.profileDisplay.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
-                    </div>
-                  </StaticCard>
-                ):''}
-                {this.state.user.flag?(
-                  <StaticCard title={upperFirst(this.state.user.flag.type)}>
-                    <div style={{maxWidth:'300px'}}>
-                      This player has been marked as {this.state.user.flag.type} by the <a href="https://discord.gg/CdTmYrG">Trade Center Discord</a> staff.
-                      {this.state.user.flag.notes?<><br/><br/>Trade Center Staff notes:<br/> {this.state.user.flag.notes}</>:''}
-                      {this.state.user.flag.discordid?<><br/><br/>Discord ID: <br/>{this.state.user.flag.discordid}</>:''}
-                      {(this.state.user.flag.alts&&this.state.user.flag.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={this.state.user.flag.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
-                      {this.state.user.flag.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:this.state.user.flag.main}]} instant={true} /></>:''}
-                    </div>
-                  </StaticCard>
-                ):''}
                 <StaticCard title="Status" content={
                   <div style={{fontSize:'16px'}}>
                     <MinecraftText className='text-title' style={{color:this.state.user.online?'green':'red'}} text={this.state.user.online?'Online':'Offline'}/><br/>
