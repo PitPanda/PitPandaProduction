@@ -93,7 +93,7 @@ const dbToItem = doc => {
         nonce: doc.nonce,
         item: new Item(
             doc.item.name,
-            [`${Colors.GRAY}Lives: ${doc.lives > 3 ? Colors.GREEN : Colors.RED}${doc.lives}${Colors.GRAY}/${doc.maxLives}`, ...doc.enchants.map(({ key, level }) => [
+            [`${Colors.GRAY}Lives: ${doc.lives > 3 ? Colors.GREEN : Colors.RED}${doc.lives}${Colors.GRAY}/${doc.maxLives}${doc.flags.includes('gemmed') ? ` ${Colors.GREEN}♦` : ''}`, ...doc.enchants.map(({ key, level }) => [
                 '',
                 Mystics[key].Name + ' ' + ((level > 1) ? textHelpers.romanNumGen(level) : ''),
                 ...Mystics[key].Descriptions[Math.min(level - 1, Mystics[key].Descriptions.length - 1)]

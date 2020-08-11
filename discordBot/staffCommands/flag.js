@@ -6,7 +6,7 @@ const { MessageEmbed } = require('discord.js');
 function command(msg,rest,_,permlevel){
     if(rest.length<2) return msg.reply('Insufficient parameters');
     let flag;
-    let altsPromise = new Promise(r=>r());
+    let altsPromise = new Promise(r=>r([]));
     if(typeof rest[3] !== 'undefined'){
         let jsonString = msg.content.substring(msg.content.indexOf("```json\n")+8,msg.content.lastIndexOf("```"));
         try{
