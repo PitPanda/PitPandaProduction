@@ -31,6 +31,7 @@ function command(msg,rest,_,permlevel){
                     flag.alts=altDocs.map(alt=>alt._id);
                     Player.updateOne({_id:Doc._id},{flag}).then(results=>{
                         if(!results.n) msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
+                        else msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
                     })
                 });
             }
