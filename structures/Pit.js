@@ -1975,7 +1975,6 @@ class Pit {
             discord: this.discord,
             prestigeTimes: this.prestiges.slice(1).map(p=>new Date(p.timestamp)),
         });
-        console.log(player.prestigeTimes);
         return player;
     }
 

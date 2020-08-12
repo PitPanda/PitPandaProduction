@@ -6,10 +6,10 @@ const { MessageEmbed } = require('discord.js');
 const getActualDoc = tag => getDoc(tag.toLowerCase().replace(/[-\s]/g,''), {maxAge:Infinity});
 
 /**
- * @param {string[]} alts 
+ * @param {string[]} alts
  * @returns {string[]}
  */
-const resolveAltUUIDs = async alts => (await Promise.all(data.alts.map(getActualDoc))).map(doc=>doc._id);
+const resolveAltUUIDs = async alts => (await Promise.all(alts.map(getActualDoc))).map(doc=>doc._id);
 
 const methods = {
     async add(msg, doc){

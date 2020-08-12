@@ -7,7 +7,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('autoIndex', Development);
 
 const express = require('express');
-//const app = express();
+const app = express();
 
 const requestPlayer = require('../apiTools/playerRequest');
 const playerDoc = require('../models/Player');
@@ -15,7 +15,7 @@ const playerDoc = require('../models/Player');
 //constants
 const maxQueueSize = 500;
 const maxBatchSize = 1;
-const batchTimeout = 450;
+const batchTimeout = 700;
 
 let currentQueue = 0;
 let lastQueueChange = 0;
@@ -25,11 +25,9 @@ let lastQueueSize = 0;
 const queue = [];
 
 const queryFilter = {
-  /*
-    lastinpit: {
-        $gte: new Date(Date.now() - 14 * 86400e3),
+    lastsave: {
+        $gte: new Date(Date.now() - 86400e3),
     }
-  */
 }
 
 const getNextChunk = async () => {
@@ -65,7 +63,7 @@ const start = async () => {
 
     setTimeout(() => start(), batchTimeout); //loop again with delay 
 }
-/*
+
 const update = async () => estimatedCount = await playerDoc.find(queryFilter).countDocuments();
 update();
 setInterval(update, 300e3);
@@ -82,5 +80,5 @@ app.get('/status', async (req, res) => {
     res.json({ currentPosition, estimatedCount, info: { currentQueueCount: currentQueue, maxBatchSize, maxQueueSize, batchTimeout, lastQueueChange } });
 });
 
-app.listen(5001, () => console.log('Indexer booted! Port 5001.'));
-*/
+app.listen(5002, () => console.log('Indexer booted! Port 5002.'));
+
