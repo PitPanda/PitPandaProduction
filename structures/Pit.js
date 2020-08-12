@@ -1972,8 +1972,10 @@ class Pit {
             joins: this.joins,
             enderchestOpened: this.enderchestOpened,
             lastinpit: new Date(this.lastSave),
-            discord: this.discord
+            discord: this.discord,
+            prestigeTimes: this.prestiges.slice(1).map(p=>new Date(p.timestamp)),
         });
+        console.log(player.prestigeTimes);
         return player;
     }
 

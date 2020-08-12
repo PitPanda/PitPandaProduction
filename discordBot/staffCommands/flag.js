@@ -3,16 +3,15 @@ const Player = require('../../models/Player');
 const getDoc = require('../../apiTools/playerDocRequest');
 const { MessageEmbed } = require('discord.js');
 
-function command(msg,rest,_,permlevel){
+async function command(msg,rest,_,permlevel){
     if(rest.length<2) return msg.reply('Insufficient parameters');
     let flag;
-    let altsPromise = new Promise(r=>r([]));
+    let altsPromise = new Promise(r=>r());
     if(typeof rest[3] !== 'undefined'){
         let jsonString = msg.content.substring(msg.content.indexOf("```json\n")+8,msg.content.lastIndexOf("```"));
         try{
             flag=JSON.parse(jsonString);
-            if(!flag.type) return msg.reply('You didnt tell me what type of flag this is');
-            flag.type=flag.type.toLowerCase();
+            if(flag.type) flag.type=flag.type.toLowerCase();
             flag.timestamp=Date.now();
             flag.addedby=msg.author.id;
             if(flag.alts) {
@@ -23,27 +22,33 @@ function command(msg,rest,_,permlevel){
             return msg.reply(`Uhoh failed to understand your JSON input error:\n${e}`);
         }
     }
+
+    const Doc = await getActualDoc(rest[1].toLowerCase());
+
     const methods = {
-        add:Doc=>{
-            if(Doc.flag) msg.reply('This player is already flagged, please remove them before updating!');
-            else {
-                altsPromise.then(altDocs=>{
-                    flag.alts=altDocs.map(alt=>alt._id);
-                    Player.updateOne({_id:Doc._id},{flag}).then(results=>{
-                        if(!results.n) msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
-                        else msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
-                    })
-                });
-            }
+        async add(){
+            if(!flag.type) return msg.reply('You didnt tell me what type of flag this is');
+            const altDocs = await altsPromise
+            if(altDocs) flag.alts=altDocs.map(alt=>alt._id);
+            const results = await Player.updateOne({_id:Doc._id},{flag});
+            if(!results.n) msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
+            else msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
         },
-        remove:Doc=>{
-            if(!Doc.flag) msg.reply('This player isnt even a flagged what are you doing fool. Maybe you mean to remove an alt? (if so, remove the main and add back with updated list)');
-            else Player.updateOne({_id:Doc._id},{$unset:{flag:""}}).then(results=>{
-                if(results.n && results.nModified) msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
-                else msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
-            });
+        async adjust(){
+            if(!Doc.flag) return msg.reply('This command can only be used on already marked players');
+            const altDocs = await altsPromise
+            if(altDocs) flag.alts=altDocs.map(alt=>alt._id);
+            Doc.flag = { ...Doc.toJSON().flag, ...flag };
+            await Doc.save();
+            msg.reply(`Updated https://pitpanda.rocks/players/${Doc._id}`);
         },
-        inspect: async Doc=>{
+        async remove(){
+            if(!Doc.flag) return msg.reply('This player isnt even a flagged what are you doing fool.');
+            const results = await Player.updateOne({_id:Doc._id},{$unset:{flag:""}})
+            if(results.n && results.nModified) msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
+            else msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
+        },
+        async inspect(){
             if(Doc.error) return msg.reply(`An error occured: ${Doc.error}`);
             if(!Doc.flag) return msg.reply('This player isnt even flagged what are you doing fool');
             const flag = Doc.flag;
@@ -69,7 +74,7 @@ function command(msg,rest,_,permlevel){
         }
     }
     if(!methods[rest[0].toLowerCase()]) return msg.reply(`unknown subcommand \`${rest[0].toLowerCase()}\``);
-    getActualDoc(rest[1].toLowerCase()).then(methods[rest[0].toLowerCase()]);
+    methods[rest[0]]();
 }
 
 function getActualDoc(tag){

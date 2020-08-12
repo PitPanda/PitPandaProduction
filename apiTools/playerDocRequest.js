@@ -5,7 +5,6 @@ const Player = require('../models/Player');
  * gets the player doc
  * @param {string} tag 
  * @param {{maxAge:number,doc:any}} options
- * @returns {Promise<Doc>}
  */
 const getDoc = async (tag, options={}) => {
     const maxAge = options.maxAge;

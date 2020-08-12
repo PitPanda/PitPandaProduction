@@ -14,6 +14,7 @@ const forums = require('./Forums');
 const indexer = require('./Indexer');
 const ApiStat = require('../models/ApiStat');
 const position =  require('./Position');
+const randomPlayers =  require('./RandomPlayers');
 const bot =  require('./Bot');
 const discordtodocs =  require('./DiscordToDocs');
 
@@ -50,6 +51,7 @@ router.use('/forums', forums);
 router.use('/indexer', indexer);
 router.use('/position', position);
 router.use('/bot', bot);
+router.use('/randomplayers', randomPlayers);
 router.use('/discordtodocs', discordtodocs);
 
 router.use('*', APIerror('Invalid Endpoint'));

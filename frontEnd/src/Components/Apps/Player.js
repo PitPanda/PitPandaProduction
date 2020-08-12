@@ -5,7 +5,7 @@ import NumberedCard from '../Cards/NumberedCard';
 import MinecraftText from '../Minecraft/MinecraftText';
 import MinecraftInventory from '../Minecraft/MinecraftInventory';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import PlayerForm from './PlayerForm';
+import Header from '../Header/Header';
 import PlayerList from '../PlayerList/PlayerList';
 import LeaderboardPositions from '../LeaderboardPositions/LeaderboardPositions';
 import frontendTools from '../../scripts/frontendTools';
@@ -44,7 +44,7 @@ class Player extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PlayerForm history={this.props.history}/>
+        <Header history={this.props.history}/>
         <div style={{
           width: '100%',
           display: 'flex',
