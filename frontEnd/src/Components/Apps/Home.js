@@ -24,14 +24,14 @@ export default (props) => {
       <Header/>
       <div style={{
         width: '80%',
-        maxWidth: '840px',
+        maxWidth: '880px',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
         margin: 'auto',
       }}>
         {players?players.map(player => (
-          <TitlelessCard key={player.uuid}style={{width:'400px',margin:'10px',display:'inline-block'}}>
+          <TitlelessCard key={player.uuid}style={{width:'410px',margin:'10px',display:'inline-block'}}>
             <Link href={`/players/${player.uuid}`}>
               <img 
                 src={`https://crafatar.com/avatars/${player.uuid}?overlay=true`} 
