@@ -27,7 +27,10 @@ const queue = [];
 const queryFilter = {
     lastsave: {
         $gte: new Date(Date.now() - 86400e3),
-    }
+    },
+    xp: {
+        $gt: 65950,
+    },
 }
 
 const getNextChunk = async () => {

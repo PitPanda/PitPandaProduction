@@ -13,9 +13,6 @@ router.get('/', rateLimiter(1), async (req, res) => {
         playtime: { 
           $gt: 36000,
         },
-        xp: {
-          $gt: 65950,
-        },
       },
     },
     { 
