@@ -8,8 +8,27 @@ const Player = require('../models/Player');
 
 router.get('/', rateLimiter(1), async (req, res) => {
   const players = (await Player.aggregate([
-    { $match: { playtime: { $gt: 36000 } } },
-    { $sample: {size: 10} },
+    { 
+      $match: { 
+        playtime: { 
+          $gt: 36000,
+        },
+      },
+    },
+    { 
+      $sample: {
+        size: 10,
+      } ,
+    },
+    {
+      $project: {
+        formattedRank: 1,
+        colouredName: 1,
+        formattedLevel: 1,
+        gold: 1,
+        playtime:1,
+      },
+    },
   ])).map(doc => ({
     uuid: doc._id,
     name: `${doc.formattedRank} ${doc.colouredName}`,
