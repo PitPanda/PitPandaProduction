@@ -105,4 +105,13 @@ const dbToItem = doc => {
     };
 }
 
-module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription };
+const cleanDoc = doc => {
+    const newDoc = doc.toJSON();
+    if(newDoc.flag) {
+        const { addedby, timestamp, evidence, ...clean } = newDoc.flag;
+        newDoc.flag = clean;
+    }
+    return newDoc;
+}
+
+module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription, cleanDoc };

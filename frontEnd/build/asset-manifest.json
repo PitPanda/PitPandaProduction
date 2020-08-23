@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.9adb9e83.chunk.css",
-    "main.js": "/static/js/main.471dd13a.chunk.js",
-    "main.js.map": "/static/js/main.471dd13a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.ba34760b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.ba34760b.js.map",
-    "static/js/2.cd3e2438.chunk.js": "/static/js/2.cd3e2438.chunk.js",
-    "static/js/2.cd3e2438.chunk.js.map": "/static/js/2.cd3e2438.chunk.js.map",
+    "main.css": "/static/css/main.ab6936df.chunk.css",
+    "main.js": "/static/js/main.5848585c.chunk.js",
+    "main.js.map": "/static/js/main.5848585c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.94058b0e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.94058b0e.js.map",
+    "static/js/2.3fa842d9.chunk.js": "/static/js/2.3fa842d9.chunk.js",
+    "static/js/2.3fa842d9.chunk.js.map": "/static/js/2.3fa842d9.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.e877599d47ad9d264bd4fa0905b76a8e.js": "/precache-manifest.e877599d47ad9d264bd4fa0905b76a8e.js",
+    "precache-manifest.c8cceda03b26d78d18db685c4ef944af.js": "/precache-manifest.c8cceda03b26d78d18db685c4ef944af.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.9adb9e83.chunk.css.map": "/static/css/main.9adb9e83.chunk.css.map",
-    "static/js/2.cd3e2438.chunk.js.LICENSE": "/static/js/2.cd3e2438.chunk.js.LICENSE",
+    "static/css/main.ab6936df.chunk.css.map": "/static/css/main.ab6936df.chunk.css.map",
+    "static/js/2.3fa842d9.chunk.js.LICENSE.txt": "/static/js/2.3fa842d9.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/minecraft-italic.35903bfa.otf",
     "static/media/itemStyles.css": "/static/media/blocks_items_potions.195f6b98.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.ba34760b.js",
-    "static/js/2.cd3e2438.chunk.js",
-    "static/css/main.9adb9e83.chunk.css",
-    "static/js/main.471dd13a.chunk.js"
+    "static/js/runtime-main.94058b0e.js",
+    "static/js/2.3fa842d9.chunk.js",
+    "static/css/main.ab6936df.chunk.css",
+    "static/js/main.5848585c.chunk.js"
   ]
 }

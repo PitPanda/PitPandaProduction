@@ -66,7 +66,7 @@ class Player extends React.Component {
                     />
                     <div key={this.state.user.uuid} style={{verticalAlign:'top', display:'inline-block', marginTop:'7px',marginLeft:'10px', fontSize:'17px'}}>
                       <MinecraftText style={{fontSize:'110%'}} raw={this.state.user.formattedName}/><br/>
-                      <MinecraftText raw={`LVL: ${this.state.user.formattedLevel}`}/><br/>
+                      <MinecraftText raw={`Level: ${this.state.user.formattedLevel}`}/><br/>
                       <MinecraftText raw={`Gold: §6${this.state.user.currentGold.toLocaleString()}g`}/><br/>
                       <MinecraftText raw={`Played: §f${frontendTools.minutesToString(this.state.user.playtime)}`}/>
                     </div>

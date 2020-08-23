@@ -3,6 +3,7 @@ const router = require('express').Router();
 const hypixelAPI = require('../apiTools/playerRequest');
 const Player = require('../models/Player');
 const rateLimiter = require('../apiTools/rateLimiter');
+const { cleanDoc } = require('../apiTools/apiTools');
 
 router.get('/:tag', rateLimiter(10), async (req, res) => {
     const target = await hypixelAPI(req.params.tag);
@@ -87,6 +88,7 @@ router.get('/:tag', rateLimiter(10), async (req, res) => {
     data.xpProgress = target.xpProgress;
     data.goldProgress = target.goldProgress;
     data.renownProgress = target.renownProgress;
+    data.doc = cleanDoc(self);
     res.status(200).json({ success: true, data });
 });
 
