@@ -13,7 +13,10 @@ module.exports = {
     },
     gold: Number,
     lifetimeGold: Number,
-    playtime: Number,
+    playtime: {
+        type: Number,
+        index: true
+    },
     contracts: Number,
     gapples: Number,
     gheads: Number,

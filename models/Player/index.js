@@ -51,4 +51,22 @@ PlayerSchema.virtual('rankName').get(function(){
 });
 PlayerSchema.virtual('displayName').get(function(){return this.levelName});
 
-module.exports = mongoose.model('Players', PlayerSchema);
+const Player = mongoose.model('Players', PlayerSchema);
+
+/*
+// convert legacy profiles to current
+(async()=>{
+    const docs = await Player.find({profileDisplay:{$exists:true}});
+    docs.forEach(doc => {
+        if(doc.description) return;
+        const description = [];
+        const dsp = doc.profileDisplay;
+        if(dsp.message) description.push({type:"text",content:dsp.message});
+        if(dsp.url) description.push({type:"link",url:dsp.url,title:dsp.linkTitle});
+        dsp.description = description
+        doc.save()
+    })
+})();
+*/
+
+module.exports = Player;

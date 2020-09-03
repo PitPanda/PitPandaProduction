@@ -92,8 +92,20 @@ class Player extends React.Component {
                       return (
                         <StaticCard title={display.title} key={key}>
                           <div style={{maxWidth:'300px'}}>
-                            {display.message?<p style={{marginBottom:display.url?'10px':''}}>{display.message}</p>:''}
-                            {display.url?<a href={display.url}>{display.linkTitle||display.url}</a>:''}
+                            {(display.description||[]).map((seg,i) => {
+                              switch (seg.type){
+                                case 'text':
+                                  return (
+                                    <div style={{paddingBottom:'5px'}} key={`${key}-${i}`}>
+                                      {seg.content.split('\\n').map((str, i2) => <p style={{marginBottom:'5px'}} key={`${key}-${i}-${i2}`}>{str}</p>)}
+                                    </div>
+                                  )
+                                case 'link':
+                                  return <React.Fragment key={`${key}-${i}`}><a href={seg.url} style={{marginBottom:'10px',display:'block'}}>{seg.title || seg.url}</a></React.Fragment>
+                                default:
+                                  return '';
+                              }
+                            })}
                             {(display.alts&&display.alts.length)?<><br/><br/>Alts:<br/><PlayerList players={display.alts.map(alt=>({tag:alt}))} instant={true} /></>:''}
                             {display.main?<><br/><br/>Main:<br/><PlayerList players={[{tag:display.main}]} instant={true} /></>:''}
                           </div>
