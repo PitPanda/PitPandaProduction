@@ -5464,7 +5464,7 @@
 			},
 			"gapples": {
 				"displayName": "Top Golden Apples Eaten",
-				"short": "Golden Apples"
+				"short": "Golden Apples Eaten"
 			},
 			"gheads": {
 				"displayName": "Top Golden Heads Eaten",
@@ -5527,7 +5527,7 @@
 			},
 			"kingsQuests": {
 				"displayName": "Top Kings Quest Completions",
-				"short": "Kings Quest"
+				"short": "Kings Quest Completions"
 			},
 			"sewerTreasures": {
 				"displayName": "Top Sewer Treasures Found",
