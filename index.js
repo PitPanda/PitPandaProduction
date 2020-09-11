@@ -15,7 +15,7 @@ const redis = new (require('./utils/RedisClient'))(0);
 const ApiKeys = require('./models/ApiKey');
 ApiKeys.find({}).then(keys => {
   keys.forEach(key => {
-    redis.client.hset(`apikey:${key}`, 'limit', key.limit, 'name', key.name);
+    redis.client.hset(`apikey:${key._id}`, 'limit', key.limit, 'name', key.name);
   })
 });
 
