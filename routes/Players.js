@@ -88,7 +88,7 @@ router.get('/:tag', rateLimiter(10), async (req, res) => {
     data.xpProgress = target.xpProgress;
     data.goldProgress = target.goldProgress;
     data.renownProgress = target.renownProgress;
-    data.doc = cleanDoc(self);
+    data.doc = cleanDoc(self || await target.playerDoc);
     res.status(200).json({ success: true, data });
 });
 
