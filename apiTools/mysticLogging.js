@@ -63,6 +63,7 @@ const logMystic = async(owner, item) => {
                 {
                     upsert: true,
                     rawResult: true,
+                    new: true,
                 }
             )
             if(!res.lastErrorObject.updatedExisting) emitter.emit('new', res.value);
