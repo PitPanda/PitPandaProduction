@@ -24,7 +24,7 @@ router.get('/:id', rateLimiter(2), async (req, res) => {
 
         return res.status(200).json({ success: true, item: result });
     } else {
-        return res.status(200).json({ success: true, item: (req.query.raw !== 'false') ? docs : dbToItem(item) });
+        return res.status(200).json({ success: true, item: (req.query.raw !== 'false') ? item : dbToItem(item) });
     }
 });
 
