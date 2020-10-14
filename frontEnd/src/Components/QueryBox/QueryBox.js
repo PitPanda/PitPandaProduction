@@ -19,6 +19,7 @@ Mystics.gemmed = {Name:'§fGemmed',Type:'any',NoNumber:true};
 Mystics.lives = {Name:'§fLives',Type:'any'};
 Mystics.maxLives = {Name:'§fMax Lives',Type:'any'};
 Mystics.tokens = {Name:'§fTokens',Type:'any'};
+Mystics.tier = {Name:'§fTier',Type:'any'};
 Mystics.artifact = {Name:'§fArtifact',Type:'any',NoNumber:true};
 Mystics.rare = {Name:'§fRare',Type:'any',NoNumber:true};
 Mystics.legendary = {Name:'§fLegendary',Type:'any',NoNumber:true};

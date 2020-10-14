@@ -57,6 +57,7 @@ const itemSearch = (req, res) => {
             }
             const finalB = formatQueryNum[direction](b);
             if (a === 'tokens') and.push({ tokens: not ? {$not:{$eq:finalB}} : finalB });
+            else if (a === 'tier') and.push({ tier: not ? {$not:{$eq:finalB}} : finalB });
             else if (a === 'lives') and.push({ lives: not ? {$not:{$eq:finalB}} : finalB });
             else if (a === 'maxlives') and.push({ maxLives: not ? {$not:{$eq:finalB}} : finalB });
             else if (a === 'color') and.push({ nonce: not ? {$not:{ $mod: [5, b] }} : { $mod: [5, b] } });

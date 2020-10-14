@@ -5362,6 +5362,30 @@
 				"Classes": [
 					"gold"
 				]
+			},
+			"guardian": {
+				"Descriptions": [
+					[
+						"§7Receive §9-10% §7damage"
+					]
+				],
+				"Name": "§9Guardian",
+				"Type": "chestplate",
+				"Classes": [
+					"defense"
+				]
+			},
+			"evil_within": {
+				"Descriptions": [
+					[
+						"§7Your hits ignore Somber"
+					]
+				],
+				"Name": "§9Evil Within",
+				"Type": "boots",
+				"Classes": [
+					"defense"
+				]
 			}
 		}
 	},

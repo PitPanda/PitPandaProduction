@@ -8,7 +8,6 @@ const Progress = require('./Progress');
 const UnlockCollection = require('./UnlockCollection');
 const { inflate } = require('pako');
 const nbt = require('nbt');
-const Mystic = require('../models/Mystic');
 const Player = require('../models/Player');
 const leaderboardFields = require('../models/Player/leaderboardFields');
 const allowedStats = Object.keys(leaderboardFields);
@@ -22,7 +21,7 @@ const [ renownShopSize, renownShopTotalCost ] = Object.values(RenownUpgrades).re
 },[0,0]);
 
 const textHelpers = require('../utils/TextHelpers');
-const { logMystic } = require('../apiTools/mysticLogging');
+const { logMystics } = require('../apiTools/mysticLogging');
 
 function removeFromLB(uuid){
     Object.keys(leaderboardFields)
@@ -1882,11 +1881,11 @@ class Pit {
      */
     parseInv(byteArr) {
         return new Promise(resolve => nbt.parse(inflate(byteArr), (err, inv) => {
-            if (err) return resolve([]);
+            if (err) resolve([]);
             else {
                 let items = inv.value.i.value.value;
-                items.forEach(item => logMystic(this, item));
-                return resolve(items);
+                logMystics(this, items);
+                resolve(items);
             }
         }));
     }

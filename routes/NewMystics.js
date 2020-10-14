@@ -6,8 +6,8 @@ events.on('new', console.log)
 
 router.ws('/', (ws) => {
     const cb = item => ws.send(JSON.stringify(item));
-    events.on('new', cb);
-    ws.on('close', () => events.removeListener('new', cb));
+    events.on('mystic', cb);
+    ws.on('close', () => events.removeListener('mystic', cb));
     ws.on('message', () => ws.send('3'));
 });
 

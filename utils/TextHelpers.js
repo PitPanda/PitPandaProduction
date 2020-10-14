@@ -30,7 +30,7 @@ const TextHelpers = {
      * @returns {string}
      */
     toHex(n) {
-        if (typeof n == "undefined") return;
+        if (n === undefined || n === null) return;
         let str = n.toString(16);
         str = '0'.repeat(6 - str.length) + str;
         return str.toUpperCase();
