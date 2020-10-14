@@ -127,15 +127,17 @@ const logMystics = async (owner, items) => {
             }
             if(prev.uuid === owner.uuid){
                 if(rest) {
-                    bulk.find({_id:old._id}).updateOne(rest);
+                    bulk.find({_id:old._id}).updateOne({'$set':rest});
                     index++
                 }
                 // else do nothing
             } else {
                 bulk.find({_id:old._id}).updateOne({
                     '$push': {owners:mystic.owners[0]},
-                    owner: owner.uuid,
-                    ...(rest || {})
+                    '$set': {
+                        owner: owner.uuid,
+                        ...(rest || {})
+                    },
                 })
                 index++;
             }
