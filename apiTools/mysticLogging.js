@@ -188,7 +188,7 @@ const logMystics = async (owner, items) => {
         }
         //if we reached here this is a new item
 
-        if(mystic.tier>0 && !mystic.flags.includes('gemmed')) updates[`t${mystic.tier}`] = mystic.enchants;
+        if(mystic.tier>0 && !mystic.flags.includes('gemmed')) mystic[`t${mystic.tier}`] = mystic.enchants;
         bulk.insert(mystic);
         index++;
         emitQueue.push({events:['new',`t${mystic.tier}`, ...gemmed],index:index-1,item:mystic});
