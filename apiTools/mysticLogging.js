@@ -104,10 +104,7 @@ const logMystics = async (owner, items) => {
     const docs = items.map(item => prepareItem(owner, item)).reduce((acc, cur) => acc.concat(cur), []);
     
     //console.log(docs)
-    const start = Date.now();
     const matches = await Mystic.find({nonce: {'$in':docs.map(d => d.nonce)}});
-
-    console.log('read',Date.now()-start)
     const assigned = new Map();
     matches.forEach(m => {
         if(!assigned.has(m.nonce)) assigned.set(m.nonce, []);
