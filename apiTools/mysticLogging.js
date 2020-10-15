@@ -12,7 +12,7 @@ const prepareItem = (owner, item) => {
     const attributes = getRef(item, "tag", "value", "ExtraAttributes", "value");
     const bundleContents = getRef(attributes,'bundle_contents','value','value');
     if(bundleContents){
-        return bundleContents.map(p => ({
+        return bundleContents.filter(p=>p.nonce.value > 0 && p.nonce.value < 16).map(p => ({
             owner: owner.uuid,
             enchants: [],
             nonce: p.nonce.value,
