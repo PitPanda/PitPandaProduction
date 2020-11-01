@@ -207,6 +207,10 @@ const logMystics = async (owner, items) => {
         const ids = result.insertedIds.map(i=>i._id);
         emitQueue.forEach(e => {
             if(e.index !== undefined) e.item._id = ids[e.index];
+            e.item.owners = undefined;
+            e.item.t1 = undefined;
+            e.item.t2 = undefined;
+            e.item.t3 = undefined;
             emitter.emit('mystic', {tags: e.events, item: e.item});
         })
     }

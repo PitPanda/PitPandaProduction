@@ -87,14 +87,13 @@ router.get('/:tag', rateLimiter(10), async (req, res) => {
   data.prestige = target.prestige;
 
   data.builtInventories = target.buildCustominventories();
-  data.nbtInventories = {
-    inventory: target.inventoryNBT,
-    enderchest: target.enderchestNBT,
-    armor: target.armorNBT,
-    stash: target.stashNBT,
-    mysticWellItem: target.mysticWellItemNBT,
-    mysticWellPants: target.mysticWellPantsNBT,
-  };
+  data.nbtInventories = {};
+  if(target.inventoryNBT) data.nbtInventories.inventory = Buffer.from(target.inventoryNBT).toString('base64');
+  if(target.enderchestNBT) data.nbtInventories.enderchest = Buffer.from(target.enderchestNBT).toString('base64');
+  if(target.armorNBT) data.nbtInventories.armor = Buffer.from(target.armorNBT).toString('base64');
+  if(target.stashNBT) data.nbtInventories.stash = Buffer.from(target.stashNBT).toString('base64');
+  if(target.mysticWellItemNBT) data.nbtInventories.mysticWellItem = Buffer.from(target.mysticWellItemNBT).toString('base64');
+  if(target.mysticWellPantsNBT) data.nbtInventories.mysticWellPants = Buffer.from(target.mysticWellPantsNBT).toString('base64');
   data.prestiges = target.prestiges;
   data.xpProgress = target.xpProgress;
   data.goldProgress = target.goldProgress;
