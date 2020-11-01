@@ -140,7 +140,6 @@ const logMystics = async (owner, items) => {
                         ...(rest || {})
                     },
                 })
-                index++;
                 return true;
             }
             return false;
