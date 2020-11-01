@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const players = require('./Players');
+const chattriggers = require('./ChatTriggers');
 const dump = require('./Dump');
 const item = require('./Item');
 const itemSearch = require('./ItemSearch');
@@ -40,6 +41,7 @@ router.use('*', (req, res, next) => {
 });
 
 router.use('/players', players);
+router.use('/chattriggers', chattriggers);
 router.use('/dump', dump);
 router.use('/item', item);
 router.use('/itemSearch', itemSearch);

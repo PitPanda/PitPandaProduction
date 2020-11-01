@@ -47,8 +47,6 @@ const prepareItem = (owner, item) => {
         try{
             return Mystics[key].Name.includes('RARE')
         }catch(e){
-            console.log(key);
-            console.log(rawEnchants[i], item.tag.value.display.value.Lore.value.value)
             return false;
         }
         
@@ -101,7 +99,7 @@ const prepareItem = (owner, item) => {
  */
 const logMystics = async (owner, items) => {
     //console.log('source',items)
-    const docs = items.map(item => prepareItem(owner, item)).reduce((acc, cur) => acc.concat(cur), []);
+    const docs = items.map(item => prepareItem(owner, item)).reduce((acc, cur) => acc.concat(cur), []).filter(d => d.nonce < 0 || d.nonce > 16);
     
     //console.log(docs)
     const matches = await Mystic.find({nonce: {'$in':docs.map(d => d.nonce)}});
@@ -118,7 +116,8 @@ const logMystics = async (owner, items) => {
         const dups = assigned.get(mystic.nonce) || [];
         const gemmed = mystic.flags.includes('gemmed') ? ['gemmed'] : [];
 
-        const updateOwner = async (old, rest) => {
+        /** returns true if the owner is different */
+        const updateOwner = (old, rest) => {
             const prev = old.owners[old.owners.length-1];
             if(prev.uuid !== owner.uuid || old.lastseenOffline + 86400e3 < Date.now()){
                 if(!rest) rest = {};
@@ -128,22 +127,27 @@ const logMystics = async (owner, items) => {
             if(prev.uuid === owner.uuid){
                 if(rest) {
                     bulk.find({_id:old._id}).updateOne({'$set':rest});
-                    index++
                 }
                 // else do nothing
             } else {
                 bulk.find({_id:old._id}).updateOne({
-                    '$push': {owners:mystic.owners[0]},
+                    '$push': {owners:{
+                        $each: [mystic.owners[0]],
+                        $slice: -100
+                    }},
                     '$set': {
                         owner: owner.uuid,
                         ...(rest || {})
                     },
                 })
                 index++;
+                return true;
             }
+            return false;
         }
 
-        const updateItem = async old => {
+        /** returns true if the owner is different */
+        const updateItem = old => {
             const updates = {
                 enchants: mystic.enchants,
                 lives: mystic.lives,
@@ -154,7 +158,7 @@ const logMystics = async (owner, items) => {
                 tokens: mystic.tokens,
             };
             if(mystic.tier>0 && mystic.tier !== old.tier && !mystic.flags.includes('gemmed')) updates[`t${mystic.tier}`] = mystic.enchants;
-            updateOwner(old, updates);
+            return updateOwner(old, updates);
         }
 
         // this should handle deleting 
@@ -168,20 +172,24 @@ const logMystics = async (owner, items) => {
                     delta += mystic.enchants[i].level - m.enchants[i].level;
                 }
                 if(delta === 0) { //no change, so check for owner change 
-                    updateOwner(m);
+                    const ownerChange = updateOwner(m);
+                    mystic._id = m._id;
+                    if(ownerChange) emitQueue.push({events:['owner'],item:mystic});
                     continue outer;
                 }
                 if(delta === 1 && !m.flags.includes('gemmed') && mystic.flags.includes('gemmed')){ // item was gemmed
-                    await updateItem(m);
-                    emitQueue.push({events:[`t${mystic.tier}`, 'gemmed'],index: index-1,item:mystic});
+                    const ownerEvent = updateItem(m) ? ['owner'] : [];
+                    mystic._id = m._id;
+                    emitQueue.push({events:['gemmed', ...ownerEvent],item:mystic});
                     continue outer;
                 }
                 // if reach here -> item is duped t3 with totally diff enchants woah
             }else if(m.tier < mystic.tier){
                 // could this mystic be made from the previous
                 if(mystic.maxLives >= m.maxLives && m.enchants.every(e1=>mystic.enchants.some(e2=>e1.key === e2.key && e1.level <= e2.level))) {
-                    await updateItem(m);
-                    emitQueue.push({events:[`t${mystic.tier}`, ...gemmed],index: index-1,item:mystic});
+                    const ownerEvent = updateItem(m) ? ['owner'] : [];
+                    mystic._id = m._id;
+                    emitQueue.push({events:[`t${mystic.tier}`, ...gemmed, ...ownerEvent],item:mystic});
                     continue outer;
                 }
             }
@@ -190,15 +198,15 @@ const logMystics = async (owner, items) => {
 
         if(mystic.tier>0 && !mystic.flags.includes('gemmed')) mystic[`t${mystic.tier}`] = mystic.enchants;
         bulk.insert(mystic);
+        emitQueue.push({events:['new',`t${mystic.tier}`, ...gemmed],index,item:mystic});
         index++;
-        emitQueue.push({events:['new',`t${mystic.tier}`, ...gemmed],index:index-1,item:mystic});
     }
     //console.log(bulk.s.currentBatch.operations)
     if(getRef(bulk, 's', 'currentBatch', 'operations', 'length')){
         const { result } = await bulk.execute();
         const ids = result.insertedIds.map(i=>i._id);
         emitQueue.forEach(e => {
-            e.item._id = ids[e.index];
+            if(e.index !== undefined) e.item._id = ids[e.index];
             emitter.emit('mystic', {tags: e.events, item: e.item});
         })
     }

@@ -72,9 +72,9 @@ class Pit {
 
         /**
          * container for inventory formatted data
-         * @type {object}
+         * @type {Record<'stash' | 'generalStats' | 'renownShop' | 'upgrades' | 'killstreaks' | 'perks' | 'mysticWellPants' | 'mysticWellItem' | 'main' | 'enderchest' | 'armor', Item[]>}
          */
-        this.inventories = {};
+        this.inventories = {}; 
 
         /**
          * container for raw inventory data
