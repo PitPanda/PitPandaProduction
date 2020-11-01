@@ -463,7 +463,7 @@
 				],
 				"Cost":10000,
 				"Item":{
-					"Id": 360,
+					"Id": 260,
 					"Meta": 0
 				}
 			},
@@ -686,7 +686,7 @@
 				"Interval":7,
 				"Cost":5000,
 				"Item":{
-					"Id": 172,
+					"Id": 175,
 					"Meta": 2
 				},
 				"Category":"Minor"
@@ -3424,16 +3424,16 @@
 			"less_damage_when_high_bounty": {
 				"Descriptions": [
 					[
-						"§7Receive §9-2% §7damage when you",
-						"§7have a §65000g bounty"
+						"§7Receive §9-2% §7damage per",
+						"§61,000g bounty"
 					],
 					[
 						"§7Receive §9-3% §7damage per",
 						"§61,000g bounty"
 					],
 					[
-						"§7Receive §9-4% §7damage when you",
-						"§7have a §65000g bounty"
+						"§7Receive §9-4% §7damage per",
+						"§61,000g bounty"
 					]
 				],
 				"Name": "§9Billy",
