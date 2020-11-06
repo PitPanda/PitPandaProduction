@@ -21,6 +21,6 @@ module.exports = cost => async (req, res, next) => {
     console.error(err);
     return res.status(500).send({ success: false, error: err });
   }
-  if(used>limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
+  if(used>=limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
   next();
 }
