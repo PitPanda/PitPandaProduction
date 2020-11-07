@@ -1,6 +1,6 @@
 const { Pit: { Upgrades, RenownUpgrades, Perks, Mystics }, Extra: { ColorCodes: Colors } } = require('../frontEnd/src/pitMaster.json');
 const mcitems = require('../minecraftItems.json');
-
+const Player = require('../models/Player');
 const textHelpers = require('../utils/TextHelpers');
 
 /**
@@ -114,4 +114,69 @@ const cleanDoc = doc => {
     return newDoc;
 }
 
-module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription, cleanDoc };
+const getDisplays = async uuid => {
+    const players = await Player.find(
+        {
+            $or:[
+                {
+                    'flag.alts':{
+                        $elemMatch:{
+                            $eq: uuid,
+                        },
+                    },
+                },
+                {
+                    'profileDisplay.alts':{
+                        $elemMatch:{
+                            $eq: uuid,
+                        },
+                    },
+                },
+                {
+                    '_id': uuid,
+                },
+            ],
+        }
+    );
+
+    const displays = [];
+
+    const self = players.find(d=>d._id === uuid);
+    if (self) {
+        if(self.profileDisplay) displays.push({
+            ...self.toJSON().profileDisplay,
+            display_type: 'plaque',
+        });
+        if(self.flag) displays.push({
+            ...self.toJSON().flag,
+            addedby: undefined,
+            timestamp: undefined,
+            evidence: undefined,
+            display_type: 'flag',
+        });
+    }
+    players.filter(d=>d._id !== uuid).map(notSelf => {
+        if(notSelf.profileDisplay && notSelf.profileDisplay.alts && notSelf.profileDisplay.alts.includes(uuid)) displays.push({
+            ...notSelf.toJSON().profileDisplay, 
+            alts: undefined, 
+            main: notSelf._id,
+            display_type: 'plaque',
+        });
+        if(notSelf.flag && notSelf.flag.alts && notSelf.flag.alts.includes(uuid)) displays.push({
+            ...notSelf.toJSON().flag,
+            addedby: undefined,
+            timestamp: undefined,
+            evidence: undefined,
+            alts: undefined,
+            main: notSelf._id,
+            display_type: 'flag',
+        });
+    });
+
+    return {
+        self,
+        displays,
+    }
+}
+
+module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription, cleanDoc, getDisplays };
