@@ -12,6 +12,7 @@
     "canvas": "^2.6.1",
     "discord.js": "^12.1.1",
     "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2",
     "express-ws": "^4.0.0",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
