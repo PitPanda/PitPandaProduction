@@ -171,7 +171,7 @@ const logMystics = async (owner, items) => {
                     delta += mystic.enchants[i].level - m.enchants[i].level;
                 }
                 if(delta === 0) { //no change, so check for owner change 
-                    const rest = (mystic.lives !== m.lives) ? { lives: mystic.lives } : {};
+                    const rest = (mystic.lives !== m.lives) ? { lives: mystic.lives } : undefined;
                     const ownerChange = updateOwner(m, rest);
                     mystic._id = m._id;
                     if(ownerChange) emitQueue.push({events:['owner'],item:mystic});
