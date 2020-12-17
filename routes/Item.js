@@ -10,7 +10,7 @@ router.get('/:id', rateLimiter(2), async (req, res) => {
     if (!item) return res.status(404).json({ success: false, err: 'No Item Found.' });
 
     if (req.query.extended) {
-        const owner = await hypixelAPI(item.owner);
+        const owner = await hypixelAPI.player(item.owner);
 
         const target = new Pit(owner);
         if (target.error) return res.json({ success: false, error: target.error });

@@ -17,7 +17,7 @@ const getDoc = async (tag, options={}) => {
         }
     }
     if (!doc || !isAged(doc,maxAge)) {
-        const target = await hypixelAPI(tag);
+        const target = await hypixelAPI.player(tag);
         if (target.error) {
             if(doc) return doc
             return { error: target.error };

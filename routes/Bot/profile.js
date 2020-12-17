@@ -11,7 +11,7 @@ const redisClient = new RedisClient(0);
 const removeColors = str => str.replace(/§./g, '');
 
 router.get('/:tag', rateLimiter(12), async (req, res) => {
-    const target = await hypixelAPI(req.params.tag);
+    const target = await hypixelAPI.player(req.params.tag);
 
     if (target.error) return res.status(400).json({ success: false, error: target.error });
 

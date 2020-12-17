@@ -10,7 +10,7 @@ function invalid(tag){
 const command = async (msg,rest,alias) => {
     const verify = alias===`verify`;
     if(!rest[0]) return msg.reply(`Please include your username. Ex: \`.${verify?'verify':'prestige'} mcpqndq\``);
-    const result = await hypixelAPI(rest[0].toLowerCase())
+    const result = await hypixelAPI.player(rest[0].toLowerCase())
     const gmrm = msg.member.roles;
     if(result.error) return msg.reply(result.error);
     if(!result.discord) return msg.reply(invalid(msg.author.tag));

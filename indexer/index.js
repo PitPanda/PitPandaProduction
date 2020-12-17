@@ -39,7 +39,7 @@ const runBatch = async () => {
     const batch = await playerDoc.find(queryFilter, { _id: 1 }).lean().limit(batchSize);
     const timeout = wait(checkTimeout*batchSize);
     for(const { _id } of batch){
-        requestPlayer(_id);
+        requestPlayer.player(_id);
         await wait(checkTimeout);
     }
 

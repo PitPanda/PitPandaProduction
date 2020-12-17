@@ -7,17 +7,14 @@ const { DataResolver } = require('discord.js');
 const batchSize = 10;
 let count = 0;
 
-/**
- * Constructor for API utilty function
- */
-const hypixelAPIconstructor = () => {
+const hypixelAPI = (() => {
     const { APIKeys: keys } = require('../settings.json');
     let i = 0;
     const getKey = () => {
         if (i === keys.length) i = 0;
         return keys[i++];
     }
-    return (tag => {
+    const logRequest = () => {
         if (count === batchSize) {
             HypixelUsage.findOneAndUpdate(
                 { date: Math.floor(Date.now() / 86400e3) },
@@ -26,6 +23,14 @@ const hypixelAPIconstructor = () => {
             ).catch(console.error);
             count = 1;
         } else count++;
+    }
+    /**
+     * Return an object containing the api response or error info
+     * @param {string} tag UUID or Username of the user you are getting
+     * @returns {Promise<Pit>} Pit Object constructed from result
+     */
+    const player = tag => {
+        logRequest();
         return Promise.race([new Promise((resolve) => {
             request(`https://api.hypixel.net/player?key=${getKey()}&${tag.length < 32 ? 'name' : 'uuid'}=${tag}`, (err, response, body) => {
                 if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
@@ -38,13 +43,27 @@ const hypixelAPIconstructor = () => {
         }), new Promise((resolve) => {
             setTimeout(() => resolve(APIerror("Request Timed Out").json), 60e3);
         })]);
-    });
-}
-const tmp = hypixelAPIconstructor();
-/**
- * Return an object containing the api response or error info
- * @param {string} tag UUID or Username of the user you are getting
- * @returns {Promise<Pit>} JSON result of the api call
- */
-const hypixelAPI = tag => tmp(tag);
+    };
+    /**
+     * Return an object containing the api response or error info
+     * @param {string} tag UUID or Username of the user you are getting
+     * @returns {Promise<Any>} JSON result of the api call
+     */
+    const friends = uuid => {
+        logRequest();
+        return Promise.race([new Promise((resolve) => {
+            request(`https://api.hypixel.net/friends?key=${getKey()}&uuid=${uuid}`, (err, response, body) => {
+                if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
+                else try{
+                    resolve(JSON.parse(body));
+                }catch(e){
+                    resolve({success: false, error: `API returned with code ${response.statusCode}`});
+                }
+            });
+        }), new Promise((resolve) => {
+            setTimeout(() => resolve(APIerror("Request Timed Out").json), 60e3);
+        })]);
+    }
+    return { player, friends };
+})();
 module.exports = hypixelAPI;

@@ -6,7 +6,7 @@ const rateLimiter = require('../apiTools/rateLimiter');
 const { cleanDoc } = require('../apiTools/apiTools');
 
 router.get('/:tag', rateLimiter(10), async (req, res) => {
-  const target = await hypixelAPI(req.params.tag);
+  const target = await hypixelAPI.player(req.params.tag);
 
   if (target.error) return res.status(400).json({ success: false, error: target.error });
 

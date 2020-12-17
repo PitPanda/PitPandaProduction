@@ -42,7 +42,7 @@ const getNextChunk = async () => {
 
 const runNextBatch = async () => {
     const batch = queue.splice(0, maxBatchSize); // zero based indexes
-    const players = await Promise.all(batch.map(requestPlayer));
+    const players = await Promise.all(batch.map(requestPlayer.player));
 
 
     return players;

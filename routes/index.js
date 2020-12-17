@@ -20,6 +20,7 @@ const newMystics =  require('./NewMystics');
 const bot =  require('./Bot');
 const discordtodocs =  require('./DiscordToDocs');
 const add =  require('./Add');
+const friends =  require('./Friends');
 
 let statBatch = {};
 const batchSize = 10;
@@ -59,6 +60,7 @@ router.use('/randomplayers', randomPlayers);
 router.use('/newmystics', newMystics);
 router.use('/discordtodocs', discordtodocs);
 router.use('/add', add);
+router.use('/friends', friends);
 
 router.use('*', APIerror('Invalid Endpoint'));
 
