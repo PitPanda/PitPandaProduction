@@ -1,6 +1,6 @@
 const UnlockEntry = require('./UnlockEntry');
 const Item = require('./Item');
-const { Pit: { Upgrades, RenownUpgrades, Perks } } = require('../frontEnd/src/pitMaster.json');
+const { Pit: { Upgrades, RenownUpgrades, Perks } } = require('../PitPandaFrontend/src/pitMaster.json');
 const { getRef, isTiered, subDescription } = require('../apiTools/apiTools');
 
 const textHelpers = require('../utils/TextHelpers');

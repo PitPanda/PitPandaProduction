@@ -1,6 +1,6 @@
 const Mystic = require('../models/Mystic');
 const { dbToItem } = require('../apiTools/apiTools');
-const {Pit:{Mystics}} = require('../frontEnd/src/pitMaster.json');
+const {Pit:{Mystics}} = require('../PitPandaFrontend/src/pitMaster.json');
 const rateLimiter = require('../apiTools/rateLimiter');
 const classes = {};
 Object.entries(Mystics).forEach(([key,enchant])=>{

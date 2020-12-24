@@ -1,7 +1,7 @@
 const Pit = require("../structures/Pit");
 const Mystic = require("../models/Mystic");
 const { getRef } = require('../apiTools/apiTools');
-const { Pit: { Mystics }} = require('../frontEnd/src/pitMaster.json');
+const { Pit: { Mystics }} = require('../PitPandaFrontend/src/pitMaster.json');
 const EventEmitter = require('events');
 const e = require("express");
 const { update, find } = require("../models/Mystic");

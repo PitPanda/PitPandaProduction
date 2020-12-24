@@ -21,12 +21,12 @@ ApiKeys.find({}).then(keys => {
 
 app.set('trust proxy', true);
 
-app.use(express.static('frontEnd/build'));
+app.use(express.static('PitPandaFrontend/build'));
 
 app.use('/api', api);
-app.use('/pitReference', (req, res) => res.status(200).sendFile(__dirname + "/frontEnd/src/pitMaster.json"));
+app.use('/pitReference', (req, res) => res.status(200).sendFile(__dirname + "/PitPandaFrontend/src/pitMaster.json"));
 
 app.ws('*', (ws,req)=>ws.send('Invalid websocket endpoint'))
-app.use('*', (req, res) => res.status(200).sendFile(__dirname + "/frontEnd/build/index.html"));
+app.use('*', (req, res) => res.status(200).sendFile(__dirname + "/PitPandaFrontend/build/index.html"));
 
 app.listen(5000, () => console.log(`Pit Panda has just booted! Port ${5000}.`));

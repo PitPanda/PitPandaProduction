@@ -1,5 +1,5 @@
 const { getRef } = require('../apiTools/apiTools');
-const pitMaster = require('../frontEnd/src/pitMaster.json');
+const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
 const { Pit: { Levels, Prestiges, Upgrades, Perks, Killstreaks, RenownUpgrades }, Extra: { ColorCodes: Colors, RankPrefixes } } = pitMaster;
 const Item = require('./Item');
 const SimpleItem = require('./SimpleItem');

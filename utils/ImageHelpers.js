@@ -1,9 +1,9 @@
 const { createCanvas, registerFont } = require('canvas');
 
-registerFont('./frontEnd/src/Fonts/Minecraft-Regular.otf', {family: 'Minecraft'});
-registerFont('./frontEnd/src/Fonts/minecraft-bold.otf', {family: 'Minecraft', weight:'bold'});
-registerFont('./frontEnd/src/Fonts/minecraft-bold-italic.otf', {family: 'Minecraft', weight:'bold', style:'italic'});
-registerFont('./frontEnd/src/Fonts/minecraft-italic.otf', {family: 'Minecraft', style:'italic'});
+registerFont('./PitPandaFrontend/src/Fonts/Minecraft-Regular.otf', {family: 'Minecraft'});
+registerFont('./PitPandaFrontend/src/Fonts/minecraft-bold.otf', {family: 'Minecraft', weight:'bold'});
+registerFont('./PitPandaFrontend/src/Fonts/minecraft-bold-italic.otf', {family: 'Minecraft', weight:'bold', style:'italic'});
+registerFont('./PitPandaFrontend/src/Fonts/minecraft-italic.otf', {family: 'Minecraft', style:'italic'});
 
 const colors = {
     '0': {color:'000000',textshadow:'000000'},

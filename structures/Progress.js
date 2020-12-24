@@ -1,5 +1,5 @@
 const { formatNumber, abbrNum } = require('../apiTools/apiTools');
-const pitMaster = require('../frontEnd/src/pitMaster.json');
+const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
 
 const textHelpers = require('../utils/TextHelpers');
 

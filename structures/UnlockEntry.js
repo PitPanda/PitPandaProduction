@@ -1,4 +1,4 @@
-const { Pit: { Upgrades, Killstreaks, Perks, RenownUpgrades } } = require('../frontEnd/src/pitMaster.json');
+const { Pit: { Upgrades, Killstreaks, Perks, RenownUpgrades } } = require('../PitPandaFrontend/src/pitMaster.json');
 const { isTiered } = require('../apiTools/apiTools');
 
 /**
