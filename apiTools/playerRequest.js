@@ -27,10 +27,8 @@ const hypixelAPI = (() => {
         logRequest();
         return Promise.race([new Promise(async (resolve) => {
             if(tag.length < 32) {
-                console.log('resolving name')
                 const doc = await Player.findOne({nameLower:tag.toLowerCase()}, {_id:1});
                 if(doc) tag = doc._id;
-                else console.log('failed');
             }
             request(`https://api.hypixel.net/player?key=${process.env.APIKEY}&${tag.length < 32 ? 'name' : 'uuid'}=${tag}`, (err, response, body) => {
                 if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
