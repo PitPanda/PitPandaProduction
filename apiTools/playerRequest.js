@@ -2,18 +2,12 @@ const request = require('request');
 const { APIerror } = require('./apiTools');
 const Pit = require('../structures/Pit');
 const HypixelUsage = require('../models/HypixelUsage');
-const { DataResolver } = require('discord.js');
+const Player = require('../models/Player');
 
 const batchSize = 10;
 let count = 0;
 
 const hypixelAPI = (() => {
-    const { APIKeys: keys } = require('../settings.json');
-    let i = 0;
-    const getKey = () => {
-        if (i === keys.length) i = 0;
-        return keys[i++];
-    }
     const logRequest = () => {
         if (count === batchSize) {
             HypixelUsage.findOneAndUpdate(
@@ -31,8 +25,14 @@ const hypixelAPI = (() => {
      */
     const player = tag => {
         logRequest();
-        return Promise.race([new Promise((resolve) => {
-            request(`https://api.hypixel.net/player?key=${getKey()}&${tag.length < 32 ? 'name' : 'uuid'}=${tag}`, (err, response, body) => {
+        return Promise.race([new Promise(async (resolve) => {
+            if(tag.length < 32) {
+                console.log('resolving name')
+                const doc = await Player.findOne({nameLower:tag.toLowerCase()}, {_id:1});
+                if(doc) tag = doc._id;
+                else console.log('failed');
+            }
+            request(`https://api.hypixel.net/player?key=${process.env.APIKEY}&${tag.length < 32 ? 'name' : 'uuid'}=${tag}`, (err, response, body) => {
                 if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
                 else try{
                     resolve(new Pit(JSON.parse(body)));
@@ -52,7 +52,7 @@ const hypixelAPI = (() => {
     const friends = uuid => {
         logRequest();
         return Promise.race([new Promise((resolve) => {
-            request(`https://api.hypixel.net/friends?key=${getKey()}&uuid=${uuid}`, (err, response, body) => {
+            request(`https://api.hypixel.net/friends?key=${process.env.APIKEY}&uuid=${uuid}`, (err, response, body) => {
                 if (err || (Math.floor(response.statusCode / 100) != 2)) resolve({ success: false, error: err || `API returned with code ${response.statusCode}` });
                 else try{
                     resolve(JSON.parse(body));

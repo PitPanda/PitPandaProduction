@@ -1,9 +1,8 @@
 const redis = require('redis');
-const config = require('../settings.json');
 
 class RedisClient {
     constructor(db) {
-        this.client = redis.createClient({ host: config.redis.host, port: config.redis.port, db });
+        this.client = redis.createClient({ host: 'localhost', port: 6379, db });
     }
 
     set(setName, key, value) {

@@ -2,3 +2,4 @@
 /discordBot/CoreConfig.json
 .vs/
 settings.json
+.env

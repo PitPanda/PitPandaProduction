@@ -6,10 +6,9 @@ const commands = require('./commands');
 const staffCommands = require('./staffCommands');
 const botAdminCommands = require('./botAdminCommands');
 const pitPandaAdminCommands = require('./pitPandaAdminCommands');
-const { Development } = require('../settings.json');
 const permission = require('./Permission');
 
-if(!Development){
+if(process.env.ENV === 'PROD'){
     client.on('guildMemberAdd',member=>{
         if(member.user.bot) return;
         client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(

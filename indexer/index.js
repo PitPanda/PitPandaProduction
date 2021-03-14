@@ -1,10 +1,4 @@
-const mongoose = require('mongoose');
-const { dbLogin, Development } = require('../settings.json');
-
-mongoose.connect(dbLogin, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('MongoDB Connected'));
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('autoIndex', Development);
+require('../setup');
 
 const express = require('express');
 const app = express();
@@ -55,7 +49,7 @@ const update = async () => {
 update();
 setInterval(update, 300e3);
 
-if (!Development) runBatch(); //entry point
+if (process.env.ENV === 'PROD') runBatch(); //entry point
 
 app.get('/', (req, res) => {
     res.json({dailyCount, remaingCount, checkTimeout})

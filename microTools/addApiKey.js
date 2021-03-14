@@ -1,12 +1,6 @@
-const mongoose = require('mongoose');
-const { dbLogin, Development } = require('../settings.json');
+require('../setup');
 
 const uuid = require('uuid-with-v6');
-
-mongoose.connect(dbLogin, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('MongoDB Connected'));
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('autoIndex', Development);
 
 const ApiKeys = require('../models/ApiKey');
 const redis = new (require('../utils/RedisClient'))(0);

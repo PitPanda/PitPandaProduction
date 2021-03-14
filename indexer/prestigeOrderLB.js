@@ -1,13 +1,6 @@
-const mongoose = require('mongoose');
+require('../setup');
 const Player = require('../models/Player');
 const fs = require('fs');
-
-const { dbLogin, Development } = require('../settings.json');
-
-mongoose.connect(dbLogin, { useNewUrlParser: true, useUnifiedTopology: true }, () => console.log('MongoDB Connected'));
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('autoIndex', Development);
 
 const [log, finalize] = (()=>{
   let output = '';
