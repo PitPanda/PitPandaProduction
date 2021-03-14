@@ -22,7 +22,7 @@ app.use('*',(req,res,next)=>{
     next();
 });
 
-app.use('/level/:tag', rateLimiter(20), async (req, res) => {
+app.use('/level/:tag', rateLimiter(1), async (req, res) => {
     let shadow = req.query.shadow !== 'false';
     let size = Math.max(Math.min(Number(req.query.size) || 40, 512),10);
     if(size>1000) size = 1000;
@@ -39,7 +39,7 @@ app.use('/level/:tag', rateLimiter(20), async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-app.use("/leaderboards/:cat/:tag",rateLimiter(20), async (req, res) => {
+app.use("/leaderboards/:cat/:tag",rateLimiter(3), async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
@@ -79,7 +79,7 @@ app.use("/leaderboards/:cat/:tag",rateLimiter(20), async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-app.use("/profile/:tag",rateLimiter(20), async (req, res) => {
+app.use("/profile/:tag",rateLimiter(3), async (req, res) => {
     const doc = await playerDoc(req.params.tag);
     if(doc.error) return error(doc, res);
     let size = Math.max(Math.min(Number(req.query.size) || 128, 512),40);
@@ -118,7 +118,7 @@ app.use("/profile/:tag",rateLimiter(20), async (req, res) => {
     cvs.createPNGStream().pipe(res);
 });
 
-app.use("/item/:id",rateLimiter(20), async (req, res) => {
+app.use("/item/:id",rateLimiter(1), async (req, res) => {
     const doc = await Mystics.findById(req.params.id);
     if(!doc) return error({error:'item not found'}, res);
     const data = dbToItem(doc);
