@@ -5,14 +5,6 @@ const expressWs = require('express-ws')(app);
 const api = require('./routes');
 require('./discordBot');
 
-const redis = new (require('./utils/RedisClient'))(0);
-const ApiKeys = require('./models/ApiKey');
-ApiKeys.find({}).then(keys => {
-  keys.forEach(key => {
-    redis.client.hset(`apikey:${key._id}`, 'limit', key.limit, 'name', key.name);
-  })
-});
-
 app.set('trust proxy', true);
 
 app.use(express.static('PitPandaFrontend/build'));
