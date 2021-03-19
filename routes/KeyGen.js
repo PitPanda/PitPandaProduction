@@ -16,10 +16,10 @@ router.post("/", rateLimiter(10), async (req, res) => {
   try{
     const uuid = (await getUUID(username)).split('').filter(c => c !== '-').join('');
 
-    const oncooldown = redis.client.get(`cd:${uuid}`, (err, reply) => {
+    const oncooldown = await new Promise(resolve => redis.client.get(`cd:${uuid}`, (err, reply) => {
       if(err) resolve(false);
       else resolve(reply === 'true');
-    });
+    }));
     if(oncooldown) return res.status(429).json({ success: false, error: 'You are on a cooldown!' });
 
     const body = await fetch(`https://sessionserver.mojang.com/session/minecraft/hasJoined?username=${username}&serverId=${hash}&ip=${ip}`);
