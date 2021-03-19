@@ -1081,7 +1081,7 @@ class Pit {
         this.pitSupporter;
         Object.defineProperty(this, 'pitSupporter', {
             enumerable: true,
-            get: () => (getStat('stats','Pit','packages') || []).includes('supporter'),
+            get: () => (this.getStat('stats','Pit','packages') || []).includes('supporter'),
         });
         
         /**
