@@ -3,7 +3,10 @@ const EnchantSchema = require('./EnchantSchema');
 const ItemSchema = require('./ItemSchema');
 
 const MysticSchema = mongoose.Schema({
-    enchants: [EnchantSchema],
+    enchants: {
+        type: [EnchantSchema],
+        index: true,
+    },
     lastseen: {
         type: Date,
         index: true
@@ -18,9 +21,18 @@ const MysticSchema = mongoose.Schema({
         type: Number,
         index: true,
     },
-    lives: Number,
-    maxLives: Number,
-    tokens: Number,
+    lives: {
+        type: Number,
+        index: true,
+    },
+    maxLives: {
+        type: Number,
+        index: true,
+    },
+    tokens: {
+        type: Number,
+        index: true,
+    },
     tier: {
         type: Number,
         index: true,
