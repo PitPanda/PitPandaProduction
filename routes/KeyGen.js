@@ -35,10 +35,10 @@ const genKey = async owner => {
       limit = 480;
     }
   }
-  const oldkey = await new Promise(resolve => redis.client.get(`keyof:${owner}`, resolve));
+  const oldkey = await new Promise(resolve => redis.client.hget(`keyof:${owner}`, 'key', resolve));
   if(oldkey) redis.client.del(`apikey:${oldkey}`);
   await new Promise(resolve => redis.client.hset(`apikey:${key}`, 'limit', limit, 'owner', owner, resolve));
-  await new Promise(resolve => redis.client.set(`keyof:${owner}`, key, resolve));
+  await new Promise(resolve => redis.client.hset(`keyof:${owner}`, 'key', key, resolve));
   return { key, limit };
 }
 
