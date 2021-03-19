@@ -23,5 +23,14 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
     return res.status(500).send({ success: false, error: err });
   }
   if(used>=limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
+  if(passed){
+    const owner = await new Promise((resolve, reject) => RedisClient.client.hget(`apikey:${passed}`, 'owner', (err, owner) => {
+      if(err) resolve();
+      resolve(owner);
+    }));
+    if(owner){
+      RedisClient.client.hincrby(`keyof:${owner}`, 'uses', cost);
+    }
+  }
   next();
 }
