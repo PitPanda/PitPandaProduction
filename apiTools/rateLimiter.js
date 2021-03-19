@@ -16,9 +16,9 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
       token = `rl:key:${passed}`;
       req.apiKey = passed;
     }catch(e){
-      return res.status(429).send({ success: false, error: 'Invalid key' });
+      return res.status(401).send({ success: false, error: 'Invalid key' });
     }
-  } else if(keyonly) return res.status(429).send({ success: false, error: 'Endpoint requires a key' });
+  } else if(keyonly) return res.status(401).send({ success: false, error: 'Endpoint requires a key' });
   const [err, used] = await new Promise(resolve=>RedisClient.client.eval(rateLimitManager, 1, token, Math.floor(Date.now()/1e3), 60, limit, cost, (err, used)=>resolve([err,used])));
   if(err) {
     console.error(err);
