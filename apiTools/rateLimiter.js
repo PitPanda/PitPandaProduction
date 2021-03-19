@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { resolve } = require('path');
 const { invalidateKey } = require('./apiTools');
 const redis = new (require('../utils/RedisClient'))(0);
 
@@ -28,7 +27,7 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
   }
   if(used>=limit) return res.status(429).send({ success: false, error: 'Rate Limited' });
   if(passed){
-    const alright = await new Promise(r => {
+    const alright = await new Promise(resolve => {
       redis.client.sadd(`keys:${req.ip}`, passed, () => {
         redis.client.scard(`keys:${req.ip}`, (err, members) => resolve(members <= 3));
         redis.client.expire(`keys:${req.ip}`, 3600);
