@@ -48,7 +48,7 @@ const genKey = async owner => {
   if(oldkey) redis.client.del(`apikey:${oldkey}`);
   await new Promise(resolve => redis.client.hset(`apikey:${key}`, 'limit', limit, 'owner', owner, (err, oldkey) => resolve(oldkey)));
   await new Promise(resolve => redis.client.hset(`keyof:${owner}`, 'key', key, resolve));
-  redis.client.set(`cd:${uuid}`, 'true', 'EX', 900);
+  redis.client.set(`cd:${owner}`, 'true', 'EX', 900);
   return { key, limit };
 }
 
