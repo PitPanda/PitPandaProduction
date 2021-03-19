@@ -40,6 +40,7 @@ const PlayerSchema = mongoose.Schema({
     special: String,
     prestigeTimes: [Date],
     admin: Boolean,
+    pitSupporter: Boolean,
 });
 
 PlayerSchema.virtual('levelName').get(function(){
