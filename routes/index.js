@@ -19,6 +19,8 @@ const bot =  require('./Bot');
 const discordtodocs =  require('./DiscordToDocs');
 const add =  require('./Add');
 const friends =  require('./Friends');
+const keyGen =  require('./KeyGen');
+const keyInfo =  require('./KeyInfo');
 
 let statBatch = {};
 const batchSize = 10;
@@ -57,6 +59,8 @@ router.use('/newmystics', newMystics);
 router.use('/discordtodocs', discordtodocs);
 router.use('/add', add);
 router.use('/friends', friends);
+router.use('/keygen', keyGen);
+router.use('/keyinfo', keyInfo);
 
 router.use('*', APIerror('Invalid Endpoint'));
 

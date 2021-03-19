@@ -97,7 +97,7 @@ const itemSearch = (req, res) => {
         });
 };
 
-router.use('/:query/:page', rateLimiter(6), itemSearch); //deprecated
-router.use('/:query', rateLimiter(6), itemSearch);
+router.use('/:query/:page', rateLimiter(20), itemSearch); //deprecated
+router.use('/:query', rateLimiter(20), itemSearch);
 
 module.exports = router;

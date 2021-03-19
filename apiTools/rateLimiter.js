@@ -3,9 +3,9 @@ const RedisClient = new (require('../utils/RedisClient'))(0);
 
 const rateLimitManager = fs.readFileSync('./redis/scripts/rateLimitManager.lua', {encoding: 'utf-8'});
 
-module.exports = cost => async (req, res, next) => {
+module.exports = (cost, keyonly) => async (req, res, next) => {
   let token = `rl:ip:${req.ip}`;
-  let limit = 120;
+  let limit = 160;
   const passed = req.query.key || req.get("X-API-Key");
   if(passed){
     try{
@@ -14,8 +14,9 @@ module.exports = cost => async (req, res, next) => {
         resolve(Number(limit));
       }));
       token = `rl:key:${passed}`;
+      req.apiKey = passed;
     }catch(e){ }
-  }
+  } else if(keyonly) return res.status(429).send({ success: false, error: 'Endpoint requires a key' });
   const [err, used] = await new Promise(resolve=>RedisClient.client.eval(rateLimitManager, 1, token, Math.floor(Date.now()/1e3), 60, limit, cost, (err, used)=>resolve([err,used])));
   if(err) {
     console.error(err);

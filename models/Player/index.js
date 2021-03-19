@@ -39,6 +39,7 @@ const PlayerSchema = mongoose.Schema({
     },
     special: String,
     prestigeTimes: [Date],
+    admin: Boolean,
 });
 
 PlayerSchema.virtual('levelName').get(function(){

@@ -119,7 +119,7 @@ const logMystics = async (owner, items) => {
         /** returns true if the owner is different */
         const updateOwner = (old, rest) => {
             const prev = old.owners[old.owners.length-1];
-            if(prev.uuid !== owner.uuid || old.lastseenOffline + 86400e3 < Date.now()){
+            if(prev.uuid !== owner.uuid || old.lastseenOffline.getTime() + 86400e3 < Date.now()){
                 if(!rest) rest = {};
                 rest.lastseen = mystic.lastseen;
                 rest.lastseenOffline = mystic.lastseenOffline;

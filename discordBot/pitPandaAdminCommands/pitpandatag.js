@@ -27,6 +27,36 @@ const methods = {
         await doc.save();
         msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
     },
+    async addalts(msg, doc, rest){
+        if(!doc.profileDisplay) return msg.reply('This command can only be used on players who already have a display');
+        const toAdd = (await resolveAltUUIDs(rest)).filter(a => !doc.profileDisplay.alts || !doc.profileDisplay.alts.includes(a));
+        doc.profileDisplay.alts.push(...toAdd);
+        await doc.save();
+        msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
+    },
+    async removealts(msg, doc, rest){
+        if(!doc.profileDisplay) return msg.reply('This command can only be used on players who already have a display');
+        const toRemove = await resolveAltUUIDs(rest);
+        console.log(doc)
+        doc.profileDisplay.alts = doc.profileDisplay.alts.filter(a => !toRemove.includes(a));
+        await doc.save();
+        msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
+    },
+    async sortalts(msg, doc, rest){
+        if(!doc.profileDisplay) return msg.reply('This command can only be used on players who already have a display');
+        if(!doc.profileDisplay.alts) return msg.reply('This command can only be used on players who have alts added');
+        const alts = await Promise.all(doc.profileDisplay.alts.map(u => getActualDoc(u)));
+        if(!rest[0] || rest[0] === 'xp'){
+            alts.sort((a,b) => b.xp - a.xp);
+        }else if(rest[0] === 'alphabetical' || rest[0] === 'alpha'){
+            alts.sort((a,b) => a.nameLower < b.nameLower ? -1 : 1);
+        }else{
+            return msg.reply(`Unknown sorting method`);
+        }
+        doc.profileDisplay.alts = alts.map(a => a._id);
+        await doc.save();
+        msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
+    },
     async remove(msg, doc){
         if(!doc.profileDisplay) return msg.reply('This player doesn\'t even have a display what are you doing fool.');
         doc.profileDisplay = undefined;
@@ -62,7 +92,7 @@ const command = async (msg,rest) => {
 
     if(!doc) msg.reply('I couldn\'t find that player');
 
-    methods[rest[0].toLowerCase()](msg, doc);
+    methods[rest[0].toLowerCase()](msg, doc, rest.slice(2));
 
     /*
     if(!rest[0]) msg.reply('please include the username or uuid of the player you would like to edit');
