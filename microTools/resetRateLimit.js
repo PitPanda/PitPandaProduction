@@ -7,6 +7,10 @@ const scanHandler = (err, [cursor, keys]) => {
     redis.client.del(key);
   }
   if(cursor != 0) redis.client.scan(cursor, 'MATCH', 'rl:*', scanHandler)
+  else{
+    console.log('done!')
+    process.exit(0);
+  }
 }
 
 redis.client.scan(0, 'MATCH', 'rl:*', scanHandler)

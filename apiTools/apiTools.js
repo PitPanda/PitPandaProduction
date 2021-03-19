@@ -2,6 +2,7 @@ const { Pit: { Upgrades, RenownUpgrades, Perks, Mystics }, Extra: { ColorCodes: 
 const mcitems = require('../minecraftItems.json');
 const Player = require('../models/Player');
 const textHelpers = require('../utils/TextHelpers');
+const redis = new (require('../utils/RedisClient'))(0);
 
 /**
  * Generates a function to send to router to display a given error message
@@ -80,6 +81,7 @@ const subDescription = (upgrade, tier, api) => {
 }
 
 const Item = require('../structures/Item');
+const { hydrate } = require('../models/Player');
 /**
  * converts document to item
  * @param {Document} doc 
@@ -179,4 +181,11 @@ const getDisplays = async uuid => {
     }
 }
 
-module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription, cleanDoc, getDisplays };
+const invalidateKey = key => {
+    redis.client.hgetall(`apikey:${key}`, (err, reply) => {
+        if(err || !reply || Object.keys(reply).length < 1) return;
+        redis.client.set(`cd:${reply.owner}`, 'true', 'EX', 900);
+    })
+}
+
+module.exports = { dbToItem, getItemNameFromId, isTiered, APIerror, getRef, subDescription, cleanDoc, getDisplays, invalidateKey };
