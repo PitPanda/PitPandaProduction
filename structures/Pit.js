@@ -1076,6 +1076,15 @@ class Pit {
         });
 
         /**
+         * @type {boolean}
+         */
+        this.pitSupporter;
+        Object.defineProperty(this, 'pitSupporter', {
+            enumerable: true,
+            get: () => (getStat('stats','Pit','packages') || []).includes('supporter'),
+        });
+        
+        /**
          * promise for when inventories will be loaded
          * @type {Promise<Item[][] | void>}
          */
@@ -1974,6 +1983,7 @@ class Pit {
             lastinpit: new Date(this.lastSave),
             discord: this.discord,
             prestigeTimes: this.prestiges.slice(1).map(p=>new Date(p.timestamp)),
+            pitSupporter: this.pitSupporter,
         });
         return player;
     }
