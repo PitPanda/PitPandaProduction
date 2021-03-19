@@ -185,6 +185,7 @@ const invalidateKey = key => {
     redis.client.hgetall(`apikey:${key}`, (err, reply) => {
         if(err || !reply || Object.keys(reply).length < 1) return;
         redis.client.set(`cd:${reply.owner}`, 'true', 'EX', 900);
+        redis.client.del(`apikey:${key}`, 'true');
     })
 }
 
