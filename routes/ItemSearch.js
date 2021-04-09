@@ -42,6 +42,9 @@ const itemSearch = (req, res) => {
         if (str.startsWith('uuid')) {
             query.owner = fix(str.substring(4));
             continue;
+        }else if(str.startsWith('past')){
+            and.push({ "owners.uuid": not ? {$nin:str.substring(4)} : {$in:str.substring(4)} });
+            continue;
         }
         const end = /-?[0-9]{1,}(\+|-)?$/.exec(str);
         if (end) {
