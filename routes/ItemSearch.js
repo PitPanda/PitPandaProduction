@@ -1,8 +1,10 @@
 const Mystic = require('../models/Mystic');
+const Player = require('../models/Player');
 const { dbToItem } = require('../apiTools/apiTools');
 const {Pit:{Mystics}} = require('../PitPandaFrontend/src/pitMaster.json');
 const rateLimiter = require('../apiTools/rateLimiter');
 const classes = {};
+const redis = new (require('../utils/RedisClient'))(0);
 Object.entries(Mystics).forEach(([key,enchant])=>{
     enchant.Classes.forEach(cls=>{
         if(!classes[cls])classes[cls]=[];
@@ -26,7 +28,17 @@ const formatQueryNum = {
     lesser: value => ({ $lte: value }),
 }
 
-const itemSearch = (req, res) => {
+const cleanUserRef = async (sample, req) => {
+    sample = sample.replace(/-/g,'').toLowerCase();
+    if(sample.length < 32 && req.apiKey){
+        redis.client.hincrby(`rl:key:${req.apiKey}`, Math.floor(Date.now()/1e3), 1)
+        const doc = await Player.findOne({nameLower:sample}, {_id:1});
+        if(doc) return doc._id;
+    }
+    return sample;
+}
+
+const itemSearch = async (req, res) => {
     let query = {};
     let enchants = [];
     let flags = [];
@@ -34,16 +46,19 @@ const itemSearch = (req, res) => {
     let and = [];
     let or = [];
 
+    /** @type {string} */
     const queryString = req.query.query || req.params.query;
     for (let str of queryString.toLowerCase().split(',')) {
         const not = str.startsWith('!');
         if(not) str = str.substring(1);
         const fix = not ? (q => ({$not: q})) : (q => q); 
         if (str.startsWith('uuid')) {
-            and.push({ "owner": not ? {$not:{$eq:str.substring(4)}} : str.substring(4) });
+            let sample = await cleanUserRef(str.substring(4), req);
+            and.push({ "owner": not ? { $not:{ $eq: sample } } : sample });
             continue;
         }else if(str.startsWith('past')){
-            and.push({ "owners.uuid": not ? {$nin:str.substring(4)} : {$in:str.substring(4)} });
+            let sample = await cleanUserRef(str.substring(4), req);
+            and.push({ "owners.uuid": not ? { $nin: sample } : {$in: sample} });
             continue;
         }
         const end = /-?[0-9]{1,}(\+|-)?$/.exec(str);
