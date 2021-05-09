@@ -30,8 +30,7 @@ const formatQueryNum = {
 
 const cleanUserRef = async (sample, req) => {
     sample = sample.replace(/-/g,'').toLowerCase();
-    if(sample.length < 32 && req.apiKey){
-        redis.client.hincrby(`rl:key:${req.apiKey}`, Math.floor(Date.now()/1e3), 1)
+    if(sample.length < 32){
         const doc = await Player.findOne({nameLower:sample}, {_id:1});
         if(doc) return doc._id;
     }
