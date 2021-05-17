@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const Config = require('./CoreConfig.json');
 const TradeCenter = require('./TradeCenter.json');
 const commands = require('./commands');
 const staffCommands = require('./staffCommands');
@@ -9,7 +8,7 @@ const pitPandaAdminCommands = require('./pitPandaAdminCommands');
 const permission = require('./Permission');
 
 if(process.env.ENV === 'PROD'){
-    client.on('guildMemberAdd',member=>{
+    client.on('guildMemberAdd', member => {
         if(member.user.bot) return;
         client.channels.fetch(TradeCenter.WelcomeChannel).then(channel=>channel.send(
             `Welcome to Trade Center, ${member}!\n`+
@@ -23,66 +22,66 @@ if(process.env.ENV === 'PROD'){
 client.on('guildMemberUpdate', (oldMem, newMem) => {
     if(oldMem.roles.cache.get(TradeCenter.Nitro) && !newMem.roles.cache.get(TradeCenter.Nitro) && !newMem.roles.cache.get(TradeCenter.Staff)){
         let roles = newMem.roles.cache.filter(role=>/^#[0-9a-fA-F]{6}$/.test(role.name));
-        newMem.roles.remove(roles,'Expired Nitro');
+        newMem.roles.remove(roles, 'Expired Nitro');
     }
 });
 
-client.on('message',async msg=>{
-    const content = msg.content.replace(/(@(here|everyone))|(<@&[0-9]{1,}>)/gi,'stopbro');
+client.on('message', async msg => {
+    const content = msg.content.replace(/(@(here|everyone))|(<@&[0-9]{1,}>)/gi, 'stopbro');
     let perms = permission(msg.member);
-    if(!await perms('tradecenter',8) && /discord\.gg\/[a-z0-9]{1,}/i.test(msg.content)) return msg.delete();
+    if(!await perms('tradecenter', 8) && /discord\.gg\/[a-z0-9]{1,}/i.test(msg.content)) return msg.delete();
 
     let state;
-    if(content.startsWith(Config.Prefix)) state = {
+    if(content.startsWith(process.env.PREFIX)) state = {
         commandList:commands,
         minimumPerm: 0,
         type: 'tradecenter',
-        prefix:Config.Prefix
+        prefix:process.env.PREFIX
     };
-    else if(content.startsWith(`s${Config.Prefix}`)) state = {
+    else if(content.startsWith(`s${process.env.PREFIX}`)) state = {
         commandList:staffCommands,
         minimumPerm: 3,
         type: 'tradecenter',
-        prefix:`s${Config.Prefix}`
+        prefix:`s${process.env.PREFIX}`
     };
-    else if(content.startsWith(`a${Config.Prefix}`)) state = {
+    else if(content.startsWith(`a${process.env.PREFIX}`)) state = {
         commandList:botAdminCommands,
         minimumPerm: 8,
         type: 'tradecenter',
-        prefix:`a${Config.Prefix}`
+        prefix:`a${process.env.PREFIX}`
     };
-    else if(content.startsWith(`p${Config.Prefix}`)) state = {
+    else if(content.startsWith(`p${process.env.PREFIX}`)) state = {
         commandList:pitPandaAdminCommands,
         minimumPerm: 1,
         type: 'pitpanda',
-        prefix:`p${Config.Prefix}`
+        prefix:`p${process.env.PREFIX}`
     };
     else return;
     
-    if(!await perms(state.type,state.minimumPerm)) return msg.reply('You do not have permission to use these commands!');
+    if(!await perms(state.type, state.minimumPerm)) return msg.reply('You do not have permission to use these commands!');
 
-    let [command, ...args] = getArgs(content,state.prefix);
+    let [command, ...args] = getArgs(content, state.prefix);
     command = command.toLowerCase();
     if(command==='help'){
         let embed = new Discord.MessageEmbed()
             .setTitle('Trade Center Bot usage')
             .setColor('#9040ff');
         for(const cmd of state.commandList){
-            embed.addField(cmd.example.replace('$',state.prefix),cmd.description.replace('$',state.prefix));
+            embed.addField(cmd.example.replace('$', state.prefix), cmd.description.replace('$',state.prefix));
         }
-        embed.addField(`**${state.prefix}help**`,'This menu');
+        embed.addField(`**${state.prefix}help**`, 'This menu');
         msg.channel.send(embed);
     } else for(const cmd of state.commandList){
         if(cmd.aliases.includes(command)){
             if(!await perms(cmd.type, cmd.permission)) return msg.reply('You do not have permission to use this command!');
-            cmd.fn(msg,args,command,perms);
+            cmd.fn(msg, args, command, perms);
             break;
         }
     }
 });
 
-function getArgs(content,prefix){
-    return content.substring(prefix.length).replace(/\s{1,}/g,' ').split(/\s/);
+function getArgs(content, prefix){
+    return content.substring(prefix.length).replace(/\s{1,}/g, ' ').split(/\s/);
 }
 
-client.login(Config.Token);
+client.login(process.env.TOKEN);

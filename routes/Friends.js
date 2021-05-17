@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { APIerror } = require('../apiTools/apiTools');
-const fetch = require('node-fetch');
 const rateLimiter = require('../apiTools/rateLimiter');
 const HypixelAPI = require('../apiTools/playerRequest');
 

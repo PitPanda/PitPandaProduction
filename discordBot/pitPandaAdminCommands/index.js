@@ -1,5 +1,4 @@
 const commands = [
-  require('./event'),
   require('./special'),
   require('./pitpandatag'),
 ];
