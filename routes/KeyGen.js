@@ -5,8 +5,6 @@ const redis = new (require('../utils/RedisClient'))(0);
 const getDoc = require('../apiTools/playerDocRequest');
 const rateLimiter = require('../apiTools/rateLimiter');
 
-
-
 router.post("/", rateLimiter(10), async (req, res) => {
   const { username, hash } = req.query;
   if (!username || !hash) return res.status(400).json({ success: false, error: 'Include and a hash and a username as query parameters' });

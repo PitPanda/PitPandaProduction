@@ -15,7 +15,6 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
         resolve(Number(limit));
       }));
       token = `rl:key:${passed}`;
-      req.apiKey = passed;
     }catch(e){
       return res.status(401).send({ success: false, error: 'Invalid key' });
     }
@@ -40,6 +39,12 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
       })
       return res.status(429).send({ success: false, error: 'Invalid key' });
     }
+  }
+  req.rateLimiter = {
+    key: used,
+    limit: limit,
+    patron: limit >= 480,
+    ip: req.ip,
   }
   next();
   if(passed){
