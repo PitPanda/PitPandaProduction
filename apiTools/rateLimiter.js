@@ -41,7 +41,7 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
     }
   }
   req.rateLimiter = {
-    key: used,
+    key: passed,
     limit: limit,
     patron: limit >= 480,
     ip: req.ip,
