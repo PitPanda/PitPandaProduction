@@ -2,15 +2,18 @@ const router = require('express').Router();
 const fetch = require('node-fetch');
 const uuidv6 = require('uuid-with-v6');
 const redis = new (require('../utils/RedisClient'))(0);
+const crypto = require("crypto");
 const getDoc = require('../apiTools/playerDocRequest');
 const rateLimiter = require('../apiTools/rateLimiter');
+const APPLICATION_PREFIX = "pitpanda_"
 
 router.post("/", rateLimiter(10), async (req, res) => {
-  const { username, hash } = req.query;
-  if (!username || !hash) return res.status(400).json({ success: false, error: 'Include and a hash and a username as query parameters' });
+  const { username, salt } = req.query;
+  if (!username || !hash) return res.status(400).json({ success: false, error: 'Include and a salt and a username as query parameters' });
+  if (!salt.match(/^[0-9a-f]{40}$/)) return res.status(400).json({ success: false, error: 'Include a 40 length hex salt' });
   const ip = (req.headers["x-forwarded-for"] || req.ip || "")
     .replace(/^.*:/, "").split(",");
-
+  
   try{
     const uuid = (await getUUID(username)).split('').filter(c => c !== '-').join('');
 
@@ -20,7 +23,7 @@ router.post("/", rateLimiter(10), async (req, res) => {
     }));
     if(oncooldown) return res.status(429).json({ success: false, error: 'You are on a cooldown!' });
 
-    const body = await fetch(`https://sessionserver.mojang.com/session/minecraft/hasJoined?username=${username}&serverId=${hash}&ip=${ip}`);
+    const body = await fetch(`https://sessionserver.mojang.com/session/minecraft/hasJoined?username=${username}&serverId=${crypto.createHash("sha1").update(APPLICATION_PREFIX + uuid + salt).digest("hex")}&ip=${ip}`);
     const data = await body.json();
     if (data.id === uuid) {
       const { key, limit } = await genKey(uuid);
