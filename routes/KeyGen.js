@@ -10,7 +10,7 @@ const APPLICATION_PREFIX = "pitpanda_"
 router.post("/", rateLimiter(10), async (req, res) => {
   const { username, salt } = req.query;
   if (!username || !hash) return res.status(400).json({ success: false, error: 'Include and a salt and a username as query parameters' });
-  const ip = (req.salt["x-forwarded-for"] || req.ip || "")
+  const ip = (req.headers["x-forwarded-for"] || req.ip || "")
     .replace(/^.*:/, "").split(",");
 
   try{
