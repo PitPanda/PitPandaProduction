@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
-const uuidv6 = require('uuid-with-v6');
+const uuid = require('uuid-with-v6');
 const redis = new (require('../utils/RedisClient'))(0);
 const crypto = require("crypto");
 const getDoc = require('../apiTools/playerDocRequest');
@@ -35,7 +35,7 @@ router.post("/", rateLimiter(10), async (req, res) => {
 });
 
 const genKey = async owner => {
-  const key = uuidv6.v6();
+  const key = uuid.v4();
   const doc = await getDoc(owner);
   let limit = 240;
   if(doc){
