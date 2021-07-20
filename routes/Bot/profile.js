@@ -33,14 +33,7 @@ router.get('/:tag', rateLimiter(12), async (req, res) => {
 
     await target.loadInventorys();
 
-    data.inventories = {
-      main: target.inventories.main,
-      armor: target.inventories.armor,
-      enderchest: target.inventories.enderchest,
-      stash: target.inventories.stash,
-      mysticWellItem: target.inventories.mysticWellItem,
-      mysticWellPants: target.inventories.mysticWellPants,
-    }
+    data.inventories = target.inventories;
 
     data.rankings = rankings;
 
