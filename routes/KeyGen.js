@@ -30,6 +30,7 @@ router.post("/", rateLimiter(10), async (req, res) => {
       return res.status(200).json({ success: true, key, limit });
     } else return res.status(403).json({ success: false, error: 'Submitted hash does not correspond to give user.' });
   }catch(e){
+    console.error(e);
     res.status(400).json({ success: false, error: 'Something went wrong' });
   }
 });
