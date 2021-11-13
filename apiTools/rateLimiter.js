@@ -12,7 +12,7 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
   if(passed){
     try{
       const info = await new Promise((resolve, reject) => redis.client.hgetall(`apikey:${passed}`, (err, hash) => {
-        if(err || !hash) reject(err);
+        if(err || !hash) return reject(err);
         resolve({
           limit: Number(hash.limit),
           role: hash.role || 'none',
