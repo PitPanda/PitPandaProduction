@@ -1,6 +1,6 @@
 const { getRef } = require('../apiTools/apiTools');
 const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
-const { Pit: { Levels, Prestiges, Upgrades, Perks, Killstreaks, RenownUpgrades }, Extra: { ColorCodes: Colors, RankPrefixes } } = pitMaster;
+const { Pit: { Levels, Prestiges, Upgrades, Perks, Killstreaks, RenownUpgrades }, Extra: { ColorCodes: Colors, RankPrefixes, Leaderboards } } = pitMaster;
 const Item = require('./Item');
 const SimpleItem = require('./SimpleItem');
 const Prestige = require('./Prestige');
@@ -10,7 +10,7 @@ const { inflate } = require('pako');
 const nbt = require('nbt');
 const Player = require('../models/Player');
 const leaderboardFields = require('../models/Player/leaderboardFields');
-const allowedStats = Object.keys(leaderboardFields);
+const allowedStats = Object.keys(Leaderboards);
 const RedisClient = require('../utils/RedisClient');
 const redisClient = new RedisClient(0);
 
@@ -24,7 +24,7 @@ const textHelpers = require('../utils/TextHelpers');
 const { logMystics } = require('../apiTools/mysticLogging');
 
 function removeFromLB(uuid){
-    Object.keys(leaderboardFields)
+    Object.keys(Leaderboards)
         .forEach(key=>redisClient.delete(key, uuid));
 }
 

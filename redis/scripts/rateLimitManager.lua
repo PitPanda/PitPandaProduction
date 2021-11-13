@@ -4,8 +4,6 @@ local window = tonumber(ARGV[2])
 local limit = tonumber(ARGV[3])
 local cost = tonumber(ARGV[4])
 
-redis.call('EXPIRE', token, window);
-
 local clearBefore = now - window
 local keys = redis.call('HGETALL', token)
 local len = table.getn(keys)
@@ -23,5 +21,7 @@ if used + cost <= limit then
     redis.call('HINCRBY', token, now, cost)
     used = used + cost
 end
+
+redis.call('EXPIRE', token, window);
 
 return used
