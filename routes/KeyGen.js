@@ -40,10 +40,16 @@ const genKey = async owner => {
   const doc = await getDoc(owner);
   let limit = 240;
   if(doc){
-    if(doc.admin){
-      limit = 10000;
-    }else if(doc.profileDisplay){
-      limit = 480;
+    switch(doc.role){
+      case 'admin':
+        limit = 10000;
+        break;
+      case 'contributor':
+        limit = 1000;
+        break;
+      case 'supporter':
+        limit = 480;
+        break;
     }
   }
   const oldkey = await new Promise(resolve => redis.client.hget(`keyof:${owner}`, 'key', (err, key) => resolve(key)));

@@ -39,7 +39,7 @@ const PlayerSchema = mongoose.Schema({
     },
     special: String,
     prestigeTimes: [Date],
-    admin: Boolean,
+    role: String,
     pitSupporter: Boolean,
 });
 
