@@ -54,7 +54,7 @@ const genKey = async owner => {
   }
   const oldkey = await new Promise(resolve => redis.client.hget(`keyof:${owner}`, 'key', (err, key) => resolve(key)));
   if(oldkey) redis.client.del(`apikey:${oldkey}`);
-  await new Promise(resolve => redis.client.hset(`apikey:${key}`, 'limit', limit, 'owner', owner, (err, oldkey) => resolve(oldkey)));
+  await new Promise(resolve => redis.client.hset(`apikey:${key}`, 'limit', limit, 'owner', owner, 'role', doc.role || 'none', (err, oldkey) => resolve(oldkey)));
   await new Promise(resolve => redis.client.hset(`keyof:${owner}`, 'key', key, resolve));
   redis.client.set(`cd:${owner}`, 'true', 'EX', 900);
   return { key, limit };

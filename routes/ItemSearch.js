@@ -79,7 +79,7 @@ const itemSearch = async (req, res) => {
             else if (a === 'maxlives') and.push({ maxLives: not ? {$not:{$eq:finalB}} : finalB });
             else if (a === 'color') and.push({ nonce: not ? {$not:{ $mod: [5, b] }} : { $mod: [5, b] } });
             else if (a === 'nonce') {
-                if(!req.rateLimiter.patron) return res.send({ success: false, error: "nonce search term is only available to patreon members using api keys" })
+                if(req.rateLimiter.role === 'none') return res.send({ success: false, error: "nonce search term is only available to patreon members using api keys" })
                 and.push({ nonce: not ? {$not:{$eq:finalB}} : finalB });
             }
             else if(a in classes) enchants.push(fix({

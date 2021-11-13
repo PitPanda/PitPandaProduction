@@ -6,14 +6,20 @@ const rateLimitManager = fs.readFileSync('./redis/scripts/rateLimitManager.lua',
 
 module.exports = (cost, keyonly) => async (req, res, next) => {
   let token = `rl:ip:${req.ip}`;
+  let role = 'none';
   let limit = 160;
   const passed = req.query.key || req.get("X-API-Key");
   if(passed){
     try{
-      limit = await new Promise((resolve, reject) => redis.client.hget(`apikey:${passed}`, 'limit', (err, limit) => {
-        if(err || !limit) reject(err);
-        resolve(Number(limit));
+      const info = await new Promise((resolve, reject) => redis.client.hgetall(`apikey:${passed}`, (err, hash) => {
+        if(err || !hash) reject(err);
+        resolve({
+          limit: Number(hash.limit),
+          role: hash.role || 'none',
+        });
       }));
+      limit = info.limit;
+      role = info.role;
       token = `rl:key:${passed}`;
     }catch(e){
       return res.status(401).send({ success: false, error: 'Invalid key' });
@@ -42,8 +48,8 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
   }
   req.rateLimiter = {
     key: passed,
-    limit: limit,
-    patron: limit >= 480,
+    limit,
+    role,
     ip: req.ip,
   }
   next();
