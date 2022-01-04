@@ -82,7 +82,7 @@ const methods = {
     },
     async move(msg, from, rest){
         if(!from.profileDisplay) return msg.reply('Source doesn\'t have a display you fool.');
-        const to = await getActualDoc(rest[1]);
+        const to = await getActualDoc(rest[0]);
         if(to.profileDisplay) return msg.reply('Target already has a display, delete it first.');
         to.profileDisplay = from.profileDisplay;
         if(to.profileDisplay.alts) to.profileDisplay.alts = to.profileDisplay.alts.filter(a => a !== to._id);
