@@ -61,7 +61,7 @@ const methods = {
         if(!doc.profileDisplay) return msg.reply('This player doesn\'t even have a display what are you doing fool.');
         doc.profileDisplay = undefined;
         await doc.save();
-        msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
+        msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${doc._id}`);
     },
     async inspect(msg, doc){
         if(!doc.profileDisplay) return msg.reply('This player doesn\'t even have a display what are you doing fool.');
@@ -79,7 +79,17 @@ const methods = {
             embed.addField('Alts',alts.map(d=>d.name).join(', '))
         }
         msg.channel.send(embed);
-    }
+    },
+    async move(msg, from, rest){
+        if(!from.profileDisplay) return msg.reply('Source doesn\'t have a display you fool.');
+        const to = await getActualDoc(rest[1]);
+        if(to.profileDisplay) return msg.reply('Target already has a display, delete it first.');
+        to.profileDisplay = from.profileDisplay;
+        if(to.profileDisplay.alts) to.profileDisplay.alts = to.profileDisplay.alts.filter(a => a !== to._id);
+        from.profileDisplay = undefined;
+        await Promise.all([to.save(), from.save()]);
+        msg.reply(`Successfully moved tag to https://pitpanda.rocks/players/${to._id}`);
+    },
 }
 
 const command = async (msg,rest) => {
