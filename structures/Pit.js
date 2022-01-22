@@ -1273,7 +1273,7 @@ class Pit {
      * @type {Object[]}
      */
     get renownShopUnlocksRaw() {
-        return this.profile.renown_unlocks?.filter(u => u.key !== 'unlock_golden_pickaxe') ?? [];
+        return (this.profile.renown_unlocks || []).filter(u => u.key !== 'unlock_golden_pickaxe');
     }
 
     /**
