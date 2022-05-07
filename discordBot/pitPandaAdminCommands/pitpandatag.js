@@ -57,6 +57,13 @@ const methods = {
         await doc.save();
         msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
     },
+    async clearerrors(msg, doc, rest){
+        if(!doc.profileDisplay) return msg.reply('This command can only be used on players who already have a display');
+        if(!doc.profileDisplay.alts) return msg.reply('This command can only be used on players who have alts added');
+        doc.profileDisplay.alts = doc.profileDisplay.alts.filter(Boolean);
+        await doc.save();
+        msg.reply(`Updated https://pitpanda.rocks/players/${doc._id}`);
+    },
     async remove(msg, doc){
         if(!doc.profileDisplay) return msg.reply('This player doesn\'t even have a display what are you doing fool.');
         doc.profileDisplay = undefined;
