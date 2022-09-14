@@ -10,7 +10,7 @@ const APPLICATION_PREFIX = "pitpanda_"
 router.post("/", rateLimiter(10), async (req, res) => {
   const { username, salt } = req.query;
   if (!username || !salt) return res.status(400).json({ success: false, error: 'Include and a salt and a username as query parameters' });
-  if (!salt.match(/^[0-9a-z]{30,40}$/)) return res.status(400).json({ success: false, error: 'Include a 40 length hex or 30 length base64 salt' });
+  if (!salt.match(/^([0-9a-z]{30} | [0-9a-f]{40})$/)) return res.status(400).json({ success: false, error: 'Include a 40 length hex or 30 length base64 salt' });
   const ip = (req.headers["x-forwarded-for"] || req.ip || "")
     .replace(/^.*:/, "").split(",");
   
