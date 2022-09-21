@@ -13,7 +13,7 @@ const getDoc = async (tag, options={}) => {
         if(tag.length===32) doc = await Player.findById(tag);
         else {
             doc = await Player.findOne({ nameLower: tag.toLowerCase() });
-            if(!doc && /#\d{4}$/.test(tag)) doc = await Player.findOne({ discord: tag });
+            if(!doc && /#\d{4}$/.test(tag)) doc = await Player.findOne({ "doc.discord": tag });
         }
     }
     if (!doc || !isAged(doc,maxAge)) {
