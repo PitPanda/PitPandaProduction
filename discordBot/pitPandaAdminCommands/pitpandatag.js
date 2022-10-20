@@ -100,6 +100,7 @@ const methods = {
 }
 
 const command = async (msg,rest) => {
+    if(!msg.member.roles.cache.some(role=>role.id===TradeCenter.PitPandaTagPerms)) return msg.reply("no")
     
 
     if(!rest[0] || !Object.keys(methods).includes(rest[0].toLowerCase())) return msg.reply(`Invalid subcommand, commands are: ${Object.keys(methods).join(', ')}`);
@@ -145,6 +146,6 @@ module.exports = new Command(
         description:`Set a player's profile display on pit panda`,
         example:`**$pitpandatag [command] [uuid or name] \\\`\\\`\\\`json [info] \\\`\\\`\\\`**`,
         type: 'pitpanda',
-        permlevel:Infinity
+        permlevel:0
     }
 );
