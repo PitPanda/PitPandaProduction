@@ -1,5 +1,6 @@
 const Command = require('../Command');
 const getDoc = require('../../apiTools/playerDocRequest');
+const TradeCenter = require('./TradeCenter.json');
 const { parseJson } = require('../utils');
 const { MessageEmbed } = require('discord.js');
 
