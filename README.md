@@ -1,6 +1,6 @@
-# PitPanda 2
+# PitPanda 2 : The pandaenning
 
-https://pitpanda2.rocks/
+https://pitpanda.rocks/
 
 ## Set up
 
