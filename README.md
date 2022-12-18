@@ -1,6 +1,6 @@
-# PitPanda
+# PitPanda 2
 
-https://pitpanda.rocks/
+https://pitpanda2.rocks/
 
 ## Set up
 
