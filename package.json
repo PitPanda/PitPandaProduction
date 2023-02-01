@@ -21,7 +21,7 @@
     "express-ws": "^4.0.0",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
-    "mongoose": "^5.9.1",
+    "mongoose": "^5.13.15",
     "nbt": "^0.8.1",
     "node-fetch": "^2.6.1",
     "pako": "^1.0.10",
