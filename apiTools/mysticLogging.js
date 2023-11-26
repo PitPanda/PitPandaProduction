@@ -164,6 +164,7 @@ const logMystics = async (owner, items) => {
         dups_loop:
         for(const m of dups){
             if(m.tier === mystic.tier){
+                if(m.maxLives !== mystic.maxLives) continue;
                 if(m.enchants.length !== mystic.enchants.length) continue;
                 let delta = 0;
                 for(let i = 0; i < m.enchants.length; i++){
