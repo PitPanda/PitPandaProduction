@@ -3,7 +3,11 @@ const express = require('express');
 const app = express();
 const expressWs = require('express-ws')(app);
 const api = require('./routes');
+const cors = require('cors');
 require('./discordBot');
+
+// for local dev
+app.use(cors());
 
 app.set('trust proxy', true);
 
