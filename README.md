@@ -11,7 +11,7 @@ Pit Panda is a web application created by [Kelly Dance](https://github.com/kelly
 
 ## Installation
 
-Installation is exactly the same as any other JS webapp, but be sure to install the frontend and its dependencies as well:
+Installation is exactly the same as any other JS webapp, but be sure to install the [frontend](https://github.com/pitpanda/pitpandafrontend) and its dependencies as well.
 
 ```bash
 cd PitPandaFrontend
