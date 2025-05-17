@@ -1,4 +1,4 @@
-const { Pit: { Upgrades, RenownUpgrades, Perks, Mystics }, Extra: { ColorCodes: Colors } } = require('../PitPandaFrontend/src/pitMaster.json');
+const { Pit: { Upgrades, RenownUpgrades, Perks, Mystics }, Extra: { ColorCodes: Colors } } = require('../../PitPandaFrontend/src/pitMaster.json');
 const mcitems = require('../minecraftItems.json');
 const Player = require('../models/Player');
 const textHelpers = require('../utils/TextHelpers');

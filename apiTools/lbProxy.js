@@ -1,5 +1,5 @@
 const { minutesToString } = require('../utils/TextHelpers');
-const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
+const pitMaster = require('../../PitPandaFrontend/src/pitMaster.json');
  
 function toString(n) {
     return toFixed(0)(n);

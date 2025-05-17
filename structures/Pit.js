@@ -1,5 +1,5 @@
 const { getRef } = require('../apiTools/apiTools');
-const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
+const pitMaster = require('../../PitPandaFrontend/src/pitMaster.json');
 const { Pit: { Levels, Prestiges, Upgrades, Perks, Killstreaks, RenownUpgrades }, Extra: { ColorCodes: Colors, RankPrefixes, Leaderboards } } = pitMaster;
 const Item = require('./Item');
 const SimpleItem = require('./SimpleItem');
@@ -1799,7 +1799,7 @@ class Pit {
                 `${Colors.GRAY}XP: ${Colors.AQUA}${textHelpers.formatNumber(this.xp)}`,
                 `${Colors.GRAY}XP/hour: ${Colors.AQUA}${textHelpers.formatNumber(Math.round(this.xpHourly))}`,
                 `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${textHelpers.formatNumber(this.lifetimeGold)}g`,
-                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${textHelpers.formatNumber(Math.round(this.goldHourly))}g`,
+                `${Colors.GRAY}Gold/Hour: ${Colors.GOLD}${textHelpers.formatNumber(Math.round(this.goldHourly))}g`,
                 `${Colors.GRAY}K/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killDeathRatio)}`,
                 `${Colors.GRAY}K+A/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistDeathRatio)}`,
                 `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistHourly)}`,
@@ -1824,7 +1824,7 @@ class Pit {
                 `${Colors.GRAY}Playtime: ${Colors.GREEN}${textHelpers.minutesToString(this.playtime)}`,
                 `${Colors.GRAY}Left Clicks: ${Colors.GREEN}${textHelpers.formatNumber(this.leftClicks)}`,
                 `${Colors.GRAY}Diamond Items Purchased: ${Colors.GREEN}${textHelpers.formatNumber(this.diamondItemsPurchased)}`,
-                `${Colors.GRAY}Chat messages: ${Colors.GREEN}${textHelpers.formatNumber(this.chatMessages)}`,
+                `${Colors.GRAY}Chat Messages: ${Colors.GREEN}${textHelpers.formatNumber(this.chatMessages)}`,
                 `${Colors.GRAY}Blocks Placed: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksPlaced)}`,
                 `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksBroken)}`,
                 `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${textHelpers.formatNumber(this.jumpsIntoPit)}`,
@@ -1847,7 +1847,7 @@ class Pit {
                 `${Colors.GRAY}Prestige: ${Colors.GREEN}${textHelpers.formatNumber(this.prestige)}`,
                 `${Colors.GRAY}Current Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.renown)}`,
                 `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.lifetimeRenown)}`,
-                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/113`
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/114`
             ]
             const off = new Item(`${Colors.RED}Offensive Stats`, offlore, 267);
             const def = new Item(`${Colors.BLUE}Defensive Stats`, deflore, 307);

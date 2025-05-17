@@ -15,6 +15,7 @@ const resolveAltUUIDs = async alts => (await Promise.all(alts.map(getActualDoc))
 const methods = {
     async add(msg, doc){
         const data = parseJson(msg);
+        if (!data) return;
         if(data.alts) data.alts = await resolveAltUUIDs(data.alts);
         doc.profileDisplay = data;
         await doc.save();
@@ -23,6 +24,7 @@ const methods = {
     async adjust(msg, doc){
         if(!doc.profileDisplay) return msg.reply('This command can only be used on players who already have a display');
         const data = parseJson(msg);
+        if (!data) return;
         if(data.alts) data.alts = await resolveAltUUIDs(data.alts);
         doc.profileDisplay = { ...doc.toJSON().profileDisplay, ...data };
         await doc.save();
@@ -101,8 +103,7 @@ const methods = {
 }
 
 const command = async (msg,rest) => {
-    if(!msg.member.roles.cache.some(role=>role.id===TradeCenter.PitPandaTagPerms)) return msg.reply("no")
-    
+    if(!msg.member.roles.cache.some(role => TradeCenter.PitPandaTagPerms.includes(role.id))) return msg.reply("no")
 
     if(!rest[0] || !Object.keys(methods).includes(rest[0].toLowerCase())) return msg.reply(`Invalid subcommand, commands are: ${Object.keys(methods).join(', ')}`);
     if(!rest[1]) return msg.reply('But for who?');

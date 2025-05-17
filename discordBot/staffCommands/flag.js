@@ -27,12 +27,16 @@ async function command(msg,rest,_,permlevel){
 
     const methods = {
         async add(){
-            if(!flag.type) return msg.reply('You didnt tell me what type of flag this is');
+            if(!flag.type) return msg.reply('You didn\'t tell me what type of flag this is');
             const altDocs = await altsPromise
             if(altDocs) flag.alts=altDocs.map(alt=>alt._id);
             const results = await Player.updateOne({_id:Doc._id},{flag});
-            if(!results.n) msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
-            else msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
+
+            if(results.matchedCount > 0 && results.modifiedCount > 0) {
+                msg.reply(`Successfully marked https://pitpanda.rocks/players/${Doc._id}`);
+            } else {
+                msg.reply('I couldn\'t find that player; maybe they haven\'t been searched on Pit Panda before?');
+            }
         },
         async adjust(){
             if(!Doc.flag) return msg.reply('This command can only be used on already marked players');
@@ -43,14 +47,14 @@ async function command(msg,rest,_,permlevel){
             msg.reply(`Updated https://pitpanda.rocks/players/${Doc._id}`);
         },
         async remove(){
-            if(!Doc.flag) return msg.reply('This player isnt even a flagged what are you doing fool.');
+            if(!Doc.flag) return msg.reply('This isn\'t even a flagged player; what are you doing?');
             const results = await Player.updateOne({_id:Doc._id},{$unset:{flag:""}})
-            if(results.n && results.nModified) msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
-            else msg.reply('I couldn\'t find that player, maybe they haven\'t been searched on pitpanda before?');
+            if(results.matchedCount > 0 && results.modifiedCount > 0) msg.reply(`Successfully unmarked https://pitpanda.rocks/players/${Doc._id}`);
+            else msg.reply('I couldn\'t find that player; maybe they haven\'t been searched on Pit Panda before?');
         },
         async inspect(){
             if(Doc.error) return msg.reply(`An error occured: ${Doc.error}`);
-            if(!Doc.flag) return msg.reply('This player isnt even flagged what are you doing fool');
+            if(!Doc.flag) return msg.reply('This isn\'t even a flagged player; what are you doing?');
             const flag = Doc.flag;
             let embed = new MessageEmbed()
                 .setTitle(Doc.displayName.replace(/§./g,''))
