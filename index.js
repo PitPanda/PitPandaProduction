@@ -1,4 +1,4 @@
-require('./setup');
+const connectionPromise = require('./setup');
 const express = require('express');
 const app = express();
 const expressWs = require('express-ws')(app);
@@ -19,4 +19,10 @@ app.use('/pitReference', (req, res) => res.status(200).sendFile(__dirname + "/Pi
 app.ws('*', (ws,req)=>ws.send('Invalid websocket endpoint'))
 app.use('*', (req, res) => res.status(200).sendFile(__dirname + "/PitPandaFrontend/build/index.html"));
 
-app.listen(5000, () => console.log(`Pit Panda has just booted! Port ${5000}.`));
+// wait before starting mongo
+connectionPromise.then(() => {
+  app.listen(5000, () => console.log(`Pit Panda has just booted! Port ${5000}.`));
+}).catch(err => {
+  console.error('Failed to connect to MongoDB!!', err);
+  process.exit(1);
+});
