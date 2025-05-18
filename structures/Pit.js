@@ -1096,7 +1096,8 @@ class Pit {
                 this.loadArmor(),
                 this.loadEnderchest(),
                 this.loadStash(),
-                this.loadWell()
+                this.loadWell(),
+                this.loadSpireStash()
             ])
         });
 
@@ -1188,6 +1189,26 @@ class Pit {
         Object.defineProperty(this.simplified_inventories, 'stash', {
             enumerable: true,
             get: () => this.raw_inventories.stash.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's spire stash inventory
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.spireStash;
+        Object.defineProperty(this.simplified_inventories, 'spireStash', {
+            enumerable: true,
+            get: () => this.raw_inventories.spireStash.map(SimpleItem.buildFromNBT)
+        });
+
+        /**
+         * Player's spire stash armour
+         * @type {SimpleItem[]}
+         */
+        this.simplified_inventories.spireStashArmor;
+        Object.defineProperty(this.simplified_inventories, 'spireStashArmor', {
+            enumerable: true,
+            get: () => this.raw_inventories.spireStashArmor.map(SimpleItem.buildFromNBT)
         });
 
         /**
@@ -1491,6 +1512,8 @@ class Pit {
             enderchest: this.enderchestNBT, 
             armor: this.armorNBT, 
             stash: this.stashNBT,
+            spireStash: this.spireStashNBT,
+            spireStashArmor: this.spireStashArmorNBT,
             mysticWellItem: this.mysticWellItemNBT,
             mysticWellPants: this.mysticWellPantsNBT
         };
@@ -1639,6 +1662,22 @@ class Pit {
     }
 
     /**
+     * NBT data for spire stash
+     * @returns {any}
+     */
+    get spireStashNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'spire_stash', 'data');
+    }
+
+    /**
+     * NBT data for spire stash armour
+     * @returns {any}
+     */
+    get spireStashArmorNBT(){
+        return this.getStat('stats', 'Pit', 'profile', 'spire_stash_armor', 'data');
+    }
+
+    /**
      * Loads and caches the player's Mystic Well
      * @returns {Promise<any[] | void>}
      */
@@ -1665,6 +1704,37 @@ class Pit {
                  */
                 this.raw_inventories.well = result;
                 resolve(this.raw_inventories.well);
+            });
+        });
+    }
+
+    /**
+     * Loads and caches the player's Spire Stash by combining the item and armour NBT data
+     * @returns {Promise<any[] | void>}
+     */
+    loadSpireStash() {
+        return new Promise(resolve => {
+            if (this.raw_inventories.spireStash) return resolve(this.raw_inventories.spireStash);
+            const invs = [
+                this.spireStashNBT,
+                this.spireStashArmorNBT
+            ];
+            Promise.all(
+                invs.map(inv =>
+                    new Promise(res =>
+                        inv ?
+                            this.parseInv(Buffer.from(inv)).then(res) :
+                            res([])
+                    )
+                )
+            ).then(result => {
+                result = result.flat(1);
+                /**
+                 * Player's Spire Stash
+                 * @type {Item[]}
+                 */
+                this.raw_inventories.spireStash = result;
+                resolve(this.raw_inventories.spireStash);
             });
         });
     }
