@@ -1666,7 +1666,7 @@ class Pit {
      * @returns {any}
      */
     get spireStashNBT(){
-        return this.getStat('stats', 'Pit', 'profile', 'spire_stash', 'data');
+        return this.getStat('stats', 'Pit', 'profile', 'spire_stash_inv', 'data');
     }
 
     /**
@@ -1828,7 +1828,15 @@ class Pit {
      * @type {void | Item[]}
      */
     buildRenownUpgradeInventory() {
-        const inv = Object.keys(RenownUpgrades).map(this.renownShopCollection.buildItem);
+        const inv = Object.keys(RenownUpgrades).map(key => {
+            const item = this.renownShopCollection.buildItem(key);
+            const renownUpgradeData = RenownUpgrades[key];
+            if (renownUpgradeData && renownUpgradeData.Category) {
+                item.category = renownUpgradeData.Category;
+                item.maxCount = renownUpgradeData.Costs.length;
+            }
+            return item;
+        });
         /**
          * Player's Renown Shop Upgrades
          * @type {Item[]}
@@ -1930,7 +1938,7 @@ class Pit {
             this.inventories.generalStats = inv;
             return inv;
         } else {
-            const inv = new Item(`${Colors.DARK_RED}Error`, [`${Colors.RED}Player Does not have any stats!`], 166)
+            const inv = new Item(`${Colors.DARK_RED}Error`, [`${Colors.RED}Player does not have any stats!`], 166)
             this.inventories.generalStats = [inv];
             return inv;
         }
