@@ -1,4 +1,4 @@
-const pitMaster = require('../../PitPandaFrontend/src/pitMaster.json');
+const pitMaster = require('../PitPandaFrontend/src/pitMaster.json');
 const UnlockCollection = require('./UnlockCollection');
 const UnlockEntry = require('./UnlockEntry');
 

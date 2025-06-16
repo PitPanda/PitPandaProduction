@@ -1,4 +1,4 @@
-const { Extra: { ColorCodes } } = require('../../PitPandaFrontend/src/pitMaster.json');
+const { Extra: { ColorCodes } } = require('../PitPandaFrontend/src/pitMaster.json');
 const mcenchants = require('../enchants.json');
 const mcitems = require('../minecraftItems.json');
 
