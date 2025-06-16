@@ -10,7 +10,9 @@ const getActualDoc = tag => getDoc(tag.toLowerCase().replace(/[-\s]/g,''), {maxA
  * @param {string[]} alts
  * @returns {string[]}
  */
-const resolveAltUUIDs = async alts => (await Promise.all(alts.map(getActualDoc))).map(doc=>doc._id);
+const resolveAltUUIDs = async alts => (await Promise.all(alts.map(getActualDoc)))
+    .filter(doc => !doc.error)
+    .map(doc => doc._id);
 
 const methods = {
     async add(msg, doc){

@@ -1,7 +1,7 @@
 const Mystic = require('../models/Mystic');
 const Player = require('../models/Player');
 const { dbToItem } = require('../apiTools/apiTools');
-const {Pit:{Mystics}} = require('../../PitPandaFrontend/src/pitMaster.json');
+const {Pit:{Mystics}} = require('../PitPandaFrontend/src/pitMaster.json');
 const rateLimiter = require('../apiTools/rateLimiter');
 const classes = {};
 const redis = new (require('../utils/RedisClient'))(0);
