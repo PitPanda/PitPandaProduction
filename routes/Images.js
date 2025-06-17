@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const proxy = require('express-http-proxy');
 
-router.use(proxy('localhost:5002'))
+const imageApiUrl = process.env.IMAGE_API_URL || 'localhost:5002';
+
+router.use(proxy(imageApiUrl))
 
 module.exports = router;
