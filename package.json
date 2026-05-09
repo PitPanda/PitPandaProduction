@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
+    "start": "node index.js",
+    "dev": "nodemon index",
     "addkey": "node microTools/addApiKey.js",
     "indexer": "node indexer/index.js",
     "imageapi": "node imageApi/index.js",

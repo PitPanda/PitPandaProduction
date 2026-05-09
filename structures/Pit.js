@@ -22,6 +22,7 @@ const [ renownShopSize, renownShopTotalCost ] = Object.values(RenownUpgrades).re
 
 const textHelpers = require('../utils/TextHelpers');
 const { logMystics } = require('../apiTools/mysticLogging');
+const { checkForWipe } = require('../apiTools/wipeDetector');
 
 function removeFromLB(uuid){
     Object.keys(Leaderboards)
@@ -1227,7 +1228,18 @@ class Pit {
         this.playerDoc;
         Object.defineProperty(this,'playerDoc',{
             enumerable: false,
-            value: new Promise(resolve=>Player.findByIdAndUpdate(this.uuid, { $set: this.createPlayerDoc(), $inc: {searches: 1} }, { upsert: true, new: true }).then(resolve))
+            value: (async () => {
+                const oldDoc = await Player.findById(this.uuid, {
+                    prestigeTimes: 1, playtime: 1, xp: 1, lifetimeGold: 1,
+                }).lean();
+                const newDoc = await Player.findByIdAndUpdate(
+                    this.uuid,
+                    { $set: this.createPlayerDoc(), $inc: { searches: 1 } },
+                    { upsert: true, new: true }
+                );
+                checkForWipe(this.uuid, this.name, oldDoc, this.prestige, this.playtime, this.xp, this.lifetimeGold);
+                return newDoc;
+            })()
         });
 
         this.playerDoc.then(doc=>{

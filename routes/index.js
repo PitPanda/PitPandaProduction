@@ -21,6 +21,7 @@ const add =  require('./Add');
 const friends =  require('./Friends');
 const keyGen =  require('./KeyGen');
 const keyInfo =  require('./KeyInfo');
+const wipes =  require('./Wipes');
 
 let statBatch = {};
 const batchSize = 10;
@@ -61,6 +62,7 @@ router.use('/add', add);
 router.use('/friends', friends);
 router.use('/keygen', keyGen);
 router.use('/keyinfo', keyInfo);
+router.use('/wipes', wipes);
 
 router.use('*', APIerror('Invalid Endpoint'));
 
