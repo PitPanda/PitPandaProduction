@@ -1,0 +1,22 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = [
+  "cairo",
+  "pango",
+  "libjpeg",
+  "giflib",
+  "librsvg",
+  "pkg-config",
+  "python3",
+  "gcc",
+  "gnumake",
+]
+
+[deploy]
+startCommand = "node index.js"
+healthcheckPath = "/api/indexer"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
