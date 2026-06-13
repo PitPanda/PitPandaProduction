@@ -1,9 +1,25 @@
 const { createCanvas, registerFont } = require('canvas');
+const path = require('path');
+const fs = require('fs');
 
-registerFont('../PitPandaFrontend/src/Fonts/Minecraft-Regular.otf', {family: 'Minecraft'});
-registerFont('../PitPandaFrontend/src/Fonts/minecraft-bold.otf', {family: 'Minecraft', weight:'bold'});
-registerFont('../PitPandaFrontend/src/Fonts/minecraft-bold-italic.otf', {family: 'Minecraft', weight:'bold', style:'italic'});
-registerFont('../PitPandaFrontend/src/Fonts/minecraft-italic.otf', {family: 'Minecraft', style:'italic'});
+function resolveFontPath(fileName) {
+    const candidates = [
+        // dev
+        path.join(__dirname, '..', 'PitPandaFrontend', 'src', 'Fonts', fileName),
+        // prod
+        path.join(__dirname, '..', '..', 'PitPandaFrontend', 'src', 'Fonts', fileName)
+    ];
+    for (const p of candidates) {
+        if (fs.existsSync(p)) return p;
+    }
+    // Fallback to first candidate (will throw later if invalid)
+    return candidates[0];
+}
+
+registerFont(resolveFontPath('Minecraft-Regular.otf'), {family: 'Minecraft'});
+registerFont(resolveFontPath('minecraft-bold.otf'), {family: 'Minecraft', weight:'bold'});
+registerFont(resolveFontPath('minecraft-bold-italic.otf'), {family: 'Minecraft', weight:'bold', style:'italic'});
+registerFont(resolveFontPath('minecraft-italic.otf'), {family: 'Minecraft', style:'italic'});
 
 const colors = {
     '0': {color:'000000',textshadow:'000000'},

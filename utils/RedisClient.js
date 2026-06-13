@@ -3,8 +3,9 @@ const redis = require('redis');
 class RedisClient {
     constructor(db) {
         this.client = redis.createClient(process.env.REDIS_URL || {
-            host: 'localhost',
+            host: process.env.REDIS_HOST || 'localhost',
             port: process.env.REDIS_PORT || 6381,
+            password: process.env.REDIS_PASSWORD,
             db
         });
     }

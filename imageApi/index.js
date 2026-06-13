@@ -70,7 +70,8 @@ app.use("/leaderboards/:cat/:tag",rateLimiter(3), async (req, res) => {
     ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
     ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
     try{
-        const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
+        ctx.imageSmoothingEnabled = false;
+        const img = await loadImage(`https://nmsr.nickac.dev/face/${doc._id}`);
         ctx.drawImage(img,0,0,size,size);
     }catch(e){
         ImageHelpers.printText(cvs,'§cFailed to',{size:subtitleSize,shadow,x:0,y:top});
@@ -109,7 +110,8 @@ app.use("/profile/:tag",rateLimiter(3), async (req, res) => {
     ImageHelpers.printText(cvs,line2,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize});
     ImageHelpers.printText(cvs,line3,{size:subtitleSize,shadow,x,y:top+nameSize+subtitleSize*2});
     try{
-        const img = await loadImage(`https://crafatar.com/avatars/${doc._id}?overlay=true`);
+        ctx.imageSmoothingEnabled = false;
+        const img = await loadImage(`https://nmsr.nickac.dev/face/${doc._id}`);
         ctx.drawImage(img,0,0,size,size);
     }catch(e){
         ImageHelpers.printText(cvs,'§cFailed to',{size:subtitleSize,shadow,x:0,y:top});

@@ -4,11 +4,15 @@ const redis = new (require('../utils/RedisClient'))(0);
 
 const rateLimitManager = fs.readFileSync('./redis/scripts/rateLimitManager.lua', {encoding: 'utf-8'});
 
+// This is for the evil Hypixel Forums scraper
+const NO_KEY_REQUIRED_PATTERN = /^\/api\/images(\/|\?|$)/i;
+
 module.exports = (cost, keyonly) => async (req, res, next) => {
   let token = `rl:ip:${req.ip}`;
   let role = 'none';
   let limit = 160;
   const passed = req.query.key || req.get("X-API-Key");
+  const keyRequired = keyonly && !NO_KEY_REQUIRED_PATTERN.test(req.originalUrl || '');
   if(passed){
     try{
       const info = await new Promise((resolve, reject) => redis.client.hgetall(`apikey:${passed}`, (err, hash) => {
@@ -24,7 +28,7 @@ module.exports = (cost, keyonly) => async (req, res, next) => {
     }catch(e){
       return res.status(401).send({ success: false, error: 'Invalid key' });
     }
-  } else if(keyonly) return res.status(401).send({ success: false, error: 'Endpoint requires a key' });
+  } else if(keyRequired) return res.status(401).send({ success: false, error: 'Endpoint requires a key' });
   const [err, used] = await new Promise(resolve=>redis.client.eval(rateLimitManager, 1, token, Math.floor(Date.now()/1e3), 60, limit, cost, (err, used)=>resolve([err,used])));
   if(err) {
     console.error(err);

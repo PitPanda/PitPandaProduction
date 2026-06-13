@@ -55,7 +55,7 @@ class Pit {
                     removeFromLB(uuid);
                 }
             })();
-            return { error: 'Player has not played the Pit' };
+            return { error: 'Player has not played The Pit' };
         }
 
 
@@ -1877,9 +1877,9 @@ class Pit {
                 `${Colors.GRAY}XP: ${Colors.AQUA}${textHelpers.formatNumber(this.xp)}`,
                 `${Colors.GRAY}XP/hour: ${Colors.AQUA}${textHelpers.formatNumber(Math.round(this.xpHourly))}`,
                 `${Colors.GRAY}Gold Earned: ${Colors.GOLD}${textHelpers.formatNumber(this.lifetimeGold)}g`,
-                `${Colors.GRAY}Gold/Hour: ${Colors.GOLD}${textHelpers.formatNumber(Math.round(this.goldHourly))}g`,
-                `${Colors.GRAY}K/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killDeathRatio)}`,
-                `${Colors.GRAY}K+A/D: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistDeathRatio)}`,
+                `${Colors.GRAY}Gold/hour: ${Colors.GOLD}${textHelpers.formatNumber(Math.round(this.goldHourly))}g`,
+                `${Colors.GRAY}K/D R: ${Colors.GREEN}${textHelpers.formatNumber(this.killDeathRatio)}`,
+                `${Colors.GRAY}K+A/D R: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistDeathRatio)}`,
                 `${Colors.GRAY}K+A/hour: ${Colors.GREEN}${textHelpers.formatNumber(this.killAssistHourly)}`,
                 `${Colors.GRAY}Damage dealt/taken: ${Colors.GREEN}${textHelpers.formatNumber(this.damageRatio)}`,
                 `${Colors.GRAY}Bow Accuracy: ${Colors.GREEN}${textHelpers.formatNumber(Math.round(this.bowAccuracy * 1000) / 10)}%`,
@@ -1893,9 +1893,9 @@ class Pit {
                 `${Colors.GRAY}Lava Buckets Emptied: ${Colors.GREEN}${textHelpers.formatNumber(this.lavaBucketsPlaced)}`,
                 `${Colors.GRAY}Fishing Rods Launched: ${Colors.GREEN}${textHelpers.formatNumber(this.fishingRodCasts)}`,
                 `${Colors.GRAY}Soups Drank: ${Colors.GREEN}${textHelpers.formatNumber(this.soupsDrank)}`,
-                `${Colors.GRAY}T1 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[0])}`,
-                `${Colors.GRAY}T2 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[1])}`,
-                `${Colors.GRAY}T3 Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[2])}`,
+                `${Colors.GRAY}Tier I Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[0])}`,
+                `${Colors.GRAY}Tier II Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[1])}`,
+                `${Colors.GRAY}Tier III Mystics Enchanted: ${Colors.GREEN}${textHelpers.formatNumber(this.mysticsEnchanted[2])}`,
                 `${Colors.GRAY}Dark Pants Created: ${Colors.GREEN}${textHelpers.formatNumber(this.darkPantsCreated)}`
             ];
             const misclore = [
@@ -1907,8 +1907,8 @@ class Pit {
                 `${Colors.GRAY}Blocks Broken: ${Colors.GREEN}${textHelpers.formatNumber(this.blocksBroken)}`,
                 `${Colors.GRAY}Jumps into Pit: ${Colors.GREEN}${textHelpers.formatNumber(this.jumpsIntoPit)}`,
                 `${Colors.GRAY}Launcher Launches: ${Colors.GREEN}${textHelpers.formatNumber(this.launcherLaunches)}`,
-                `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount}/25`,
-                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}/50,000`,
+                `${Colors.GRAY}Daily Trades: ${Colors.GREEN}${this.tradeCount} / 25`,
+                `${Colors.GRAY}Gold Trade Limit: ${Colors.GOLD}${textHelpers.formatNumber(this.tradeGold)}g / 50,000g`,
                 `${Colors.GRAY}Genesis Points: ${this.allegiance ? `${this.allegiance === 'DEMON' ? Colors.DARK_RED : Colors.AQUA}${textHelpers.formatNumber(this.allegiancePoints)}` : `${Colors.GREEN}N/A`}`,
             ];
             const farmlore = [
@@ -1925,16 +1925,16 @@ class Pit {
                 `${Colors.GRAY}Prestige: ${Colors.GREEN}${textHelpers.formatNumber(this.prestige)}`,
                 `${Colors.GRAY}Current Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.renown)}`,
                 `${Colors.GRAY}Lifetime Renown: ${Colors.GREEN}${textHelpers.formatNumber(this.lifetimeRenown)}`,
-                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)}/114`
+                `${Colors.GRAY}Renown Shop Completion: ${Colors.GREEN}${textHelpers.formatNumber(this.renownShop.length)} / 114`
             ]
-            const off = new Item(`${Colors.RED}Offensive Stats`, offlore, 267);
-            const def = new Item(`${Colors.BLUE}Defensive Stats`, deflore, 307);
-            const perf = new Item(`${Colors.YELLOW}Performance Stats`, perflore, 296);
-            const perkmys = new Item(`${Colors.GREEN}Perk/Mystic Stats`, perkmyslore, 116);
-            const misc = new Item(`${Colors.LIGHT_PURPLE}Miscellaneous Stats`, misclore, 49);
-            const farm = new Item(`${Colors.GOLD}Farming Stats`, farmlore, 291);
-            const prestige = new Item(`${Colors.AQUA}Prestige Stats`, presstats, 264);
-            const inv = [off, def, perf, perkmys, misc, farm, prestige];
+            const off = new Item(`${Colors.RED}Offensive`, offlore, 267);
+            const def = new Item(`${Colors.BLUE}Defensive`, deflore, 307);
+            const perf = new Item(`${Colors.YELLOW}Performance`, perflore, 296);
+            const perkmys = new Item(`${Colors.GREEN}Perks / Mystics`, perkmyslore, 116);
+            const misc = new Item(`${Colors.LIGHT_PURPLE}Misc`, misclore, 49);
+            const farm = new Item(`${Colors.GOLD}Farming`, farmlore, 291);
+            const prestige = new Item(`${Colors.AQUA}Prestige`, presstats, 264);
+            const inv = [off, def, perf, perkmys, farm, prestige, misc];
             this.inventories.generalStats = inv;
             return inv;
         } else {

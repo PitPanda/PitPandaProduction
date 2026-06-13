@@ -51,10 +51,15 @@ class Progress {
          */
         this.displayGoal = displayGoal;
 
-        this.percent = Math.round(1000 * this.percentCurrent / this.percentGoal)/1000;
+        this.percent = (this.percentGoal > 0) ? Math.round(1000 * this.percentCurrent / this.percentGoal)/1000 : 0;
+        if (this.percentGoal === 0 && this.percentCurrent > 0) this.percent = 1;
+
         this.description = `${textHelpers.abbrNum(this.displayCurrent, 2)}`;
-        if (this.displayGoal) this.description += `/${textHelpers.abbrNum(this.displayGoal, 2)}`;
-        if (specialCaseText) this.message = specialCaseText;
+        if (this.displayGoal) this.description += ` / ${textHelpers.abbrNum(this.displayGoal, 2)}`;
+        if (specialCaseText) {
+            this.message = specialCaseText;
+            this.percent = 1;
+        }
     }
 }
 
